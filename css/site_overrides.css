@@ -1,0 +1,92 @@
+p {
+    line-height: 1.5;
+    color: #666;
+}
+
+a.anchor {  
+    display: block; 
+    position: relative; 
+    top: -50px; 
+    visibility: hidden;
+}
+
+a:link {
+    color: #2EA3F2;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #2EA3F2;
+    text-decoration: none;
+}
+
+a:active {
+    color: #2EA3F2;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2EA3F2;
+    text-decoration: underline;
+}
+
+h1,h2,h3,h4,h5 {
+    color: #333;
+}
+
+.push {
+    height: 33px; 
+}
+
+#page {
+    margin-bottom: -33px;
+}
+
+#document {
+    margin-top: 10px; /* We want a little whitespace before the page content starts */
+    width: 1080px;
+}
+
+#wrapper {
+    max-width: 1080px;
+}
+
+#page-container {
+    padding-bottom: 32px; 
+}
+
+#footer {
+    width: 100%;
+    height: 32px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#page-wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    height: 100%;
+}
+
+.literal-block, li pre, div pre {
+    border: 1px solid #C6C9CB;
+    padding: 8px;
+
+}
+
+div blockquote, .simple {
+    list-style: circle outside none;
+    border-left: 0px;
+    font-style: normal;
+    letter-spacing: normal;
+}
+
+blockquote ul li {
+    margin-bottom: 5px;
+    color: #666;
+
+}
