@@ -1,0 +1,696 @@
+Как работать?
+Оригинал не стирать, писать перевод под ним, не быть сильным надмозгом.
+
+General
+Главное
+
+What is Matrix?
+Что такое Matrix?
+
+Matrix is an open standard for interoperable, decentralised, real-time communication over IP. It can be used to power Instant Messaging, VoIP/WebRTC signalling, Internet of Things communication - or anywhere you need a standard HTTP API for publishing and subscribing to data whilst tracking the conversation history.
+
+Matrix - это открытый и свободный протокол для децентрализованного общения в реальном времени. Он может быть использован для мгновенных сообщений, аудио- и видеосвязи с помощью WebRTC, интернета вещей и чего угодно, где вам может понадобиться стандартный HTTP API для публикации и подписки на информацию одновременно с отслеживанием истории общения.
+
+
+Matrix defines the standard, and provides open source reference implementations of Matrix-compatible Servers, Clients, Client SDKs and Application Services to help you create new communication solutions or extend the capabilities and reach of existing ones.
+
+Matrix определяет стандарт и предоставляет open-source реализации серверов, клиентов, инструментов для разработки (или просто SDK) и сервисов приложений, чтобы помочь вам в создании новых или в расширении существующих решений для коммуникации.
+
+What is Matrix’s Mission?
+В чём заключается цель Matrix?
+
+Для чего был создан Matrix?
+Matrix’s initial goal is to fix the problem of fragmented IP communications: letting users message and call each other without having to care what app the other user is on - making it as easy as sending an email.
+
+Первоначальная цель Matrix состоит в решении проблемы фрагментации IP-коммуникаций: дать возможность пользователям переписываться или звонить друг другу без заботы о том, какие приложения они используют - сделать это таким же лёгким, как отправка электронных писем.
+
+The longer term goal is for Matrix to act as a generic HTTP messaging and data synchronisation system for the whole web - allowing people, services and devices to easily communicate with each other, empowering users to own and control their data and select the services and vendors they want to use.
+
+Долгосрочная цель Matrix состоит в том, чтобы стать основной системой для отправки сообщений и синхронизации данных по всей сети, позволяя людям, сервисам и устройствам легко общаться друг с другом, давая пользователям контроль над своими данными и выбор между сервисами и вендорами, которые они захотят использовать. 
+
+What does Matrix provide?
+Что предоставляет Matrix?
+
+Matrix provides:
+Open Standard HTTP APIs for transferring JSON messages (e.g. instant messages, WebRTC signalling), including:
+Client<->Server API - defines how Matrix compatible clients communicate with Matrix homeservers.
+Server<->Server API - defines how Matrix homeservers exchange messages and synchronise history with each other.
+Application Service API - defines how to extend the functionality of Matrix with ‘integrations’ and bridge to other networks.
+Modules - specifies features that must be implemented by particular classes of clients.
+Open source reference implementations of:
+Clients (Web (React), iOS, Android)
+Client SDKs (Javascript, Web (React), iOS, Android)
+Homeservers (Synapse)
+Application Services (bridges to IRC, Slack, Skype, Lync and more…)
+The actual ecosystem and community of everyone running Matrix servers and services
+Loads of 3rd party contributions of clients, SDKs, servers and services.
+You can find the full list of Matrix enabled projects at https://matrix.org/blog/try-matrix-now.
+
+Matrix предоставляет:
+Открытый стандарт HTTP API для передачи JSON-сообщений (например, мгновенные сообщения, сигнализация WebRTC), включая:
+Клиент-серверный API, определяющий, как клиенты Matrix будут общаться с серверами Matrix.
+Сервер-серверный API, определяющий, как сервера Matrix будут общаться и синхронизироваться друг с другом.
+API для сервиса приложений, определяющий, как расширять функциональность Matrix с «интеграциями» и «мостами» в другие сети.
+Модули, определяющие, как конкретно должны быть реализованы классы клиентов.
+Открытые (свободные?) реализации для:
+Клиентов (Web (React), iOS, Android)
+Инструменты разработчика клиентов (Javascript, Web (React), iOS, Android)
+Сервера (Synapse)
+Сервисы приложений («мосты» в IRC, Slack, Skype, Lync и другие)
+Современную экосистему для сообщества, использующего сервера и сервисы Matrix
+Активный вклад сообщества в развитие клиентов, инструментов разработки, серверов и сервисов.
+Вы можете найти полный список Matrix-проектов на https://matrix.org/blog/try-matrix-now.
+
+What does this mean for users?
+Что это значит для пользователей?
+
+The aim is to provide an analogous ecosystem to email - one where you can communicate with pretty much anyone, without caring what app or server they are using, using whichever app & server you chose to use, and use a neutral identity system like an e-mail address or phone number to discover people to talk to.
+
+Цель - предоставить систему, аналогичную электронной почте, где пользователи могут общаться абсолютно со всеми, не беспокоясь о том, какие приложения или сервера они используют, использовать приложение и сервер, которые они захотят, и использовать нейтральную систему идентификации, такие как адрес электронной почты или номер телефона, чтобы найти людей для общения.
+
+What kind of company is Matrix.org?
+
+Matrix.org is an open initiative which acts as a neutral and independent custodian of the Matrix standard. As of Sept 2017 we are finally in the process of incorporating it as a dedicated non-profit entity (most likely a limited by guarantee UK private company called the Matrix.org Foundation).
+
+Что за компания Matrix.org?
+
+Matrix.org - это открытая инициатива, которая действует как нейтральный и независимый хранитель стандарта Matrix. По состоянию на сентябрь 2017 года мы окончательно сформировали его в виде некоммерческой организации (скорее всего ограниченной частной британской компанией, называемой Matrix.org Foundation).
+
+Who is funding Matrix.org?
+Кто спонсирует Matrix.org?
+
+Matrix.org is currently (Sept 2017) funded by the community, through a combination of community support (via Patreon, Liberapay, Bitcoin and Ethereum), corporate sponsorship, and grant funding. Current Elliptic-level supporters on Patreon and corporate sponsors can be found on our supporters page. If you would like to support the core Matrix team as a member of the community, please visit ourPatreon or Liberapay pages, or you can send us Bitcoin at 1LxowEgsquZ3UPZ68wHf8v2MDZw82dVmAE or Ethereum at ETH 0xA5f9a4f9E024F6D727f7afdA9257e22329A97485. If you would like to sponsor the team as a corporation, or are interested in paying for prioritised or custom development, please get in touch.
+For the first three years of Matrix’s development (2014-2017), most of the core contributors worked for Amdocs, who paid for them to work fulltime on Matrix. In July 2017, Amdocs considered the project to be sufficiently successful that it could now self-support and so stopped funding. The majority of the core team is now employed by New Vector, an independent company set up to hire the team and support Matrix’s development. Other contributors are funded by their own employers or donate their own time to the project.
+
+Matrix.org на текущий момент (сентябрь 2017) существует за счёт пожертвований сообщества, используя комбинацию различных площадок (Patreon, Liberapay, Bitcoin и Ethereum), корпоративного спонсорства и получения грантов. Посмотреть текущих спонсоров уровня Elliptic на площадке Patreon и корпоративных спонсоров можно на странице наших сторонников. Если вы желаете поддержать команду Matrix в качестве члена сообщества, пожалуйста, посетите нашу страницу на Patreon и Liberapay, или вы можете внести пожертвование в биткоинах на адрес 1LxowEgsquZ3UPZ68wHf8v2MDZw82dVmAE или эфир на адрес ETH 0xA5f9a4f9E024F6D727f7afdA9257e22329A97485. Если вы желаете спонсировать команду как корпорация или заинтересованы в оплате приоритетных или дополнительных разработок, пожалуйста, свяжитесь с нами.
+
+В течение первых трех лет разработки Matrix (2014-2017) большинство основных участников работали на Amdocs, которые оплатили им полный рабочий день для работы над Matrix. В июле 2017 года Amdocs посчитали проект достаточно успешным, чтобы теперь он мог самоподдерживаться, и поэтому прекратили финансирование.
+Теперь большая часть основной команды работает на New Vector, независимую компанию, созданную для найма команды и поддержки разработки Matrix. Другие участники финансируются собственными работодателями или жертвуют свое время на проект. 
+
+Who is building Matrix?
+Кто разрабатывает Matrix?
+
+The core team is ~12 people with extensive experience in building custom VoIP and Messaging apps for mobile network operators. Most of us work for New Vector, but there are an increasing number of contributors from other companies and folks all over the internet.
+
+Основная команда состоит из ~12 человек, имеющих обширный опыт в построении VoIP и приложений для обмена сообщениями для мобильных операторов. Большая часть из нас работает в компании «New Vector», но также есть растущее количество сотрудников из других компаний и ребят со всего интернета.
+
+Why are you called Matrix?
+Почему вы называетесь Matrix?
+
+We are called Matrix because we provide a structure in which all communication can be matrixed together.
+No, it’s nothing to do with the film (although you could go and build virtual worlds on top of Matrix if you wanted :)
+
+Мы выбрали такое наименование, потому что предоставляем структуру, где все коммуникации могут быть «заматриксены» вместе. Нет, это не имеет отношения к фильму (но вы можете построить виртуальный мир на Matrix, если захотите :)
+
+Why have you released this as open source?
+Почему вы развиваете этот проект как open source?
+
+We believe that any open standard defining interoperable communication needs to be justified, demonstrated and validated with transparent open source implementations. For Matrix to achieve its mission of making all communications services interoperable we believe it needs to be truly open, giving people access to take all the code we produce and to use and build on top of it.
+
+Мы убеждены, что любой открытый стандарт, определяющий  интероперабельную связь, должен быть подтверждён, продемонстрирован и оценен прозрачными open-source реализациями. Для Matrix, чтобы достичь своей цели создания сервиса для взаимодействия коммуникационных сервисов, мы считаем, необходимо быть поистине открытым, предоставляя доступ людям ко всему исходному коду, который мы производим, используем и поверх которого строим.
+
+What do you mean by open?
+Что вы подразумеваете под открытостью?
+
+Matrix is an open standard, meaning that we have freely published the details for how to communicate interoperably using the Matrix set of HTTP APIs. We encourage anyone and everyone to use the APIs and build their own projects which implement them and so benefit from interoperability with the rest of the Matrix ecosystem. We also ensure the standard is not encumbered by any known patent licensing requirements.
+Matrix is also open source, meaning that we have released the source code of the reference servers, clients and services to the public domain under the Apache Licence v2, to encourage anyone and everyone to run their own servers and clients, and enhance them and contribute their enhancements as they see fit.
+
+Matrix - это открытый стандарт, и это означает, что мы свободно публикуем детали о том, как взаимодействовать, используя набор Matrix HTTP API. Мы призываем всех и каждого использовать API и строить свои проекты, которые реализуют их, и, таким образом, получать выгоду от взаимодействия с остальной частью экосистемы Matrix. Мы также гарантируем, что стандарт не обременён никакими известными требованиями лицензирования патентов.
+Matrix также является open-source системой, подразумевающей, что мы публикуем весь исходный код базовой реализации, клиентов и сервисов для общедоступного использования под лицензией Apache Licence v2, чтобы побудить всех и каждого запускать свои сервера и клиенты, а также улучшать и вносить свой вклад по улучшению так как они это видят.
+
+What does federated mean?
+Что означает федеративность?
+
+Federation allows separate deployments of a communication service to communicate with each other - for instance a mail server run by Google federates with a mail server run by Microsoft when you send email from @gmail.com to @hotmail.com.
+Federation is different to interoperability, as interoperable clients may simply be running on the same deployment - whereas in federation the deployments themselves are exchanging data in a compatible manner.
+Matrix provides open federation - meaning that anyone on the internet can join into the Matrix ecosystem by deploying their own server.
+
+Федерация позволяет независимым экземплярам коммуникационных сервисов общаться между собой - например, как почтовый сервер Gmail взаимодействует с почтовым сервером Microsoft, когда вы посылаете письмо с @gmail.com на @hotmail.com.
+Федерация отличается от интероперабельности, поскольку интероперабельные клиенты могут работать на одном и том же сервере, тогда как в федерации сами сервера обмениваются данными между собой, понимая друг друга. Matrix обеспечивает открытую федерацию - это означает, что любой в интернете может присоединиться к экосистеме Matrix, развернув свой сервер.
+
+How is this like e-mail?
+Как оно сопоставимо с электронной почтой?
+
+When email was first set up in the early ‘80s, companies like Compuserve and AT&T and Sprint set up isolated email communities which only allowed you to exchange mail with users on the same system.  If you got your email from one service and your friend from another, then you couldn’t message each other.  This is basically the situation we’re in today with VoIP and IM.
+
+Когда электронная почта впервые «взлетела» в начале 80'х, такие компании, как Compuserve, AT&T и Sprint создали изолированные сервисы, позволяющие общаться только с пользователями того же сервера, что и вы. Если вы получили письмо из одного сервиса, а ваш друг из другого, вы не можете общаться с друг другом. Такую же ситуацию мы имеем сейчас с VoIP и IM.
+
+Why has no-one done this before?
+Почему раньше никто не сделал этого?
+
+There have been several attempts before including SIP, XMPP and RCS.  All of these have had some level of success, but many different technological/usability/economic factors have ended up limiting their success. Unfortunately, we’ve not ended up in a world where everyone has a SIP URI or Jabber ID on their business card, or a phone that actually uses RCS.
+
+Было несколько попыток прежде, включая SIP, XMPP и RCS. Все они имели разный уровень успеха, но большое количество технических, экономических и архитектурных проблем привели к ограничению их успеха. К несчастью, мы не оказались в мире, где у каждого есть SIP URI или Jabber ID на его визитной карточке или номера телефона, который использует RCS.
+
+What is the difference between Matrix and IRC?
+В чём разница между Matrix и IRC?
+
+We love IRC.  In fact, as of today the core Matrix team still uses it as our primary communication tool. Between us we’ve written IRCds, IRC bots and admined dreamforge, UnrealIRCd, epona, ircservices and several others. That said, it has some limitations that Matrix seeks to improve on:
+Text only
+No history
+No multiple-device support
+No presence support
+Fragmented identity model
+No open federation
+No standard APIs, just a rather limited TCP line protocol
+Non-standardised federation protocol
+No built-in end-to-end encryption
+Disruptive net-splits
+Non-extensible
+IRCv3 exists and is addressing some of these issues; this is great news and we wish them well. It’s almost a contradiction in terms to get competitive between openly interoperable communication projects - we look forward to increasing the richness of Matrix<->IRC bridges as the project progresses.
+
+Мы любим IRC. Фактически, на сегодня основная команда Matrix использует её в качестве нашего основного инструмента общения. Для себя мы написали IRCds, IRC ботов и используем dreamforge, UnrealIRCd, epona, ircservices и несколько других. Тем не менее, у этого решения есть несколько ограничений, которые Matrix стремится преодолеть:
+    - только текст
+    - отсутствие истории
+    - нет поддержки нескольких устройств
+    - нет поддержки присутствия
+    - фрагментированная модель идентичности
+    - нет открытой федерации
+    - нет стандартного API, только несколько ограниченных TCP протоколов
+    - не стандартизирован протокол федерализации
+    - нет встроенного сквозного шифрования
+    - разрушающие разделения сети (split)
+    - не расширяем
+    IRCv3 существует и решает некоторые из этих проблем; это отличная новость и мы желаем им успехов. Это почти противоречие с точки зрения конкуренции между открытыми взаимодействующими коммуникационными проектами - мы с нетерпением ожидаем увеличения количества мостов Matrix-IRC по мере продвижения проекта.
+
+
+
+What is the difference between Matrix and XMPP?
+В чём различия между Matrix и XMPP?
+
+The Matrix team used XMPP (Openfire, ejabberd, spectrum, asmack, XMPPFramework) for IM before starting to experiment with open HTTP APIs as an alternative in around 2012. The main issues with XMPP that drove us in this direction as of 2012 were:
+Not particularly web-friendly - you can’t easily speak XMPP from a web browser. N.B. Nowadays you have options like XMPP-FTW and Stanza.io that help loads with letting browsers talk XMPP
+Single logical server per MUC is a single point of control and availability. MUCs can be distributed over multiple physical servers, but they still sit behind a single logical JID and domain. FMUC improves this with a similar approach to Matrix, but as of Oct 2015 there are no open source implementations. The MIX XMPP extension also aims to address this limitation.
+History synchronisation is very much a second class citizen feature
+Bridging to other protocols and defragmenting existing communication apps and networks is very much a second class citizen feature
+Stanzas aren’t framed or reliably delivered without extensions. See wiki.xmpp.org for an XMPP take on this
+Multiple device support is limited. Carbons and MAM aim to resolve this
+Baseline feature set is so minimal that fragmentation of features between clients and servers is common, especially as interoperability profiles for features have fallen behind (as of July 2015)
+No strong identity system (i.e. no standard E2E PKI, unless you count X.509 certs, which are questionable)
+Not particularly well designed for mobile use cases: push; bandwidth-efficient transports. Since the time of writing a Push XEP has appeared, and wiki.xmpp.org states that XMPP is usable over a 9600bps + 30s latency link.
+This said, the whole area of XMPP vs Matrix is quite subjective. Rather than fighting over which open interoperable communication standard works the best, we should just collaborate and bridge everything together. The more federation and interoperability the better.
+We think of Matrix and XMPP as being quite different; at its core Matrix can be thought of as an eventually consistent global JSON db with an HTTP API and pubsub semantics - whilst XMPP can be thought of as a message passing protocol. You can use them both to build chat systems; you can use them both to build pubsub systems; each comes with different tradeoffs. Matrix has a deliberately extensive ‘kitchen sink’ baseline of functionality; XMPP has a deliberately minimal baseline set of functionality. If XMPP does what you need it to do, then we’re genuinely happy for you :) Meanwhile, rather than competing, an XMPP Bridge like Skaverat’s xmpptrix beta or jfred’s matrix-xmpp-bridge or Matrix.org’s own purple-matrix has potential to let both environments coexist and make the most of each other’s benefits.
+
+Команда Matrix использовала XMPP (Openfire, ejabberd, spectrum, asmack, XMPPFramework) в качестве IM до того, как начала эксперимент с разработкой открытого (свободного?) HTTP API в качестве альтернативы по состоянию на 2012 год. Главные проблемы XMPP, что сподвигли нас на этот путь в 2012 году, были:
+    
+Не особенно хорош для веба: вы не можете легко использовать XMPP из веб-браузера. N.B. В настоящее время существуют такие опции как XMPP-FTW и Stanza.io, которые помогут вам общаться в XMPP посредством браузера.
+Один логический сервер на MUC - это единственная точка управления и доступности. MUC могут быть распределены по нескольким физическим серверам, но они по-прежнему остаются за одним логическим JID и доменом. FMUC улучшает ситуацию с помощью аналогичного подхода в Matrix, но по состоянию на октябрь 2015 года нет реализаций с открытым исходным кодом. Расширение MIX XMPP так же нацелено на устранение этого ограничения.
+Функция синхронизации истории отодвинута на второй план.
+"Мосты" в другие протоколы и дефрагментация существующих коммуникационных приложений и сетей тоже скорее второстепенны
+XML-сообщения (станзы) не могут быть оформлены или надежно доставлены без расширений. См. wiki.xmpp.org для их использования в XMPP
+Поддержка нескольких устройств ограничена. Carbons и MAM стараются решить эту проблему
+Базовый набор функций настолько минимален, что фрагментация функций между клиентами и серверами является обычным явлением, особенно когда профили совместимости для функций отстают (на июль 2015 года)
+Нет хорошей системы идентификации (т. е. нет стандартного E2E PKI, если вы не считаете таковыми сертификаты X.509, которые сомнительны)
+Не очень хорошо спроектирован для применения на мобильных устройствах: push; пропускной способностью. Поскольку во время написания Push XEP выяснилось, и wiki.xmpp.org заявляет, что в XMPP его можно использовать с задержкой в 9600 бит / с + 30 секунд
+  Тем не менее, противопоставление XMPP и Matrix весьма субъективно. Вместо того, чтобы выяснять, какой открытый совместимый стандарт связи работает лучше, мы должны просто сотрудничать и объединять их вместе. Чем больше федерация и взаимосовместимость, тем лучше.
+  Мы думаем, что Matrix и XMPP совершенно разные; в своей основе Matrix можно рассматривать как согласованную глобальную JSON-db с API-интерфейсом HTTP и семантикой pubsub, в то время как XMPP можно рассматривать как протокол передачи сообщений. Вы можете использовать их как для создания чат-систем, так и для создания систем pubsub: каждый из них имеет свои преимущества. Matrix имеет намеренно обширную базовую функциональность; XMPP имеет намеренно минимальный базовый набор функциональных возможностей. Если XMPP делает то, что вам нужно, то мы искренне рады за вас :) Между тем, вместо того, чтобы конкурировать, XMPP-мосты, такие как бета-версия xmpptrix от Skaverat, или matrix-xmpp-bridge от jfred, или purple-matrix от Matrix.org имеют потенциал, чтобы обе среды сосуществовали и максимально использовали преимущества друг друга.
+
+What is the difference between Matrix and PSYC?
+В чём различия между Matrix и PSYC?
+
+PSYC is a open federated messaging protocol loosely inspired by IRC.  In version 1 it was a standalone protocol, and in version 2 it is being reutilised as a messaging layer on top of GNUnet.  We honestly don’t know that much about it, beyond trying to use psycd as an XMPP<->IRC bridge in 2010. Matrix differentiates primarily by providing simple HTTP APIs rather than the more exotic compact line protocol in PSYC v1 or the comprehensive GNUnet stack in v2, and Matrix focuses more on decentralised conversation history rather than just decentralised chat servers. On the other hand, Matrix doesn’t provide the metadata protection guarantees that GNUnet/PSYC aims for.
+
+PSYC - это открытый федеративный протокол обмена сообщениями, слабо вдохновлённый IRC. В первой версии это был автономный протокол, а во второй версии он повторно использовался как уровень обмена сообщениями поверх GNUnet. Мы честно не знаем много о нём, помимо того, что пытались использовать psycd как мост XMPP-IRC в 2010 году. Matrix отличается прежде всего тем, что предоставляет простое HTTP API, а не более экзотический компактный протокол в PSYC v1 или всеобъемлющий стек GNUnet во второй версии, а Matrix больше фокусируется на децентрализованной истории разговоров, а не на децентрализованных чат-серверов. С другой стороны Matrix не предоставляет гарантии защиты метаданных, к которым стремится GNUnet/PSYC.
+
+See http://about.psyc.eu/Matrix for PSYC’s views on Matrix.
+См. http://about/psyc.eu/Matrix, чтобы прочитать точку зрения PSYC на Matrix.
+
+What is the difference between Matrix and Tox?
+В чём разница между Matrix и Tox?
+
+Tox.chat looks to be a very cool clone of Skype - a fully decentralised peer-to-peer network.  Matrix is deliberately not a ‘pure’ peer-to-peer system; instead each user has a well-defined homeserver which stores his data and that he can depend upon.  Matrix provides HTTP APIs; Tox.chat provides C APIs. As of October 2015 Tox doesn’t seem to have an answer yet for decentralised conversation history storage.
+
+Tox.chat выглядит как очень классный клон Skype - полностью децентрализованная одноранговая сеть. Matrix намеренно не является "чистой" одноранговой сетью, вместо это у каждого пользователя есть строго заданный домашний сервер, который хранит его данные и от которого зависит клиент. Matrix предоставляет HTTP API, Tox.chat предоставляет C API. По состоянию на октябрь 2015 года Tox похоже не решил проблему с децентрализованным хранением истории.
+
+How does Matrix compare with something like Trillian or Pidgin?
+Как Matrix сопоставим с чем-нибудь типа Trillian или Pidgin?
+
+Trillian and Pidgin and similar aggregating IM clients merge all your IM activity into a single app.  However, your history and identity is still fragmented across the networks.  People can’t find you easily, and your history is fragmented (other than on the device where the client runs).   And rather than being able to chose the right app for the job when communicating with people, you are pushed towards relying on a specific aggregation app.
+
+Trillian, Pidgin и другие похожие IM-агрегаторы объединяют все ваши аккаунты IM в одно приложение. Однако, ваша история сообщений и аккаунты всё ещё разбросаны по сетям. Люди не могут просто так вас найти, ваша история фрагментирована и существует только на том устройстве, где запущен клиент. И вместо использования подходящего приложения для общения с людьми, вы опираетесь на приложение-комбайн, умеющее работать со многими протоколами.
+
+Matrix lets you get the best of both worlds by linking to all the different networks (XMPP, AIM, ICQ, Lync, Skype etc) on the serverside, using bridges which can be run by anyone. Matrix then provides a simple standard HTTP API to access any of these networks, and lets you choose whichever client you prefer (either as a ‘native’ Matrix client or using a non-Matrix client from one of the networks which has been bridged in).
+
+Matrix позволяет вам получить лучшее обоих миров, соединяя разные сети (XMPP, AIM, ICQ, Lync, Skype и другие) на серверной части, используя «мосты», которые могут быть запущены кем угодно. Matrix предоставляет простой стандартный HTTP API для доступа к этим сетям и даёт выбор, какой клиент вам использовать («нативный» или из той сети, с которой был соединён «мост»).
+
+What Matrix compliant apps are there?
+Какие есть приложения Matrix?
+Quite a few, ranging from the glossy mass-market to the geeky command-line. There’s even an emacs macro. Check out https://matrix.org/blog/try-matrix-now for the current list of Matrix enabled projects.
+
+Довольно немного, от привычных для массового использования и до «гиковских» консольных. Даже есть макрос для Emacs. Зайдите на https://matrix.org/blog/try-matrix-now для ознакомления с текущим списком проектов, использующих Matrix.
+
+What bridges to other networks are available?
+Какие «мосты» в другие сети доступны?
+
+The number of ‘bridges’ which integrate existing communication networks into Matrix are growing on a daily basis - both written by the Matrix core team and contributed by the wider community. The full list can be seen at https://matrix.org/blog/try-matrix-now, but the core ones as of Oct 2015 include:
+matrix-appservice-irc - an increasingly comprehensive Matrix<->IRC bridge
+matrix-appservice-verto - links from Matrix to FreeSWITCH via the Verto protocol
+matrix-appservice-slack - a basic bridge to Slack
+node-purple - lets you access any of the 20+ protocols supported by libpurple, including Skype, Lync, XMPP, etc)
+matrix-appservice-bridge - a general NodeJS framework for writing bridges
+Writing new bridges is incredibly fun and easy - see the matrix-appservice-bridge HOWTO for an example of how to write a fully functional Slack bridge in less than 100 lines of code!
+
+Количество «мостов», разрабатываемые командой Matrix и сообществом, которые интегрируют существующие сети в Matrix, растёт с каждым днём. Полный список можно найти на https://matrix.org/blog/try-matrix-now, но основные проекты за Октябрь 2015 года:
+matrix-appservice-irc - всё более всеобъемлющий Matrix-IRC «мост»
+matrix-appservice-verto - объединяет Matrix и FreeSWITCH с помощью протокола Verto
+matrix-appservice-slack - простой «мост» в Slack
+node-purple - дающий вам возможность доступа в 20+ протоколов, поддерживающихся libpurple, включая Skype, Lync, XMPP и другие
+matrix-appservice-bridge - основной фреймворк на NodeJS для написания «мостов»
+Написание «мостов» невероятно весёлое и простое занятие: посмотрите на matrix-appservice-bridge HOWTO для примера, как написать полностью работающий «мост» в Slack всего в 100 строк кода!
+
+Why do you think existing apps will ever join this officially?
+
+Почему вы думаете, что существующие приложения присоединятся к вам официально?
+
+We firmly believe it is what is right for the consumer. As people begin to use interoperable communications tools, service providers will see the benefit and compete on quality of service, security and features rather than relying on locking people into their walled garden. We believe as soon as users see the availability and benefits of interoperable services they will demand it.
+
+Мы твёрдо верим, что это то, что подходит потребителю. По мере того, как пользователи начинают использовать интероперабельные средства связи, поставщики услуг будут видеть выгоду и конкурировать за качество сервиса, безопасность и возможности, а не полагаться на блокировку людей в их огороженных сетях. Мы верим, что как только пользователи увидят доступность и преимущества совместимых сервисов, они перейдут на них.
+
+
+Why aren’t you doing this through the IETF? or W3C? or 3GPP?
+
+Почему вы не делаете это через IETF? Или W3C? Или 3GPP?
+
+We do recognise the advantages of working with existing standards bodies. We have been focused on writing code and getting it out, and the standard has been evolving rapidly since initial release in September 2014. Once the standard has matured sufficiently it may well be appropriate to work with an official standard body to maintain it going forwards.
+
+Мы признаём преимущества работы с существующими стандартизирующими организациями. Мы были сосредоточены на написании кода и стандарт быстро развивался с момента первоначального выпуска в сентябре 2014 года. Как только стандарт созреет достаточно, вполне может быть целесообразно работать с официальным стандартизующим органом, чтобы поддерживать его в будущем.
+
+Quick Start
+Быстрый старт.
+
+How do I get an account and get started?
+Как зарегистрироваться и начать общаться?
+
+The quickest way is to pick a client from https://matrix.org/blog/try-matrix-now and sign up. Please note that you can point clients to access any homeserver - you don’t have to use matrix.org, although as of day 1, matrix.org is the only communal homeserver available.
+Наиболее быстрый способ - это установить клиент с https://matrix.org/blog/try-matrix-now и зарегистрироваться. Обратите внимание, что для клиента можно указать любой сервер как домашний - не обязательно использовать matrix.org, хотя, как и в первый день, matrix.org является единственным общедоступным  сервером.
+
+What can I actually do with this?
+Что я могу делать?
+
+A typical client provides a simple chatroom interface to Matrix - letting the user interact with users and rooms anywhere within the Matrix federation.  Text and image messages are supported, and basic voice-only VoIP calling via WebRTC is supported in one-to-one rooms. (As of October 2015, experimental multi-way calling is also available on Riot.im)
+
+Типичный клиент предоставляет простой интерфейс чата с Matrix, позволяя пользователю взаимодействовать с пользователями и комнатами в любом месте в рамках федерации Matrix. Поддерживаются обмен текстовыми сообщениями, картинками, также работают голосовые и видео-звонки, обмен стикерами, подключение различных ботов.
+
+How do I connect my homeserver to the public Matrix network?
+Как мне подключить свой сервер к публичной сети Matrix?
+See http://github.com/matrix-org/synapse for details
+Зайдите на http://github.com/matrix-org/synapse для делатей.
+
+How do I Matrix-enable my existing app?
+
+Как мне интегрировать Matrix в моё приложение?
+
+If your app doesn’t have any communication capability already, you’ll want to use one of the Matrix client SDKs to add it in. These come in different levels of sophistication - ranging from a simple HTTP API wrapper (like matrix-js-sdk, matrix-ios-sdk or matrix-android-sdk) through to reusable UI components (like matrix-react-sdk and matrix-ios-kit). Pick the one for your platform, or a 3rd party one if none of the above work for you, and get plugging it in. You’ll probably also want to read the Client-Server API HOWTO too.
+
+Если ваше приложение пока что не имеет возможностей коммуникации, вы можете использовать инструменты разработчика клиентов для интеграции. Они поставляются в разных уровнях сложности, от простых HTTP API обёрток (такие как matrix-js-sdk, matrix-ios-sdk и matrix-android-sdk) и до компонентов для построения UI (такие как matrix-react-sdk и matrix-ios-kit). Выберите инструмент для своей платформы или, если не нашли ничего подходящего, используйте созданный сообществом. Вероятно, вам также захочется почитать HOWTO по клиент-серверному API.
+
+If you already have communication infrastructure set up (XMPP, custom HTTP, or whatever), then you’ll want to run a bridge to expose it to the wider Matrix ecosystem. See matrix-appservice-bridge HOWTO for a guide of how to write bridges using the matrix-appservice-bridge framework, or co-opt one from the list at https://matrix.org/blog/try-matrix-now. Application Service API gives the details of the API that bridges have to implement.
+
+Если у вас уже есть рабочая инфраструктура (XMPP, собственная реализация на HTTP или что угодно), вы можете поднять «мост» в экосистему Matrix. Почитайте matrix-appservice-bridge HOWTO для руководства о том, как писать «мосты», используя фреймворк matrix-appservice-bridge или другой из списка https://matrix.org/blog/try-matrix-now. API сервиса приложений предоставляет детали об API, которым «мост» должен соответствовать.
+
+How can I write a client on Matrix?
+
+Как я могу написать клиент Matrix?
+
+See the Client-Server API HOWTO and the API docs and the Spec for all the details you need to write a client.
+
+Смотрите HOWTO по клиент-серверному API, документы и спецификации по всем деталям, которые вам нужны для написания клиента.
+
+How can I help out with this?
+Как я могу вам помочь с этим?
+
+Come say hi on #matrix:matrix.org! Install synapse and tell us how you get on. Critique the spec.  Write clients. Write bridges! Run bridges! Nose around in the repositories in our GitHub organization and send us some pull requests to fix some bugs or add some features! You could even try to write a homeserver (but be warned, Matrix’s architecture makes homeservers orders of magnitude harder than clients or bridges.)
+See CONTRIBUTING.rst for full details on how to contribute to the project. All are welcome!
+
+Придите и скажите «привет» в #matrix:matrix.org! Установите synapse и скажите как он вам. Критикуйте спецификации. Пишите клиенты. Пишите «мосты»! Пройдитесь по нашим репозиториям на GitHub и отправляйте нам PR с исправлениями ошибок и реализациями новых возможностей! Вы даже можете попробовать написать реализацию сервера (но имейте в виду, архитектура Matrix делает реализацию серверов куда более сложной, чем клиентов и «мостов»).
+Почитайте CONTRIBUTING.rst для подробностей, как вы можете помочь проекту. Мы рады всем!
+
+Where can I get support?
+Где я могу получить помощь?
+
+#matrix:matrix.org aka #matrix on irc.freenode.is your best bet.
+
+#matrix:matrix.org, он же #matrix на irc.freenode.is - это ваш лучший выбор.
+
+How do I register custom matrix event types?
+
+Как я могу зарегистрировать собственные типы событий в Matrix?
+
+We’re not yet managing a registry of custom matrix event types.  If you have any particularly good ones you want to tell the world about, please let us know on #matrix-dev:matrix.org.
+
+Мы пока что не осуществляем регистрацию кастомных событий в Matrix. Если у вас есть хорошие кандидаты, о которых вы хотите сообщить миру, пожалуйста, дайте нам знать в #matrix-dev:matrix.org.
+
+How mature is this?
+Насколько вы зрелые?
+
+We started working on Matrix in July 2014, and opened it to the public in September 2014. We got all the core features in place in December 2014 and entered beta, and since then have been iterating away on the beta refining the architecture and APIs, fixing bugs and scalability, and adding new features, clients, bridges etc.
+As of October 2015 (synapse 0.10) it’s good for serious experimentation and non-production services and can absolutely be used in the real world. However, we’re still in beta and we’ll want to freeze the spec and implement clustering and other nice features before we really declare it ready for production.
+
+Мы начали работу над Matrix в июле 2014 года и открыли её публике в сентябре 2014. Мы реализовалии все основные функции в декабре 2014 и вошли в бету, и с тех пор развиваем архитектуру и API, исправляем ошибки и масштабируемость, добавляем новые функции, клиенты, «мосты» и прочее.
+По состояние за октябрь 2015 года (synapse 0.10) оно хорошо для серьёзных экспериментов и непроизводственных сервисов, и может быть использовано по всему миру. Однако, мы до сих пор в бете и хотим заморозить спецификации, реализовать крастеризацию и другие хорошие функции до того, как мы объявим, что готовы для производства.
+
+Standard
+Стандарт.
+
+What is a client?
+
+Что такое клиент?
+
+Users in Matrix use one or more clients to communicate. This could be any combination of a web client, a command line client, a mobile client - or embedded clients built into existing apps. It could even be a piece of hardware (e.g. a drone) that is Matrix enabled.
+
+Пользователи в Matrix используют один или более клиентов для общения. Это может быть любая комбинация из веб-клиента, консольного клиента и мобильного клиента, или встроенного в другие существующие приложения. Это даже может быть частью оборудования (например, дрон), использующего Matrix.
+
+Can I use Matrix without installing a Matrix client?
+
+Могу ли я использовать Matrix без установки клиента?
+
+Sure. An ever increasing number of protocols are being bridged into Matrix, so if you use something like IRC on Freenode you may well be indirectly benefiting from Matrix, as others may be connected into the IRC channel via Matrix.
+
+Конечно. Растущее количество протоколов объединяется «мостом» в Matrix, так что если вы используете что-нибудь типа IRC во Freenode, вы можете косвенно быть частью Matrix, так как другие клиенты могут подключиться к IRC-каналу с помощью Matrix.
+
+What is a home server?
+
+Что такое хоум-сервер?
+
+A user’s clients connect to a single homeserver, which stores the communication history and account information for that user, and shares data with the wider Matrix ecosystem by synchronising communication history with other homeservers.
+
+Клиент пользователя подключаются к одному серверу, который хранит историю сообщений и информацию об аккаунте и делится ею с другими серверами в экосистеме Matrix, синхронизируясь с ними.
+
+What is a MXID?
+
+Что такое MXID?
+
+Matrix user IDs (MXID) are unique user IDs. They are in the format @username:homeserver.tld (this format is used to avoid confusing them with email addresses). They are intended to be fairly hidden (although right now they are not) - instead you will find and identify other users via 3PIDs.
+
+Идентификатор пользователя Matrix (MXID) - это уникальный идентификатор. Они хранятся в формате @пользователь:сервер.tld (этот формат используется для того, чтобы не перепутать с адресами электронной почты). Они предназначены быть скрытыми (на данный момент это не так), вместо них предлагается использовать 3PID.
+
+What is a 3PID?
+
+Что такое 3PID?
+
+Third-party IDs (3PIDs) are IDs from other systems or contexts, such as email addresses, social network accounts and phone numbers.
+
+Сторонние идентификаторы (3PID) - это идентификаторы из других систем или контекстов (??? может быть платформ), таких как email, социальные сети или телефонный номер.
+
+What is an identity server?
+Что такое identity сервер?
+
+Users in Matrix are identified internally via their matrix user ID (MXID). However, existing 3rd party ID (3PID) namespaces such as email addresses or phone numbers should be used publically to identify Matrix users, at least for invitation purposes. A Matrix “Identity” describes both the user ID and any other existing IDs from third party namespaces linked to their account.
+
+Пользователи в Matrix идентифицируются с помощью уникального идентификатора Matrix (MXID). Однако, существующие сторонние идентификаторы (3PID), такие как email или телефонный номер, могут использоваться как для идентификации пользователей, так и для приглашения новых пользователей (инвайты). Аккаунт Matrix может определяться одновременно как и MXID, так и любым существующим идентификатором, привязанным к его аккаунту.
+
+Matrix users can link third-party IDs (3PIDs) to their user ID. Linking 3PIDs creates a mapping from a 3PID to a user ID. This mapping can then be used by Matrix users in order to discover the MXIDs of their contacts.
+
+Пользователи Matrix могут связать сторонний идентификатор с их MXID. Связывание создаёт отображение со стороннего идентификатора на MXID. Это отображение затем может использоваться Matrix для определения MXID по его контакту.
+
+In order to ensure that the mapping from 3PID to user ID is genuine, a globally federated cluster of trusted “Identity Servers” (IS) are used to verify the 3PID and persist and replicate the mappings. Usage of an IS is not required in order for a client application to be part of the Matrix ecosystem. However, without one clients will not be able to look up user IDs using 3PIDs.
+The precise architecture of identity servers is currently in flux and subject to change as we work to fully decentralise them.
+
+Для того, чтобы подтвердить подлинность отображения с 3PID на MXID используется глобальный федеративный кластер доверенных "Identity серверов" (IS) для проверки 3PID, сохранения и дублирования отображения 3PID на MXID. Использование IS не является обязательным условием клиентских приложений, чтобы быть частью экосистемы Matrix. Однако без этого клиенты не смогут определить идентификатор пользователя по его стороннему идентификатору.
+
+Where do my conversations get stored?
+Где хранятся мои беседы?
+
+Each homeserver stores the communication history and account information for all of its clients, and shares data with the wider Matrix ecosystem by synchronising communication history with other homeservers and their clients. Clients typically communicate with each other by emitting events in the context of a virtual room. Room data is replicated across all of the homeservers whose users are participating in a given room.
+
+Каждый сервер хранит историю и данные аккаунта всех его клиентов, а также обменивается данными со всей многочисленной Matrix экосистемой, синхронизируя историю бесед с другими серверами и их клиентами. Клиенты как правило общаются между собой обмениваясь событиями в контексте виртуальных комнат. Данные комнаты дублируются на все сервера, чьи клиенты принимают участие в данной комнате.
+
+What are redactions?
+Зачем нужно удаление?
+
+Since events are extensible it is possible for malicious users and/or servers to add keys that are, for example offensive or illegal. Since some events cannot be simply deleted (e.g. membership events) we instead ‘redact’ events, essentially stripping the event of all keys that are not required by the protocol. Redacting an event cannot be undone, allowing server owners to also delete the offending content from the databases.
+
+Поскольку события расширяемы, злоумышленники и/или сервера могут добавлять контент, которые являются, например, оскорбительным или незаконным. Так как некоторые события не могут быть удалены (например, события входа в комнату), мы вместо этого используем событие "удаления", отсекая весь контент, который не требуются протоколу. Удаление события нельзя откатить, позволяя владельцу сервера также удалять оскорбительный контект из базы данных.
+
+How do you do VoIP calls on Matrix?
+Как производятся VoIP вызовы в Matrix?
+
+Voice (and video) over Matrix uses the WebRTC 1.0 standard to transfer call media (i.e. the actual voice and video traffic). Matrix is used to signal the establishment and termination of the call by sending call events, like any other event.
+
+Голосовые (и видео) звонки в Matrix работают с использованием стандарта WebRTC 1.0 для передачи медиа данных (голос или видео). Для установления и завершения звонков Matrix использует события вызова наравне с другими событиями.
+
+Are VoIP calls encrypted?
+Зашифрованы ли VoIP звонки?
+
+WebRTC encrypts the media that’s being sent. The signalling events that set up (and end) the call are encrypted if the room they were sent in has enabled encryption.
+
+WebRTC шифрует все данные, которые пересылваются. События сигнализации, которые устанавливают (и завершают) вызовы будут зашифрованы только если они посылаются в зашифрованной комнате.
+
+Do I need a TURN server?
+Нужен ли мне TURN сервер?
+
+VoIP calls should work if both parties are on public networks. However, in practice one (or both) devices are often behind NAT, and so having a TURN server is important to help set up the call.
+See this guide for setting up a TURN server with Synapse.
+
+VoIP вызовы должны работать если оба участника находятся в публичных сетях. Однако, на практике одно (или оба) устройства часто расположены за службой трансляции адресов (NAT), в таком случае необходим TURN-сервер для установления вызова.
+Смотрите инструкцию для установки и настройки TURN-сервера для Synapse.
+
+Can I log into other homeservers with my username and password?
+Могу ли я заходить на другие хоум-серверы со своим юзернеймом и паролем?
+
+Currently, no. We are looking at options for decentralising or migrating user accounts between multiple servers, and might add this feature at a later stage.
+
+На текущий момент нет. Мы рассматриваем возможность децентрализации или миграции пользовательских аккаунтов между различными серверами, и возможно данная возможность появится на более поздних этапах.
+
+Why Apache Licence?
+Почему лицензия Apache?
+
+The Apache Licence is a permissive licence. We want the Matrix protocol itself to be free and open, but people are free to create both free and commercial apps and services that uses the protocol. In our opinion, any Matrix-service only enhances the Matrix ecosystem.
+
+Лицензия Apache является разрешающей. Мы хотим, чтобы протокол Matrix был бесплатным и открытым, чтобы люди свободно могли создавать как бесплатные, так и коммерческие приложения и сервисы, использующие протокол. По нашему мнению, Matrix-сервис только улучшит Matrix экосистему.
+
+Can I write a Matrix homeserver?
+Могу ли я написать Matrix хоум-сервер?
+
+Yes. Matrix is just a spec, so implementations of the spec are very welcome! It should be noted that as of October 2015, changes are still being made to the spec, so if you want to write a Matrix homeserver, it is strongly recommended that you chat to the Matrix.org devs in #matrix:matrix.org first! You can also read about the Federation API here.
+
+Да. Matrix это всего лишь спецификация, поэтому реализации только приветствуются! Следует отметить, что по состоянию на октябрь 2015 изменения всё ещё производятся в спецификации, поэтому, если вы хотите написать свой Matrix-сервер, настроятельно рекомендуем общаться с разработчиками Matrix.org в #matrix:matrix.org! Вы также можете почитать о API федерации здесь.
+
+How secure is this?
+Насколько это безопасно?
+
+Server-server traffic is mandatorily TLS from the outset. Server-client traffic mandates transport layer encryption other than for tinkering. Servers maintain a public/private key pair, and sign the integrity of all messages in the context of the historical conversation, preventing tampering. Server keys are distributed using a Perspectives-style system.
+
+Трафик сервер-сервер в обязательном порядке заворачивается в TLS. Трафик клиент-сервер шифруется на транспортном уровне. Сервера поддерживают пару открытый/закрытый ключей и поддерживают целостность всей истории переписки, подписываю сообщения, предотвращая подделку. Ключи серверов распределяются с использованием системы Перспектив.
+
+
+End-to-end encryption is now available in the various Riot.im builds! This allows you to encrypt both 1:1 and group chats to protect user data stored on servers, using the Olm cryptographic ratchet implementation. Read more on the blog post that announced the feature!
+Privacy of metadata is not currently protected from server administrators - a malicious homeserver administrator can see who is talking to who and when, but not what is being said (once E2E encryption is enabled). See this presentation from Jardin Entropique for a more comprehensive discussion of privacy in Matrix.
+
+Сквозное (оконечное) шифрование доступно в различных сборках Riot.im. Это позволяет вам шифровать личные и групповые чаты для защиты пользовательских данных, которые сохраняются на сервере, используя библиотеку Olm с реализацией ratchet. Узнайте больеш в блоге, в котором объявлена даннах функциональность.
+Конфиденциальность данных в настроящее время не защищена от администраторов сервером, администратор мошеннического сервера может видеть, кто с кем общается и когда, но не может прочесть саму переписку (если включено сквозное шифрование). Смотрите презентацию от Jardin Entropique для более плотного обсуждения вопросов конфиденциальности в Matrix.
+
+
+What is Perspectives?
+Что такое Перспективы?
+
+Rather than relying on Certificate Authorities (CAs) as in traditional SSL, a Perspectives-style system uses a more decentralized model for verifying keys. Perspectives uses notary servers to verify that the same key is seen across the network, making a man-in-the-middle attack much harder since an attacker must insert itself into multiple places. For federation in Matrix, each Home Server acts as a notary. When one Home Server connects to another Home Server that uses a key that it doesn’t recognize, it contacts other Home Servers to ensure that they all see the same key from that Home Server.
+
+Вместо того, чтобы полагаться на центры сертификации (CAs), как в традиционном SSL, Перспектив-система использует более децентрализованную модель проверки ключей. Эта модель использует нотариальные серверы для проверки того, что один и тот же ключ виден во всей сети, что делает атаку "человек посередине" (MITM) намного сложнее, потому что злоумышленник должен будет встроится в несколько мест. Для федерации в Matrix, каждый сервер выступает в качестве нотариуса. Когда один сервер подключается к другому серверу, который использует не распознаваемый ключ, происходит обращение к другим серверам, чтобы проверить, что все они видят один и тот же ключ с этого сервера.
+
+Why HTTP? Doesn’t HTTP suck? Why don’t you use websockets/CoAP/HTTP2/etc?
+
+Почему HTTP, он же лажовый? Почему вы не используете websockets/CoAP/HTTP2/итп?
+
+HTTP is indeed not the most efficient transport, but it is ubiquitous, very well understood and has numerous implementations on almost every platform and language. It also has a simple upgrade path to HTTP/2, which is relatively bandwidth and round-trip efficient.
+It has thus been chosen as the mandatory baseline of the exchange, but it is still entirely possible to use more fancy protocols for communication between clients and server (see for example this websocket transport draft), and it’s also possible in the future that negotiation of more efficient protocols will be added for the federation between servers, with HTTP+JSON remaining as the compability baseline.
+
+HTTP действительно не самый эффективный транспорт, но он очень распространён, понятен и поддерживается почти любой платформой и языком программирования. Также у него есть опция апгрейда до HTTP/2, который относительно эффективен в плане траффика.
+Поэтому он был выбран обязательным для базового минимума, но вполне возможно применение и более экзотических протоколов для коммуникации между клиентами и сервером (смотрите например этот проект websocket транспорта), и возможно в будущем для межсерверного обмена в федерации будут добавлены более эффективные протоколы, с сохранением HTTP+JSON для базовой совместимости.
+
+Servers
+Серверы
+
+What is Synapse?
+Что такое Synapse?
+
+Synapse is a reference “homeserver” implementation of Matrix from the core development team at matrix.org, written in Python 2/Twisted. It is intended to showcase the concept of Matrix and let folks see the spec in the context of a codebase and let you run your own homeserver and generally help bootstrap the ecosystem.
+Synapse - это эталонная реализация сервера Matrix, разрабатываемая командой matrix.org, написанная на Python 2/Twisted. Она предназначена для демонстрации концепта Matrix и показа работы спецификации в контексте кодовой базы, а также даёт вам возможность поднять свой собственный сервер и помочь в расширении экосистемы.
+
+How do I join the global Matrix federation?
+Как мне присоединиться к глобальной федерации Matrix?
+
+You can download and run one of the available Matrix servers - please see this guide for details!
+Вы можете скачать и запустить один из доступных серверов Matrix - подробности, пожалуйста, смотрите в соответствущих руководствах.
+
+What ports do I have to open up to join the global Matrix federation?
+Какие порты я должен открыть, чтобы присоединиться к федерации Matrix?
+
+We recommend servers use port 8448 for server<->server HTTPS traffic. Look at “Setting up Federation” in the Synapse readme file for details.
+Client<->Server traffic can talk directly to Synapse via port 8448, but as by default Synapse creates a self-signed TLS certificate this can cause problems for clients which can’t easily trust self-signed certificates (e.g. most web browsers). Instead, you can proxy access to Synapse’s HTTP listener on port 8008 via an existing HTTPS proxy with a valid certificate (e.g. an nginx listening on port 443), or you can point Synapse at a valid X.509 signed TLS certificate. In future, Synapse will probably use letsencrypt to autogenerate valid certificates rather than self-signed ones during installation, simplifying this process enormously.
+You can also put Synapse entirely behind an existing TLS load balancer and not expose port 8448 at all. In this situation, Synapse will need to be configured to share the same public TLS certificate as the load balancer (as Synapse uses the public certificate for identity in other areas too, and it has to match the certificate that other servers see when they connect).
+Мы рекомендуем использовать порт 8448 для сервер-серверного HTTPS трафика. Почитайте секцию «Setting up Federation» в файле readme Synapse.
+Клиент-серверный трафик может обращаться к Synapse через 8448 порт, но по умолчанию Synapse создаёт самоподписанный TLS-сертификат, который может вызывать проблемы у клиентов, которые не доверяют самоподписанным сертификатам (например, мобильные веб-браузеры). Вместо этого вы можете использовать прокси для доступа к прослушиваемому HTTP Synapse через порт 8008 с помощью существующего HTTPS прокси с действительным сертификатом (например, nginx, слушающего 443 порт) или непосредственно указать на файл действительного TLS-сертификата, подписанного X.509. В будущем Synapse будет использовать letsencrypt для автоматической генерации действительных сертификатов вместо самоподписанных при установке, чрезвычайно упрощая процесс.
+
+How do I run my own homeserver?
+
+Как установить свой личный сервер?
+
+Follow the instructions for the homeserver you want to run. If you want to run Synapse, the reference homeserver from Matrix.org, follow these instructions.
+Следуя инструкциям сервера, который вы хотите поднять. Если вы хотите использовать Synapse, сервер Matrix.org, следуйте этим инструкциям.
+
+Can I run my own identity server?
+
+Можно запустить свой сервер идентификации?
+
+Yes - the reference implementation is sydent and you can run your own ID server cluster that tracks 3rd party to Matrix ID mappings. This won’t be very useful right now, though, and we don’t recommend it.
+If you want your server to participate in the global replicated Matrix ID service then please get in touch with us. Meanwhile, we are looking at ways of decentralising the ‘official’ Matrix identity service so that identity servers are 100% decentralised and can openly federate with each other. N.B. that you can use Matrix without ever using the identity service - it exists only to map 3rd party IDs (e.g. email addresses) to matrix IDs to aid user discovery.
+Да, текущая реализация - это sydent, которая позволяет вам поднять собственный сервер ID, записывающий 3PID. Это не очень полезно на данный момент и мы не рекоммендуем его к использованию. Если вы хотите, чтобы ваш сервер учавствовал в распределённой сети MXID, дайте нам знать. Пока что мы ищем пути децентрализации «официального» MXID, чтобы сервера идентификации были на 100% децентрализованы и могли свободно общаться друг с другом посредством федерации. К вашему сведению, вы можете использовать Matrix без сервера идентификации - он нужен только для записи 3PID (например, адреса электронной почты), для поиска пользователей.
+
+What are Synapse’s platform requirements?
+
+Каковы системные требования для Synapse?
+
+Synapse will use as much RAM as you give it in order to cache conversations in RAM to avoid hitting the database. For small deployments (<50 active users) around 512MB of RAM is probably okay. You can configure the amount of RAM used by synapse with the event_cache_size config parameter - the more events in the cache, the more RAM required. Synapse itself requires relatively little diskspace other than for logging (which as of October 2015 is quite verbose for debugging purposes), but as it caches the content of all the file attachments (images, videos etc) viewed by its users, you may need to size storage appropriately. Synapse is currently effectively single threaded, and will never use more than 1 core.
+For better performance, one should back Synapse with a Postgres database rather than the default SQLite - see https://github.com/matrix-org/synapse/tree/master/README.rst#using-postgresql for details.
+Synapse будет потреблять столько памяти, сколько вы её выделите для кэширования сообщений в ней для сохранности от повреждений базы данных Для маленьких серверов (меньше, чем 50 пользователей) достаточно примерно 512 мегабайт памяти. Вы можете настроить количество потребляемой памяти с помощью параметра event_cache_size: чем больше событий, тем больше потребление памяти. Synapse сам по себе требует довольно мало пространства, в отличие от его логов (по состояние на 2015 год они довольно многословны для нужд откладки) и сохранённых вложений (изображения, видео и прочее) пользователей.
+
+Why is Synapse in Python/Twisted?
+
+Почему Synapse на Python/Twisted?
+
+This is because both provide a mature and well known event-driven async IO framework for writing serverside code. Whilst this has been okay for our initial experimentation and proof of concept, it’s likely that future homeserver work will be written in a more strongly typed language (e.g. Go).
+
+Это связано с тем, что они оба являются зрелой и хорошо известной технологией асинхронного ввода-вывода для написания серверного кода. Хотя это было хорошо для первоначального эксперимента и доказательства концепции, вполне вероятно, что сервер будет переписан на более строго типизированном языке (например, Go).
+
+Why aren’t you using an ORM layer like SqlAlchemy in Synapse?
+
+Почему вы не используете ORM слой, как SqlAlchemy в Synapse?
+
+Synapse is very database dependent (as of Oct 2015; this is improving in the near future however), and we like having the flexibility to sculpt our own queries.
+
+Synapse сильно зависит от базы данных (на октябрь 2015; однако, это улучшится в ближайшем будущем), и нам нравится иметь гибкость, чтобы лепить собственные запросы.
+
+Will Synapse share my chat data with other servers in the federation?
+
+Будет ли Synapse делиться информацией из моего чата с другими серверами в федерации?
+
+Data is only shared between servers of participating users of a room. If all users in a room are on your server, no data is shared with other servers.
+
+Данные распределяются только между серверами участников комнаты. Если все участники находятся на вашем сервере, то никакие данные не синхронизируются с другими серверами.
+
+Why can’t I rename my homeserver?
+
+Почему я не могу переименовать свой хоум-сервер?
+
+Currently, the homeserver name is assumed never to change. This means that if you rename your server, other servers will think it’s a different server.
+Perhaps in the future we will add an API for changing the homeserver name, but for now this is not supported.
+
+Сейчас предполагается, что имя сервера никогда не изменяется. Это означает, что если переименовать свой сервер, то другие сервера начнут думать, что это другой сервер. Возможно, в будущем будет добавлен API для изменения имени сервера, но это пока не поддерживается.
+
+Clients
+Клиенты
+
+Where can I find a mobile app?
+
+Где я могу найти мобильное приложение?
+
+Riot is available for Android and iOS.
+
+Riot доступен для Android и iOS.
+
+The iOS version can be downloaded from the Apple store.
+
+Версию для iOS можно скачать с Apple store.
+
+The Android version can be downloaded from the Google Play store or F-Droid. If you are not sure which one to choose, install Riot from the Google Play store.
+For the Android app, you can also install the latest development version built by Jenkins. Use it at your own risk and only if you know what you are doing.
+
+Версию для Android можно скачать с Google Play или F-Droid. Если не знаете, какую из версий выбрать, установите Riot из Google Play.
+Для Android также можно установить последнюю разрабатываемую версию, посторенную Jenkins. Используйте её на свой страх и риск и только в том случае, если знаете, что делаете.
+
+I installed Riot via F-Droid, why is it draining my battery?
+
+Я установил Riot из F-droid, почему он сажает мне батарею?
+
+The F-Droid release of Riot does not use Google Cloud Messaging. This allows users that do not have or want Google Services installed to use Riot.
+The drawback is that Riot has to pull for new messages, which can drain your battery. To counter this, you can change the delay between polls in the settings. Higher delay means better battery life (but may delay receiving messages). You can also disable the background sync entirely (which means that you won’t get any notifications at all).
+If you don’t mind using Google Services, you might be better off installing the Google Play store version.
+
+Версия F-Droid не использует Google Cloud Messaging. Это даёт пользователям возможность использовать Riot, если они не хотят или не могут установить Google Services. Недостаток заключается в том, что Riot вынужден регулярно запрашивать новые сообщения, что может разряжать батарею. Чтобы противостоять этому, вы можете изменить интервал запросов в настройках приложения. Более высокая задержка - способ продлить работу от батареи (но может вызвать задержку получения сообщений). Также вы можете полностью выключить фоновую синхронизацию (это значит, что вы вообще не будете получать уведомления). Если вы не против использования Google Services, то лучше установить версию для Google Play.
+
+Where can I find a web app?
+
+Где я могу найти веб клиент?
+
+You can use Riot.im - a glossy web client written on top of matrix-react-sdk.
+You can also run Vector, the code that Riot.im uses, on your own server. It’s a static web application, just download the last release and unpack it.
+
+Вы можете использовать Riot.im - современный веб-клиент, построенный на matrix-react-sdk.
+Вы также можете использовать Vector, код которого Riot.im использует, на вашем сервере. Это статическое веб-приложение, просто скачайте последний релиз и распакуйте его.
+
+Where can I find a desktop client?
+
+Где я могу найти десктопный клиент?
+
+You can use the desktop build of Riot.im.
+There are also other desktop clients - check the list of clients on matrix.org.
+
+Вы можете воспользоваться десктопной сборкой Riot.im.
+Есть также другие десктопные клиенты - посмотрите список на matrix.org.
+
+Why can’t end-to-end encryption be turned off?
+
+Почему E2E шифрование не может быть выключено?
+
+When encryption is enabled in a room, a flag is set in the room state, so that all clients know to encrypt any messages they send. The room state stores information about the room like the topic, the avatar, and the membership list.
+Imagine if encryption could be turned off the same way as it is turned on. Anyone with admin rights in the room could clear the flag and then messages would start being transmitted unencrypted. It would be very easy for a user to miss the change in configuration, and accidentally send a sensitive message without encryption.
+Worse yet, anyone with sysadmin access to a server could also clear the flag (remember that the main reason for using e2e encryption is that we don’t trust the sysadmins), and could then easily read any sensitive content which was sent.
+The solution we have taken for now is to make clients ignore any requests to disable encryption. We might experiment with ways to improve this in the future - for instance, by alerting the user next time they try to send a message in the room if encryption has been disabled.
+
+Когда шифрование включено, комната помечается соответствующим флагом, так что все клиенты знают, что сообщения перед отправкой нужно шифровать. Состояние комнаты хранит информацию о теме, аватаре и списке участников.
+Представьте, если бы шифрование можно было бы отключить так же, как и включить. Любой администратор может удалить флаг с комнаты и сообщения будут отправляться нешифрованными. Пользователь может легко не заметить изменения в настройках и отправить деликатное сообщение без шифрования.
+Ещё хуже, кто угодно с доступом к самому серверу так же может удалить флаг (напоминаем, что главная причина использования E2E-ширфования есть то, что мы не доверяем системным администраторам) и могут с лёгкостью прочитать всю вашу приватную переписку.
+Мы приняли решение сделать так, чтобы любой клиент игнорировал запросы об отключении шифрования. Мы экспериментируем над тем, чтобы улучшить эту функцию - например, уведомляя пользователя, пишущего в комнату, если шифрование отключено.
+
+
+Why isn’t end-to-end encryption enabled by default?
+
+Почему E2E шифрование не включено по умолчанию?
+
+We are deliberately keeping E2E opt-in during the beta as there is a small risk of undecryptable messages, and we don’t want to lull folks into a false sense of security. As soon as we are out of beta, we will turn E2E on for any room with private history by default. Another consideration is to give other clients a chance to catch up with E2E support before it’s used by default.
+
+Мы намеренно сохраняем E2E по умолчанию выключенным на стадии беты, т.к. есть небольшой риск нерасшифровки сообщений, и мы не хотим создавать у людей ложного чувства безопасности. По выходу из беты мы сделаем E2E включенным по умолчанию для комнат с приватной историей. Еще одна причина - дать другим клиентам время обзавестись поддержкой E2E прежде, чем оно станет использоваться по умолчанию.
+
+
+QUESTIONS TO BE ANSWERED!
+This FAQ is a constant work in progress - patches and pull requests are verywelcome to help us improve it. Some of the frequent questions where we need to write an answer include:
+How do I change the TLS key of my server?
+How do I maintain my synapse’s DB (e.g. prune old conversations)?
+How do I maintain my synapse’s content repository (e.g. prune old content)?
+Why is the spec so big, especially relative to the XMPP baseline spec?
+How do I contribute to the spec?
+What is the privacy policy on Matrix.org?
+How precisely does E2E work?
+How does Matrix actually work architecturally?
+What IOT use cases are there for Matrix?
+Why is are the Matrix reference implementations written in so many different languages?
+How does push work?
+What’s on the roadmap?
+How can I use Matrix to talk on Freenode or other IRC networks?
+Where can I learn more about Matrix? (link to PDFs of other presentations etc)
+Why is synapse so resource intensive immediately after federating for the first time?
+[your question goes here…]
+
+ВОПРОСЫ, НА КОТОРЫЕ НУЖНО ОТВЕТИТЬ!
+Это руководство находится в разработке, так что патчи и PR для его расширения очень приветствуются. Некоторые часто задаваемые вопросы, на которые нужно написать ответ:
+Как мне сменить TLS-ключ моего сервера?
+Как мне поддерживать базу данных synapse (например, удалять старую историю переписок)?
+Как мне поддерживать данные synapse (например, удалять старый контент)?
+Почему спецификация такая большая, особенно в сравнение с XMPP?
+Как я могу помочь в развитии спецификации?
+Какова политика конфиденциальности Matrix.org?
+Как именно работает E2E-шифрование?
+Как работает Matrix архитектурно?
+Как Matrix можно использовать в интернете вещей?
+Почему основные реализации Matrix написаны на стольких разных языках?
+Как работают push-уведомления?
+Какова ваша «дорожная карта»/Каковы ваши планы на будущее?
+Как я могу использовать Matrix для общения во Freenode или в других IRC-сетях?
+Где я могу больше узнать о Matrix? (ссылки на PDF и другие презентации, и так далее)
+Почему synapse жрёт столько памяти, блядь? потребляет столько ресурсов для постоения федерации в первый раз?
+
+Any other questions? Please contact us in #matrix:matrix.org.
+
+У вас остались вопросы? Свяжитесь с нами в #matrix:matrix.org.
+
