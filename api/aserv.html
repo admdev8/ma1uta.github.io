@@ -28,6 +28,35 @@ Application API
 
 
 
+    # Security Definitions
+
+
+### Authorization
+
+
+
+<table>
+    <tr>
+        <th>type</th>
+        <th colspan="2">apiKey</th>
+    </tr>
+    
+    
+    <tr>
+        <th>name</th>
+        <th colspan="2">Authorization</th>
+    </tr>
+    
+    
+    <tr>
+        <th>in</th>
+        <th colspan="2">HEADER</th>
+    </tr>
+    
+</table>
+
+
+
 
 
 
@@ -1308,21 +1337,6 @@ The homeserver will only query user IDs inside the application service&#x27;s us
             </td>
             <td>required</td>
             <td> A unique key which defines the overwriting semantics for this piece of room state. This value is often a zero-length string. The presence of this key makes this event a State Event. The key MUST NOT start with '_'.</td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td>invite_room_state</td>
-            <td>
-                
-                    
-                        array[<a href="#/definitions/StrippedState">StrippedState</a>]
-                    
-                    
-                
-            </td>
-            <td>optional</td>
-            <td>This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.</td>
             <td></td>
         </tr>
     
@@ -2980,6 +2994,21 @@ The homeserver will only query user IDs inside the application service&#x27;s us
             </td>
             <td>optional</td>
             <td>The previous content for this state. This will be present only for state events appearing in the timeline. If this is not a state event, or there is no previous content, this key will be missing.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>invite_room_state</td>
+            <td>
+                
+                    
+                        array[<a href="#/definitions/StrippedState">StrippedState</a>]
+                    
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.</td>
             <td></td>
         </tr>
     

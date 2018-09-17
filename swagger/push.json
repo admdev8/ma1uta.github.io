@@ -50,6 +50,13 @@
       }
     }
   },
+  "securityDefinitions" : {
+    "Authorization" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
   "definitions" : {
     "Answer" : {
       "type" : "object",

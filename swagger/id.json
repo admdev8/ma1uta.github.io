@@ -592,6 +592,13 @@
       }
     }
   },
+  "securityDefinitions" : {
+    "Authorization" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
   "definitions" : {
     "BulkLookupRequest" : {
       "type" : "object",
