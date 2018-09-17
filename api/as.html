@@ -1,0 +1,3122 @@
+<!DOCTYPE html>
+<html>
+<title>API Document</title>
+
+<xmp theme="cerulean" style="display:none;">
+#Application API
+
+
+## HTTPS://matrix.org:8448
+
+
+Application API
+
+
+[**Contact the developer**](mailto:sablintolya@gmail.com)
+
+
+**Version** r0.1.0-1-SNAPSHOT
+
+[**Terms of Service**](http://www.github.com/kongchen/swagger-maven-plugin)
+
+[**Apache 2.0**](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+
+
+
+
+
+
+
+
+
+
+# APIs
+
+
+## /_matrix/app/v1/thirdparty/location
+
+
+### GET
+
+<a id="location">Retrieve an array of third party network locations from a Matrix room alias.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>alias</th>
+        <td>query</td>
+        <td>yes</td>
+        <td>
+            The Matrix room alias to look up.
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | At least one portal room was found. | Array[<a href="#/definitions/ProtocolLocation">ProtocolLocation</a>]|
+| 404    | No portal rooms were found. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /_matrix/app/v1/thirdparty/location/{protocol}
+
+
+### GET
+
+<a id="locationProtocol">Retrieve a list of Matrix portal rooms that lead to the matched third party location.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>protocol</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            The protocol ID.
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | At least one portal room was found. | Array[<a href="#/definitions/ProtocolLocation">ProtocolLocation</a>]|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | No mappings were found with the given parameters. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /_matrix/app/v1/thirdparty/protocol/{protocol}
+
+
+### GET
+
+<a id="protocol">This API is called by the homeserver when it wants to present clients with specific information about the various third party networks that an application service supports.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>protocol</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            the name of the protocol
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The protocol was found and metadata returned. | <a href="#/definitions/Protocol">Protocol</a>|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | No protocol was found with the given path.The protocol is unknown. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /_matrix/app/v1/thirdparty/user
+
+
+### GET
+
+<a id="user">Retrieve an array of third party users from a Matrix User ID.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>userid</th>
+        <td>query</td>
+        <td>yes</td>
+        <td>
+            The Matrix User Id to look up
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | An array of third party users. | Array[<a href="#/definitions/ProtocolUser">ProtocolUser</a>]|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | No mappings were found with the given parameters. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /_matrix/app/v1/thirdparty/user/{protocol}
+
+
+### GET
+
+<a id="userProtocol">Retrieve a Matrix User ID linked to a user on the third party service, given a set of user parameters.</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>protocol</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            The name of the protocol
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The Matrix User IDs found with the given parameters. | Array[<a href="#/definitions/ProtocolUser">ProtocolUser</a>]|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | No users were found with the given parameters. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}
+
+
+
+
+### PUT
+
+<a id="updateVisibility">Updates the visibility of a given room on the application service&#x27;s room directory.</a>
+
+This API is similar to the room directory visibility API used by clients to update the homeserver&#x27;s more general room directory.
+This API requires the use of an application service access token (as_token) instead of a typical client&#x27;s access_token. This API cannot be invoked by users who are not identified as application services.
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>networkId</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+    <tr>
+        <th>roomId</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The room&#x27;s directory visibility has been updated. | <a href="#/definitions/EmptyResponse">EmptyResponse</a>|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/rooms/{roomAlias}
+
+
+### GET
+
+<a id="rooms">This endpoint is invoked by the homeserver on an application service to query the existence of a given room alias.</a>
+
+The homeserver will only query room aliases inside the application service&#x27;s aliases namespace. The homeserver will send this request when it receives a request to join a room alias within the application service&#x27;s namespace.
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>roomAlias</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            The room alias being queried.
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The application service indicates that this room alias exists. The application service MUST have created a room and associated it with the queried room alias using the client-server API. Additional information about the room such as its name and topic can be set before responding. | <a href="#/definitions/EmptyResponse">EmptyResponse</a>|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | The application service indicates that this room alias does not exist. Optional error information can be included in the body of this response. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/transactions/{txnId}
+
+
+
+
+### PUT
+
+<a id="transaction">This API is called by the homeserver when it wants to push an event (or batch of events) to the application service.</a>
+
+Note that the application service should distinguish state events from message events via the presence of a state_key, rather than via the event type.
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>txnId</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            The transaction ID for this set of events. Homeservers generate these IDs and they are used to ensure idempotency of requests.
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+    <tr>
+        <th>body</th>
+        <td>body</td>
+        <td>no</td>
+        <td>
+            JSON body request.
+            
+        </td>
+        <td> - </td>
+        
+            <td>
+                
+                <a href="#/definitions/TransactionRequest">TransactionRequest</a> 
+            </td>
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The transaction was processed successfully. | <a href="#/definitions/EmptyResponse">EmptyResponse</a>|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /v1/users/{userId}
+
+
+### GET
+
+<a id="users">This endpoint is invoked by the homeserver on an application service to query the existence of a given user ID.</a>
+
+The homeserver will only query user IDs inside the application service&#x27;s users namespace. The homeserver will send this request when it receives an event for an unknown user ID in the application service&#x27;s namespace.
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+    <tr>
+        <th>userId</th>
+        <td>path</td>
+        <td>yes</td>
+        <td>
+            The user ID being queried.
+            
+        </td>
+        <td> - </td>
+        
+            
+                <td>string </td>
+            
+        
+    </tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | The application service indicates that this user exists. The application service MUST create the user using the client-server API. | <a href="#/definitions/EmptyResponse">EmptyResponse</a>|
+| 401    | The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response. |  - |
+| 403    | The credentials supplied by the homeserver were rejected. |  - |
+| 404    | The application service indicates that this user does not exist. Optional error information can be included in the body of this response. |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Definitions
+
+## <a name="/definitions/Answer">Answer</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>type</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The type of session description. Must be 'answer'.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sdp</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The SDP text of the session description.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Audio">Audio</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/AudioInfo">AudioInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>duration</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The duration of the audio in milliseconds.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>mimetype</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The mimetype of the audio e.g. audio/aac.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>size</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The size of the audio clip in bytes.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/CallAnswer">CallAnswer</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/CallCandidates">CallCandidates</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/CallHangup">CallHangup</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/CallInvite">CallInvite</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Candidate">Candidate</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>sdpMid</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The SDP media type this candidate is intended for.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sdpMLineIndex</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>required</td>
+            <td>The index of the SDP 'm' line this candidate is intended for.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>candidate</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The SDP 'a' line of the candidate.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/CiphertextInfo">CiphertextInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>body</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The encrypted payload.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>type</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The Olm message type.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Direct">Direct</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Emote">Emote</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/EmptyResponse">EmptyResponse</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/EncryptedFile">EncryptedFile</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>the URL to the file.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>key</td>
+            <td>
+                
+                    <a href="#/definitions/JWK">JWK</a>
+                    
+                
+            </td>
+            <td>required</td>
+            <td>A JSON Web Key object.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>iv</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td> The Initialisation Vector used by AES-CTR, encoded as unpadded base64.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>hashes</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>optional</td>
+            <td>A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64. Clients should support the SHA-256 hash, which uses the key sha256.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>v</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Version of the encrypted attachments protocol. Must be v2.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Event">Event</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>content</td>
+            <td>
+                
+                    <a href="#/definitions/EventContent">EventContent</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>The fields in this object will vary depending on the type of event. When interacting with the REST API, this is the HTTP body.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>type</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The type of event. This SHOULD be namespaced similar to Java package naming conventions.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sender</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Contains the fully-qualified ID of the user who sent this event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>unsigned</td>
+            <td>
+                
+                    <a href="#/definitions/Unsigned">Unsigned</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Contains optional extra information about the event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>event_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The globally unique event identifier.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>room_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The ID of the room associated with this event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>origin_server_ts</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>required</td>
+            <td>Timestamp in milliseconds on originating homeserver when this event was sent.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>prev_content</td>
+            <td>
+                
+                    <a href="#/definitions/EventContent">EventContent</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>The previous content for this event. If there is no previous content, this key will be missing.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>state_key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td> A unique key which defines the overwriting semantics for this piece of room state. This value is often a zero-length string. The presence of this key makes this event a State Event. The key MUST NOT start with '_'.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>invite_room_state</td>
+            <td>
+                
+                    
+                        array[<a href="#/definitions/StrippedState">StrippedState</a>]
+                    
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/EventContent">EventContent</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/FieldMetadata">FieldMetadata</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>regexp</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>A regular expression for validation of a field's value.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>placeholder</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>An placeholder serving as a valid example of the field value.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/File">File</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/FileInfo">FileInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>mimetype</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The mimetype of the image, e.g. image/jpeg.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>size</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Size of the image in bytes.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The URL to a thumbnail of the image.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_file</td>
+            <td>
+                
+                    <a href="#/definitions/EncryptedFile">EncryptedFile</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_info</td>
+            <td>
+                
+                    <a href="#/definitions/ThumbnailInfo">ThumbnailInfo</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Metadata about the image referred to in thumbnail_url.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/ForwardedRoomKey">ForwardedRoomKey</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/FullyRead">FullyRead</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/IgnoredUserList">IgnoredUserList</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Image">Image</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/ImageInfo">ImageInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>mimetype</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The mimetype of the image, e.g. image/jpeg.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>size</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Size of the image in bytes.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The URL to a thumbnail of the image.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_file</td>
+            <td>
+                
+                    <a href="#/definitions/EncryptedFile">EncryptedFile</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_info</td>
+            <td>
+                
+                    <a href="#/definitions/ThumbnailInfo">ThumbnailInfo</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Metadata about the image referred to in thumbnail_url.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>h</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>w</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Instance">Instance</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>desc</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Description.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>icon</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>An optional content URI representing the protocol. Overrides the one provided at the higher level Protocol object.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>fields</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>required</td>
+            <td>Preset values for fields the client may use to search by.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>network_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>A unique identifier across all instances.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Invite">Invite</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>signed</td>
+            <td>
+                
+                    <a href="#/definitions/Signed">Signed</a>
+                    
+                
+            </td>
+            <td>required</td>
+            <td>A block of content which has been signed, which servers can use to verify the event. Clients should ignore this.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>display_name</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>A name which can be displayed to represent the user instead of their third party identifier.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/JWK">JWK</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Key type. Must be oct.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>alg</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Algorithm, Must be A256CTR.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>ext</td>
+            <td>
+                
+                    
+                    boolean
+                
+            </td>
+            <td>required</td>
+            <td>Extractable. Must be true. This is a W3C extension.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>key_opts</td>
+            <td>
+                
+                    
+                    array[string]
+                
+            </td>
+            <td>required</td>
+            <td>Key operations, Must at least contain encrypt and decrypt.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>k</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The key, encoded as urlsafe unpadded base64.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Location">Location</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/LocationInfo">LocationInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>thumbnailFile</td>
+            <td>
+                
+                    <a href="#/definitions/EncryptedFile">EncryptedFile</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Information on the encrypted thumbnail file, as specified in End-to-end encryption. Only present if the thumbnail is encrypted.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The URL to a thumbnail of the location being represented.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_info</td>
+            <td>
+                
+                    <a href="#/definitions/ThumbnailInfo">ThumbnailInfo</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Metadata about the image referred to in thumbnail_url.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/MegolmEncrypted">MegolmEncrypted</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Notice">Notice</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/NotificationPowerLevel">NotificationPowerLevel</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>room</td>
+            <td>
+                
+                    
+                    string (byte)
+                
+            </td>
+            <td>optional</td>
+            <td>The level required to trigger an @room notification. Defaults to 50 if unspecified.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Offer">Offer</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>type</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The type of session description. Must be 'offer'.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sdp</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The SDP text of the session description.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/OlmEncrypted">OlmEncrypted</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Presence">Presence</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Protocol">Protocol</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>icon</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>An icon representing the third party protocol.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>instances</td>
+            <td>
+                
+                    
+                        array[<a href="#/definitions/Instance">Instance</a>]
+                    
+                    
+                
+            </td>
+            <td>required</td>
+            <td>A list of objects representing independent instances of configuration. For instance multiple networkson IRC if multiple are bridged by the same bridge.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>user_fields</td>
+            <td>
+                
+                    
+                    array[string]
+                
+            </td>
+            <td>required</td>
+            <td>Fields used to identify a third party user.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>location_fields</td>
+            <td>
+                
+                    
+                    array[string]
+                
+            </td>
+            <td>required</td>
+            <td>Fields used to identify a third party location.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>field_types</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>required</td>
+            <td>All location or user fields should have an entry here.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/ProtocolLocation">ProtocolLocation</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>alias</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>An alias for a matrix room.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>protocol</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The protocol ID that the third party location is a part of.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>fields</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>required</td>
+            <td>Information used to identify this third party location.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/ProtocolUser">ProtocolUser</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>userid</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>A Matrix User ID represting a third party user.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>protocol</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The protocol ID that the third party location is a part of.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>fields</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>required</td>
+            <td>Information used to identify this third party location.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/PublicKeys">PublicKeys</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>publicKey</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>A base-64 encoded ed25519 key with which token may be signed.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>key_validity_url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>An optional URL which can be fetched, with querystring public_key=public_key, to validate whether the key has been revoked. The URL must return a JSON object containing a boolean property named 'valid'. If this URL is absent, the key must be considered valid indefinitely.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Receipt">Receipt</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Relates">Relates</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>m.in_reply_to</td>
+            <td>
+                
+                    <a href="#/definitions/Reply">Reply</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Reply.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Reply">Reply</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>event_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The origin event id.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/RequestedKeyInfo">RequestedKeyInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>algorithm</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>Required. The encryption algorithm the requested key in this event is to be used with.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>room_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The room where the key is used.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sender_key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The Curve25519 key of the device which initiated the session originally.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>session_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The ID of the session that the key is for.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/RoomAliases">RoomAliases</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomAvatar">RoomAvatar</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomCanonicalAlias">RoomCanonicalAlias</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomCreate">RoomCreate</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomEncrypted">RoomEncrypted</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomEncryption">RoomEncryption</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomGuestAccess">RoomGuestAccess</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomHistoryVisibility">RoomHistoryVisibility</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomJoinRules">RoomJoinRules</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomKey">RoomKey</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomKeyRequest">RoomKeyRequest</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomMember">RoomMember</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomMemberUnsigned">RoomMemberUnsigned</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>events</td>
+            <td>
+                
+                    
+                        array[<a href="#/definitions/StrippedState">StrippedState</a>]
+                    
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>A subset of the state of the room at the time of the invite, if membership is invite. Note that this state is informational, and SHOULD NOT be trusted; once the client has joined the room, it SHOULD fetch the live state from the server and discard the invite_room_state. Also, clients must not rely on any particular state being present here; they SHOULD behave properly (with possibly a degraded but not a broken experience) in the absence of any particular events here. If they are set on the room, at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules, and m.room.name SHOULD be included.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/RoomMessage">RoomMessage</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomName">RoomName</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomPinned">RoomPinned</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomPowerLevels">RoomPowerLevels</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomRedaction">RoomRedaction</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomServerAcl">RoomServerAcl</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomThirdPartyInvite">RoomThirdPartyInvite</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/RoomTopic">RoomTopic</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Signed">Signed</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>mxid</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The invited matrix user ID. Must be equal to the user_id property of the event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>token</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The token property of the containing third_party_invite object.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>signatures</td>
+            <td>
+                
+                    
+                    object
+                
+            </td>
+            <td>required</td>
+            <td>A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Sticker">Sticker</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/StrippedState">StrippedState</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>content</td>
+            <td>
+                
+                    <a href="#/definitions/EventContent">EventContent</a>
+                    
+                
+            </td>
+            <td>required</td>
+            <td>The content for the event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>type</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The type for the event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>sender</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The sender for the event.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>state_key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>required</td>
+            <td>The state_key for the event.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Tag">Tag</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/TagInfo">TagInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>order</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>A number in a range [0,1] describing a relative position of the room under the given tag.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Text">Text</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/ThumbnailInfo">ThumbnailInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>mimetype</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The mimetype of the image, e.g. image/jpeg.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>size</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Size of the image in bytes.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>h</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>w</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/TransactionRequest">TransactionRequest</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>events</td>
+            <td>
+                
+                    
+                        array[<a href="#/definitions/Event">Event</a>]
+                    
+                    
+                
+            </td>
+            <td>required</td>
+            <td>A list of events, formatted as per the Client-Server API.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Typing">Typing</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/Unsigned">Unsigned</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>age</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The time in milliseconds that has elapsed since the event was sent. This field is generated by the local homeserver, and may be incorrect if the local time on at least one of the two servers is out of sync, which can cause the age to either be negative or greater than it actually is.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>redacted_because</td>
+            <td>
+                
+                    <a href="#/definitions/Event">Event</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>The event that redacted this event, if any.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>transaction_id</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The client-supplied transaction ID, if the client being given the event is the same one which sent it.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>prev_content</td>
+            <td>
+                
+                    <a href="#/definitions/EventContent">EventContent</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>The previous content for this state. This will be present only for state events appearing in the timeline. If this is not a state event, or there is no previous content, this key will be missing.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Video">Video</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+</table>
+
+## <a name="/definitions/VideoInfo">VideoInfo</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>mimetype</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The mimetype of the image, e.g. image/jpeg.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>size</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Size of the image in bytes.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>duration</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The duration of the video in milliseconds.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_url</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>The URL to a thumbnail of the image.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_file</td>
+            <td>
+                
+                    <a href="#/definitions/EncryptedFile">EncryptedFile</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>thumbnail_info</td>
+            <td>
+                
+                    <a href="#/definitions/ThumbnailInfo">ThumbnailInfo</a>
+                    
+                
+            </td>
+            <td>optional</td>
+            <td>Metadata about the image referred to in thumbnail_url.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>h</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>w</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+
+</xmp>
+
+<script src="https://ma1uta.github.io/v/0.2/strapdown.js"></script>
+</html>
