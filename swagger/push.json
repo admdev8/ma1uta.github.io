@@ -2,7 +2,7 @@
   "swagger" : "2.0",
   "info" : {
     "description" : "Push API",
-    "version" : "r0.1.0-1-SNAPSHOT",
+    "version" : "r0.1.0-1",
     "title" : "Push API",
     "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
     "contact" : {

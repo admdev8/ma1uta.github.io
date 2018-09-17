@@ -15,7 +15,7 @@ Client-Server API
 [**Contact the developer**](mailto:sablintolya@gmail.com)
 
 
-**Version** r0.4.0-1-SNAPSHOT
+**Version** r0.4.0-1
 
 [**Terms of Service**](http://www.github.com/kongchen/swagger-maven-plugin)
 
@@ -18413,15 +18413,28 @@ Clients SHOULD use this as a guide when using content repository endpoints. All 
     </tr>
     
         <tr>
-            <td>search_categories</td>
+            <td>limit</td>
             <td>
                 
-                    <a href="#/definitions/RequestCategories">RequestCategories</a>
                     
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>The maximum number of results to return (Defaults to 10).</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>search_term</td>
+            <td>
+                
+                    
+                    string
                 
             </td>
             <td>required</td>
-            <td>Describes which categories to search in and their criteria.</td>
+            <td>The term to search for.</td>
             <td></td>
         </tr>
     
@@ -18439,15 +18452,30 @@ Clients SHOULD use this as a guide when using content repository endpoints. All 
     </tr>
     
         <tr>
-            <td>search_categories</td>
+            <td>results</td>
             <td>
                 
-                    <a href="#/definitions/ResponseCategories">ResponseCategories</a>
+                    
+                        array[<a href="#/definitions/User">User</a>]
+                    
                     
                 
             </td>
             <td>required</td>
-            <td>Describes which categories to search in and their criteria.</td>
+            <td>Ordered by rank and then whether or not profile info is available.</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>limit</td>
+            <td>
+                
+                    
+                    boolean
+                
+            </td>
+            <td>required</td>
+            <td>Indicates if the result list has been truncated by the limit.</td>
             <td></td>
         </tr>
     

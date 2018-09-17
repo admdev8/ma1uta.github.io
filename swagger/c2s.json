@@ -2,7 +2,7 @@
   "swagger" : "2.0",
   "info" : {
     "description" : "Client-Server API",
-    "version" : "r0.4.0-1-SNAPSHOT",
+    "version" : "r0.4.0-1",
     "title" : "Client-Server API",
     "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
     "contact" : {
@@ -7755,25 +7755,37 @@
     },
     "SearchRequest" : {
       "type" : "object",
-      "required" : [ "search_categories" ],
+      "required" : [ "search_term" ],
       "properties" : {
-        "search_categories" : {
-          "description" : "Describes which categories to search in and their criteria.",
-          "$ref" : "#/definitions/RequestCategories"
+        "limit" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "The maximum number of results to return (Defaults to 10)."
+        },
+        "search_term" : {
+          "type" : "string",
+          "description" : "The term to search for."
         }
       },
-      "description" : "JSON body request for search api."
+      "description" : "JSON body request for user directory api (search)."
     },
     "SearchResponse" : {
       "type" : "object",
-      "required" : [ "search_categories" ],
+      "required" : [ "limit", "results" ],
       "properties" : {
-        "search_categories" : {
-          "description" : "Describes which categories to search in and their criteria.",
-          "$ref" : "#/definitions/ResponseCategories"
+        "results" : {
+          "type" : "array",
+          "description" : "Ordered by rank and then whether or not profile info is available.",
+          "items" : {
+            "$ref" : "#/definitions/User"
+          }
+        },
+        "limit" : {
+          "type" : "boolean",
+          "description" : "Indicates if the result list has been truncated by the limit."
         }
       },
-      "description" : "JSON body response for search api."
+      "description" : "JSON body response for user directory api (search result)."
     },
     "SendEventResponse" : {
       "type" : "object",
