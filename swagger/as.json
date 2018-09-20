@@ -2,7 +2,7 @@
   "swagger" : "2.0",
   "info" : {
     "description" : "Application API",
-    "version" : "r0.1.0-1",
+    "version" : "r0.1.0-2",
     "title" : "Application API",
     "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
     "contact" : {
@@ -28,6 +28,40 @@
   } ],
   "schemes" : [ "https" ],
   "paths" : {
+    "/_matrix/app/v1/rooms/{roomAlias}" : {
+      "get" : {
+        "tags" : [ "ApplicationService" ],
+        "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given room alias.",
+        "description" : "The homeserver will only query room aliases inside the application service's aliases namespace. The homeserver will send this request when it receives a request to join a room alias within the application service's namespace.",
+        "operationId" : "rooms",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "roomAlias",
+          "in" : "path",
+          "description" : "The room alias being queried.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The application service indicates that this room alias exists. The application service MUST have created a room and associated it with the queried room alias using the client-server API. Additional information about the room such as its name and topic can be set before responding.",
+            "schema" : {
+              "$ref" : "#/definitions/EmptyResponse"
+            }
+          },
+          "401" : {
+            "description" : "The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response."
+          },
+          "403" : {
+            "description" : "The credentials supplied by the homeserver were rejected."
+          },
+          "404" : {
+            "description" : "The application service indicates that this room alias does not exist. Optional error information can be included in the body of this response."
+          }
+        }
+      }
+    },
     "/_matrix/app/v1/thirdparty/location" : {
       "get" : {
         "tags" : [ "ThirdPartyProtocol" ],
@@ -204,70 +238,7 @@
         }
       }
     },
-    "/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}" : {
-      "put" : {
-        "tags" : [ "RoomService" ],
-        "summary" : "Updates the visibility of a given room on the application service's room directory.",
-        "description" : "This API is similar to the room directory visibility API used by clients to update the homeserver's more general room directory.\nThis API requires the use of an application service access token (as_token) instead of a typical client's access_token. This API cannot be invoked by users who are not identified as application services.",
-        "operationId" : "updateVisibility",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "networkId",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "roomId",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The room's directory visibility has been updated.",
-            "schema" : {
-              "$ref" : "#/definitions/EmptyResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v1/rooms/{roomAlias}" : {
-      "get" : {
-        "tags" : [ "ApplicationService" ],
-        "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given room alias.",
-        "description" : "The homeserver will only query room aliases inside the application service's aliases namespace. The homeserver will send this request when it receives a request to join a room alias within the application service's namespace.",
-        "operationId" : "rooms",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roomAlias",
-          "in" : "path",
-          "description" : "The room alias being queried.",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The application service indicates that this room alias exists. The application service MUST have created a room and associated it with the queried room alias using the client-server API. Additional information about the room such as its name and topic can be set before responding.",
-            "schema" : {
-              "$ref" : "#/definitions/EmptyResponse"
-            }
-          },
-          "401" : {
-            "description" : "The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response."
-          },
-          "403" : {
-            "description" : "The credentials supplied by the homeserver were rejected."
-          },
-          "404" : {
-            "description" : "The application service indicates that this room alias does not exist. Optional error information can be included in the body of this response."
-          }
-        }
-      }
-    },
-    "/v1/transactions/{txnId}" : {
+    "/_matrix/app/v1/transactions/{txnId}" : {
       "put" : {
         "tags" : [ "ApplicationService" ],
         "summary" : "This API is called by the homeserver when it wants to push an event (or batch of events) to the application service.",
@@ -300,7 +271,7 @@
         }
       }
     },
-    "/v1/users/{userId}" : {
+    "/_matrix/app/v1/users/{userId}" : {
       "get" : {
         "tags" : [ "ApplicationService" ],
         "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given user ID.",
@@ -330,6 +301,35 @@
           },
           "404" : {
             "description" : "The application service indicates that this user does not exist. Optional error information can be included in the body of this response."
+          }
+        }
+      }
+    },
+    "/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}" : {
+      "put" : {
+        "tags" : [ "RoomService" ],
+        "summary" : "Updates the visibility of a given room on the application service's room directory.",
+        "description" : "This API is similar to the room directory visibility API used by clients to update the homeserver's more general room directory.\nThis API requires the use of an application service access token (as_token) instead of a typical client's access_token. This API cannot be invoked by users who are not identified as application services.",
+        "operationId" : "updateVisibility",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "networkId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "roomId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The room's directory visibility has been updated.",
+            "schema" : {
+              "$ref" : "#/definitions/EmptyResponse"
+            }
           }
         }
       }
