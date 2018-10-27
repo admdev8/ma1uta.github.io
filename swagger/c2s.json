@@ -11,7 +11,7 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "r0.4.0-2-SNAPSHOT"
+    "version" : "r0.4.0-2"
   },
   "security" : [ {
     "accessToken" : [ ]
@@ -69,104 +69,6 @@
         }, {
           "accessToken" : [ ]
         } ]
-      }
-    },
-    "/_matrix/client/r0/register/email/requestToken" : {
-      "post" : {
-        "summary" : "Request email token.",
-        "description" : "Proxies the identity server API validate/email/emailRequestToken, but first checks that the given email address is not already associated with an account on this Home Server. Note that, for consistency, this API takes JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters. See the Identity Server API for further information.",
-        "operationId" : "emailRequestToken",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/EmailRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "An email has been sent to the specified address.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Part of the request was invalid.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The homeserver does not permit the address to be bound.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/client/r0/register/msisdn/requestToken" : {
-      "post" : {
-        "summary" : "Request msisdn token.",
-        "description" : "Proxies the Identity Service API validate/msisdn/requestToken, but first checks that the given phone number is not already associated with an account on this homeserver. See the Identity Service API for further information.",
-        "operationId" : "msisdnRequestToken",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/MsisdnRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "An SMS message has been sent to the specified phone number.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Part of the request was invalid.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The homeserver does not permit the address to be bound.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/_matrix/client/r0/account/password/email/requestToken" : {
@@ -511,6 +413,104 @@
         "security" : [ {
           "accessToken" : [ ]
         } ]
+      }
+    },
+    "/_matrix/client/r0/register/email/requestToken" : {
+      "post" : {
+        "summary" : "Request email token.",
+        "description" : "Proxies the identity server API validate/email/emailRequestToken, but first checks that the given email address is not already associated with an account on this Home Server. Note that, for consistency, this API takes JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters. See the Identity Server API for further information.",
+        "operationId" : "emailRequestToken",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EmailRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An email has been sent to the specified address.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Part of the request was invalid.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The homeserver does not permit the address to be bound.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/client/r0/register/msisdn/requestToken" : {
+      "post" : {
+        "summary" : "Request msisdn token.",
+        "description" : "Proxies the Identity Service API validate/msisdn/requestToken, but first checks that the given phone number is not already associated with an account on this homeserver. See the Identity Service API for further information.",
+        "operationId" : "msisdnRequestToken",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MsisdnRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An SMS message has been sent to the specified phone number.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Part of the request was invalid.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The homeserver does not permit the address to be bound.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/_matrix/client/r0/account/3pid/msisdn/requestToken" : {
@@ -3674,6 +3674,47 @@
         } ]
       }
     },
+    "/_matrix/client/r0/rooms/{roomId}/leave" : {
+      "post" : {
+        "summary" : "This API stops a user participating in a particular room.",
+        "description" : "If the user was already in the room, they will no longer be able to see new events in the room. If the room requires an invite to join, they will need to be re-invited before they can re-join. If the user was invited to the room, but had not joined, this call serves to reject the invite.The user will still be allowed to retrieve history from the room which they were previously allowed to see.",
+        "operationId" : "leave",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room identifier to leave.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The room has been left.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "This request was rate-limited.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RateLimitedErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
     "/_matrix/client/r0/directory/list/room/{roomId}" : {
       "get" : {
         "summary" : "Gets the visibility of a given room on the server's public room directory.",
@@ -3749,47 +3790,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
-    "/_matrix/client/r0/rooms/{roomId}/leave" : {
-      "post" : {
-        "summary" : "This API stops a user participating in a particular room.",
-        "description" : "If the user was already in the room, they will no longer be able to see new events in the room. If the room requires an invite to join, they will need to be re-invited before they can re-join. If the user was invited to the room, but had not joined, this call serves to reject the invite.The user will still be allowed to retrieve history from the room which they were previously allowed to see.",
-        "operationId" : "leave",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room identifier to leave.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The room has been left.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "This request was rate-limited.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RateLimitedErrorResponse"
                 }
               }
             }
