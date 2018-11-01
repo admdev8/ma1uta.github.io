@@ -1061,6 +1061,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      deprecated: true
       security:
       - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/initialSync:
@@ -1093,6 +1094,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      deprecated: true
       security:
       - accessToken: []
   /_matrix/client/r0/initialSync:
@@ -1129,21 +1131,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/devices:
-    get:
-      tags:
-      - Device management
-      summary: Gets information about all devices for the current user.
-      operationId: devices
-      responses:
-        200:
-          description: A list of all registered devices for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DevicesResponse'
+      deprecated: true
       security:
       - accessToken: []
   /_matrix/client/r0/devices/{deviceId}:
@@ -1242,6 +1230,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/devices:
+    get:
+      tags:
+      - Device management
+      summary: Gets information about all devices for the current user.
+      operationId: devices
+      responses:
+        200:
+          description: A list of all registered devices for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DevicesResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/delete_devices:
@@ -1472,144 +1475,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/event/{eventId}:
-    get:
-      tags:
-      - Room participation
-      summary: Get a single event based on roomId/eventId. You must have permission
-        to retrieve this event e.g. by being a member in the room for this event.
-      operationId: roomEvent
-      parameters:
-      - name: roomId
-        in: path
-        description: The ID of the room the event is in.
-        required: true
-        schema:
-          type: string
-      - name: eventId
-        in: path
-        description: The event ID to get.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The full event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-        404:
-          description: The event was not found or you do not have permission to read
-            this event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/state/{eventType}/{stateKey}:
-    get:
-      tags:
-      - Room participation
-      summary: Looks up the contents of a state event in a room. If the user is joined
-        to the room then the state is taken from the current state of the room. If
-        the user has left the room then the state is taken from the state of the room
-        when they left.
-      operationId: roomEventWithTypeAndState
-      parameters:
-      - name: roomId
-        in: path
-        description: The room to look up the state in.
-        required: true
-        schema:
-          type: string
-      - name: eventType
-        in: path
-        description: The type of state to look up.
-        required: true
-        schema:
-          type: string
-      - name: stateKey
-        in: path
-        description: The key of the state to look up.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The content of the state event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventContent'
-        403:
-          description: You aren't a member of the room and weren't previously a member
-            of the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: The room has no state with the given type or key.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-    put:
-      tags:
-      - Room participation
-      summary: State events can be sent using this endpoint.
-      description: These events will be overwritten if (room id), (event type) and
-        (state key) all match. Requests to this endpoint cannot use transaction IDs
-        like other PUT paths because they cannot be differentiated from the state_key.
-        Furthermore, POST is unsupported on state paths. The body of the request should
-        be the content object of the event; the fields in this object will vary depending
-        on the type of event.See Room Events for the m.event specification.
-      operationId: sendEventWithTypeAndState
-      parameters:
-      - name: roomId
-        in: path
-        description: The room to set the state in.
-        required: true
-        schema:
-          type: string
-      - name: eventType
-        in: path
-        description: The type of event to send.
-        required: true
-        schema:
-          type: string
-      - name: stateKey
-        in: path
-        description: The state_key for the state to send. Defaults to the empty string.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: event
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EventContent'
-      responses:
-        200:
-          description: An ID for the sent event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SendEventResponse'
-        403:
-          description: The sender doesn't have permission to send the event into the
-            room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/state/{eventType}:
     get:
       tags:
@@ -1767,6 +1632,108 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/state/{eventType}/{stateKey}:
+    get:
+      tags:
+      - Room participation
+      summary: Looks up the contents of a state event in a room. If the user is joined
+        to the room then the state is taken from the current state of the room. If
+        the user has left the room then the state is taken from the state of the room
+        when they left.
+      operationId: roomEventWithTypeAndState
+      parameters:
+      - name: roomId
+        in: path
+        description: The room to look up the state in.
+        required: true
+        schema:
+          type: string
+      - name: eventType
+        in: path
+        description: The type of state to look up.
+        required: true
+        schema:
+          type: string
+      - name: stateKey
+        in: path
+        description: The key of the state to look up.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The content of the state event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventContent'
+        403:
+          description: You aren't a member of the room and weren't previously a member
+            of the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: The room has no state with the given type or key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+    put:
+      tags:
+      - Room participation
+      summary: State events can be sent using this endpoint.
+      description: These events will be overwritten if (room id), (event type) and
+        (state key) all match. Requests to this endpoint cannot use transaction IDs
+        like other PUT paths because they cannot be differentiated from the state_key.
+        Furthermore, POST is unsupported on state paths. The body of the request should
+        be the content object of the event; the fields in this object will vary depending
+        on the type of event.See Room Events for the m.event specification.
+      operationId: sendEventWithTypeAndState
+      parameters:
+      - name: roomId
+        in: path
+        description: The room to set the state in.
+        required: true
+        schema:
+          type: string
+      - name: eventType
+        in: path
+        description: The type of event to send.
+        required: true
+        schema:
+          type: string
+      - name: stateKey
+        in: path
+        description: The state_key for the state to send. Defaults to the empty string.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventContent'
+      responses:
+        200:
+          description: An ID for the sent event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEventResponse'
+        403:
+          description: The sender doesn't have permission to send the event into the
+            room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/send/{eventType}/{txnId}:
     put:
       tags:
@@ -1856,6 +1823,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendEventResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/event/{eventId}:
+    get:
+      tags:
+      - Room participation
+      summary: Get a single event based on roomId/eventId. You must have permission
+        to retrieve this event e.g. by being a member in the room for this event.
+      operationId: roomEvent
+      parameters:
+      - name: roomId
+        in: path
+        description: The ID of the room the event is in.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The full event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        404:
+          description: The event was not found or you do not have permission to read
+            this event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/context/{eventId}:
@@ -2187,69 +2190,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/client/r0/profile/{userId}/avatar_url:
-    get:
-      tags:
-      - User data
-      summary: Get the user's avatar URL. This API may be used to fetch the user's
-        own avatar URL or to query the URL of other users;  either locally or on remote
-        homeservers.
-      operationId: showAvatarUrl
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose avatar URL to get.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The avatar URL for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AvatarUrl'
-        404:
-          description: There is no avatar URL for this user or this user does not
-            exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      tags:
-      - User data
-      summary: This API sets the given user's avatar URL. You must have permission
-        to set this user's avatar URL, e.g. you need to have their access_token.
-      operationId: setAvatarUrl
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose avatar URL to set.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AvatarUrl'
-      responses:
-        200:
-          description: The avatar URL was set.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/profile/{userId}/displayname:
     get:
       tags:
@@ -2301,6 +2241,69 @@ paths:
       responses:
         200:
           description: The display name was set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/profile/{userId}/avatar_url:
+    get:
+      tags:
+      - User data
+      summary: Get the user's avatar URL. This API may be used to fetch the user's
+        own avatar URL or to query the URL of other users;  either locally or on remote
+        homeservers.
+      operationId: showAvatarUrl
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose avatar URL to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The avatar URL for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvatarUrl'
+        404:
+          description: There is no avatar URL for this user or this user does not
+            exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - User data
+      summary: This API sets the given user's avatar URL. You must have permission
+        to set this user's avatar URL, e.g. you need to have their access_token.
+      operationId: setAvatarUrl
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose avatar URL to set.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvatarUrl'
+      responses:
+        200:
+          description: The avatar URL was set.
           content:
             application/json:
               schema:
@@ -3732,7 +3735,7 @@ paths:
   /_matrix/client/r0/thirdparty/location:
     get:
       tags:
-      - Third party protocol
+      - Third party protocols
       summary: Retrieve an array of third party network locations from a Matrix room
         alias.
       operationId: location
@@ -3792,7 +3795,7 @@ paths:
   /_matrix/client/r0/thirdparty/user:
     get:
       tags:
-      - Third party protocol
+      - Third party protocols
       summary: Retrieve an array of third party users from a Matrix User ID.
       operationId: user
       parameters:
@@ -3839,7 +3842,7 @@ paths:
   /_matrix/client/r0/thirdparty/location/{protocol}:
     get:
       tags:
-      - Third party protocol
+      - Third party protocols
       summary: Requesting this endpoint with a valid protocol name results in a list
         of successful mapping resultsin a JSON array.
       description: Each result contains objects to represent the Matrix room or rooms
@@ -3876,7 +3879,7 @@ paths:
   /_matrix/client/r0/thirdparty/user/{protocol}:
     get:
       tags:
-      - Third party protocol
+      - Third party protocols
       summary: Retrieve a Matrix User ID linked to a user on the third party service,
         given a set of user parameters.
       operationId: userProtocol
