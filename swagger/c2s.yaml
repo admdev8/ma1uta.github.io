@@ -880,7 +880,7 @@ paths:
       requestBody:
         description: The file content
         content:
-          multipart/form-data:
+          '*/*':
             schema:
               type: object
       responses:
@@ -1134,6 +1134,21 @@ paths:
       deprecated: true
       security:
       - accessToken: []
+  /_matrix/client/r0/devices:
+    get:
+      tags:
+      - Device management
+      summary: Gets information about all devices for the current user.
+      operationId: devices
+      responses:
+        200:
+          description: A list of all registered devices for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DevicesResponse'
+      security:
+      - accessToken: []
   /_matrix/client/r0/devices/{deviceId}:
     get:
       tags:
@@ -1230,21 +1245,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/devices:
-    get:
-      tags:
-      - Device management
-      summary: Gets information about all devices for the current user.
-      operationId: devices
-      responses:
-        200:
-          description: A list of all registered devices for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DevicesResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/delete_devices:
@@ -2190,69 +2190,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/client/r0/profile/{userId}/displayname:
-    get:
-      tags:
-      - User data
-      summary: Get the user's display name. This API may be used to fetch the user's
-        own displayname or to query the name of other users; either locally or on
-        remote homeservers.
-      operationId: showDisplayName
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose display name to get.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The display name for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DisplayName'
-        404:
-          description: There is no display name for this user or this user does not
-            exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      tags:
-      - User data
-      summary: his API sets the given user's display name. You must have permission
-        to set this user's display name, e.g. you need to have their access_token.
-      operationId: setDisplayName
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose display name to set.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DisplayName'
-      responses:
-        200:
-          description: The display name was set.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/profile/{userId}/avatar_url:
     get:
       tags:
@@ -2304,6 +2241,69 @@ paths:
       responses:
         200:
           description: The avatar URL was set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/profile/{userId}/displayname:
+    get:
+      tags:
+      - User data
+      summary: Get the user's display name. This API may be used to fetch the user's
+        own displayname or to query the name of other users; either locally or on
+        remote homeservers.
+      operationId: showDisplayName
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose display name to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The display name for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayName'
+        404:
+          description: There is no display name for this user or this user does not
+            exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - User data
+      summary: his API sets the given user's display name. You must have permission
+        to set this user's display name, e.g. you need to have their access_token.
+      operationId: setDisplayName
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose display name to set.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisplayName'
+      responses:
+        200:
+          description: The display name was set.
           content:
             application/json:
               schema:
@@ -7561,10 +7561,7 @@ components:
           description: Whether the homeserver should also bind this third party identifier
             to the account's Matrix ID with the passed identity server
         three_pid_creds:
-          type: array
-          description: The third party credentials to associate with the account
-          items:
-            $ref: '#/components/schemas/ThreePidCred'
+          $ref: '#/components/schemas/ThreePidCred'
       description: Request for adds contact information to the user's account
     RoomKeyRequestContent:
       required:
