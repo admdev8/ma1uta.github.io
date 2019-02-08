@@ -1205,9 +1205,23 @@ span.boxed, span.framebox {
 <!-- limitations under the License. -->
 <p>This room version is the first ever version for rooms, and contains the building
 blocks for other room versions.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#server-implementation-components" id="id1">1&nbsp;&nbsp;&nbsp;Server implementation components</a><ul class="auto-toc">
+<li><a class="reference internal" href="#state-resolution" id="id2">1.1&nbsp;&nbsp;&nbsp;State resolution</a></li>
+<li><a class="reference internal" href="#authorization-rules" id="id3">1.2&nbsp;&nbsp;&nbsp;Authorization rules</a></li>
+<li><a class="reference internal" href="#event-format" id="id4">1.3&nbsp;&nbsp;&nbsp;Event format</a><ul class="auto-toc">
+<li><a class="reference internal" href="#persistent-data-unit-schema" id="id5">1.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <p><a class="anchor" id="server-implementation-components"></a></p>
 <div class="section" id="server-implementation-components">
-<h1>Server implementation components</h1>
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Server implementation components</a></h1>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The information contained in this section is strictly for server implementors.
@@ -1226,7 +1240,7 @@ may occur until room version 2 (or later) is ready and adopted.</p>
 </div>
 <p><a class="anchor" id="state-resolution"></a></p>
 <div class="section" id="state-resolution">
-<h2>State resolution</h2>
+<h2><a class="toc-backref" href="#id2">1.1&nbsp;&nbsp;&nbsp;State resolution</a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This section documents the state resolution algorithm as implemented by
@@ -1276,7 +1290,7 @@ affected are said to be <em>conflicting</em> events.</p>
 </div>
 <p><a class="anchor" id="authorization-rules"></a></p>
 <div class="section" id="authorization-rules">
-<h2>Authorization rules</h2>
+<h2><a class="toc-backref" href="#id3">1.2&nbsp;&nbsp;&nbsp;Authorization rules</a></h2>
 <p>The types of state events that affect authorization are:</p>
 <ul class="simple">
 <li><tt class="docutils literal">m.room.create</tt></li>
@@ -1300,7 +1314,7 @@ reject.</li>
 <li>Reject if event has <tt class="docutils literal">auth_events</tt> that:<ol class="loweralpha">
 <li>have duplicate entries for a given <tt class="docutils literal">type</tt> and <tt class="docutils literal">state_key</tt> pair</li>
 <li>have entries whose <tt class="docutils literal">type</tt> and <tt class="docutils literal">state_key</tt> don't match those
-specified by the <a class="reference external" href="../../server_server/r0.1.0.html#auth-events-selection">auth events selection</a> algorithm described in the
+specified by the <a class="reference external" href="../../server_server/r0.1.1.html#auth-events-selection">auth events selection</a> algorithm described in the
 server specification.</li>
 </ol>
 </li>
@@ -1434,11 +1448,11 @@ level.</li>
 </div>
 <p><a class="anchor" id="event-format"></a></p>
 <div class="section" id="event-format">
-<h2>Event format</h2>
+<h2><a class="toc-backref" href="#id4">1.3&nbsp;&nbsp;&nbsp;Event format</a></h2>
 <p>Events in version 1 rooms have the following structure:</p>
 <p><a class="anchor" id="persistent-data-unit-schema"></a></p>
 <div class="section" id="persistent-data-unit-schema">
-<h3><tt class="docutils literal">Persistent Data Unit</tt> schema</h3>
+<h3><a class="toc-backref" href="#id5">1.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></h3>
 <p>A persistent data unit (event) for room versions 1 and 2.</p>
 <p><tt class="docutils literal">Persistent Data Unit</tt></p>
 <table border="1" class="colwidths-auto docutils">
@@ -1521,12 +1535,12 @@ those defined here may be used.</td>
 <tr><td>hashes</td>
 <td>Event Hash</td>
 <td><strong>Required.</strong> Content hashes of the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.0.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 <tr><td>signatures</td>
 <td>{string: {string: string}}</td>
 <td><strong>Required.</strong> Signatures for the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.0.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 </tbody>
 </table>

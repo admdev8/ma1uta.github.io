@@ -1205,21 +1205,34 @@ span.boxed, span.framebox {
 <!-- limitations under the License. -->
 <p>This room version builds off of <a class="reference external" href="v1.html">version 1</a> with an improved state
 resolution algorithm.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#server-implementation-components" id="id1">1&nbsp;&nbsp;&nbsp;Server implementation components</a><ul class="auto-toc">
+<li><a class="reference internal" href="#state-resolution" id="id2">1.1&nbsp;&nbsp;&nbsp;State resolution</a><ul class="auto-toc">
+<li><a class="reference internal" href="#definitions" id="id3">1.1.1&nbsp;&nbsp;&nbsp;Definitions</a></li>
+<li><a class="reference internal" href="#algorithm" id="id4">1.1.2&nbsp;&nbsp;&nbsp;Algorithm</a></li>
+<li><a class="reference internal" href="#rejected-events" id="id5">1.1.3&nbsp;&nbsp;&nbsp;Rejected events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <p><a class="anchor" id="server-implementation-components"></a></p>
 <div class="section" id="server-implementation-components">
-<h1>Server implementation components</h1>
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Server implementation components</a></h1>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The information contained in this section is strictly for server implementors.
 Applications which use the Client-Server API are generally unaffected by the
 details contained here, and can safely ignore their presence.</p>
 </div>
-<p>The algorithms defined here should only apply to version 2 rooms. Other algorithms
-may be used by other room versions, and as such servers should be aware of which
-version room they are dealing with prior to executing a given algorithm.</p>
+<p>Room version 2 uses the base components of <a class="reference external" href="v1.html">room version 1</a>, changing
+only the state resolution algorithm.</p>
 <p><a class="anchor" id="state-resolution"></a></p>
 <div class="section" id="state-resolution">
-<h2>State resolution</h2>
+<h2><a class="toc-backref" href="#id2">1.1&nbsp;&nbsp;&nbsp;State resolution</a></h2>
 <p>The room state <span class="formula"><i>S</i>’(<i>E</i>)</span> after an event <span class="formula"><i>E</i></span> is defined in terms of
 the room state <span class="formula"><i>S</i>(<i>E</i>)</span> before <span class="formula"><i>E</i></span>, and depends on whether
 <span class="formula"><i>E</i></span> is a state event or a message event:</p>
@@ -1235,7 +1248,7 @@ states <span class="formula">{<i>S</i>’(<i>E</i><sub>1</sub>), <i>S</i>’(<
 a set of states is given in the algorithm below.</p>
 <p><a class="anchor" id="definitions"></a></p>
 <div class="section" id="definitions">
-<h3>Definitions</h3>
+<h3><a class="toc-backref" href="#id3">1.1.1&nbsp;&nbsp;&nbsp;Definitions</a></h3>
 <p>The state resolution algorithm for version 2 rooms uses the following
 definitions, given the set of room states <span class="formula">{<i>S</i><sub>1</sub>, <i>S</i><sub>2</sub>, …}</span>:</p>
 <dl class="docutils">
@@ -1310,7 +1323,7 @@ mainline event to <span class="formula"><i>y</i></span>; or</li>
 <dd>The <em>iterative auth checks algorithm</em> takes as input an initial room state
 and a sorted list of state events, and constructs a new room state by
 iterating through the event list and applying the state event to the room
-state if the state event is allowed by the <a class="reference external" href="../server_server/r0.1.0.html#authorization-rules">authorization rules</a>. If the
+state if the state event is allowed by the <a class="reference external" href="../server_server/r0.1.1.html#authorization-rules">authorization rules</a>. If the
 state event is not allowed by the authorization rules, then the event is
 ignored. If a <tt class="docutils literal">(event_type, state_key)</tt> key that is required for checking
 the authorization rules is not present in the state, then the appropriate
@@ -1320,7 +1333,7 @@ not rejected.</dd>
 </div>
 <p><a class="anchor" id="algorithm"></a></p>
 <div class="section" id="algorithm">
-<h3>Algorithm</h3>
+<h3><a class="toc-backref" href="#id4">1.1.2&nbsp;&nbsp;&nbsp;Algorithm</a></h3>
 <p>The <em>resolution</em> of a set of states is obtained as follows:</p>
 <ol class="arabic simple">
 <li>Take all <em>power events</em> and any events in their auth chains, recursively,
@@ -1341,7 +1354,7 @@ resolved state.</li>
 </div>
 <p><a class="anchor" id="rejected-events"></a></p>
 <div class="section" id="rejected-events">
-<h3>Rejected events</h3>
+<h3><a class="toc-backref" href="#id5">1.1.3&nbsp;&nbsp;&nbsp;Rejected events</a></h3>
 <p>Events that have been rejected due to failing auth based on the state at the
 event (rather than based on their auth chain) are handled as usual by the
 algorithm, unless otherwise specified.</p>

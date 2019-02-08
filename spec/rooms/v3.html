@@ -930,9 +930,24 @@ which actually use this room version. For example, a requirement of "all APIs mu
 accept the new event format" does in fact apply to all APIs, but only so much as
 where the contextual room of the request is using this room version. Rooms using
 other room versions should not be affected by these sweeping requirements. -->
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#client-considerations" id="id1">1&nbsp;&nbsp;&nbsp;Client considerations</a></li>
+<li><a class="reference internal" href="#server-implementation-components" id="id2">2&nbsp;&nbsp;&nbsp;Server implementation components</a><ul class="auto-toc">
+<li><a class="reference internal" href="#event-ids" id="id3">2.1&nbsp;&nbsp;&nbsp;Event IDs</a><ul class="auto-toc">
+<li><a class="reference internal" href="#persistent-data-unit-schema" id="id4">2.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#changes-to-apis" id="id5">2.2&nbsp;&nbsp;&nbsp;Changes to APIs</a></li>
+<li><a class="reference internal" href="#authorization-rules-for-events" id="id6">2.3&nbsp;&nbsp;&nbsp;Authorization rules for events</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <p><a class="anchor" id="client-considerations"></a></p>
 <div class="section" id="client-considerations">
-<h1>Client considerations</h1>
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Client considerations</a></h1>
 <p>This room version changes the format for event IDs sent to clients. Clients should be
 aware that these event IDs may contain slashes and other potentially problematic
 characters. Clients should be treating event IDs as opaque identifiers and should not
@@ -943,7 +958,7 @@ domain and the potentially problematic slash).</p>
 </div>
 <p><a class="anchor" id="server-implementation-components"></a></p>
 <div class="section" id="server-implementation-components">
-<h1>Server implementation components</h1>
+<h1><a class="toc-backref" href="#id2">2&nbsp;&nbsp;&nbsp;Server implementation components</a></h1>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The information contained in this section is strictly for server implementors.
@@ -955,7 +970,7 @@ is the resource that Client-Server API use cases should reference.</p>
 and the event format defined here.</p>
 <p><a class="anchor" id="event-ids"></a></p>
 <div class="section" id="event-ids">
-<h2>Event IDs</h2>
+<h2><a class="toc-backref" href="#id3">2.1&nbsp;&nbsp;&nbsp;Event IDs</a></h2>
 <div class="admonition admonition-rationale">
 <p class="first admonition-title">Rationale</p>
 <p class="last">In other room versions (namely version 1 and 2) the event ID is a distinct field
@@ -965,7 +980,7 @@ same or different rooms where the server cannot easily keep track of which event
 should be using. By removing the use of a dedicated event ID, servers are required
 to track the hashes on an event to determine its ID.</p>
 </div>
-<p>The event ID is the <a class="reference external" href="../../server_server/r0.1.0.html#reference-hashes">reference hash</a> of the event encoded using <a class="reference external" href="../../appendices.html#unpadded-base64">Unpadded Base64</a>,
+<p>The event ID is the <a class="reference external" href="../../server_server/r0.1.1.html#reference-hashes">reference hash</a> of the event encoded using <a class="reference external" href="../../appendices.html#unpadded-base64">Unpadded Base64</a>,
 prefixed with <tt class="docutils literal">$</tt>. A resulting event ID using this approach should look similar to
 <tt class="docutils literal">$CD66HAED5npg6074c6pDtLKalHjVfYb2q4Q3LZgrW6o</tt>.</p>
 <p>Event IDs should not be sent over federation to servers when the room uses
@@ -976,7 +991,7 @@ compared to other room versions to make it easier to handle. Instead of a tuple
 of values, they are now plain lists of events.</p>
 <p><a class="anchor" id="persistent-data-unit-schema"></a></p>
 <div class="section" id="persistent-data-unit-schema">
-<h3><tt class="docutils literal">Persistent Data Unit</tt> schema</h3>
+<h3><a class="toc-backref" href="#id4">2.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></h3>
 <p>A persistent data unit (event) for room version 3 and beyond.</p>
 <p><tt class="docutils literal">Persistent Data Unit</tt></p>
 <table border="1" class="colwidths-auto docutils">
@@ -1055,12 +1070,12 @@ those defined here may be used.</td>
 <tr><td>hashes</td>
 <td>Event Hash</td>
 <td><strong>Required.</strong> Content hashes of the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.0.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 <tr><td>signatures</td>
 <td>{string: {string: string}}</td>
 <td><strong>Required.</strong> Signatures for the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.0.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -1151,7 +1166,7 @@ replaces.</td>
 </div>
 <p><a class="anchor" id="changes-to-apis"></a></p>
 <div class="section" id="changes-to-apis">
-<h2>Changes to APIs</h2>
+<h2><a class="toc-backref" href="#id5">2.2&nbsp;&nbsp;&nbsp;Changes to APIs</a></h2>
 <p>Due to the event ID being removed from the event, some APIs need to change. All
 APIs which currently accept an event ID must do so with the new format. Servers
 must append the calculated event ID to all events sent to clients where an event
@@ -1163,7 +1178,7 @@ are aware of (or can find) the room version during a request.</p>
 </div>
 <p><a class="anchor" id="authorization-rules-for-events"></a></p>
 <div class="section" id="authorization-rules-for-events">
-<h2>Authorization rules for events</h2>
+<h2><a class="toc-backref" href="#id6">2.3&nbsp;&nbsp;&nbsp;Authorization rules for events</a></h2>
 <p>The authorization rules for a given event have changed in this room version due
 to the change in event format:</p>
 <ul class="simple">

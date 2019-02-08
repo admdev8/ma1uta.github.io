@@ -924,6 +924,12 @@ div.admonition-example {
 <!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. -->
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You are viewing an unstable version of this specification. Unstable
+specifications may change at any time without notice. To view the
+current specification, please <a class="reference external" href="latest.html">click here</a>.</p>
+</div>
 <p>Matrix homeservers use the Federation APIs (also known as server-server APIs)
 to communicate with each other. Homeservers use these APIs to push messages to
 each other in real-time, to retrieve historic messages from each other, and to
@@ -1116,7 +1122,7 @@ request.</p>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/baf00ba6">master,baf00ba6</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/3e064733">master,3e064733</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/server_server.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/server_server.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -1125,6 +1131,7 @@ request.</p>
 <p>The following other versions are also available, in reverse chronological order:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://matrix.org/docs/spec/server_server/unstable.html">HEAD</a>: Includes all changes since the latest versioned release.</li>
+<li><a class="reference external" href="https://matrix.org/docs/spec/server_server/r0.1.1.html">r0.1.1</a></li>
 <li><a class="reference external" href="https://matrix.org/docs/spec/server_server/r0.1.0.html">r0.1.0</a></li>
 </ul>
 </div>
@@ -1198,13 +1205,13 @@ and a port of 8448, using a <tt class="docutils literal">Host</tt> header of <tt
 The target server must present a valid certificate for <tt class="docutils literal">&lt;delegated_hostname&gt;</tt>.</li>
 </ul>
 </li>
-<li>If the <cite>/.well-known</cite> request resulted in an error response, a server
+<li>If the <tt class="docutils literal"><span class="pre">/.well-known</span></tt> request resulted in an error response, a server
 is found by resolving an SRV record for <tt class="docutils literal"><span class="pre">_matrix._tcp.&lt;hostname&gt;</span></tt>. This
 may result in a hostname (to be resolved using AAAA or A records) and
 port. Requests are made to the resolved IP address and port, using 8448
 as a default port, with a <tt class="docutils literal">Host</tt> header of <tt class="docutils literal">&lt;hostname&gt;</tt>. The target
 server must present a valid certificate for <tt class="docutils literal">&lt;hostname&gt;</tt>.</li>
-<li>If the <cite>/.well-known</cite> request returned an error response, and the SRV
+<li>If the <tt class="docutils literal"><span class="pre">/.well-known</span></tt> request returned an error response, and the SRV
 record was not found, an IP address is resolved using AAAA and A records.
 Requests are made to the resolved IP address using port 8448 and a <tt class="docutils literal">Host</tt>
 header containing the <tt class="docutils literal">&lt;hostname&gt;</tt>. The target server must present a
@@ -1255,7 +1262,7 @@ delegated server name uses the same grammar as
 </pre>
 <p class="httpheaders">Response:</p>
 <p><strong>Status code 200:</strong></p>
-<p>The delegated server information. The <tt class="docutils literal"><span class="pre">Content-Type</span></tt> for this response SHOULD be <tt class="docutils literal">application/json</tt>, however servers parsing the response should assume that the body is JSON regardless of type. Failures parsing the JSON or invalid data provided in the resulting parsed JSON must result in server discovery failure (no attempts should be made to continue finding an IP address/port number to connect to).</p>
+<p>The delegated server information. The <tt class="docutils literal"><span class="pre">Content-Type</span></tt> for this response SHOULD be <tt class="docutils literal">application/json</tt>, however servers parsing the response should assume that the body is JSON regardless of type. Failures parsing the JSON or invalid data provided in the resulting parsed JSON should not result in discovery failure - consult the server discovery process for information on how to continue.</p>
 <p class="httpheaders">Example</p>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
@@ -1349,16 +1356,15 @@ server by querying other servers.</p>
 <p><a class="anchor" id="publishing-keys"></a></p>
 <div class="section" id="publishing-keys">
 <h3><a class="toc-backref" href="#id11">2.3.1&nbsp;&nbsp;&nbsp;Publishing Keys</a></h3>
-<p>Homeservers publish the allowed TLS fingerprints and signing keys in a JSON
+<p>Homeservers publish their signing keys in a JSON
 object at <tt class="docutils literal"><span class="pre">/_matrix/key/v2/server/{key_id}</span></tt>. The response contains a list of
 <tt class="docutils literal">verify_keys</tt> that are valid for signing federation requests made by the
 homeserver and for signing events. It contains a list of <tt class="docutils literal">old_verify_keys</tt> which
-are only valid for signing events. Finally the response contains a list of TLS
-certificate fingerprints to validate any connection made to the homeserver.</p>
+are only valid for signing events.</p>
 <p><a class="anchor" id="get-matrix-key-v2-server-keyid"></a></p>
 <div class="section" id="get-matrix-key-v2-server-keyid">
 <h4><a class="toc-backref" href="#id12">2.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/server/{keyId}</span></tt></a></h4>
-<p>Gets the homeserver's published TLS fingerprints and signing keys.
+<p>Gets the homeserver's published signing keys.
 The homeserver may have any number of active keys and may have a
 number of old keys.</p>
 <p>Intermediate notary servers should cache a response for half of its
@@ -1386,7 +1392,7 @@ checked.</p>
 <td>string</td>
 <td><strong>Deprecated</strong>. Servers should not use this
 parameter and instead opt to return all keys, not
-just the requested one. The key ID to  look up.</td>
+just the requested one. The key ID to look up.</td>
 </tr>
 </tbody>
 </table>
