@@ -980,7 +980,7 @@ same or different rooms where the server cannot easily keep track of which event
 should be using. By removing the use of a dedicated event ID, servers are required
 to track the hashes on an event to determine its ID.</p>
 </div>
-<p>The event ID is the <a class="reference external" href="../../server_server/r0.1.1.html#reference-hashes">reference hash</a> of the event encoded using <a class="reference external" href="../../appendices.html#unpadded-base64">Unpadded Base64</a>,
+<p>The event ID is the <a class="reference external" href="../../spec/server_server/r0.1.1.html#reference-hashes">reference hash</a> of the event encoded using <a class="reference external" href="../../spec/appendices.html#unpadded-base64">Unpadded Base64</a>,
 prefixed with <tt class="docutils literal">$</tt>. A resulting event ID using this approach should look similar to
 <tt class="docutils literal">$CD66HAED5npg6074c6pDtLKalHjVfYb2q4Q3LZgrW6o</tt>.</p>
 <p>Event IDs should not be sent over federation to servers when the room uses
@@ -1070,12 +1070,12 @@ those defined here may be used.</td>
 <tr><td>hashes</td>
 <td>Event Hash</td>
 <td><strong>Required.</strong> Content hashes of the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../spec/server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 <tr><td>signatures</td>
 <td>{string: {string: string}}</td>
 <td><strong>Required.</strong> Signatures for the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../../spec/server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 </tbody>
 </table>
