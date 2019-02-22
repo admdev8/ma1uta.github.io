@@ -1648,7 +1648,7 @@ local persistent copy of server state.</p>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/49119ed3">master,49119ed3</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/9edf2a32">master,9edf2a32</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -14549,25 +14549,14 @@ would not flicker as it transitions from local to remote. Flickering can be
 reduced through clients making use of the transaction ID they used to send
 a particular event. The transaction ID used will be included in the event's
 <tt class="docutils literal">unsigned</tt> data as <tt class="docutils literal">transaction_id</tt> when it arrives through the event stream.</p>
-<p>Clients unable to make use of the transaction ID are more likely to experience
-flickering due to the following two scenarios, however the effect can be mitigated
-to a degree:</p>
-<ul class="simple">
-<li>The client sends a message and the remote echo arrives on the event stream
-<em>after</em> the request to send the message completes.</li>
-<li>The client sends a message and the remote echo arrives on the event stream
-<em>before</em> the request to send the message completes.</li>
-</ul>
-<p>In the first scenario, the client will receive an event ID when the request to
-send the message completes. This ID can be used to identify the duplicate event
-when it arrives on the event stream. However, in the second scenario, the event
-arrives before the client has obtained an event ID. This makes it impossible to
-identify it as a duplicate event. This results in the client displaying the
-message twice for a fraction of a second before the the original request to send
-the message completes. Once it completes, the client can take remedial actions
-to remove the duplicate event by looking for duplicate event IDs. A future version
-of the client-server API will resolve this by attaching the transaction ID of the
-sending request to the event itself.</p>
+<p>Clients unable to make use of the transaction ID are likely to experience
+flickering when the remote echo arrives on the event stream <em>before</em>
+the request to send the message completes. In that case the event
+arrives before the client has obtained an event ID, making it impossible to
+identify it as a remote echo. This results in the client displaying the message
+twice for some time (depending on the server responsiveness) before the original
+request to send the message completes. Once it completes, the client can take
+remedial actions to remove the duplicate event by looking for duplicate event IDs.</p>
 </div>
 <p><a class="anchor" id="calculating-the-display-name-for-a-user"></a></p>
 <div class="section" id="calculating-the-display-name-for-a-user">
