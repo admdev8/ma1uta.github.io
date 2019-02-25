@@ -1,0 +1,11 @@
+module:matrix.identity.api
+io.github.ma1uta.matrix.identity
+io.github.ma1uta.matrix.identity.api
+io.github.ma1uta.matrix.identity.model
+io.github.ma1uta.matrix.identity.model.associations
+io.github.ma1uta.matrix.identity.model.invitation
+io.github.ma1uta.matrix.identity.model.key
+io.github.ma1uta.matrix.identity.model.lookup
+io.github.ma1uta.matrix.identity.model.session
+io.github.ma1uta.matrix.identity.model.signing
+io.github.ma1uta.matrix.identity.model.validation

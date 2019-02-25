@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"matrix.application.api","l":"io.github.ma1uta.matrix.application"},{"m":"matrix.application.api","l":"io.github.ma1uta.matrix.application.api"},{"m":"matrix.application.api","l":"io.github.ma1uta.matrix.application.model"}]

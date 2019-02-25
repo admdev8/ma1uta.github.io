@@ -11,105 +11,9 @@
       "name" : "Apache 2.0",
       "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "r0.1.0-3"
+    "version" : "r0.1.0-5"
   },
   "paths" : {
-    "/_matrix/app/v1/transactions/{txnId}" : {
-      "put" : {
-        "summary" : "This API is called by the homeserver when it wants to push an event (or batch of events) to the application service.",
-        "description" : "Note that the application service should distinguish state events from message events via the presence of a state_key, rather than via the event type.",
-        "operationId" : "transaction",
-        "parameters" : [ {
-          "name" : "txnId",
-          "in" : "path",
-          "description" : "The transaction ID for this set of events. Homeservers generate these IDs and they are used to ensure idempotency of requests.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/TransactionRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The transaction was processed successfully.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/app/v1/rooms/{roomAlias}" : {
-      "get" : {
-        "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given room alias.",
-        "description" : "The homeserver will only query room aliases inside the application service's aliases namespace. The homeserver will send this request when it receives a request to join a room alias within the application service's namespace.",
-        "operationId" : "rooms",
-        "parameters" : [ {
-          "name" : "roomAlias",
-          "in" : "path",
-          "description" : "The room alias being queried.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The application service indicates that this room alias exists. The application service MUST have created a room and associated it with the queried room alias using the client-server API. Additional information about the room such as its name and topic can be set before responding.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The credentials supplied by the homeserver were rejected.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The application service indicates that this room alias does not exist. Optional error information can be included in the body of this response.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_matrix/app/v1/users/{userId}" : {
       "get" : {
         "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given user ID.",
@@ -121,7 +25,7 @@
           "description" : "The user ID being queried.",
           "required" : true,
           "schema" : {
-            "type" : "string"
+            "$ref" : "#/components/schemas/Id"
           }
         } ],
         "responses" : {
@@ -168,6 +72,102 @@
         }
       }
     },
+    "/_matrix/app/v1/rooms/{roomAlias}" : {
+      "get" : {
+        "summary" : "This endpoint is invoked by the homeserver on an application service to query the existence of a given room alias.",
+        "description" : "The homeserver will only query room aliases inside the application service's aliases namespace. The homeserver will send this request when it receives a request to join a room alias within the application service's namespace.",
+        "operationId" : "rooms",
+        "parameters" : [ {
+          "name" : "roomAlias",
+          "in" : "path",
+          "description" : "The room alias being queried.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/Id"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The application service indicates that this room alias exists. The application service MUST have created a room and associated it with the queried room alias using the client-server API. Additional information about the room such as its name and topic can be set before responding.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "The homeserver has not supplied credentials to the application service. Optional error information can be included in the body of this response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The credentials supplied by the homeserver were rejected.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The application service indicates that this room alias does not exist. Optional error information can be included in the body of this response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/app/v1/transactions/{txnId}" : {
+      "put" : {
+        "summary" : "This API is called by the homeserver when it wants to push an event (or batch of events) to the application service.",
+        "description" : "Note that the application service should distinguish state events from message events via the presence of a state_key, rather than via the event type.",
+        "operationId" : "transaction",
+        "parameters" : [ {
+          "name" : "txnId",
+          "in" : "path",
+          "description" : "The transaction ID for this set of events. Homeservers generate these IDs and they are used to ensure idempotency of requests.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The transaction was processed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_matrix/app/v1/thirdparty/location" : {
       "get" : {
         "summary" : "Retrieve an array of third party network locations from a Matrix room alias.",
@@ -178,7 +178,7 @@
           "description" : "The Matrix room alias to look up.",
           "required" : true,
           "schema" : {
-            "type" : "string"
+            "$ref" : "#/components/schemas/Id"
           }
         } ],
         "responses" : {
@@ -275,7 +275,7 @@
           "description" : "The Matrix User Id to look up",
           "required" : true,
           "schema" : {
-            "type" : "string"
+            "$ref" : "#/components/schemas/Id"
           }
         } ],
         "responses" : {
@@ -464,7 +464,7 @@
           "description" : "The room ID to add to the directory.",
           "required" : true,
           "schema" : {
-            "type" : "string"
+            "$ref" : "#/components/schemas/Id"
           }
         } ],
         "requestBody" : {
@@ -495,390 +495,66 @@
   },
   "components" : {
     "schemas" : {
-      "MegolmEncryptedContent" : {
-        "required" : [ "algorithm", "ciphertext", "sender_key" ],
+      "EmptyResponse" : {
+        "type" : "object",
+        "description" : "Empty response"
+      },
+      "ErrorResponse" : {
         "type" : "object",
         "properties" : {
-          "ciphertext" : {
-            "type" : "string",
-            "description" : "The encrypted content of the event. The encrypted payload itself."
+          "errcode" : {
+            "type" : "string"
           },
-          "algorithm" : {
-            "type" : "string",
-            "description" : "The encryption algorithm used to encrypt this event. The value of this field determines which other properties will be present.",
-            "readOnly" : true,
-            "enum" : [ "m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2" ]
+          "error" : {
+            "type" : "string"
           }
-        },
-        "description" : "Megolm encrypted message.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomEncryptedContent"
-        } ]
+        }
       },
-      "RoomEncryptedContent" : {
-        "required" : [ "algorithm", "sender_key" ],
+      "Id" : {
         "type" : "object",
         "properties" : {
-          "algorithm" : {
-            "type" : "string",
-            "description" : "The encryption algorithm used to encrypt this event. The value of this field determines which other properties will be present.",
-            "enum" : [ "m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2" ]
+          "valid" : {
+            "type" : "boolean"
           },
-          "sender_key" : {
-            "type" : "string",
-            "description" : "The Curve25519 key of the sender."
-          },
-          "device_id" : {
-            "type" : "string",
-            "description" : "The ID of the sending device. Required with Megolm."
-          },
-          "session_id" : {
-            "type" : "string",
-            "description" : "The ID of the session used to encrypt the message. Required with Megolm."
+          "sigil" : {
+            "type" : "string"
           }
-        },
-        "description" : "This event type is used when sending encrypted events. It can be used either within a room (in which case it will have all of the Room Event fields), or as a to-device event.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
+        }
       },
-      "FieldMetadata" : {
-        "required" : [ "placeholder", "regexp" ],
+      "Answer" : {
+        "required" : [ "sdp", "type" ],
         "type" : "object",
         "properties" : {
-          "regexp" : {
+          "type" : {
             "type" : "string",
-            "description" : "A regular expression for validation of a field's value."
+            "description" : "The type of session description. Must be 'answer'."
           },
-          "placeholder" : {
+          "sdp" : {
             "type" : "string",
-            "description" : "An placeholder serving as a valid example of the field value."
+            "description" : "The SDP text of the session description."
           }
         },
-        "description" : "Definition of valid values for a field."
+        "description" : "Answer"
       },
-      "PresenceContent" : {
-        "required" : [ "presence" ],
-        "type" : "object",
-        "properties" : {
-          "presence" : {
-            "type" : "string",
-            "description" : "The presence state for this user.",
-            "enum" : [ "online, offline, unavailable" ]
-          },
-          "avatar_url" : {
-            "type" : "string",
-            "description" : "The current avatar URL for this user, if any."
-          },
-          "displayname" : {
-            "type" : "string",
-            "description" : "The current display name for this user, if any."
-          },
-          "last_active_ago" : {
-            "type" : "integer",
-            "description" : "The last time since this used performed some action, in milliseconds.",
-            "format" : "int64"
-          },
-          "currently_active" : {
-            "type" : "boolean",
-            "description" : "Whether the user is currently active."
-          }
-        },
-        "description" : "Informs the client of a user's presence state change.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomServerAclContent" : {
-        "type" : "object",
-        "properties" : {
-          "allow" : {
-            "type" : "array",
-            "description" : "The server names to allow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided, effectively disallowing every server.",
-            "items" : {
-              "type" : "string",
-              "description" : "The server names to allow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided, effectively disallowing every server."
-            }
-          },
-          "deny" : {
-            "type" : "array",
-            "description" : "The server names to disallow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided.",
-            "items" : {
-              "type" : "string",
-              "description" : "The server names to disallow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided."
-            }
-          },
-          "allow_ip_literals" : {
-            "type" : "boolean",
-            "description" : "True to allow server names that are IP address literals. False to deny. Defaults to true if missing or otherwise not a boolean. This is strongly recommended to be set to false as servers running with IP literal names are strongly discouraged in order to require legitimate homeservers to be backed by a valid registered domain name."
-          }
-        },
-        "description" : "An event to indicate which servers are permitted to participate in the room. Server ACLs may allow or deny groups of hosts.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomPinnedContent" : {
-        "required" : [ "pinned" ],
-        "type" : "object",
-        "properties" : {
-          "pinned" : {
-            "type" : "array",
-            "description" : "An ordered list of event IDs to pin.",
-            "items" : {
-              "type" : "string",
-              "description" : "An ordered list of event IDs to pin."
-            }
-          }
-        },
-        "description" : "This event is used to \"pin\" particular events in a room for other participants to review later. The order of the pinned events is guaranteed and based upon the order supplied in the event. Clients should be aware that the current user may not be able to see some of the events pinned due to visibility settings in the room. Clients are responsible for determining if a particular event in the pinned list is displayable, and have the option to not display it if it cannot be pinned in the client.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "Image" : {
+      "Audio" : {
         "required" : [ "url" ],
         "type" : "object",
         "properties" : {
           "info" : {
-            "$ref" : "#/components/schemas/ImageInfo"
+            "$ref" : "#/components/schemas/AudioInfo"
           },
           "url" : {
             "type" : "string",
-            "description" : "The URL to the file."
+            "description" : "The URL to the audio clip."
           },
           "file" : {
             "$ref" : "#/components/schemas/EncryptedFile"
           }
         },
-        "description" : "This message represents a single image and an optional thumbnail.",
+        "description" : "This message represents a single audio clip.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/RoomMessageContent"
         } ]
-      },
-      "IgnoredUserListContent" : {
-        "required" : [ "ignored_users" ],
-        "type" : "object",
-        "properties" : {
-          "ignored_users" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "description" : "The map of users to ignore."
-            },
-            "description" : "The map of users to ignore."
-          }
-        },
-        "description" : "A map of users which are considered ignored is kept in account_data in an event type of m.ignored_user_list.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "TagContent" : {
-        "type" : "object",
-        "properties" : {
-          "tags" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/TagInfo"
-            },
-            "description" : "The tags on the room and their contents."
-          }
-        },
-        "description" : "Informs the client of tags on a room.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomGuestAccessContent" : {
-        "type" : "object",
-        "properties" : {
-          "guest_access" : {
-            "type" : "string",
-            "description" : "Whether guests can join the room.",
-            "enum" : [ "can_join, forbidden" ]
-          }
-        },
-        "description" : "This event controls whether guest users are allowed to join rooms. If this event is absent, servers should act as if it is present and has the guest_access value \"forbidden\".",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomHistoryVisibilityContent" : {
-        "required" : [ "history_visibility" ],
-        "type" : "object",
-        "properties" : {
-          "history_visibility" : {
-            "type" : "string",
-            "description" : "Who can see the room history.",
-            "enum" : [ "invited, joined, shared, world_readable" ]
-          }
-        },
-        "description" : "This event controls whether a user can see the events that happened in a room from before they joined.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "FileInfo" : {
-        "type" : "object",
-        "properties" : {
-          "mimetype" : {
-            "type" : "string",
-            "description" : "The mimetype of the image, e.g. image/jpeg."
-          },
-          "size" : {
-            "type" : "integer",
-            "description" : "Size of the image in bytes.",
-            "format" : "int64"
-          },
-          "thumbnail_url" : {
-            "type" : "string",
-            "description" : "The URL to a thumbnail of the image."
-          },
-          "thumbnail_file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          },
-          "thumbnail_info" : {
-            "$ref" : "#/components/schemas/ThumbnailInfo"
-          }
-        },
-        "description" : "File info."
-      },
-      "Notice" : {
-        "type" : "object",
-        "properties" : {
-          "format" : {
-            "type" : "string",
-            "description" : "The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html`` is supported."
-          },
-          "formatted_body" : {
-            "type" : "string",
-            "description" : "The formatted version of the ``body``. This is required if ``format`` is specified."
-          }
-        },
-        "description" : "The ``m.notice`` type is primarily intended for responses from automated clients. An ``m.notice`` message must be treated the same way as a regular ``m.text`` message with two exceptions. Firstly, clients should present ``m.notice`` messages to users in a distinct manner, and secondly, ``m.notice`` messages must never be automatically responded to. This helps to prevent infinite-loop situations where two automated clients continuously exchange messages.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomMessageContent"
-        } ]
-      },
-      "ReceiptTs" : {
-        "type" : "object",
-        "properties" : {
-          "ts" : {
-            "type" : "integer",
-            "description" : "The timestamp the receipt was sent at.",
-            "format" : "int64"
-          }
-        },
-        "description" : "ReceiptContent timestamps."
-      },
-      "TagInfo" : {
-        "type" : "object",
-        "properties" : {
-          "order" : {
-            "type" : "integer",
-            "description" : "A number in a range [0,1] describing a relative position of the room under the given tag.",
-            "format" : "int64"
-          }
-        },
-        "description" : "TagContent info."
-      },
-      "ImageInfo" : {
-        "type" : "object",
-        "properties" : {
-          "mimetype" : {
-            "type" : "string",
-            "description" : "The mimetype of the image, e.g. image/jpeg."
-          },
-          "size" : {
-            "type" : "integer",
-            "description" : "Size of the image in bytes.",
-            "format" : "int64"
-          },
-          "thumbnail_url" : {
-            "type" : "string",
-            "description" : "The URL to a thumbnail of the image."
-          },
-          "thumbnail_file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          },
-          "thumbnail_info" : {
-            "$ref" : "#/components/schemas/ThumbnailInfo"
-          },
-          "h" : {
-            "type" : "integer",
-            "description" : "The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
-            "format" : "int64"
-          },
-          "w" : {
-            "type" : "integer",
-            "description" : "The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
-            "format" : "int64"
-          }
-        },
-        "description" : "Image info."
-      },
-      "OlmEncryptedContent" : {
-        "required" : [ "algorithm", "ciphertext", "sender_key" ],
-        "type" : "object",
-        "properties" : {
-          "ciphertext" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/CiphertextInfo"
-            },
-            "description" : "The encrypted content of the event. A map from the recipient Curve25519 identity key to ciphertext information. For more details, see Messaging Algorithms."
-          }
-        },
-        "description" : "Olm encrypted message.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomEncryptedContent"
-        } ]
-      },
-      "RoomTopicContent" : {
-        "required" : [ "topic" ],
-        "type" : "object",
-        "properties" : {
-          "topic" : {
-            "type" : "string",
-            "description" : "The topic text"
-          }
-        },
-        "description" : "A topic is a short message detailing what is currently being discussed in the room. It can also be used as a way to display extra information about the room, which may not be suitable for the room name. The room topic can also be set when creating a room using /createRoom with the topic key.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "JWK" : {
-        "required" : [ "alg", "ext", "k", "key", "key_opts" ],
-        "type" : "object",
-        "properties" : {
-          "key" : {
-            "type" : "string",
-            "description" : "Key type. Must be oct."
-          },
-          "alg" : {
-            "type" : "string",
-            "description" : "Algorithm, Must be A256CTR."
-          },
-          "ext" : {
-            "type" : "boolean",
-            "description" : "Extractable. Must be true. This is a W3C extension."
-          },
-          "key_opts" : {
-            "type" : "array",
-            "description" : "Key operations, Must at least contain encrypt and decrypt.",
-            "items" : {
-              "type" : "string",
-              "description" : "Key operations, Must at least contain encrypt and decrypt."
-            }
-          },
-          "k" : {
-            "type" : "string",
-            "description" : "The key, encoded as urlsafe unpadded base64."
-          }
-        },
-        "description" : "JSON Web Key."
       },
       "AudioInfo" : {
         "type" : "object",
@@ -899,6 +575,100 @@
           }
         },
         "description" : "Audio type."
+      },
+      "CallAnswerContent" : {
+        "required" : [ "answer", "call_id", "version" ],
+        "type" : "object",
+        "properties" : {
+          "answer" : {
+            "$ref" : "#/components/schemas/Answer"
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
+            "format" : "int64"
+          },
+          "call_id" : {
+            "type" : "string",
+            "description" : "The ID of the call this event relates to."
+          }
+        },
+        "description" : "This event is sent by the callee when they wish to answer the call.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "CallCandidatesContent" : {
+        "required" : [ "call_id", "candidates", "version" ],
+        "type" : "object",
+        "properties" : {
+          "candidates" : {
+            "type" : "array",
+            "description" : "Array of objects describing the candidates.",
+            "items" : {
+              "$ref" : "#/components/schemas/Candidate"
+            }
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "The version of the VoIP specification this messages adheres to. This specification is version 0.",
+            "format" : "int64"
+          },
+          "call_id" : {
+            "type" : "string",
+            "description" : "The ID of the call this event relates to."
+          }
+        },
+        "description" : "This event is sent by callers after sending an invite and by the callee after answering. Its purpose is to give the other party additional ICE candidates to try using to communicate.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "CallHangupContent" : {
+        "required" : [ "call_id", "version" ],
+        "type" : "object",
+        "properties" : {
+          "version" : {
+            "type" : "integer",
+            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
+            "format" : "int64"
+          },
+          "call_id" : {
+            "type" : "string",
+            "description" : "The ID of the call this event relates to."
+          }
+        },
+        "description" : "Sent by either party to signal their termination of the call. This can be sent either once the call has has been established or before to abort the call.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "CallInviteContent" : {
+        "required" : [ "call_id", "lifetime", "offer", "version" ],
+        "type" : "object",
+        "properties" : {
+          "offer" : {
+            "$ref" : "#/components/schemas/Offer"
+          },
+          "version" : {
+            "type" : "integer",
+            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
+            "format" : "int64"
+          },
+          "lifetime" : {
+            "type" : "integer",
+            "description" : "The time in milliseconds that the invite is valid for. Once the invite age exceeds this value, clients should discard it. They should also no longer show the call as awaiting an answer in the UI.",
+            "format" : "int64"
+          },
+          "call_id" : {
+            "type" : "string",
+            "description" : "The ID of the call this event relates to."
+          }
+        },
+        "description" : "This event is sent by the caller when they wish to establish a call.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
       },
       "Candidate" : {
         "required" : [ "candidate", "sdpMLineIndex", "sdpMid" ],
@@ -935,103 +705,17 @@
         },
         "description" : "Cipher text info."
       },
-      "ProtocolLocation" : {
-        "required" : [ "alias", "fields", "protocol" ],
+      "DirectContent" : {
         "type" : "object",
         "properties" : {
-          "alias" : {
-            "type" : "string",
-            "description" : "An alias for a matrix room."
-          },
-          "protocol" : {
-            "type" : "string",
-            "description" : "The protocol ID that the third party location is a part of."
-          },
-          "fields" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string",
-              "description" : "Information used to identify this third party location."
-            },
-            "description" : "Information used to identify this third party location."
+          "empty" : {
+            "type" : "boolean"
           }
         },
-        "description" : "Protocol Location."
-      },
-      "Relates" : {
-        "type" : "object",
-        "properties" : {
-          "m.in_reply_to" : {
-            "$ref" : "#/components/schemas/Reply"
-          }
-        },
-        "description" : "Related data."
-      },
-      "RoomNameContent" : {
-        "required" : [ "name" ],
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "The name of the room. This MUST NOT exceed 255 bytes."
-          }
-        },
-        "description" : "A room has an opaque room ID which is not human-friendly to read. A room alias is human-friendly, but not all rooms have room aliases. The room name is a human-friendly string designed to be displayed to the end-user. The room name is not unique, as multiple rooms can have the same room name set. A room with an m.room.name event with an absent, null, or empty name field should be treated the same as a room with no m.room.name event. An event of this type is automatically created when creating a room using /createRoom with the name key.",
+        "description" : "A map of which rooms are considered 'direct' rooms for specific users is kept in account_data in an event of type m.direct. The content of this event is an object where the keys are the user IDs and values are lists of room ID strings of the 'direct' rooms for that user ID.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
-      },
-      "RoomRedactionContent" : {
-        "type" : "object",
-        "properties" : {
-          "reason" : {
-            "type" : "string",
-            "description" : "The reason for the redaction, if any."
-          }
-        },
-        "description" : "Events can be redacted by either room or server admins. Redacting an event means that all keys not required by the protocol are stripped off, allowing admins to remove offensive or illegal content that may have been attached to any event. This cannot be undone, allowing server owners to physically delete the offending data. There is also a concept of a moderator hiding a message event, which can be undone, but cannot be applied to state events. The event that has been redacted is specified in the redacts event level key.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomVisibility" : {
-        "required" : [ "visibility" ],
-        "type" : "object",
-        "properties" : {
-          "visibility" : {
-            "type" : "string",
-            "description" : "Whether the room should be visible (public) in the directory or not (private).",
-            "enum" : [ "public", "private" ]
-          }
-        },
-        "description" : "JSON body request of the room service api."
-      },
-      "Signed" : {
-        "required" : [ "mxid", "signatures", "token" ],
-        "type" : "object",
-        "properties" : {
-          "mxid" : {
-            "type" : "string",
-            "description" : "The invited matrix user ID. Must be equal to the user_id property of the event."
-          },
-          "token" : {
-            "type" : "string",
-            "description" : "The token property of the containing third_party_invite object."
-          },
-          "signatures" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "additionalProperties" : {
-                "type" : "string",
-                "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
-              },
-              "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
-            },
-            "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
-          }
-        },
-        "description" : "Signed part of the invitation request."
       },
       "Emote" : {
         "type" : "object",
@@ -1048,6 +732,776 @@
         "description" : "This message is similar to m.text except that the sender is 'performing' the action contained in the body key, similar to /me in IRC. This message should be prefixed by the name of the sender. This message could also be represented in a different colour to distinguish it from regular m.text messages.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
+      "EncryptedFile" : {
+        "required" : [ "iv", "key", "url", "v" ],
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "type" : "string",
+            "description" : "the URL to the file."
+          },
+          "key" : {
+            "$ref" : "#/components/schemas/JWK"
+          },
+          "iv" : {
+            "type" : "string",
+            "description" : " The Initialisation Vector used by AES-CTR, encoded as unpadded base64."
+          },
+          "hashes" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string",
+              "description" : "A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64. Clients should support the SHA-256 hash, which uses the key sha256."
+            },
+            "description" : "A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64. Clients should support the SHA-256 hash, which uses the key sha256."
+          },
+          "v" : {
+            "type" : "string",
+            "description" : "Version of the encrypted attachments protocol. Must be v2."
+          }
+        },
+        "description" : "Encrypted file."
+      },
+      "Event" : {
+        "required" : [ "type" ],
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "$ref" : "#/components/schemas/EventContent"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of event. This SHOULD be namespaced similar to Java package naming conventions.",
+            "readOnly" : true
+          }
+        },
+        "description" : "Event."
+      },
+      "EventContent" : {
+        "type" : "object",
+        "description" : "Parent class of all event contents part in the Event."
+      },
+      "File" : {
+        "required" : [ "filename", "url" ],
+        "type" : "object",
+        "properties" : {
+          "filename" : {
+            "type" : "string",
+            "description" : "The original filename of the uploaded file."
+          },
+          "info" : {
+            "$ref" : "#/components/schemas/FileInfo"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The URL to the file."
+          },
+          "file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          }
+        },
+        "description" : "This message represents a generic file.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
+      "FileInfo" : {
+        "type" : "object",
+        "properties" : {
+          "mimetype" : {
+            "type" : "string",
+            "description" : "The mimetype of the image, e.g. image/jpeg."
+          },
+          "size" : {
+            "type" : "integer",
+            "description" : "Size of the image in bytes.",
+            "format" : "int64"
+          },
+          "thumbnail_url" : {
+            "type" : "string",
+            "description" : "The URL to a thumbnail of the image."
+          },
+          "thumbnail_file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          },
+          "thumbnail_info" : {
+            "$ref" : "#/components/schemas/ThumbnailInfo"
+          }
+        },
+        "description" : "File info."
+      },
+      "ForwardedRoomKeyContent" : {
+        "required" : [ "algorithm", "forwarding_curve25519_key_chain", "room_id", "sender_claimed_ed25519_key", "sender_key", "session_id", "session_key" ],
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string",
+            "description" : "Required. The encryption algorithm the key in this event is to be used with."
+          },
+          "room_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "sender_key" : {
+            "type" : "string",
+            "description" : "Required. The Curve25519 key of the device which initiated the session originally."
+          },
+          "session_id" : {
+            "type" : "string",
+            "description" : "The ID of the session that the key is for."
+          },
+          "session_key" : {
+            "type" : "string",
+            "description" : "The key to be exchanged."
+          },
+          "sender_claimed_ed25519_key" : {
+            "type" : "string",
+            "description" : "The Ed25519 key of the device which initiated the session originally. It is 'claimed' because the receiving device has no way to tell that the original room_key actually came from a device which owns the private partof this key unless they have done device verification."
+          },
+          "forwarding_curve25519_key_chain" : {
+            "type" : "array",
+            "description" : "Chain of Curve25519 keys. It starts out empty, but each time the key is forwarded to another device, the previous sender in the chain is added to the end of the list. For example, if the key is forwarded from A to B to C, this field is empty between A and B, and contains A's Curve25519 key between B and C.",
+            "items" : {
+              "type" : "string",
+              "description" : "Chain of Curve25519 keys. It starts out empty, but each time the key is forwarded to another device, the previous sender in the chain is added to the end of the list. For example, if the key is forwarded from A to B to C, this field is empty between A and B, and contains A's Curve25519 key between B and C."
+            }
+          }
+        },
+        "description" : "This event type is used to forward keys for end-to-end encryption. Typically it is encrypted as an m.room.encrypted event, then sent as a to-device event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "FullyReadContent" : {
+        "required" : [ "event_id" ],
+        "type" : "object",
+        "properties" : {
+          "event_id" : {
+            "$ref" : "#/components/schemas/Id"
+          }
+        },
+        "description" : "The current location of the user's read marker in a room. This event appears in the user's room account data for the room the marker is applicable for.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "IgnoredUserListContent" : {
+        "required" : [ "ignored_users" ],
+        "type" : "object",
+        "properties" : {
+          "ignored_users" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "description" : "The map of users to ignore."
+            },
+            "description" : "The map of users to ignore."
+          }
+        },
+        "description" : "A map of users which are considered ignored is kept in account_data in an event type of m.ignored_user_list.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "Image" : {
+        "required" : [ "url" ],
+        "type" : "object",
+        "properties" : {
+          "info" : {
+            "$ref" : "#/components/schemas/ImageInfo"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The URL to the file."
+          },
+          "file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          }
+        },
+        "description" : "This message represents a single image and an optional thumbnail.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
+      "ImageInfo" : {
+        "type" : "object",
+        "properties" : {
+          "mimetype" : {
+            "type" : "string",
+            "description" : "The mimetype of the image, e.g. image/jpeg."
+          },
+          "size" : {
+            "type" : "integer",
+            "description" : "Size of the image in bytes.",
+            "format" : "int64"
+          },
+          "thumbnail_url" : {
+            "type" : "string",
+            "description" : "The URL to a thumbnail of the image."
+          },
+          "thumbnail_file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          },
+          "thumbnail_info" : {
+            "$ref" : "#/components/schemas/ThumbnailInfo"
+          },
+          "h" : {
+            "type" : "integer",
+            "description" : "The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
+            "format" : "int64"
+          },
+          "w" : {
+            "type" : "integer",
+            "description" : "The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
+            "format" : "int64"
+          }
+        },
+        "description" : "Image info."
+      },
+      "Invite" : {
+        "required" : [ "display_name", "signed" ],
+        "type" : "object",
+        "properties" : {
+          "signed" : {
+            "$ref" : "#/components/schemas/Signed"
+          },
+          "display_name" : {
+            "type" : "string",
+            "description" : "A name which can be displayed to represent the user instead of their third party identifier."
+          }
+        },
+        "description" : "Third-party invites."
+      },
+      "JWK" : {
+        "required" : [ "alg", "ext", "k", "key", "key_opts" ],
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "description" : "Key type. Must be oct."
+          },
+          "alg" : {
+            "type" : "string",
+            "description" : "Algorithm, Must be A256CTR."
+          },
+          "ext" : {
+            "type" : "boolean",
+            "description" : "Extractable. Must be true. This is a W3C extension."
+          },
+          "key_opts" : {
+            "type" : "array",
+            "description" : "Key operations, Must at least contain encrypt and decrypt.",
+            "items" : {
+              "type" : "string",
+              "description" : "Key operations, Must at least contain encrypt and decrypt."
+            }
+          },
+          "k" : {
+            "type" : "string",
+            "description" : "The key, encoded as urlsafe unpadded base64."
+          }
+        },
+        "description" : "JSON Web Key."
+      },
+      "Location" : {
+        "required" : [ "geo_uri" ],
+        "type" : "object",
+        "properties" : {
+          "info" : {
+            "$ref" : "#/components/schemas/LocationInfo"
+          },
+          "geo_uri" : {
+            "type" : "string",
+            "description" : "A geo URI representing this location."
+          }
+        },
+        "description" : "This message represents a real-world location.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
+      "LocationInfo" : {
+        "type" : "object",
+        "properties" : {
+          "thumbnail_url" : {
+            "type" : "string",
+            "description" : "The URL to a thumbnail of the location being represented."
+          },
+          "thumbnail_file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          },
+          "thumbnail_info" : {
+            "$ref" : "#/components/schemas/ThumbnailInfo"
+          }
+        },
+        "description" : "Location info."
+      },
+      "MegolmEncryptedContent" : {
+        "required" : [ "algorithm", "ciphertext", "sender_key" ],
+        "type" : "object",
+        "properties" : {
+          "ciphertext" : {
+            "type" : "string",
+            "description" : "The encrypted content of the event. The encrypted payload itself."
+          },
+          "algorithm" : {
+            "type" : "string",
+            "description" : "The encryption algorithm used to encrypt this event. The value of this field determines which other properties will be present.",
+            "readOnly" : true,
+            "enum" : [ "m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2" ]
+          }
+        },
+        "description" : "Megolm encrypted message.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomEncryptedContent"
+        } ]
+      },
+      "Notice" : {
+        "type" : "object",
+        "properties" : {
+          "format" : {
+            "type" : "string",
+            "description" : "The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html`` is supported."
+          },
+          "formatted_body" : {
+            "type" : "string",
+            "description" : "The formatted version of the ``body``. This is required if ``format`` is specified."
+          }
+        },
+        "description" : "The ``m.notice`` type is primarily intended for responses from automated clients. An ``m.notice`` message must be treated the same way as a regular ``m.text`` message with two exceptions. Firstly, clients should present ``m.notice`` messages to users in a distinct manner, and secondly, ``m.notice`` messages must never be automatically responded to. This helps to prevent infinite-loop situations where two automated clients continuously exchange messages.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
+      "NotificationPowerLevel" : {
+        "type" : "object",
+        "properties" : {
+          "room" : {
+            "type" : "string",
+            "description" : "The level required to trigger an @room notification. Defaults to 50 if unspecified.",
+            "format" : "byte"
+          }
+        },
+        "description" : "Notifications."
+      },
+      "Offer" : {
+        "required" : [ "sdp", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "The type of session description. Must be 'offer'."
+          },
+          "sdp" : {
+            "type" : "string",
+            "description" : "The SDP text of the session description."
+          }
+        },
+        "description" : "Offer"
+      },
+      "OlmEncryptedContent" : {
+        "required" : [ "algorithm", "ciphertext", "sender_key" ],
+        "type" : "object",
+        "properties" : {
+          "ciphertext" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/CiphertextInfo"
+            },
+            "description" : "The encrypted content of the event. A map from the recipient Curve25519 identity key to ciphertext information. For more details, see Messaging Algorithms."
+          }
+        },
+        "description" : "Olm encrypted message.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomEncryptedContent"
+        } ]
+      },
+      "PresenceContent" : {
+        "required" : [ "presence" ],
+        "type" : "object",
+        "properties" : {
+          "presence" : {
+            "type" : "string",
+            "description" : "The presence state for this user.",
+            "enum" : [ "online, offline, unavailable" ]
+          },
+          "avatar_url" : {
+            "type" : "string",
+            "description" : "The current avatar URL for this user, if any."
+          },
+          "displayname" : {
+            "type" : "string",
+            "description" : "The current display name for this user, if any."
+          },
+          "last_active_ago" : {
+            "type" : "integer",
+            "description" : "The last time since this used performed some action, in milliseconds.",
+            "format" : "int64"
+          },
+          "currently_active" : {
+            "type" : "boolean",
+            "description" : "Whether the user is currently active."
+          },
+          "status_msg" : {
+            "type" : "string",
+            "description" : "An optional description to accompany the presence."
+          }
+        },
+        "description" : "Informs the client of a user's presence state change.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "PreviousRoom" : {
+        "required" : [ "event_id", "room_id" ],
+        "type" : "object",
+        "properties" : {
+          "room_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "event_id" : {
+            "$ref" : "#/components/schemas/Id"
+          }
+        },
+        "description" : "A reference to the room this room replaces, if the previous room was upgraded."
+      },
+      "PublicKeys" : {
+        "required" : [ "public_key" ],
+        "type" : "object",
+        "properties" : {
+          "key_validity_url" : {
+            "type" : "string",
+            "description" : "An optional URL which can be fetched, with querystring public_key=public_key, to validate whether the key has been revoked. The URL must return a JSON object containing a boolean property named 'valid'. If this URL is absent, the key must be considered valid indefinitely."
+          },
+          "public_key" : {
+            "type" : "string",
+            "description" : "A base-64 encoded ed25519 key with which token may be signed."
+          }
+        },
+        "description" : "Public keys."
+      },
+      "ReceiptContent" : {
+        "type" : "object",
+        "properties" : {
+          "empty" : {
+            "type" : "boolean"
+          }
+        },
+        "additionalProperties" : {
+          "$ref" : "#/components/schemas/ReceiptInfo"
+        },
+        "description" : "A map of which rooms are considered 'direct' rooms for specific users is kept in account_data in an event of type m.direct. The content of this event is an object where the keys are the user IDs and values are lists of room ID strings of the 'direct' rooms for that user ID.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "ReceiptInfo" : {
+        "type" : "object",
+        "properties" : {
+          "m.read" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/ReceiptTs"
+            },
+            "description" : "A collection of users who have sent m.read receipts for this event."
+          }
+        },
+        "description" : "Receipts."
+      },
+      "ReceiptTs" : {
+        "type" : "object",
+        "properties" : {
+          "ts" : {
+            "type" : "integer",
+            "description" : "The timestamp the receipt was sent at.",
+            "format" : "int64"
+          }
+        },
+        "description" : "ReceiptContent timestamps."
+      },
+      "Relates" : {
+        "type" : "object",
+        "properties" : {
+          "m.in_reply_to" : {
+            "$ref" : "#/components/schemas/Reply"
+          }
+        },
+        "description" : "Related data."
+      },
+      "Reply" : {
+        "required" : [ "event_id" ],
+        "type" : "object",
+        "properties" : {
+          "event_id" : {
+            "$ref" : "#/components/schemas/Id"
+          }
+        },
+        "description" : "Reply model."
+      },
+      "RequestedKeyInfo" : {
+        "required" : [ "algorithm", "room_id", "sender_key", "session_id" ],
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string",
+            "description" : "Required. The encryption algorithm the requested key in this event is to be used with."
+          },
+          "room_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "sender_key" : {
+            "type" : "string",
+            "description" : "The Curve25519 key of the device which initiated the session originally."
+          },
+          "session_id" : {
+            "type" : "string",
+            "description" : "The ID of the session that the key is for."
+          }
+        },
+        "description" : "Requested key info."
+      },
+      "RoomAliasesContent" : {
+        "required" : [ "aliases" ],
+        "type" : "object",
+        "properties" : {
+          "aliases" : {
+            "type" : "array",
+            "description" : "A list of room aliases.",
+            "items" : {
+              "$ref" : "#/components/schemas/Id"
+            }
+          }
+        },
+        "description" : "This event is sent by a homeserver directly to inform of changes to the list of aliases it knows about for that room. The state_key for this event is set to the homeserver which owns the room alias. The entire set of known aliases for the room is the union of all the m.room.aliases events, one for each homeserver. Clients should check the validity of any room alias given in this list before presenting it to the user as trusted fact. The lists given by this event should be considered simply as advice on which aliases might exist, for which the client can perform the lookup to confirm whether it receives the correct room ID.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomAvatarContent" : {
+        "required" : [ "url" ],
+        "type" : "object",
+        "properties" : {
+          "info" : {
+            "$ref" : "#/components/schemas/ImageInfo"
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "The URL to the image."
+          }
+        },
+        "description" : "A picture that is associated with the room. This can be displayed alongside the room information.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomCanonicalAliasContent" : {
+        "required" : [ "alias" ],
+        "type" : "object",
+        "properties" : {
+          "alias" : {
+            "$ref" : "#/components/schemas/Id"
+          }
+        },
+        "description" : "This event is used to inform the room about which alias should be considered the canonical one. This could be for display purposes or as suggestion to users which alias to use to advertise the room. A room with an m.room.canonical_alias event with an absent, null, or empty alias field should be treated the same as a room with no m.room.canonical_alias event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomCreateContent" : {
+        "required" : [ "creator" ],
+        "type" : "object",
+        "properties" : {
+          "creator" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "predecessor" : {
+            "$ref" : "#/components/schemas/PreviousRoom"
+          },
+          "m.federate" : {
+            "type" : "boolean",
+            "description" : "Whether users on other servers can join this room. Defaults to ``true`` if key does not exist."
+          },
+          "room_version" : {
+            "type" : "string",
+            "description" : "The version of the room. Defaults to \"1\" if the key does not exist."
+          }
+        },
+        "description" : "This is the first event in a room and cannot be changed. It acts as the root of all other events.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomEncryptedContent" : {
+        "required" : [ "algorithm", "sender_key" ],
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string",
+            "description" : "The encryption algorithm used to encrypt this event. The value of this field determines which other properties will be present.",
+            "enum" : [ "m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2" ]
+          },
+          "sender_key" : {
+            "type" : "string",
+            "description" : "The Curve25519 key of the sender."
+          },
+          "device_id" : {
+            "type" : "string",
+            "description" : "The ID of the sending device. Required with Megolm."
+          },
+          "session_id" : {
+            "type" : "string",
+            "description" : "The ID of the session used to encrypt the message. Required with Megolm."
+          }
+        },
+        "description" : "This event type is used when sending encrypted events. It can be used either within a room (in which case it will have all of the Room Event fields), or as a to-device event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomEncryptionContent" : {
+        "required" : [ "algorithm" ],
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string",
+            "description" : "The encryption algorithm to be used to encrypt messages sent in this room. Must be 'm.megolm.v1.aes-sha2'."
+          },
+          "rotation_period_ms" : {
+            "type" : "integer",
+            "description" : "How long the session should be used before changing it. 604800000 (a week) is the recommended default.",
+            "format" : "int64"
+          },
+          "rotation_period_msgs" : {
+            "type" : "integer",
+            "description" : "How many messages should be sent before changing the session. 100 is the recommended default.",
+            "format" : "int64"
+          }
+        },
+        "description" : "State Event. Defines how messages sent in this room should be encrypted.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomEvent" : {
+        "required" : [ "event_id", "origin_server_ts", "room_id", "sender", "type" ],
+        "type" : "object",
+        "properties" : {
+          "sender" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "unsigned" : {
+            "$ref" : "#/components/schemas/UnsignedEventContent"
+          },
+          "event_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "room_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "origin_server_ts" : {
+            "type" : "integer",
+            "description" : "Timestamp in milliseconds on originating homeserver when this event was sent.",
+            "format" : "int64"
+          }
+        },
+        "description" : "Room Event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Event"
+        } ]
+      },
+      "RoomGuestAccessContent" : {
+        "type" : "object",
+        "properties" : {
+          "guest_access" : {
+            "type" : "string",
+            "description" : "Whether guests can join the room.",
+            "enum" : [ "can_join, forbidden" ]
+          }
+        },
+        "description" : "This event controls whether guest users are allowed to join rooms. If this event is absent, servers should act as if it is present and has the guest_access value \"forbidden\".",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomHistoryVisibilityContent" : {
+        "required" : [ "history_visibility" ],
+        "type" : "object",
+        "properties" : {
+          "history_visibility" : {
+            "type" : "string",
+            "description" : "Who can see the room history.",
+            "enum" : [ "invited, joined, shared, world_readable" ]
+          }
+        },
+        "description" : "This event controls whether a user can see the events that happened in a room from before they joined.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomJoinRulesContent" : {
+        "type" : "object",
+        "properties" : {
+          "join_rule" : {
+            "type" : "string",
+            "description" : "The type of rules used for users wishing to join this room.",
+            "enum" : [ "public", "knock", "invite", "private" ]
+          }
+        },
+        "description" : "A room may be ``public`` meaning anyone can join the room without any prior action. Alternatively, it can be ``invite`` meaning that a user who wishes to join the room must first receive an invite to the room from someone already inside of the room. Currently, ``knock`` and ``private`` are reserved keywords which are not implemented.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomKeyContent" : {
+        "required" : [ "algorithm", "room_id", "session_id", "session_key" ],
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string",
+            "description" : "The encryption algorithm the key in this event is to be used with. Must be 'm.megolm.v1.aes-sha2'."
+          },
+          "room_id" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "session_id" : {
+            "type" : "string",
+            "description" : "The ID of the session that the key is for."
+          },
+          "session_key" : {
+            "type" : "string",
+            "description" : "The key to be exchanged."
+          }
+        },
+        "description" : "This event type is used to exchange keys for end-to-end encryption. Typically it is encrypted as an m.room.encrypted event, then sent as a to-device event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomKeyRequestContent" : {
+        "required" : [ "action", "request_id", "requesting_device_id" ],
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "$ref" : "#/components/schemas/RequestedKeyInfo"
+          },
+          "action" : {
+            "type" : "string",
+            "description" : "Request action.",
+            "enum" : [ "request, cancel_request" ]
+          },
+          "requesting_device_id" : {
+            "type" : "string",
+            "description" : "ID of the device requesting the key."
+          },
+          "request_id" : {
+            "type" : "string",
+            "description" : "A random string uniquely identifying the request for a key. If the key is requested multiple times, it should be reused. It should also reused in order to cancel a request."
+          }
+        },
+        "description" : "This event type is used to request keys for end-to-end encryption. It is sent as an unencrypted to-device event.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
         } ]
       },
       "RoomMemberContent" : {
@@ -1082,694 +1536,18 @@
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
-      "CallInviteContent" : {
-        "required" : [ "call_id", "lifetime", "offer", "version" ],
-        "type" : "object",
-        "properties" : {
-          "offer" : {
-            "$ref" : "#/components/schemas/Offer"
-          },
-          "version" : {
-            "type" : "integer",
-            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
-            "format" : "int64"
-          },
-          "lifetime" : {
-            "type" : "integer",
-            "description" : "The time in milliseconds that the invite is valid for. Once the invite age exceeds this value, clients should discard it. They should also no longer show the call as awaiting an answer in the UI.",
-            "format" : "int64"
-          },
-          "call_id" : {
-            "type" : "string",
-            "description" : "The ID of the call this event relates to."
-          }
-        },
-        "description" : "This event is sent by the caller when they wish to establish a call.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "Offer" : {
-        "required" : [ "sdp", "type" ],
-        "type" : "object",
-        "properties" : {
-          "type" : {
-            "type" : "string",
-            "description" : "The type of session description. Must be 'offer'."
-          },
-          "sdp" : {
-            "type" : "string",
-            "description" : "The SDP text of the session description."
-          }
-        },
-        "description" : "Offer"
-      },
-      "EncryptedFile" : {
-        "required" : [ "iv", "key", "url", "v" ],
-        "type" : "object",
-        "properties" : {
-          "url" : {
-            "type" : "string",
-            "description" : "the URL to the file."
-          },
-          "key" : {
-            "$ref" : "#/components/schemas/JWK"
-          },
-          "iv" : {
-            "type" : "string",
-            "description" : " The Initialisation Vector used by AES-CTR, encoded as unpadded base64."
-          },
-          "hashes" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string",
-              "description" : "A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64. Clients should support the SHA-256 hash, which uses the key sha256."
-            },
-            "description" : "A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64. Clients should support the SHA-256 hash, which uses the key sha256."
-          },
-          "v" : {
-            "type" : "string",
-            "description" : "Version of the encrypted attachments protocol. Must be v2."
-          }
-        },
-        "description" : "Encrypted file."
-      },
-      "Video" : {
-        "required" : [ "url" ],
-        "type" : "object",
-        "properties" : {
-          "info" : {
-            "$ref" : "#/components/schemas/VideoInfo"
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "The URL to the video clip."
-          },
-          "file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          }
-        },
-        "description" : "This message represents a single video clip.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomMessageContent"
-        } ]
-      },
-      "CallCandidatesContent" : {
-        "required" : [ "call_id", "candidates", "version" ],
-        "type" : "object",
-        "properties" : {
-          "candidates" : {
-            "type" : "array",
-            "description" : "Array of objects describing the candidates.",
-            "items" : {
-              "$ref" : "#/components/schemas/Candidate"
-            }
-          },
-          "version" : {
-            "type" : "integer",
-            "description" : "The version of the VoIP specification this messages adheres to. This specification is version 0.",
-            "format" : "int64"
-          },
-          "call_id" : {
-            "type" : "string",
-            "description" : "The ID of the call this event relates to."
-          }
-        },
-        "description" : "This event is sent by callers after sending an invite and by the callee after answering. Its purpose is to give the other party additional ICE candidates to try using to communicate.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "EventContent" : {
-        "type" : "object",
-        "description" : "Parent class of all event contents part in the Event."
-      },
-      "RoomEvent" : {
-        "required" : [ "event_id", "origin_server_ts", "room_id", "sender", "type" ],
-        "type" : "object",
-        "properties" : {
-          "sender" : {
-            "type" : "string",
-            "description" : "Contains the fully-qualified ID of the user who sent this event."
-          },
-          "unsigned" : {
-            "$ref" : "#/components/schemas/UnsignedEventContent"
-          },
-          "event_id" : {
-            "type" : "string",
-            "description" : "The globally unique event identifier."
-          },
-          "room_id" : {
-            "type" : "string",
-            "description" : "The ID of the room associated with this event."
-          },
-          "origin_server_ts" : {
-            "type" : "integer",
-            "description" : "Timestamp in milliseconds on originating homeserver when this event was sent.",
-            "format" : "int64"
-          }
-        },
-        "description" : "Room Event.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/Event"
-        } ]
-      },
-      "RoomEncryptionContent" : {
-        "required" : [ "algorithm" ],
-        "type" : "object",
-        "properties" : {
-          "algorithm" : {
-            "type" : "string",
-            "description" : "The encryption algorithm to be used to encrypt messages sent in this room. Must be 'm.megolm.v1.aes-sha2'."
-          },
-          "rotation_period_ms" : {
-            "type" : "integer",
-            "description" : "How long the session should be used before changing it. 604800000 (a week) is the recommended default.",
-            "format" : "int64"
-          },
-          "rotation_period_msgs" : {
-            "type" : "integer",
-            "description" : "How many messages should be sent before changing the session. 100 is the recommended default.",
-            "format" : "int64"
-          }
-        },
-        "description" : "State Event. Defines how messages sent in this room should be encrypted.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomJoinRulesContent" : {
-        "type" : "object",
-        "properties" : {
-          "join_rule" : {
-            "type" : "string",
-            "description" : "The type of rules used for users wishing to join this room.",
-            "enum" : [ "public", "knock", "invite", "private" ]
-          }
-        },
-        "description" : "A room may be ``public`` meaning anyone can join the room without any prior action. Alternatively, it can be ``invite`` meaning that a user who wishes to join the room must first receive an invite to the room from someone already inside of the room. Currently, ``knock`` and ``private`` are reserved keywords which are not implemented.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "EmptyResponse" : {
-        "type" : "object",
-        "description" : "Empty response"
-      },
-      "File" : {
-        "required" : [ "filename", "url" ],
-        "type" : "object",
-        "properties" : {
-          "filename" : {
-            "type" : "string",
-            "description" : "The original filename of the uploaded file."
-          },
-          "info" : {
-            "$ref" : "#/components/schemas/FileInfo"
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "The URL to the file."
-          },
-          "file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          }
-        },
-        "description" : "This message represents a generic file.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomMessageContent"
-        } ]
-      },
-      "Instance" : {
-        "required" : [ "desc", "fields", "network_id" ],
-        "type" : "object",
-        "properties" : {
-          "desc" : {
-            "type" : "string",
-            "description" : "Description."
-          },
-          "icon" : {
-            "type" : "string",
-            "description" : "An optional content URI representing the protocol. Overrides the one provided at the higher level Protocol object."
-          },
-          "fields" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string",
-              "description" : "Preset values for fields the client may use to search by."
-            },
-            "description" : "Preset values for fields the client may use to search by."
-          },
-          "network_id" : {
-            "type" : "string",
-            "description" : "A unique identifier across all instances."
-          }
-        },
-        "description" : "Instance."
-      },
-      "RequestedKeyInfo" : {
-        "required" : [ "algorithm", "room_id", "sender_key", "session_id" ],
-        "type" : "object",
-        "properties" : {
-          "algorithm" : {
-            "type" : "string",
-            "description" : "Required. The encryption algorithm the requested key in this event is to be used with."
-          },
-          "room_id" : {
-            "type" : "string",
-            "description" : "The room where the key is used."
-          },
-          "sender_key" : {
-            "type" : "string",
-            "description" : "The Curve25519 key of the device which initiated the session originally."
-          },
-          "session_id" : {
-            "type" : "string",
-            "description" : "The ID of the session that the key is for."
-          }
-        },
-        "description" : "Requested key info."
-      },
-      "ProtocolUser" : {
-        "required" : [ "fields", "protocol", "userid" ],
-        "type" : "object",
-        "properties" : {
-          "userid" : {
-            "type" : "string",
-            "description" : "A Matrix User ID represting a third party user."
-          },
-          "protocol" : {
-            "type" : "string",
-            "description" : "The protocol ID that the third party location is a part of."
-          },
-          "fields" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string",
-              "description" : "Information used to identify this third party location."
-            },
-            "description" : "Information used to identify this third party location."
-          }
-        },
-        "description" : "Protocol User."
-      },
-      "RoomThirdPartyInviteContent" : {
-        "required" : [ "display_name", "key_validity_url", "public_key" ],
-        "type" : "object",
-        "properties" : {
-          "display_name" : {
-            "type" : "string",
-            "description" : "A user-readable string which represents the user who has been invited. This should not contain the user's third party ID, as otherwise when the invite is accepted it would leak the association between the matrix ID and the third party ID."
-          },
-          "key_validity_url" : {
-            "type" : "string",
-            "description" : "A URL which can be fetched, with querystring public_key=public_key, to validate whether the key has been revoked. The URL must return a JSON object containing a boolean property named 'valid'."
-          },
-          "public_key" : {
-            "type" : "string",
-            "description" : "A base64-encoded ed25519 key with which token must be signed (though a signature from any entry in public_keys is also sufficient). This exists for backwards compatibility."
-          },
-          "public_keys" : {
-            "type" : "array",
-            "description" : "Keys with which the token may be signed.",
-            "items" : {
-              "$ref" : "#/components/schemas/PublicKeys"
-            }
-          }
-        },
-        "description" : "Acts as an m.room.member invite event, where there isn't a target user_id to invite. This event contains a token and a public key whose private key must be used to sign the token. Any user who can present that signature may use this invitation to join the target room.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "UnsignedEventContent" : {
-        "type" : "object",
-        "properties" : {
-          "age" : {
-            "type" : "integer",
-            "description" : "The time in milliseconds that has elapsed since the event was sent. This field is generated by the local homeserver, and may be incorrect if the local time on at least one of the two servers is out of sync, which can cause the age to either be negative or greater than it actually is.",
-            "format" : "int64"
-          },
-          "redacted_because" : {
-            "$ref" : "#/components/schemas/Event"
-          },
-          "transaction_id" : {
-            "type" : "string",
-            "description" : "The client-supplied transaction ID, if the client being given the event is the same one which sent it."
-          },
-          "prev_content" : {
-            "$ref" : "#/components/schemas/EventContent"
-          },
-          "invite_room_state" : {
-            "type" : "array",
-            "description" : "This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.",
-            "items" : {
-              "$ref" : "#/components/schemas/Event"
-            }
-          }
-        },
-        "description" : "Unsigned addition data."
-      },
-      "VideoInfo" : {
-        "type" : "object",
-        "properties" : {
-          "mimetype" : {
-            "type" : "string",
-            "description" : "The mimetype of the image, e.g. image/jpeg."
-          },
-          "size" : {
-            "type" : "integer",
-            "description" : "Size of the image in bytes.",
-            "format" : "int64"
-          },
-          "duration" : {
-            "type" : "integer",
-            "description" : "The duration of the video in milliseconds.",
-            "format" : "int64"
-          },
-          "thumbnail_url" : {
-            "type" : "string",
-            "description" : "The URL to a thumbnail of the image."
-          },
-          "thumbnail_file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          },
-          "thumbnail_info" : {
-            "$ref" : "#/components/schemas/ThumbnailInfo"
-          },
-          "h" : {
-            "type" : "integer",
-            "description" : "The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
-            "format" : "int64"
-          },
-          "w" : {
-            "type" : "integer",
-            "description" : "The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
-            "format" : "int64"
-          }
-        },
-        "description" : "Video info."
-      },
-      "RoomAliasesContent" : {
-        "required" : [ "aliases" ],
-        "type" : "object",
-        "properties" : {
-          "aliases" : {
-            "type" : "array",
-            "description" : "A list of room aliases.",
-            "items" : {
-              "type" : "string",
-              "description" : "A list of room aliases."
-            }
-          }
-        },
-        "description" : "This event is sent by a homeserver directly to inform of changes to the list of aliases it knows about for that room. The state_key for this event is set to the homeserver which owns the room alias. The entire set of known aliases for the room is the union of all the m.room.aliases events, one for each homeserver. Clients should check the validity of any room alias given in this list before presenting it to the user as trusted fact. The lists given by this event should be considered simply as advice on which aliases might exist, for which the client can perform the lookup to confirm whether it receives the correct room ID.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "PublicKeys" : {
-        "required" : [ "public_key" ],
-        "type" : "object",
-        "properties" : {
-          "key_validity_url" : {
-            "type" : "string",
-            "description" : "An optional URL which can be fetched, with querystring public_key=public_key, to validate whether the key has been revoked. The URL must return a JSON object containing a boolean property named 'valid'. If this URL is absent, the key must be considered valid indefinitely."
-          },
-          "public_key" : {
-            "type" : "string",
-            "description" : "A base-64 encoded ed25519 key with which token may be signed."
-          }
-        },
-        "description" : "Public keys."
-      },
-      "TransactionRequest" : {
-        "required" : [ "events" ],
+      "RoomMemberUnsigned" : {
         "type" : "object",
         "properties" : {
           "events" : {
             "type" : "array",
-            "description" : "A list of events, formatted as per the Client-Server API.",
+            "description" : "A subset of the state of the room at the time of the invite, if membership is invite. Note that this state is informational, and SHOULD NOT be trusted; once the client has joined the room, it SHOULD fetch the live state from the server and discard the invite_room_state. Also, clients must not rely on any particular state being present here; they SHOULD behave properly (with possibly a degraded but not a broken experience) in the absence of any particular events here. If they are set on the room, at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules, and m.room.name SHOULD be included.",
             "items" : {
               "$ref" : "#/components/schemas/Event"
             }
           }
         },
-        "description" : "JSON body request of the transaction api."
-      },
-      "ForwardedRoomKeyContent" : {
-        "required" : [ "algorithm", "forwarding_curve25519_key_chain", "room_id", "sender_claimed_ed25519_key", "sender_key", "session_id", "session_key" ],
-        "type" : "object",
-        "properties" : {
-          "algorithm" : {
-            "type" : "string",
-            "description" : "Required. The encryption algorithm the key in this event is to be used with."
-          },
-          "room_id" : {
-            "type" : "string",
-            "description" : "The room where the key is used."
-          },
-          "sender_key" : {
-            "type" : "string",
-            "description" : "Required. The Curve25519 key of the device which initiated the session originally."
-          },
-          "session_id" : {
-            "type" : "string",
-            "description" : "The ID of the session that the key is for."
-          },
-          "session_key" : {
-            "type" : "string",
-            "description" : "The key to be exchanged."
-          },
-          "sender_claimed_ed25519_key" : {
-            "type" : "string",
-            "description" : "The Ed25519 key of the device which initiated the session originally. It is 'claimed' because the receiving device has no way to tell that the original room_key actually came from a device which owns the private partof this key unless they have done device verification."
-          },
-          "forwarding_curve25519_key_chain" : {
-            "type" : "array",
-            "description" : "Chain of Curve25519 keys. It starts out empty, but each time the key is forwarded to another device, the previous sender in the chain is added to the end of the list. For example, if the key is forwarded from A to B to C, this field is empty between A and B, and contains A's Curve25519 key between B and C.",
-            "items" : {
-              "type" : "string",
-              "description" : "Chain of Curve25519 keys. It starts out empty, but each time the key is forwarded to another device, the previous sender in the chain is added to the end of the list. For example, if the key is forwarded from A to B to C, this field is empty between A and B, and contains A's Curve25519 key between B and C."
-            }
-          }
-        },
-        "description" : "This event type is used to forward keys for end-to-end encryption. Typically it is encrypted as an m.room.encrypted event, then sent as a to-device event.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomCreateContent" : {
-        "required" : [ "creator" ],
-        "type" : "object",
-        "properties" : {
-          "creator" : {
-            "type" : "string",
-            "description" : "The user_id of the room creator. This is set by the homeserver."
-          },
-          "m.federate" : {
-            "type" : "boolean",
-            "description" : "Whether users on other servers can join this room. Defaults to ``true`` if key does not exist."
-          },
-          "room_version" : {
-            "type" : "string",
-            "description" : "The version of the room. Defaults to \"1\" if the key does not exist."
-          }
-        },
-        "description" : "This is the first event in a room and cannot be changed. It acts as the root of all other events.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomAvatarContent" : {
-        "required" : [ "url" ],
-        "type" : "object",
-        "properties" : {
-          "info" : {
-            "$ref" : "#/components/schemas/ImageInfo"
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "The URL to the image."
-          }
-        },
-        "description" : "A picture that is associated with the room. This can be displayed alongside the room information.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomKeyContent" : {
-        "required" : [ "algorithm", "room_id", "session_id", "session_key" ],
-        "type" : "object",
-        "properties" : {
-          "algorithm" : {
-            "type" : "string",
-            "description" : "The encryption algorithm the key in this event is to be used with. Must be 'm.megolm.v1.aes-sha2'."
-          },
-          "room_id" : {
-            "type" : "string",
-            "description" : "The room where the key is used."
-          },
-          "session_id" : {
-            "type" : "string",
-            "description" : "The ID of the session that the key is for."
-          },
-          "session_key" : {
-            "type" : "string",
-            "description" : "The key to be exchanged."
-          }
-        },
-        "description" : "This event type is used to exchange keys for end-to-end encryption. Typically it is encrypted as an m.room.encrypted event, then sent as a to-device event.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "DirectContent" : {
-        "type" : "object",
-        "properties" : {
-          "empty" : {
-            "type" : "boolean"
-          }
-        },
-        "description" : "A map of which rooms are considered 'direct' rooms for specific users is kept in account_data in an event of type m.direct. The content of this event is an object where the keys are the user IDs and values are lists of room ID strings of the 'direct' rooms for that user ID.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "NotificationPowerLevel" : {
-        "type" : "object",
-        "properties" : {
-          "room" : {
-            "type" : "string",
-            "description" : "The level required to trigger an @room notification. Defaults to 50 if unspecified.",
-            "format" : "byte"
-          }
-        },
-        "description" : "Notifications."
-      },
-      "Protocol" : {
-        "required" : [ "field_types", "icon", "instances", "location_fields", "user_fields" ],
-        "type" : "object",
-        "properties" : {
-          "icon" : {
-            "type" : "string",
-            "description" : "An icon representing the third party protocol."
-          },
-          "instances" : {
-            "type" : "array",
-            "description" : "A list of objects representing independent instances of configuration. For instance multiple networkson IRC if multiple are bridged by the same bridge.",
-            "items" : {
-              "$ref" : "#/components/schemas/Instance"
-            }
-          },
-          "user_fields" : {
-            "type" : "array",
-            "description" : "Fields used to identify a third party user.",
-            "items" : {
-              "type" : "string",
-              "description" : "Fields used to identify a third party user."
-            }
-          },
-          "location_fields" : {
-            "type" : "array",
-            "description" : "Fields used to identify a third party location.",
-            "items" : {
-              "type" : "string",
-              "description" : "Fields used to identify a third party location."
-            }
-          },
-          "field_types" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/FieldMetadata"
-            },
-            "description" : "All location or user fields should have an entry here."
-          }
-        },
-        "description" : "Protocol metadata."
-      },
-      "CallHangupContent" : {
-        "required" : [ "call_id", "version" ],
-        "type" : "object",
-        "properties" : {
-          "version" : {
-            "type" : "integer",
-            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
-            "format" : "int64"
-          },
-          "call_id" : {
-            "type" : "string",
-            "description" : "The ID of the call this event relates to."
-          }
-        },
-        "description" : "Sent by either party to signal their termination of the call. This can be sent either once the call has has been established or before to abort the call.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "StickerContent" : {
-        "required" : [ "body", "info", "url" ],
-        "type" : "object",
-        "properties" : {
-          "body" : {
-            "type" : "string",
-            "description" : "A textual representation or associated description of the sticker image. This could be the alt text of the original image, or a message to accompany and further describe the sticker."
-          },
-          "info" : {
-            "$ref" : "#/components/schemas/ImageInfo"
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "The URL to the sticker image. This must be a valid mxc:// URI."
-          }
-        },
-        "description" : "This message represents a single sticker image.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomKeyRequestContent" : {
-        "required" : [ "action", "request_id", "requesting_device_id" ],
-        "type" : "object",
-        "properties" : {
-          "body" : {
-            "$ref" : "#/components/schemas/RequestedKeyInfo"
-          },
-          "action" : {
-            "type" : "string",
-            "description" : "Request action.",
-            "enum" : [ "request, cancel_request" ]
-          },
-          "requesting_device_id" : {
-            "type" : "string",
-            "description" : "ID of the device requesting the key."
-          },
-          "request_id" : {
-            "type" : "string",
-            "description" : "A random string uniquely identifying the request for a key. If the key is requested multiple times, it should be reused. It should also reused in order to cancel a request."
-          }
-        },
-        "description" : "This event type is used to request keys for end-to-end encryption. It is sent as an unencrypted to-device event.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "Text" : {
-        "type" : "object",
-        "properties" : {
-          "format" : {
-            "type" : "string",
-            "description" : "The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html`` is supported."
-          },
-          "formatted_body" : {
-            "type" : "string",
-            "description" : "The formatted version of the ``body``. This is required if ``format`` is specified."
-          }
-        },
-        "description" : "This message is the most basic message and is used to represent text.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/RoomMessageContent"
-        } ]
+        "description" : "Unsigned data."
       },
       "RoomMessageContent" : {
         "type" : "object",
@@ -1792,112 +1570,33 @@
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
-      "LocationInfo" : {
+      "RoomNameContent" : {
+        "required" : [ "name" ],
         "type" : "object",
         "properties" : {
-          "thumbnail_url" : {
+          "name" : {
             "type" : "string",
-            "description" : "The URL to a thumbnail of the location being represented."
-          },
-          "thumbnail_file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
-          },
-          "thumbnail_info" : {
-            "$ref" : "#/components/schemas/ThumbnailInfo"
+            "description" : "The name of the room. This MUST NOT exceed 255 bytes."
           }
         },
-        "description" : "Location info."
-      },
-      "ErrorResponse" : {
-        "type" : "object",
-        "properties" : {
-          "errcode" : {
-            "type" : "string"
-          },
-          "error" : {
-            "type" : "string"
-          }
-        }
-      },
-      "ReceiptContent" : {
-        "type" : "object",
-        "properties" : {
-          "empty" : {
-            "type" : "boolean"
-          }
-        },
-        "additionalProperties" : {
-          "$ref" : "#/components/schemas/ReceiptInfo"
-        },
-        "description" : "A map of which rooms are considered 'direct' rooms for specific users is kept in account_data in an event of type m.direct. The content of this event is an object where the keys are the user IDs and values are lists of room ID strings of the 'direct' rooms for that user ID.",
+        "description" : "A room has an opaque room ID which is not human-friendly to read. A room alias is human-friendly, but not all rooms have room aliases. The room name is a human-friendly string designed to be displayed to the end-user. The room name is not unique, as multiple rooms can have the same room name set. A room with an m.room.name event with an absent, null, or empty name field should be treated the same as a room with no m.room.name event. An event of this type is automatically created when creating a room using /createRoom with the name key.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
-      "Answer" : {
-        "required" : [ "sdp", "type" ],
+      "RoomPinnedContent" : {
+        "required" : [ "pinned" ],
         "type" : "object",
         "properties" : {
-          "type" : {
-            "type" : "string",
-            "description" : "The type of session description. Must be 'answer'."
-          },
-          "sdp" : {
-            "type" : "string",
-            "description" : "The SDP text of the session description."
-          }
-        },
-        "description" : "Answer"
-      },
-      "TypingContent" : {
-        "required" : [ "user_ids" ],
-        "type" : "object",
-        "properties" : {
-          "user_ids" : {
+          "pinned" : {
             "type" : "array",
-            "description" : "The list of user IDs typing in this room, if any.",
+            "description" : "An ordered list of event IDs to pin.",
             "items" : {
-              "type" : "string",
-              "description" : "The list of user IDs typing in this room, if any."
+              "$ref" : "#/components/schemas/Id"
             }
           }
         },
-        "description" : "Informs the client of the list of users currently typing.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "RoomMemberUnsigned" : {
-        "type" : "object",
-        "properties" : {
-          "events" : {
-            "type" : "array",
-            "description" : "A subset of the state of the room at the time of the invite, if membership is invite. Note that this state is informational, and SHOULD NOT be trusted; once the client has joined the room, it SHOULD fetch the live state from the server and discard the invite_room_state. Also, clients must not rely on any particular state being present here; they SHOULD behave properly (with possibly a degraded but not a broken experience) in the absence of any particular events here. If they are set on the room, at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules, and m.room.name SHOULD be included.",
-            "items" : {
-              "$ref" : "#/components/schemas/Event"
-            }
-          }
-        },
-        "description" : "Unsigned data."
-      },
-      "CallAnswerContent" : {
-        "required" : [ "answer", "call_id", "version" ],
-        "type" : "object",
-        "properties" : {
-          "answer" : {
-            "$ref" : "#/components/schemas/Answer"
-          },
-          "version" : {
-            "type" : "integer",
-            "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
-            "format" : "int64"
-          },
-          "call_id" : {
-            "type" : "string",
-            "description" : "The ID of the call this event relates to."
-          }
-        },
-        "description" : "This event is sent by the callee when they wish to answer the call.",
+        "description" : "This event is used to \"pin\" particular events in a room for other participants to review later. The order of the pinned events is guaranteed and based upon the order supplied in the event. Clients should be aware that the current user may not be able to see some of the events pinned due to visibility settings in the room. Clients are responsible for determining if a particular event in the pinned list is displayable, and have the option to not display it if it cannot be pinned in the client.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
@@ -1967,50 +1666,132 @@
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
-      "Event" : {
-        "required" : [ "type" ],
+      "RoomRedactionContent" : {
         "type" : "object",
         "properties" : {
-          "content" : {
-            "$ref" : "#/components/schemas/EventContent"
-          },
-          "type" : {
+          "reason" : {
             "type" : "string",
-            "description" : "The type of event. This SHOULD be namespaced similar to Java package naming conventions.",
-            "readOnly" : true
+            "description" : "The reason for the redaction, if any."
           }
         },
-        "description" : "Event."
+        "description" : "Events can be redacted by either room or server admins. Redacting an event means that all keys not required by the protocol are stripped off, allowing admins to remove offensive or illegal content that may have been attached to any event. This cannot be undone, allowing server owners to physically delete the offending data. There is also a concept of a moderator hiding a message event, which can be undone, but cannot be applied to state events. The event that has been redacted is specified in the redacts event level key.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
       },
-      "Reply" : {
-        "required" : [ "event_id" ],
+      "RoomServerAclContent" : {
         "type" : "object",
         "properties" : {
-          "event_id" : {
-            "type" : "string",
-            "description" : "The origin event id."
+          "allow" : {
+            "type" : "array",
+            "description" : "The server names to allow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided, effectively disallowing every server.",
+            "items" : {
+              "type" : "string",
+              "description" : "The server names to allow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided, effectively disallowing every server."
+            }
+          },
+          "deny" : {
+            "type" : "array",
+            "description" : "The server names to disallow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided.",
+            "items" : {
+              "type" : "string",
+              "description" : "The server names to disallow in the room, excluding any port information. Wildcards may be used to cover a wider range of hosts, where * matches zero or more characters and ? matches exactly one character. This defaults to an empty list when not provided."
+            }
+          },
+          "allow_ip_literals" : {
+            "type" : "boolean",
+            "description" : "True to allow server names that are IP address literals. False to deny. Defaults to true if missing or otherwise not a boolean. This is strongly recommended to be set to false as servers running with IP literal names are strongly discouraged in order to require legitimate homeservers to be backed by a valid registered domain name."
           }
         },
-        "description" : "Reply model."
+        "description" : "An event to indicate which servers are permitted to participate in the room. Server ACLs may allow or deny groups of hosts.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomThirdPartyInviteContent" : {
+        "required" : [ "display_name", "key_validity_url", "public_key" ],
+        "type" : "object",
+        "properties" : {
+          "display_name" : {
+            "type" : "string",
+            "description" : "A user-readable string which represents the user who has been invited. This should not contain the user's third party ID, as otherwise when the invite is accepted it would leak the association between the matrix ID and the third party ID."
+          },
+          "key_validity_url" : {
+            "type" : "string",
+            "description" : "A URL which can be fetched, with querystring public_key=public_key, to validate whether the key has been revoked. The URL must return a JSON object containing a boolean property named 'valid'."
+          },
+          "public_key" : {
+            "type" : "string",
+            "description" : "A base64-encoded ed25519 key with which token must be signed (though a signature from any entry in public_keys is also sufficient). This exists for backwards compatibility."
+          },
+          "public_keys" : {
+            "type" : "array",
+            "description" : "Keys with which the token may be signed.",
+            "items" : {
+              "$ref" : "#/components/schemas/PublicKeys"
+            }
+          }
+        },
+        "description" : "Acts as an m.room.member invite event, where there isn't a target user_id to invite. This event contains a token and a public key whose private key must be used to sign the token. Any user who can present that signature may use this invitation to join the target room.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "RoomTopicContent" : {
+        "required" : [ "topic" ],
+        "type" : "object",
+        "properties" : {
+          "topic" : {
+            "type" : "string",
+            "description" : "The topic text"
+          }
+        },
+        "description" : "A topic is a short message detailing what is currently being discussed in the room. It can also be used as a way to display extra information about the room, which may not be suitable for the room name. The room topic can also be set when creating a room using /createRoom with the topic key.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "Signed" : {
+        "required" : [ "mxid", "signatures", "token" ],
+        "type" : "object",
+        "properties" : {
+          "mxid" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "token" : {
+            "type" : "string",
+            "description" : "The token property of the containing third_party_invite object."
+          },
+          "signatures" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string",
+                "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
+              },
+              "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
+            },
+            "description" : "A single signature from the verifying server, in the format specified by the Signing Events section of the server-server API."
+          }
+        },
+        "description" : "Signed part of the invitation request."
       },
       "StateEvent" : {
         "required" : [ "event_id", "origin_server_ts", "room_id", "sender", "state_key", "type" ],
         "type" : "object",
         "properties" : {
           "sender" : {
-            "type" : "string",
-            "description" : "Contains the fully-qualified ID of the user who sent this event."
+            "$ref" : "#/components/schemas/Id"
           },
           "unsigned" : {
             "$ref" : "#/components/schemas/UnsignedEventContent"
           },
           "event_id" : {
-            "type" : "string",
-            "description" : "The globally unique event identifier."
+            "$ref" : "#/components/schemas/Id"
           },
           "room_id" : {
-            "type" : "string",
-            "description" : "The ID of the room associated with this event."
+            "$ref" : "#/components/schemas/Id"
           },
           "origin_server_ts" : {
             "type" : "integer",
@@ -2030,22 +1811,67 @@
           "$ref" : "#/components/schemas/Event"
         } ]
       },
-      "Audio" : {
-        "required" : [ "url" ],
+      "StickerContent" : {
+        "required" : [ "body", "info", "url" ],
         "type" : "object",
         "properties" : {
+          "body" : {
+            "type" : "string",
+            "description" : "A textual representation or associated description of the sticker image. This could be the alt text of the original image, or a message to accompany and further describe the sticker."
+          },
           "info" : {
-            "$ref" : "#/components/schemas/AudioInfo"
+            "$ref" : "#/components/schemas/ImageInfo"
           },
           "url" : {
             "type" : "string",
-            "description" : "The URL to the audio clip."
-          },
-          "file" : {
-            "$ref" : "#/components/schemas/EncryptedFile"
+            "description" : "The URL to the sticker image. This must be a valid mxc:// URI."
           }
         },
-        "description" : "This message represents a single audio clip.",
+        "description" : "This message represents a single sticker image.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "TagContent" : {
+        "type" : "object",
+        "properties" : {
+          "tags" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/TagInfo"
+            },
+            "description" : "The tags on the room and their contents."
+          }
+        },
+        "description" : "Informs the client of tags on a room.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventContent"
+        } ]
+      },
+      "TagInfo" : {
+        "type" : "object",
+        "properties" : {
+          "order" : {
+            "type" : "integer",
+            "description" : "A number in a range [0,1] describing a relative position of the room under the given tag.",
+            "format" : "int64"
+          }
+        },
+        "description" : "TagContent info."
+      },
+      "Text" : {
+        "type" : "object",
+        "properties" : {
+          "format" : {
+            "type" : "string",
+            "description" : "The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html`` is supported."
+          },
+          "formatted_body" : {
+            "type" : "string",
+            "description" : "The formatted version of the ``body``. This is required if ``format`` is specified."
+          }
+        },
+        "description" : "This message is the most basic message and is used to represent text.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/RoomMessageContent"
         } ]
@@ -2075,77 +1901,263 @@
         },
         "description" : "Thumbnail info."
       },
-      "ReceiptInfo" : {
+      "TransactionRequest" : {
+        "required" : [ "events" ],
         "type" : "object",
         "properties" : {
-          "m.read" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/ReceiptTs"
-            },
-            "description" : "A collection of users who have sent m.read receipts for this event."
+          "events" : {
+            "type" : "array",
+            "description" : "A list of events, formatted as per the Client-Server API.",
+            "items" : {
+              "$ref" : "#/components/schemas/Event"
+            }
           }
         },
-        "description" : "Receipts."
+        "description" : "JSON body request of the transaction api."
       },
-      "RoomCanonicalAliasContent" : {
-        "required" : [ "alias" ],
+      "TypingContent" : {
+        "required" : [ "user_ids" ],
         "type" : "object",
         "properties" : {
-          "alias" : {
-            "type" : "string",
-            "description" : "The canonical alias"
+          "user_ids" : {
+            "type" : "array",
+            "description" : "The list of user IDs typing in this room, if any.",
+            "items" : {
+              "$ref" : "#/components/schemas/Id"
+            }
           }
         },
-        "description" : "This event is used to inform the room about which alias should be considered the canonical one. This could be for display purposes or as suggestion to users which alias to use to advertise the room. A room with an m.room.canonical_alias event with an absent, null, or empty alias field should be treated the same as a room with no m.room.canonical_alias event.",
+        "description" : "Informs the client of the list of users currently typing.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
-      "FullyReadContent" : {
-        "required" : [ "event_id" ],
+      "UnsignedEventContent" : {
         "type" : "object",
         "properties" : {
-          "event_id" : {
-            "type" : "string",
-            "description" : "The event the user's read marker is located at in the room."
-          }
-        },
-        "description" : "The current location of the user's read marker in a room. This event appears in the user's room account data for the room the marker is applicable for.",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/EventContent"
-        } ]
-      },
-      "Invite" : {
-        "required" : [ "display_name", "signed" ],
-        "type" : "object",
-        "properties" : {
-          "signed" : {
-            "$ref" : "#/components/schemas/Signed"
+          "age" : {
+            "type" : "integer",
+            "description" : "The time in milliseconds that has elapsed since the event was sent. This field is generated by the local homeserver, and may be incorrect if the local time on at least one of the two servers is out of sync, which can cause the age to either be negative or greater than it actually is.",
+            "format" : "int64"
           },
-          "display_name" : {
+          "redacted_because" : {
+            "$ref" : "#/components/schemas/Event"
+          },
+          "transaction_id" : {
             "type" : "string",
-            "description" : "A name which can be displayed to represent the user instead of their third party identifier."
+            "description" : "The client-supplied transaction ID, if the client being given the event is the same one which sent it."
+          },
+          "prev_content" : {
+            "$ref" : "#/components/schemas/EventContent"
+          },
+          "invite_room_state" : {
+            "type" : "array",
+            "description" : "This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.",
+            "items" : {
+              "$ref" : "#/components/schemas/Event"
+            }
           }
         },
-        "description" : "Third-party invites."
+        "description" : "Unsigned addition data."
       },
-      "Location" : {
-        "required" : [ "geo_uri" ],
+      "Video" : {
+        "required" : [ "url" ],
         "type" : "object",
         "properties" : {
           "info" : {
-            "$ref" : "#/components/schemas/LocationInfo"
+            "$ref" : "#/components/schemas/VideoInfo"
           },
-          "geo_uri" : {
+          "url" : {
             "type" : "string",
-            "description" : "A geo URI representing this location."
+            "description" : "The URL to the video clip."
+          },
+          "file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
           }
         },
-        "description" : "This message represents a real-world location.",
+        "description" : "This message represents a single video clip.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/RoomMessageContent"
         } ]
+      },
+      "VideoInfo" : {
+        "type" : "object",
+        "properties" : {
+          "mimetype" : {
+            "type" : "string",
+            "description" : "The mimetype of the image, e.g. image/jpeg."
+          },
+          "size" : {
+            "type" : "integer",
+            "description" : "Size of the image in bytes.",
+            "format" : "int64"
+          },
+          "duration" : {
+            "type" : "integer",
+            "description" : "The duration of the video in milliseconds.",
+            "format" : "int64"
+          },
+          "thumbnail_url" : {
+            "type" : "string",
+            "description" : "The URL to a thumbnail of the image."
+          },
+          "thumbnail_file" : {
+            "$ref" : "#/components/schemas/EncryptedFile"
+          },
+          "thumbnail_info" : {
+            "$ref" : "#/components/schemas/ThumbnailInfo"
+          },
+          "h" : {
+            "type" : "integer",
+            "description" : "The intended display height of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
+            "format" : "int64"
+          },
+          "w" : {
+            "type" : "integer",
+            "description" : "The intended display width of the image in pixels. This may differ from the intrinsic dimensions of the image file.",
+            "format" : "int64"
+          }
+        },
+        "description" : "Video info."
+      },
+      "ProtocolLocation" : {
+        "required" : [ "alias", "fields", "protocol" ],
+        "type" : "object",
+        "properties" : {
+          "alias" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "protocol" : {
+            "type" : "string",
+            "description" : "The protocol ID that the third party location is a part of."
+          },
+          "fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string",
+              "description" : "Information used to identify this third party location."
+            },
+            "description" : "Information used to identify this third party location."
+          }
+        },
+        "description" : "Protocol Location."
+      },
+      "FieldMetadata" : {
+        "required" : [ "placeholder", "regexp" ],
+        "type" : "object",
+        "properties" : {
+          "regexp" : {
+            "type" : "string",
+            "description" : "A regular expression for validation of a field's value."
+          },
+          "placeholder" : {
+            "type" : "string",
+            "description" : "An placeholder serving as a valid example of the field value."
+          }
+        },
+        "description" : "Definition of valid values for a field."
+      },
+      "Instance" : {
+        "required" : [ "desc", "fields", "network_id" ],
+        "type" : "object",
+        "properties" : {
+          "desc" : {
+            "type" : "string",
+            "description" : "Description."
+          },
+          "icon" : {
+            "type" : "string",
+            "description" : "An optional content URI representing the protocol. Overrides the one provided at the higher level Protocol object."
+          },
+          "fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string",
+              "description" : "Preset values for fields the client may use to search by."
+            },
+            "description" : "Preset values for fields the client may use to search by."
+          },
+          "network_id" : {
+            "type" : "string",
+            "description" : "A unique identifier across all instances."
+          }
+        },
+        "description" : "Instance."
+      },
+      "Protocol" : {
+        "required" : [ "field_types", "icon", "instances", "location_fields", "user_fields" ],
+        "type" : "object",
+        "properties" : {
+          "icon" : {
+            "type" : "string",
+            "description" : "An icon representing the third party protocol."
+          },
+          "instances" : {
+            "type" : "array",
+            "description" : "A list of objects representing independent instances of configuration. For instance multiple networkson IRC if multiple are bridged by the same bridge.",
+            "items" : {
+              "$ref" : "#/components/schemas/Instance"
+            }
+          },
+          "user_fields" : {
+            "type" : "array",
+            "description" : "Fields used to identify a third party user.",
+            "items" : {
+              "type" : "string",
+              "description" : "Fields used to identify a third party user."
+            }
+          },
+          "location_fields" : {
+            "type" : "array",
+            "description" : "Fields used to identify a third party location.",
+            "items" : {
+              "type" : "string",
+              "description" : "Fields used to identify a third party location."
+            }
+          },
+          "field_types" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/FieldMetadata"
+            },
+            "description" : "All location or user fields should have an entry here."
+          }
+        },
+        "description" : "Protocol metadata."
+      },
+      "ProtocolUser" : {
+        "required" : [ "fields", "protocol", "userid" ],
+        "type" : "object",
+        "properties" : {
+          "userid" : {
+            "$ref" : "#/components/schemas/Id"
+          },
+          "protocol" : {
+            "type" : "string",
+            "description" : "The protocol ID that the third party location is a part of."
+          },
+          "fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string",
+              "description" : "Information used to identify this third party location."
+            },
+            "description" : "Information used to identify this third party location."
+          }
+        },
+        "description" : "Protocol User."
+      },
+      "RoomVisibility" : {
+        "required" : [ "visibility" ],
+        "type" : "object",
+        "properties" : {
+          "visibility" : {
+            "type" : "string",
+            "description" : "Whether the room should be visible (public) in the directory or not (private).",
+            "enum" : [ "public", "private" ]
+          }
+        },
+        "description" : "JSON body request of the room service api."
       }
     }
   }

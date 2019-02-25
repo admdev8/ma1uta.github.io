@@ -9,8 +9,35 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: r0.1.0-2
+  version: r0.1.0-4
 paths:
+  /_matrix/identity/api/v1/validate/msisdn/requestToken:
+    post:
+      summary: Create a session for validating a phone number.
+      description: |-
+        The identity server will send an SMS message containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the SMS for that phone number, and so we validate ownership of the phone number.
+        Note that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example, /register/msisdn/requestToken is designed specifically for use when registering an account and therefore will inform the user if the phone number given is already registered on the server.
+      operationId: createPhoneSession
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhoneRequestToken'
+        required: true
+      responses:
+        200:
+          description: Session created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        400:
+          description: An error occured.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/identity/api/v1/validate/email/requestToken:
     post:
       summary: Create a session for validating an email address.
@@ -110,29 +137,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationResponse'
-  /_matrix/identity/api/v1/validate/msisdn/requestToken:
+  /_matrix/identity/api/v1/bind:
     post:
-      summary: Create a session for validating a phone number.
-      description: |-
-        The identity server will send an SMS message containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the SMS for that phone number, and so we validate ownership of the phone number.
-        Note that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example, /register/msisdn/requestToken is designed specifically for use when registering an account and therefore will inform the user if the phone number given is already registered on the server.
-      operationId: createPhoneSession
+      summary: Publish an association between a session and a Matrix user ID.
+      description: Future calls to /lookup for any of the session's 3pids will return
+        this association.
+      operationId: publish
       requestBody:
-        description: JSON body request
+        description: JSON boy request
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PhoneRequestToken'
+              $ref: '#/components/schemas/PublishRequest'
         required: true
       responses:
         200:
-          description: Session created.
+          description: The association was published.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionResponse'
+                $ref: '#/components/schemas/PublishResponse'
         400:
-          description: An error occured.
+          description: The association was not published. If the session has not been
+            validated, then errcode will be M_SESSION_NOT_VALIDATED. If the session
+            has timed out, then errcode will be M_SESSION_EXPIRED.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: he Session ID or client secret were not found.
           content:
             application/json:
               schema:
@@ -206,40 +240,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationResponse'
-  /_matrix/identity/api/v1/bind:
-    post:
-      summary: Publish an association between a session and a Matrix user ID.
-      description: Future calls to /lookup for any of the session's 3pids will return
-        this association.
-      operationId: publish
-      requestBody:
-        description: JSON boy request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PublishRequest'
-        required: true
-      responses:
-        200:
-          description: The association was published.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PublishResponse'
-        400:
-          description: The association was not published. If the session has not been
-            validated, then errcode will be M_SESSION_NOT_VALIDATED. If the session
-            has timed out, then errcode will be M_SESSION_EXPIRED.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: he Session ID or client secret were not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/identity/api/v1/store-invite:
     post:
       summary: Store pending invitations to a user's 3pid.
@@ -276,24 +276,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MxidErrorResponse'
-  /_matrix/identity/api/v1/pubkey/ephemeral/isvalid:
-    get:
-      summary: Check whether a short-term public key is valid.
-      operationId: ephemeralValid
-      parameters:
-      - name: public_key
-        in: query
-        description: The unpadded base64-encoded public key to check.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The validity of the public key.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KeyValidationResponse'
   /_matrix/identity/api/v1/pubkey/{keyId}:
     get:
       summary: Get the public key for the passed key ID.
@@ -339,25 +321,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KeyValidationResponse'
-  /_matrix/identity/api/v1/bulk_lookup:
-    post:
-      summary: Lookup Matrix user IDs for a list of 3pids.
-      operationId: bulkLookup
-      requestBody:
-        description: An array of arrays containing the 3PID Types with the medium
-          in first position and the address in second position.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BulkLookupRequest'
+  /_matrix/identity/api/v1/pubkey/ephemeral/isvalid:
+    get:
+      summary: Check whether a short-term public key is valid.
+      operationId: ephemeralValid
+      parameters:
+      - name: public_key
+        in: query
+        description: The unpadded base64-encoded public key to check.
         required: true
+        schema:
+          type: string
       responses:
         200:
-          description: A list of known 3PID mappings for the supplied 3PIDs.
+          description: The validity of the public key.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkLookupResponse'
+                $ref: '#/components/schemas/KeyValidationResponse'
   /_matrix/identity/api/v1/lookup:
     get:
       summary: Look up the Matrix user ID for a 3pid.
@@ -383,6 +364,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LookupResponse'
+  /_matrix/identity/api/v1/bulk_lookup:
+    post:
+      summary: Lookup Matrix user IDs for a list of 3pids.
+      operationId: bulkLookup
+      requestBody:
+        description: An array of arrays containing the 3PID Types with the medium
+          in first position and the address in second position.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkLookupRequest'
+        required: true
+      responses:
+        200:
+          description: A list of known 3PID mappings for the supplied 3PIDs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkLookupResponse'
   /_matrix/identity/api/v1/sign-ed25519:
     post:
       summary: Sign invitation details.
@@ -463,6 +463,52 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SessionResponse:
+      required:
+      - sid
+      type: object
+      properties:
+        sid:
+          type: string
+          description: The session ID. Session IDs are opaque strings generated by
+            the identity server. They must consist entirely of the characters [0-9a-zA-Z.=_-].
+            Their length must not exceed 255 characters and they must not be empty.
+      description: The sid generated for this session to the caller, in a JSON object
+        containing the sid key.
+    ErrorResponse:
+      type: object
+      properties:
+        errcode:
+          type: string
+        error:
+          type: string
+    ValidationResponse:
+      required:
+      - address
+      - medium
+      - validated_at
+      type: object
+      properties:
+        medium:
+          type: string
+          description: The medium type of the 3pid.
+        address:
+          type: string
+          description: The address of the 3pid being looked up.
+        validated_at:
+          type: integer
+          description: Timestamp, in milliseconds, indicating the time that the 3pid
+            was validated.
+          format: int64
+      description: Validation result.
+    Id:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        sigil:
+          type: string
+      description: The Matrix user ID to associate with the 3pids.
     PublishResponse:
       required:
       - address
@@ -481,8 +527,7 @@ components:
           type: string
           description: The medium type of the 3pid.
         mxid:
-          type: string
-          description: The Matrix user ID associated with the 3pid.
+          $ref: '#/components/schemas/Id'
         ts:
           type: integer
           description: The unix timestamp at which the association was verified.
@@ -513,6 +558,30 @@ components:
             be valid.
           format: int64
       description: Result of the publishing association.
+    InvitationResponse:
+      required:
+      - display_name
+      - public_keys
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+          description: The generated token. Must be a string consisting of the characters
+            [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must
+            not be empty.
+        public_keys:
+          type: array
+          description: A list of [server's long-term public key, generated ephemeral
+            public key].
+          items:
+            type: string
+            description: A list of [server's long-term public key, generated ephemeral
+              public key].
+        display_name:
+          type: string
+          description: The generated (redacted) display_name.
+      description: Result of the pending invitation.
     MxidErrorResponse:
       type: object
       properties:
@@ -521,71 +590,12 @@ components:
         error:
           type: string
         mxid:
-          type: string
-          description: The MXID.
+          $ref: '#/components/schemas/Id'
       description: The Matrix error response with the MXID.
-    EmailRequestToken:
-      required:
-      - client_secret
-      - email
-      - send_attempt
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address to validate.
-        client_secret:
-          type: string
-          description: A unique string generated by the client, and used to identify
-            the validation attempt. It must be a string consisting of the characters
-            [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must
-            not be empty.
-        send_attempt:
-          type: integer
-          description: The server will only send an email if the send_attempt is a
-            number greater than the most recent one which it has seen, scoped to that
-            email + client_secret pair. This is to avoid repeatedly sending the same
-            email in the case of request retries between the POSTing user and the
-            identity server.The client should increment this value if they desire
-            a new email(e.g.a reminder) to be sent.
-          format: int64
-        next_link:
-          type: string
-          description: When the validation is completed, the identity server will
-            redirect the user to this URL.
-      description: JSON body request of the creating an email association.
-    SigningRequest:
-      required:
-      - mxid
-      - private_key
-      - token
-      type: object
-      properties:
-        mxid:
-          type: string
-          description: The Matrix user ID of the user accepting the invitation.
-        token:
-          type: string
-          description: The token from the call to store-invite.
-        private_key:
-          type: string
-          description: The private key, encoded as Unpadded base64.
-      description: JSON body request of the signing api.
-    KeyValidationResponse:
-      required:
-      - valid
-      type: object
-      properties:
-        valid:
-          type: boolean
-          description: Whether the public key is recognised and is currently valid.
-      description: The validity of the public key.
     InvitationRequest:
       required:
       - address
       - medium
-      - room_id
-      - sender
       type: object
       properties:
         medium:
@@ -595,12 +605,28 @@ components:
           type: string
           description: The email address of the invited user.
         sender:
-          type: string
-          description: The Matrix user ID of the inviting user.
+          $ref: '#/components/schemas/Id'
         room_id:
-          type: string
-          description: The Matrix room ID to which the user is invited.
+          $ref: '#/components/schemas/Id'
       description: JSON boy request of the invitation api.
+    PublicKeyResponse:
+      required:
+      - public_key
+      type: object
+      properties:
+        public_key:
+          type: string
+          description: Unpadded Base64 encoded public key.
+      description: The public key exists.
+    KeyValidationResponse:
+      required:
+      - valid
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: Whether the public key is recognised and is currently valid.
+      description: The validity of the public key.
     LookupResponse:
       required:
       - address
@@ -621,8 +647,7 @@ components:
           description: A medium from the 3PID Types Appendix, matching the medium
             requested.
         mxid:
-          type: string
-          description: The Matrix user ID associated with the 3pid.
+          $ref: '#/components/schemas/Id'
         ts:
           type: integer
           description: The unix timestamp at which the association was verified.
@@ -653,23 +678,96 @@ components:
             be valid.
           format: int64
       description: Look up response the Matrix user ID for a 3pid.
-    PublishRequest:
+    BulkLookupResponse:
+      required:
+      - threepids
+      type: object
+      properties:
+        threepids:
+          type: array
+          description: An array of array containing the 3PID Types with the medium
+            in first position, the address in second position and Matrix user ID in
+            third position.
+          items:
+            type: array
+            description: An array of array containing the 3PID Types with the medium
+              in first position, the address in second position and Matrix user ID
+              in third position.
+            items:
+              type: string
+              description: An array of array containing the 3PID Types with the medium
+                in first position, the address in second position and Matrix user
+                ID in third position.
+      description: Response of the lookup Matrix user IDs for a list of 3pids.
+    BulkLookupRequest:
+      required:
+      - threepids
+      type: object
+      properties:
+        threepids:
+          type: array
+          description: An array of arrays containing the 3PID Types with the medium
+            in first position and the address in second position.
+          items:
+            type: array
+            description: An array of arrays containing the 3PID Types with the medium
+              in first position and the address in second position.
+            items:
+              type: string
+              description: An array of arrays containing the 3PID Types with the medium
+                in first position and the address in second position.
+      description: Request of the lookup Matrix user IDs for a list of 3pids.
+    EmailRequestToken:
       required:
       - client_secret
-      - mxid
+      - email
+      - send_attempt
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address to validate.
+        client_secret:
+          type: string
+          description: A unique string generated by the client, and used to identify
+            the validation attempt. It must be a string consisting of the characters
+            [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must
+            not be empty.
+        send_attempt:
+          type: integer
+          description: The server will only send an email if the send_attempt is a
+            number greater than the most recent one which it has seen, scoped to that
+            email + client_secret pair. This is to avoid repeatedly sending the same
+            email in the case of request retries between the POSTing user and the
+            identity server.The client should increment this value if they desire
+            a new email(e.g.a reminder) to be sent.
+          format: int64
+        next_link:
+          type: string
+          description: When the validation is completed, the identity server will
+            redirect the user to this URL.
+      description: JSON body request of the creating an email association.
+    SubmitToken:
+      required:
+      - client_secret
       - sid
+      - token
       type: object
       properties:
         sid:
           type: string
-          description: The Session ID generated by the requestToken call.
-        mxid:
+          description: The session ID, generated by the requestToken call.
+        token:
           type: string
-          description: The Matrix user ID to associate with the 3pids.
+          description: The token generated by the requestToken call and sent to the
+            user.
         client_secret:
           type: string
-          description: The client secret passed to the requestToken call.
-      description: JSON body request of the bind api.
+          description: The client secret that was supplied to the requestToken call.
+      description: JSON body request of the validation.
+    EmptyResponse:
+      type: object
+      description: Empty response
     PhoneRequestToken:
       required:
       - client_secret
@@ -705,104 +803,6 @@ components:
           description: When the validation is completed, the identity server will
             redirect the user to this URL.
       description: JSON body request of the creating an phone association.
-    InvitationResponse:
-      required:
-      - display_name
-      - public_keys
-      - token
-      type: object
-      properties:
-        token:
-          type: string
-          description: The generated token. Must be a string consisting of the characters
-            [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must
-            not be empty.
-        public_keys:
-          type: array
-          description: A list of [server's long-term public key, generated ephemeral
-            public key].
-          items:
-            type: string
-            description: A list of [server's long-term public key, generated ephemeral
-              public key].
-        display_name:
-          type: string
-          description: The generated (redacted) display_name.
-      description: Result of the pending invitation.
-    ErrorResponse:
-      type: object
-      properties:
-        errcode:
-          type: string
-        error:
-          type: string
-    PublicKeyResponse:
-      required:
-      - public_key
-      type: object
-      properties:
-        public_key:
-          type: string
-          description: Unpadded Base64 encoded public key.
-      description: The public key exists.
-    ValidationResponse:
-      required:
-      - address
-      - medium
-      - validated_at
-      type: object
-      properties:
-        medium:
-          type: string
-          description: The medium type of the 3pid.
-        address:
-          type: string
-          description: The address of the 3pid being looked up.
-        validated_at:
-          type: integer
-          description: Timestamp, in milliseconds, indicating the time that the 3pid
-            was validated.
-          format: int64
-      description: Validation result.
-    BulkLookupRequest:
-      required:
-      - threepids
-      type: object
-      properties:
-        threepids:
-          type: array
-          description: An array of arrays containing the 3PID Types with the medium
-            in first position and the address in second position.
-          items:
-            type: array
-            description: An array of arrays containing the 3PID Types with the medium
-              in first position and the address in second position.
-            items:
-              type: string
-              description: An array of arrays containing the 3PID Types with the medium
-                in first position and the address in second position.
-      description: Request of the lookup Matrix user IDs for a list of 3pids.
-    BulkLookupResponse:
-      required:
-      - threepids
-      type: object
-      properties:
-        threepids:
-          type: array
-          description: An array of array containing the 3PID Types with the medium
-            in first position, the address in second position and Matrix user ID in
-            third position.
-          items:
-            type: array
-            description: An array of array containing the 3PID Types with the medium
-              in first position, the address in second position and Matrix user ID
-              in third position.
-            items:
-              type: string
-              description: An array of array containing the 3PID Types with the medium
-                in first position, the address in second position and Matrix user
-                ID in third position.
-      description: Response of the lookup Matrix user IDs for a list of 3pids.
     SigningResponse:
       required:
       - mxid
@@ -812,11 +812,9 @@ components:
       type: object
       properties:
         mxid:
-          type: string
-          description: The Matrix user ID of the user accepting the invitation.
+          $ref: '#/components/schemas/Id'
         sender:
-          type: string
-          description: The Matrix user ID of the user who sent the invitation.
+          $ref: '#/components/schemas/Id'
         signatures:
           type: object
           additionalProperties:
@@ -830,36 +828,33 @@ components:
           type: string
           description: The token for the invitation.
       description: JSON body response of the signing api.
-    SessionResponse:
+    SigningRequest:
       required:
-      - sid
-      type: object
-      properties:
-        sid:
-          type: string
-          description: The session ID. Session IDs are opaque strings generated by
-            the identity server. They must consist entirely of the characters [0-9a-zA-Z.=_-].
-            Their length must not exceed 255 characters and they must not be empty.
-      description: The sid generated for this session to the caller, in a JSON object
-        containing the sid key.
-    SubmitToken:
-      required:
-      - client_secret
-      - sid
+      - private_key
       - token
       type: object
       properties:
-        sid:
-          type: string
-          description: The session ID, generated by the requestToken call.
+        mxid:
+          $ref: '#/components/schemas/Id'
         token:
           type: string
-          description: The token generated by the requestToken call and sent to the
-            user.
+          description: The token from the call to store-invite.
+        private_key:
+          type: string
+          description: The private key, encoded as Unpadded base64.
+      description: JSON body request of the signing api.
+    PublishRequest:
+      required:
+      - client_secret
+      - sid
+      type: object
+      properties:
+        sid:
+          type: string
+          description: The Session ID generated by the requestToken call.
+        mxid:
+          $ref: '#/components/schemas/Id'
         client_secret:
           type: string
-          description: The client secret that was supplied to the requestToken call.
-      description: JSON body request of the validation.
-    EmptyResponse:
-      type: object
-      description: Empty response
+          description: The client secret passed to the requestToken call.
+      description: JSON body request of the bind api.
