@@ -1341,7 +1341,7 @@ succeeds.</li>
 <div class="section" id="identifier-grammar">
 <h1><a class="toc-backref" href="#id9">4&nbsp;&nbsp;&nbsp;Identifier Grammar</a></h1>
 <p>Some identifiers are specific to given room versions, please refer to the
-<a class="reference external" href="../index.html#room-versions">room versions specification</a> for more information.</p>
+<a class="reference external" href="index.html#room-versions">room versions specification</a> for more information.</p>
 <p><a class="anchor" id="server-name"></a></p>
 <div class="section" id="server-name">
 <h2><a class="toc-backref" href="#id10">4.1&nbsp;&nbsp;&nbsp;Server Name</a></h2>
@@ -1539,17 +1539,15 @@ encode ASCII punctuation).</p>
 <pre class="literal-block">
 !opaque_id:domain
 </pre>
-<p>An event has exactly one event ID. An event ID has the format:</p>
-<pre class="literal-block">
-$opaque_id:domain
-</pre>
-<p>The <tt class="docutils literal">domain</tt> of a room/event ID is the <a class="reference internal" href="#server-name">server name</a> of the homeserver which
+<p>An event has exactly one event ID. The format of an event ID depends upon the
+<a class="reference external" href="index.html#room-versions">room version specification</a>.</p>
+<p>The <tt class="docutils literal">domain</tt> of a room ID is the <a class="reference internal" href="#server-name">server name</a> of the homeserver which
 created the room/event. The domain is used only for namespacing to avoid the
 risk of clashes of identifiers between different homeservers. There is no
 implication that the room or event in question is still available at the
 corresponding homeserver.</p>
 <p>Event IDs and Room IDs are case-sensitive. They are not meant to be human
-readable.</p>
+readable. They are intended to be treated as fully opaque strings by clients.</p>
 <!-- TODO-spec
 What is the grammar for the opaque part? https://matrix.org/jira/browse/SPEC-389 -->
 </div>
@@ -1618,15 +1616,29 @@ followed by the identifier.</p>
 and instead should perform some sort of action within the client. For example, if
 the user were to click on a matrix.to URI for a room alias, the client may open
 a view for the user to participate in the room.</p>
+<p>The components of the matrix.to URI (<tt class="docutils literal">&lt;identifier&gt;</tt> and <tt class="docutils literal">&lt;extra parameter&gt;</tt>)
+are to be percent-encoded as per RFC 3986.</p>
 <p>Examples of matrix.to URIs are:</p>
 <ul class="simple">
-<li>Room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/#somewhere:example.org</span></tt></li>
-<li>Room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere:example.org</span></tt></li>
-<li>Permalink by room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere:example.org/$event:example.org</span></tt></li>
-<li>Permalink by room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/#somewhere:example.org/$event:example.org</span></tt></li>
-<li>User: <tt class="docutils literal"><span class="pre">https://matrix.to/#/&#64;alice:example.org</span></tt></li>
-<li>Group: <tt class="docutils literal"><span class="pre">https://matrix.to/#/+example:example.org</span></tt></li>
+<li>Room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%23somewhere%3Aexample.org</span></tt></li>
+<li>Room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere%3Aexample.org</span></tt></li>
+<li>Permalink by room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere%3Aexample.org/%24event%3Aexample.org</span></tt></li>
+<li>Permalink by room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/#somewhere:example.org/%24event%3Aexample.org</span></tt></li>
+<li>User: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%40alice%3Aexample.org</span></tt></li>
+<li>Group: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%2Bexample%3Aexample.org</span></tt></li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Historically, clients have not produced URIs which are fully encoded. Clients should
+try to interpret these cases to the best of their ability. For example, an unencoded
+room alias should still work within the client if possible.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Clients should be aware that decoding a matrix.to URI may result in extra slashes
+appearing due to some <a class="reference external" href="index.html#room-versions">room versions</a>. These slashes
+should normally be encoded when producing matrix.to URIs, however.</p>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Room ID permalinks are unroutable as there is no reliable domain to send requests
