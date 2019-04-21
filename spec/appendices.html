@@ -952,48 +952,51 @@ div.admonition-example {
 <li><a class="reference internal" href="#room-ids-and-event-ids" id="id15">4.2.2&nbsp;&nbsp;&nbsp;Room IDs and Event IDs</a></li>
 <li><a class="reference internal" href="#group-identifiers" id="id16">4.2.3&nbsp;&nbsp;&nbsp;Group Identifiers</a></li>
 <li><a class="reference internal" href="#room-aliases" id="id17">4.2.4&nbsp;&nbsp;&nbsp;Room Aliases</a></li>
-<li><a class="reference internal" href="#matrix-to-navigation" id="id18">4.2.5&nbsp;&nbsp;&nbsp;matrix.to navigation</a></li>
+<li><a class="reference internal" href="#matrix-to-navigation" id="id18">4.2.5&nbsp;&nbsp;&nbsp;matrix.to navigation</a><ul class="auto-toc">
+<li><a class="reference internal" href="#routing" id="id19">4.2.5.1&nbsp;&nbsp;&nbsp;Routing</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#pid-types" id="id19">5&nbsp;&nbsp;&nbsp;3PID Types</a><ul class="auto-toc">
-<li><a class="reference internal" href="#e-mail" id="id20">5.1&nbsp;&nbsp;&nbsp;E-Mail</a></li>
-<li><a class="reference internal" href="#pstn-phone-numbers" id="id21">5.2&nbsp;&nbsp;&nbsp;PSTN Phone numbers</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#security-threat-model" id="id22">6&nbsp;&nbsp;&nbsp;Security Threat Model</a><ul class="auto-toc">
-<li><a class="reference internal" href="#denial-of-service" id="id23">6.1&nbsp;&nbsp;&nbsp;Denial of Service</a><ul class="auto-toc">
-<li><a class="reference internal" href="#threat-resource-exhaustion" id="id24">6.1.1&nbsp;&nbsp;&nbsp;Threat: Resource Exhaustion</a></li>
-<li><a class="reference internal" href="#threat-unrecoverable-consistency-violations" id="id25">6.1.2&nbsp;&nbsp;&nbsp;Threat: Unrecoverable Consistency Violations</a></li>
-<li><a class="reference internal" href="#threat-bad-history" id="id26">6.1.3&nbsp;&nbsp;&nbsp;Threat: Bad History</a></li>
-<li><a class="reference internal" href="#threat-block-network-traffic" id="id27">6.1.4&nbsp;&nbsp;&nbsp;Threat: Block Network Traffic</a></li>
-<li><a class="reference internal" href="#threat-high-volume-of-messages" id="id28">6.1.5&nbsp;&nbsp;&nbsp;Threat: High Volume of Messages</a></li>
-<li><a class="reference internal" href="#threat-banning-users-without-necessary-authorisation" id="id29">6.1.6&nbsp;&nbsp;&nbsp;Threat: Banning users without necessary authorisation</a></li>
+<li><a class="reference internal" href="#pid-types" id="id20">5&nbsp;&nbsp;&nbsp;3PID Types</a><ul class="auto-toc">
+<li><a class="reference internal" href="#e-mail" id="id21">5.1&nbsp;&nbsp;&nbsp;E-Mail</a></li>
+<li><a class="reference internal" href="#pstn-phone-numbers" id="id22">5.2&nbsp;&nbsp;&nbsp;PSTN Phone numbers</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spoofing" id="id30">6.2&nbsp;&nbsp;&nbsp;Spoofing</a><ul class="auto-toc">
-<li><a class="reference internal" href="#threat-altering-message-contents" id="id31">6.2.1&nbsp;&nbsp;&nbsp;Threat: Altering Message Contents</a></li>
-<li><a class="reference internal" href="#threat-fake-message-origin-field" id="id32">6.2.2&nbsp;&nbsp;&nbsp;Threat: Fake Message &quot;origin&quot; Field</a></li>
+<li><a class="reference internal" href="#security-threat-model" id="id23">6&nbsp;&nbsp;&nbsp;Security Threat Model</a><ul class="auto-toc">
+<li><a class="reference internal" href="#denial-of-service" id="id24">6.1&nbsp;&nbsp;&nbsp;Denial of Service</a><ul class="auto-toc">
+<li><a class="reference internal" href="#threat-resource-exhaustion" id="id25">6.1.1&nbsp;&nbsp;&nbsp;Threat: Resource Exhaustion</a></li>
+<li><a class="reference internal" href="#threat-unrecoverable-consistency-violations" id="id26">6.1.2&nbsp;&nbsp;&nbsp;Threat: Unrecoverable Consistency Violations</a></li>
+<li><a class="reference internal" href="#threat-bad-history" id="id27">6.1.3&nbsp;&nbsp;&nbsp;Threat: Bad History</a></li>
+<li><a class="reference internal" href="#threat-block-network-traffic" id="id28">6.1.4&nbsp;&nbsp;&nbsp;Threat: Block Network Traffic</a></li>
+<li><a class="reference internal" href="#threat-high-volume-of-messages" id="id29">6.1.5&nbsp;&nbsp;&nbsp;Threat: High Volume of Messages</a></li>
+<li><a class="reference internal" href="#threat-banning-users-without-necessary-authorisation" id="id30">6.1.6&nbsp;&nbsp;&nbsp;Threat: Banning users without necessary authorisation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spamming" id="id33">6.3&nbsp;&nbsp;&nbsp;Spamming</a><ul class="auto-toc">
-<li><a class="reference internal" href="#threat-unsolicited-messages" id="id34">6.3.1&nbsp;&nbsp;&nbsp;Threat: Unsolicited Messages</a></li>
-<li><a class="reference internal" href="#threat-abusive-messages" id="id35">6.3.2&nbsp;&nbsp;&nbsp;Threat: Abusive Messages</a></li>
+<li><a class="reference internal" href="#spoofing" id="id31">6.2&nbsp;&nbsp;&nbsp;Spoofing</a><ul class="auto-toc">
+<li><a class="reference internal" href="#threat-altering-message-contents" id="id32">6.2.1&nbsp;&nbsp;&nbsp;Threat: Altering Message Contents</a></li>
+<li><a class="reference internal" href="#threat-fake-message-origin-field" id="id33">6.2.2&nbsp;&nbsp;&nbsp;Threat: Fake Message &quot;origin&quot; Field</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spying" id="id36">6.4&nbsp;&nbsp;&nbsp;Spying</a><ul class="auto-toc">
-<li><a class="reference internal" href="#threat-disclosure-during-transmission" id="id37">6.4.1&nbsp;&nbsp;&nbsp;Threat: Disclosure during Transmission</a></li>
-<li><a class="reference internal" href="#threat-disclosure-to-servers-outside-chatroom" id="id38">6.4.2&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Outside Chatroom</a></li>
-<li><a class="reference internal" href="#threat-disclosure-to-servers-within-chatroom" id="id39">6.4.3&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Within Chatroom</a></li>
+<li><a class="reference internal" href="#spamming" id="id34">6.3&nbsp;&nbsp;&nbsp;Spamming</a><ul class="auto-toc">
+<li><a class="reference internal" href="#threat-unsolicited-messages" id="id35">6.3.1&nbsp;&nbsp;&nbsp;Threat: Unsolicited Messages</a></li>
+<li><a class="reference internal" href="#threat-abusive-messages" id="id36">6.3.2&nbsp;&nbsp;&nbsp;Threat: Abusive Messages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spying" id="id37">6.4&nbsp;&nbsp;&nbsp;Spying</a><ul class="auto-toc">
+<li><a class="reference internal" href="#threat-disclosure-during-transmission" id="id38">6.4.1&nbsp;&nbsp;&nbsp;Threat: Disclosure during Transmission</a></li>
+<li><a class="reference internal" href="#threat-disclosure-to-servers-outside-chatroom" id="id39">6.4.2&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Outside Chatroom</a></li>
+<li><a class="reference internal" href="#threat-disclosure-to-servers-within-chatroom" id="id40">6.4.3&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Within Chatroom</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cryptographic-test-vectors" id="id40">7&nbsp;&nbsp;&nbsp;Cryptographic Test Vectors</a><ul class="auto-toc">
-<li><a class="reference internal" href="#signing-key" id="id41">7.1&nbsp;&nbsp;&nbsp;Signing Key</a></li>
-<li><a class="reference internal" href="#json-signing" id="id42">7.2&nbsp;&nbsp;&nbsp;JSON Signing</a></li>
-<li><a class="reference internal" href="#event-signing" id="id43">7.3&nbsp;&nbsp;&nbsp;Event Signing</a></li>
+<li><a class="reference internal" href="#cryptographic-test-vectors" id="id41">7&nbsp;&nbsp;&nbsp;Cryptographic Test Vectors</a><ul class="auto-toc">
+<li><a class="reference internal" href="#signing-key" id="id42">7.1&nbsp;&nbsp;&nbsp;Signing Key</a></li>
+<li><a class="reference internal" href="#json-signing" id="id43">7.2&nbsp;&nbsp;&nbsp;JSON Signing</a></li>
+<li><a class="reference internal" href="#event-signing" id="id44">7.3&nbsp;&nbsp;&nbsp;Event Signing</a></li>
 </ul>
 </li>
 </ul>
@@ -1607,11 +1610,13 @@ in the room's history (a permalink).</p>
 <p>A matrix.to URI has the following format, based upon the specification defined
 in RFC 3986:</p>
 <blockquote>
-<a class="reference external" href="https://matrix.to">https://matrix.to</a>/#/&lt;identifier&gt;/&lt;extra parameter&gt;</blockquote>
+<a class="reference external" href="https://matrix.to">https://matrix.to</a>/#/&lt;identifier&gt;/&lt;extra parameter&gt;?&lt;additional arguments&gt;</blockquote>
 <p>The identifier may be a room ID, room alias, user ID, or group ID. The extra
 parameter is only used in the case of permalinks where an event ID is referenced.
 The matrix.to URI, when referenced, must always start with <tt class="docutils literal"><span class="pre">https://matrix.to/#/</span></tt>
 followed by the identifier.</p>
+<p>The <tt class="docutils literal">&lt;additional arguments&gt;</tt> and the preceeding question mark are optional and
+only apply in certain circumstances, documented below.</p>
 <p>Clients should not rely on matrix.to URIs falling back to a web server if accessed
 and instead should perform some sort of action within the client. For example, if
 the user were to click on a matrix.to URI for a room alias, the client may open
@@ -1623,7 +1628,7 @@ are to be percent-encoded as per RFC 3986.</p>
 <li>Room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%23somewhere%3Aexample.org</span></tt></li>
 <li>Room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere%3Aexample.org</span></tt></li>
 <li>Permalink by room: <tt class="docutils literal"><span class="pre">https://matrix.to/#/!somewhere%3Aexample.org/%24event%3Aexample.org</span></tt></li>
-<li>Permalink by room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/#somewhere:example.org/%24event%3Aexample.org</span></tt></li>
+<li>Permalink by room alias: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%23somewhere:example.org/%24event%3Aexample.org</span></tt></li>
 <li>User: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%40alice%3Aexample.org</span></tt></li>
 <li>Group: <tt class="docutils literal"><span class="pre">https://matrix.to/#/%2Bexample%3Aexample.org</span></tt></li>
 </ul>
@@ -1639,12 +1644,49 @@ room alias should still work within the client if possible.</p>
 appearing due to some <a class="reference external" href="index.html#room-versions">room versions</a>. These slashes
 should normally be encoded when producing matrix.to URIs, however.</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Room ID permalinks are unroutable as there is no reliable domain to send requests
-to upon receipt of the permalink. Clients should do their best route Room IDs to
-where they need to go, however they should also be aware of <a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/1579">issue #1579</a>.</p>
-</div>
+<p><a class="anchor" id="routing"></a></p>
+<div class="section" id="routing">
+<h4><a class="toc-backref" href="#id19">4.2.5.1&nbsp;&nbsp;&nbsp;Routing</a></h4>
+<p>Room IDs are not routable on their own as there is no reliable domain to send requests
+to. This is partially mitigated with the addition of a <tt class="docutils literal">via</tt> argument on a matrix.to
+URI, however the problem of routability is still present. Clients should do their best
+to route Room IDs to where they need to go, however they should also be aware of
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/1579">issue #1579</a>.</p>
+<p>A room (or room permalink) which isn't using a room alias should supply at least one
+server using <tt class="docutils literal">via</tt> in the <tt class="docutils literal">&lt;additional arguments&gt;</tt>, like so:
+<tt class="docutils literal"><span class="pre">https://matrix.to/!somewhere%3Aexample.org?via=example.org&amp;via=alt.example.org</span></tt>. The
+parameter can be supplied multiple times to specify multiple servers to try.</p>
+<p>The values of <tt class="docutils literal">via</tt> are intended to be passed along as the <tt class="docutils literal">server_name</tt> parameters
+on the Client Server <tt class="docutils literal">/join</tt> API.</p>
+<p>When generating room links and permalinks, the application should pick servers which
+have a high probability of being in the room in the distant future. How these servers
+are picked is left as an implementation detail, however the current recommendation is
+to pick 3 unique servers based on the following criteria:</p>
+<ul class="simple">
+<li>The first server should be the server of the highest power level user in the room,
+provided they are at least power level 50. If no user meets this criteria, pick the
+most popular server in the room (most joined users). The rationale for not picking
+users with power levels under 50 is that they are unlikely to be around into the
+distant future while higher ranking users (and therefore servers) are less likely
+to give up their power and move somewhere else. Most rooms in the public federation
+have a power level 100 user and have not deviated from the default structure where
+power level 50 users have moderator-style privileges.</li>
+<li>The second server should be the next highest server by population, or the first
+highest by population if the first server was based on a user's power level. The
+rationale for picking popular servers is that the server is unlikely to be removed
+as the room naturally grows in membership due to that server joining users. The
+server could be refused participation in the future due to server ACLs or similar,
+however the chance of that happening to a server which is organically joining the
+room is unlikely.</li>
+<li>The third server should be the next highest server by population.</li>
+<li>Servers which are blocked due to server ACLs should never be chosen.</li>
+<li>Servers which are IP addresses should never be chosen. Servers which use a domain
+name are less likely to be unroutable in the future whereas IP addresses cannot be
+pointed to a different location and therefore higher risk options.</li>
+<li>All 3 servers should be unique from each other. If the room does not have enough users
+to supply 3 servers, the application should only specify the servers it can. For example,
+a room with only 2 users in it would result in maximum 2 <tt class="docutils literal">via</tt> parameters.</li>
+</ul>
 <!-- Copyright 2017 Kamax.io -->
 <!--  -->
 <!-- Licensed under the Apache License, Version 2.0 (the "License"); -->
@@ -1661,9 +1703,10 @@ where they need to go, however they should also be aware of <a class="reference 
 </div>
 </div>
 </div>
+</div>
 <p><a class="anchor" id="pid-types"></a></p>
 <div class="section" id="pid-types">
-<h1><a class="toc-backref" href="#id19">5&nbsp;&nbsp;&nbsp;3PID Types</a></h1>
+<h1><a class="toc-backref" href="#id20">5&nbsp;&nbsp;&nbsp;3PID Types</a></h1>
 <p>Third Party Identifiers (3PIDs) represent identifiers on other namespaces that
 might be associated with a particular person. They comprise a tuple of <tt class="docutils literal">medium</tt>
 which is a string that identifies the namespace in which the identifier exists,
@@ -1679,7 +1722,7 @@ of <tt class="docutils literal">bob&#64;example.com</tt> (without the capital 'e
 may be defined in future versions of this specification.</p>
 <p><a class="anchor" id="e-mail"></a></p>
 <div class="section" id="e-mail">
-<h2><a class="toc-backref" href="#id20">5.1&nbsp;&nbsp;&nbsp;E-Mail</a></h2>
+<h2><a class="toc-backref" href="#id21">5.1&nbsp;&nbsp;&nbsp;E-Mail</a></h2>
 <p>Medium: <tt class="docutils literal">email</tt></p>
 <p>Represents E-Mail addresses. The <tt class="docutils literal">address</tt> is the raw email address in
 <tt class="docutils literal">user&#64;domain</tt> form with the domain in lowercase. It must not contain other text
@@ -1687,7 +1730,7 @@ such as real name, angle brackets or a mailto: prefix.</p>
 </div>
 <p><a class="anchor" id="pstn-phone-numbers"></a></p>
 <div class="section" id="pstn-phone-numbers">
-<h2><a class="toc-backref" href="#id21">5.2&nbsp;&nbsp;&nbsp;PSTN Phone numbers</a></h2>
+<h2><a class="toc-backref" href="#id22">5.2&nbsp;&nbsp;&nbsp;PSTN Phone numbers</a></h2>
 <p>Medium: <tt class="docutils literal">msisdn</tt></p>
 <p>Represents telephone numbers on the public switched telephone network.  The
 <tt class="docutils literal">address</tt> is the telephone number represented as a MSISDN (Mobile Station
@@ -1710,10 +1753,10 @@ plan. Note that MSISDNs do not include a leading '+'.</p>
 </div>
 <p><a class="anchor" id="security-threat-model"></a></p>
 <div class="section" id="security-threat-model">
-<h1><a class="toc-backref" href="#id22">6&nbsp;&nbsp;&nbsp;Security Threat Model</a></h1>
+<h1><a class="toc-backref" href="#id23">6&nbsp;&nbsp;&nbsp;Security Threat Model</a></h1>
 <p><a class="anchor" id="denial-of-service"></a></p>
 <div class="section" id="denial-of-service">
-<h2><a class="toc-backref" href="#id23">6.1&nbsp;&nbsp;&nbsp;Denial of Service</a></h2>
+<h2><a class="toc-backref" href="#id24">6.1&nbsp;&nbsp;&nbsp;Denial of Service</a></h2>
 <p>The attacker could attempt to prevent delivery of messages to or from the
 victim in order to:</p>
 <ul class="simple">
@@ -1723,20 +1766,20 @@ victim in order to:</p>
 </ul>
 <p><a class="anchor" id="threat-resource-exhaustion"></a></p>
 <div class="section" id="threat-resource-exhaustion">
-<h3><a class="toc-backref" href="#id24">6.1.1&nbsp;&nbsp;&nbsp;Threat: Resource Exhaustion</a></h3>
+<h3><a class="toc-backref" href="#id25">6.1.1&nbsp;&nbsp;&nbsp;Threat: Resource Exhaustion</a></h3>
 <p>An attacker could cause the victims server to exhaust a particular resource
 (e.g. open TCP connections, CPU, memory, disk storage)</p>
 </div>
 <p><a class="anchor" id="threat-unrecoverable-consistency-violations"></a></p>
 <div class="section" id="threat-unrecoverable-consistency-violations">
-<h3><a class="toc-backref" href="#id25">6.1.2&nbsp;&nbsp;&nbsp;Threat: Unrecoverable Consistency Violations</a></h3>
+<h3><a class="toc-backref" href="#id26">6.1.2&nbsp;&nbsp;&nbsp;Threat: Unrecoverable Consistency Violations</a></h3>
 <p>An attacker could send messages which created an unrecoverable &quot;split-brain&quot;
 state in the cluster such that the victim's servers could no longer derive a
 consistent view of the chatroom state.</p>
 </div>
 <p><a class="anchor" id="threat-bad-history"></a></p>
 <div class="section" id="threat-bad-history">
-<h3><a class="toc-backref" href="#id26">6.1.3&nbsp;&nbsp;&nbsp;Threat: Bad History</a></h3>
+<h3><a class="toc-backref" href="#id27">6.1.3&nbsp;&nbsp;&nbsp;Threat: Bad History</a></h3>
 <p>An attacker could convince the victim to accept invalid messages which the
 victim would then include in their view of the chatroom history. Other servers
 in the chatroom would reject the invalid messages and potentially reject the
@@ -1747,26 +1790,26 @@ haven't seen recent events, and fake a splitbrain... - -M -->
 </div>
 <p><a class="anchor" id="threat-block-network-traffic"></a></p>
 <div class="section" id="threat-block-network-traffic">
-<h3><a class="toc-backref" href="#id27">6.1.4&nbsp;&nbsp;&nbsp;Threat: Block Network Traffic</a></h3>
+<h3><a class="toc-backref" href="#id28">6.1.4&nbsp;&nbsp;&nbsp;Threat: Block Network Traffic</a></h3>
 <p>An attacker could try to firewall traffic between the victim's server and some
 or all of the other servers in the chatroom.</p>
 </div>
 <p><a class="anchor" id="threat-high-volume-of-messages"></a></p>
 <div class="section" id="threat-high-volume-of-messages">
-<h3><a class="toc-backref" href="#id28">6.1.5&nbsp;&nbsp;&nbsp;Threat: High Volume of Messages</a></h3>
+<h3><a class="toc-backref" href="#id29">6.1.5&nbsp;&nbsp;&nbsp;Threat: High Volume of Messages</a></h3>
 <p>An attacker could send large volumes of messages to a chatroom with the victim
 making the chatroom unusable.</p>
 </div>
 <p><a class="anchor" id="threat-banning-users-without-necessary-authorisation"></a></p>
 <div class="section" id="threat-banning-users-without-necessary-authorisation">
-<h3><a class="toc-backref" href="#id29">6.1.6&nbsp;&nbsp;&nbsp;Threat: Banning users without necessary authorisation</a></h3>
+<h3><a class="toc-backref" href="#id30">6.1.6&nbsp;&nbsp;&nbsp;Threat: Banning users without necessary authorisation</a></h3>
 <p>An attacker could attempt to ban a user from a chatroom without the necessary
 authorisation.</p>
 </div>
 </div>
 <p><a class="anchor" id="spoofing"></a></p>
 <div class="section" id="spoofing">
-<h2><a class="toc-backref" href="#id30">6.2&nbsp;&nbsp;&nbsp;Spoofing</a></h2>
+<h2><a class="toc-backref" href="#id31">6.2&nbsp;&nbsp;&nbsp;Spoofing</a></h2>
 <p>An attacker could try to send a message claiming to be from the victim without
 the victim having sent the message in order to:</p>
 <ul class="simple">
@@ -1775,20 +1818,20 @@ the victim having sent the message in order to:</p>
 </ul>
 <p><a class="anchor" id="threat-altering-message-contents"></a></p>
 <div class="section" id="threat-altering-message-contents">
-<h3><a class="toc-backref" href="#id31">6.2.1&nbsp;&nbsp;&nbsp;Threat: Altering Message Contents</a></h3>
+<h3><a class="toc-backref" href="#id32">6.2.1&nbsp;&nbsp;&nbsp;Threat: Altering Message Contents</a></h3>
 <p>An attacker could try to alter the contents of an existing message from the
 victim.</p>
 </div>
 <p><a class="anchor" id="threat-fake-message-origin-field"></a></p>
 <div class="section" id="threat-fake-message-origin-field">
-<h3><a class="toc-backref" href="#id32">6.2.2&nbsp;&nbsp;&nbsp;Threat: Fake Message &quot;origin&quot; Field</a></h3>
+<h3><a class="toc-backref" href="#id33">6.2.2&nbsp;&nbsp;&nbsp;Threat: Fake Message &quot;origin&quot; Field</a></h3>
 <p>An attacker could try to send a new message purporting to be from the victim
 with a phony &quot;origin&quot; field.</p>
 </div>
 </div>
 <p><a class="anchor" id="spamming"></a></p>
 <div class="section" id="spamming">
-<h2><a class="toc-backref" href="#id33">6.3&nbsp;&nbsp;&nbsp;Spamming</a></h2>
+<h2><a class="toc-backref" href="#id34">6.3&nbsp;&nbsp;&nbsp;Spamming</a></h2>
 <p>The attacker could try to send a high volume of solicited or unsolicited
 messages to the victim in order to:</p>
 <ul class="simple">
@@ -1797,19 +1840,19 @@ messages to the victim in order to:</p>
 </ul>
 <p><a class="anchor" id="threat-unsolicited-messages"></a></p>
 <div class="section" id="threat-unsolicited-messages">
-<h3><a class="toc-backref" href="#id34">6.3.1&nbsp;&nbsp;&nbsp;Threat: Unsolicited Messages</a></h3>
+<h3><a class="toc-backref" href="#id35">6.3.1&nbsp;&nbsp;&nbsp;Threat: Unsolicited Messages</a></h3>
 <p>An attacker could try to send messages to victims who do not wish to receive
 them.</p>
 </div>
 <p><a class="anchor" id="threat-abusive-messages"></a></p>
 <div class="section" id="threat-abusive-messages">
-<h3><a class="toc-backref" href="#id35">6.3.2&nbsp;&nbsp;&nbsp;Threat: Abusive Messages</a></h3>
+<h3><a class="toc-backref" href="#id36">6.3.2&nbsp;&nbsp;&nbsp;Threat: Abusive Messages</a></h3>
 <p>An attacker could send abusive or threatening messages to the victim</p>
 </div>
 </div>
 <p><a class="anchor" id="spying"></a></p>
 <div class="section" id="spying">
-<h2><a class="toc-backref" href="#id36">6.4&nbsp;&nbsp;&nbsp;Spying</a></h2>
+<h2><a class="toc-backref" href="#id37">6.4&nbsp;&nbsp;&nbsp;Spying</a></h2>
 <p>The attacker could try to access message contents or metadata for messages sent
 by the victim or to the victim that were not intended to reach the attacker in
 order to:</p>
@@ -1821,19 +1864,19 @@ order to:</p>
 </ul>
 <p><a class="anchor" id="threat-disclosure-during-transmission"></a></p>
 <div class="section" id="threat-disclosure-during-transmission">
-<h3><a class="toc-backref" href="#id37">6.4.1&nbsp;&nbsp;&nbsp;Threat: Disclosure during Transmission</a></h3>
+<h3><a class="toc-backref" href="#id38">6.4.1&nbsp;&nbsp;&nbsp;Threat: Disclosure during Transmission</a></h3>
 <p>An attacker could try to expose the message contents or metadata during
 transmission between the servers.</p>
 </div>
 <p><a class="anchor" id="threat-disclosure-to-servers-outside-chatroom"></a></p>
 <div class="section" id="threat-disclosure-to-servers-outside-chatroom">
-<h3><a class="toc-backref" href="#id38">6.4.2&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Outside Chatroom</a></h3>
+<h3><a class="toc-backref" href="#id39">6.4.2&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Outside Chatroom</a></h3>
 <p>An attacker could try to convince servers within a chatroom to send messages to
 a server it controls that was not authorised to be within the chatroom.</p>
 </div>
 <p><a class="anchor" id="threat-disclosure-to-servers-within-chatroom"></a></p>
 <div class="section" id="threat-disclosure-to-servers-within-chatroom">
-<h3><a class="toc-backref" href="#id39">6.4.3&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Within Chatroom</a></h3>
+<h3><a class="toc-backref" href="#id40">6.4.3&nbsp;&nbsp;&nbsp;Threat: Disclosure to Servers Within Chatroom</a></h3>
 <p>An attacker could take control of a server within a chatroom to expose message
 contents or metadata for messages in that room.</p>
 <!-- Copyright 2015 OpenMarket Ltd -->
@@ -1854,12 +1897,12 @@ contents or metadata for messages in that room.</p>
 </div>
 <p><a class="anchor" id="cryptographic-test-vectors"></a></p>
 <div class="section" id="cryptographic-test-vectors">
-<h1><a class="toc-backref" href="#id40">7&nbsp;&nbsp;&nbsp;Cryptographic Test Vectors</a></h1>
+<h1><a class="toc-backref" href="#id41">7&nbsp;&nbsp;&nbsp;Cryptographic Test Vectors</a></h1>
 <p>To assist in the development of compatible implementations, the following test
 values may be useful for verifying the cryptographic event signing code.</p>
 <p><a class="anchor" id="signing-key"></a></p>
 <div class="section" id="signing-key">
-<h2><a class="toc-backref" href="#id41">7.1&nbsp;&nbsp;&nbsp;Signing Key</a></h2>
+<h2><a class="toc-backref" href="#id42">7.1&nbsp;&nbsp;&nbsp;Signing Key</a></h2>
 <p>The following test vectors all use the 32-byte value given by the following
 Base64-encoded string as the seed for generating the <tt class="docutils literal">ed25519</tt> signing key:</p>
 <pre class="code literal-block">
@@ -1876,7 +1919,7 @@ KEY_ID = &quot;ed25519:1&quot;
 </div>
 <p><a class="anchor" id="json-signing"></a></p>
 <div class="section" id="json-signing">
-<h2><a class="toc-backref" href="#id42">7.2&nbsp;&nbsp;&nbsp;JSON Signing</a></h2>
+<h2><a class="toc-backref" href="#id43">7.2&nbsp;&nbsp;&nbsp;JSON Signing</a></h2>
 <p>Given an empty JSON object:</p>
 <pre class="code json literal-block">
 <span class="punctuation">{}</span>
@@ -1913,7 +1956,7 @@ KEY_ID = &quot;ed25519:1&quot;
 </div>
 <p><a class="anchor" id="event-signing"></a></p>
 <div class="section" id="event-signing">
-<h2><a class="toc-backref" href="#id43">7.3&nbsp;&nbsp;&nbsp;Event Signing</a></h2>
+<h2><a class="toc-backref" href="#id44">7.3&nbsp;&nbsp;&nbsp;Event Signing</a></h2>
 <p>Given the following minimally-sized event:</p>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
