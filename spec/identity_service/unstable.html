@@ -981,7 +981,7 @@ practice has only been applied specifically to email addresses and phone numbers
 </li>
 <li><a class="reference internal" href="#general" id="id27">9.4&nbsp;&nbsp;&nbsp;General</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-identity-api-v1-3pid-getvalidated3pid" id="id28">9.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-bind" id="id29">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/bind</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-api-v1-3pid-bind" id="id29">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></li>
 </ul>
 </li>
 </ul>
@@ -1008,7 +1008,7 @@ practice has only been applied specifically to email addresses and phone numbers
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/5c62d627">master,5c62d627</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/4e9dc209">master,4e9dc209</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -2170,9 +2170,9 @@ indicating the time that the 3pid was validated.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-bind"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-bind">
-<h3><a class="toc-backref" href="#id29">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/bind</tt></a></h3>
+<p><a class="anchor" id="post-matrix-identity-api-v1-3pid-bind"></a></p>
+<div class="section" id="post-matrix-identity-api-v1-3pid-bind">
+<h3><a class="toc-backref" href="#id29">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></h3>
 <p>Publish an association between a session and a Matrix user ID.</p>
 <p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will return
 this association.</p>
@@ -2257,7 +2257,7 @@ identity services.</td>
 </table>
 <p class="httpheaders">Example request:</p>
 <pre class="code http literal-block">
-<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/api/v1/bind</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/api/v1/3pid/bind</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
 <span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
 
 <span class="punctuation">{</span>
