@@ -1652,7 +1652,7 @@ local persistent copy of server state.</p>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/ba18a6e9">master,ba18a6e9</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/cae07d9e">master,cae07d9e</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -2547,7 +2547,14 @@ the homeserver.</p>
 </tr>
 <tr class="field"><th class="field-name">Description:</th><td class="field-body">Dummy authentication always succeeds and requires no extra parameters. Its
 purpose is to allow servers to not require any form of User-Interactive
-Authentication to perform a request.</td>
+Authentication to perform a request. It can also be used to differentiate
+flows where otherwise one flow would be a subset of another flow. eg. if
+a server offers flows <tt class="docutils literal">m.login.recaptcha</tt> and <tt class="docutils literal">m.login.recaptcha,
+m.login.email.identity</tt> and the client completes the recaptcha stage first,
+the auth would succeed with the former flow, even if the client was intending
+to then complete the email auth stage. A server can instead send flows
+<tt class="docutils literal">m.login.recaptcha, m.login.dummy</tt> and <tt class="docutils literal">m.login.recaptcha,
+m.login.email.identity</tt> to fix the ambiguity.</td>
 </tr>
 </tbody>
 </table>
