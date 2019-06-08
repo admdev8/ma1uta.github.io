@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
-<title>Push Gateway API</title>
+<title>Room Version 4</title>
 <style type="text/css">
 
 pre.code .comment, code .comment { color: green }
@@ -915,11 +915,10 @@ table.docutils tbody th.stub {
 </style>
 </head>
 <body>
-<div class="document" id="push-gateway-api">
-<h1 class="title">Push Gateway API</h1>
+<div class="document" id="room-version-4">
+<h1 class="title">Room Version 4</h1>
 
-<!-- Copyright 2016 OpenMarket Ltd -->
-<!-- Copyright 2018 New Vector Ltd -->
+<!-- Copyright 2019 The Matrix.org Foundation C.I.C. -->
 <!--  -->
 <!-- Licensed under the Apache License, Version 2.0 (the "License"); -->
 <!-- you may not use this file except in compliance with the License. -->
@@ -932,118 +931,66 @@ table.docutils tbody th.stub {
 <!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. -->
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">You are viewing an unstable version of this specification. Unstable
-specifications may change at any time without notice. To view the
-current specification, please <a class="reference external" href="latest.html">click here</a>.</p>
-</div>
-<p>Clients may want to receive push notifications when events are received at
-the homeserver. This is managed by a distinct entity called the Push Gateway.</p>
+<p>This room version builds on <a class="reference external" href="v3.html">version 3</a> using a different encoding for
+event IDs.</p>
 <div class="contents topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#changelog" id="id1">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
-<li><a class="reference internal" href="#other-versions-of-this-specification" id="id2">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#overview" id="id3">2&nbsp;&nbsp;&nbsp;Overview</a></li>
-<li><a class="reference internal" href="#homeserver-behaviour" id="id4">3&nbsp;&nbsp;&nbsp;Homeserver behaviour</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-push-v1-notify" id="id5">3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/push/v1/notify</tt></a></li>
+<li><a class="reference internal" href="#client-considerations" id="id1">1&nbsp;&nbsp;&nbsp;Client considerations</a></li>
+<li><a class="reference internal" href="#server-implementation-components" id="id2">2&nbsp;&nbsp;&nbsp;Server implementation components</a><ul class="auto-toc">
+<li><a class="reference internal" href="#event-ids" id="id3">2.1&nbsp;&nbsp;&nbsp;Event IDs</a><ul class="auto-toc">
+<li><a class="reference internal" href="#persistent-data-unit-schema" id="id4">2.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></li>
 </ul>
 </li>
 </ul>
-</div>
-<p><a class="anchor" id="changelog"></a></p>
-<div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
-<div class="topic">
-<p class="topic-title first">Version: unstable</p>
-<p>No significant changes.</p>
-</div>
-<p>This version of the specification is generated from
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/3438ea50">master,3438ea50</a>.</p>
-<p>For the full historical changelog, see
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/push_gateway.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/push_gateway.rst</a></p>
-<p><a class="anchor" id="other-versions-of-this-specification"></a></p>
-<div class="section" id="other-versions-of-this-specification">
-<h2><a class="toc-backref" href="#id2">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
-<p>The following other versions are also available, in reverse chronological order:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://matrix.org/docs/spec/push_gateway/unstable.html">HEAD</a>: Includes all changes since the latest versioned release.</li>
-<li><a class="reference external" href="https://matrix.org/docs/spec/push_gateway/r0.1.0.html">r0.1.0</a></li>
+</li>
 </ul>
 </div>
+<p><a class="anchor" id="client-considerations"></a></p>
+<div class="section" id="client-considerations">
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Client considerations</a></h1>
+<p>This room version changes the format form event IDs sent to clients. Clients should
+already be treating event IDs as opaque identifiers, and should not be concerned with
+the format of them. Clients should still encode the event ID when including it in a
+request path.</p>
+<p>Clients should expect to see event IDs changed from the format of <tt class="docutils literal">$randomstring:example.org</tt>
+to something like <tt class="docutils literal"><span class="pre">$Rqnc-F-dvnEYJTyHq_iKxU2bZ1CI92-kuZq3a5lr5Zg</span></tt> (note the lack of domain).</p>
 </div>
-<p><a class="anchor" id="overview"></a></p>
-<div class="section" id="overview">
-<h1><a class="toc-backref" href="#id3">2&nbsp;&nbsp;&nbsp;Overview</a></h1>
-<p>A client's homeserver forwards information about received events to the push
-gateway. The gateway then submits a push notification to the push notification
-provider (e.g. APNS, GCM).</p>
-<pre class="literal-block">
-                                  +--------------------+  +-------------------+
-                 Matrix HTTP      |                    |  |                   |
-            Notification Protocol |   App Developer    |  |   Device Vendor   |
-                                  |                    |  |                   |
-          +-------------------+   | +----------------+ |  | +---------------+ |
-          |                   |   | |                | |  | |               | |
-          | Matrix homeserver +-----&gt;  Push Gateway  +------&gt; Push Provider | |
-          |                   |   | |                | |  | |               | |
-          +-^-----------------+   | +----------------+ |  | +----+----------+ |
-            |                     |                    |  |      |            |
-   Matrix   |                     |                    |  |      |            |
-Client/Server API  +              |                    |  |      |            |
-            |      |              +--------------------+  +-------------------+
-            |   +--+-+                                           |
-            |   |    &lt;-------------------------------------------+
-            +---+    |
-                |    |          Provider Push Protocol
-                +----+
-
-        Mobile Device or Client
-</pre>
+<p><a class="anchor" id="server-implementation-components"></a></p>
+<div class="section" id="server-implementation-components">
+<h1><a class="toc-backref" href="#id2">2&nbsp;&nbsp;&nbsp;Server implementation components</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The information contained in this section is strictly for server implementors.
+Applications which use the Client-Server API are generally unaffected by the
+intricacies contained here. The section above regarding client considerations
+is the resource that Client-Server API use cases should reference.</p>
 </div>
-<p><a class="anchor" id="homeserver-behaviour"></a></p>
-<div class="section" id="homeserver-behaviour">
-<h1><a class="toc-backref" href="#id4">3&nbsp;&nbsp;&nbsp;Homeserver behaviour</a></h1>
-<p>This describes the format used by &quot;HTTP&quot; pushers to send notifications of
-events to Push Gateways. If the endpoint returns an HTTP error code, the
-homeserver SHOULD retry for a reasonable amount of time using exponential backoff.</p>
-<p>When pushing notifications for events, the homeserver is expected to include all of
-the event-related fields in the <tt class="docutils literal">/notify</tt> request. When the homeserver is performing
-a push where the <tt class="docutils literal">format</tt> is <tt class="docutils literal">&quot;event_id_only&quot;</tt>, only the <tt class="docutils literal">event_id</tt>, <tt class="docutils literal">room_id</tt>,
-<tt class="docutils literal">counts</tt>, and <tt class="docutils literal">devices</tt> are required to be populated.</p>
-<p><a class="anchor" id="post-matrix-push-v1-notify"></a></p>
-<div class="section" id="post-matrix-push-v1-notify">
-<h2><a class="toc-backref" href="#id5">3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/push/v1/notify</tt></a></h2>
-<p>This endpoint is invoked by HTTP pushers to notify a push gateway about
-an event or update the number of unread notifications a user has.
-In the former case it will contain selected information about the event.
-In either case it may contain numeric counts of the number of unread
-events of different types the user has. The counts may be sent along
-with a notification about an event or by themselves.</p>
-<p>Notifications about a particular event will normally cause the user to be
-alerted in some way. It is therefore necessary to perform duplicate
-suppression for such notifications using the <tt class="docutils literal">event_id</tt> field to avoid
-retries of this HTTP API causing duplicate alerts. The operation of
-updating counts of unread notifications should be idempotent and
-therefore do not require duplicate suppression.</p>
-<p>Notifications are sent to the URL configured when the pusher is created.
-This means that the HTTP path may be different depending on the push
-gateway.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
-</tr>
-<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">No.</td>
-</tr>
-</tbody>
-</table>
-<p class="httpheaders">Request format:</p>
+<p>Room version 4 uses the same algorithms defined in <a class="reference external" href="v3.html">room version 3</a>, however
+using URL-safe base64 to generate the event ID.</p>
+<p><a class="anchor" id="event-ids"></a></p>
+<div class="section" id="event-ids">
+<h2><a class="toc-backref" href="#id3">2.1&nbsp;&nbsp;&nbsp;Event IDs</a></h2>
+<div class="admonition admonition-rationale">
+<p class="first admonition-title">Rationale</p>
+<p class="last">Room version 3 generated event IDs that were difficult for client implementations
+which were not encoding the event ID to function in those rooms. It additionally
+raised concern due to the <tt class="docutils literal">/</tt> character being interpretted differently by some
+reverse proxy software, and generally made administration harder.</p>
+</div>
+<p>The event ID is the <a class="reference external" href="../server_server/r0.1.1.html#reference-hashes">reference hash</a> of the event encoded using a variation of
+<a class="reference external" href="../appendices.html#unpadded-base64">Unpadded Base64</a> which replaces the 62nd and 63rd characters with <tt class="docutils literal">-</tt> and <tt class="docutils literal">_</tt>
+instead of using <tt class="docutils literal">+</tt> and <tt class="docutils literal">/</tt>. This matches <a class="reference external" href="https://tools.ietf.org/html/rfc4648#section-5">RFC4648's definition of URL-safe base64</a>. Event IDs are still prefixed
+with <tt class="docutils literal">$</tt> and may result in looking like <tt class="docutils literal"><span class="pre">$Rqnc-F-dvnEYJTyHq_iKxU2bZ1CI92-kuZq3a5lr5Zg</span></tt>.</p>
+<p>Just like in room version 3, event IDs should not be sent over federation to servers
+when the room uses this room version. On the receiving end of an event, the server
+should compute the relevant event ID for itself. Room version 3 also changes the format
+of <tt class="docutils literal">auth_events</tt> and <tt class="docutils literal">prev_events</tt> in a PDU.</p>
+<p><a class="anchor" id="persistent-data-unit-schema"></a></p>
+<div class="section" id="persistent-data-unit-schema">
+<h3><a class="toc-backref" href="#id4">2.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Persistent Data Unit</tt> schema</a></h3>
+<p>A persistent data unit (event) for room version 4 and beyond.</p>
+<p><tt class="docutils literal">Persistent Data Unit</tt></p>
 <table border="1" class="colwidths-auto docutils">
 <thead valign="bottom">
 <tr><th class="head">Parameter</th>
@@ -1052,230 +999,167 @@ gateway.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td colspan="3"><em>JSON body parameters</em></td>
-</tr>
-<tr><td>notification</td>
-<td>Notification</td>
-<td><strong>Required.</strong> Information about the push
-notification</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="colwidths-auto docutils">
-<caption>Notification</caption>
-<thead valign="bottom">
-<tr><th class="head">Parameter</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>event_id</td>
-<td>string</td>
-<td>The Matrix event ID of the event being notified
-about. This is required if the notification is
-about a particular Matrix event. It may be omitted
-for notifications that only contain updated badge
-counts. This ID can and should be used to detect
-duplicate notification requests.</td>
-</tr>
 <tr><td>room_id</td>
 <td>string</td>
-<td>The ID of the room in which this event occurred.
-Required if the notification relates to a specific
-Matrix event.</td>
-</tr>
-<tr><td>type</td>
-<td>string</td>
-<td>The type of the event as in the event's <tt class="docutils literal">type</tt>
-field.</td>
+<td><strong>Required.</strong> Room identifier.</td>
 </tr>
 <tr><td>sender</td>
 <td>string</td>
-<td>The sender of the event as in the corresponding
-event field.</td>
+<td><strong>Required.</strong> The ID of the user sending the
+event.</td>
 </tr>
-<tr><td>sender_display_name</td>
+<tr><td>origin</td>
 <td>string</td>
-<td>The current display name of the sender in the room
-in which the event occurred.</td>
+<td><strong>Required.</strong> The <tt class="docutils literal">server_name</tt> of the
+homeserver that created this event.</td>
 </tr>
-<tr><td>room_name</td>
+<tr><td>origin_server_ts</td>
+<td>integer</td>
+<td><strong>Required.</strong> Timestamp in milliseconds on origin
+homeserver when this event was created.</td>
+</tr>
+<tr><td>type</td>
 <td>string</td>
-<td>The name of the room in which the event occurred.</td>
+<td><strong>Required.</strong> Event type</td>
 </tr>
-<tr><td>room_alias</td>
+<tr><td>state_key</td>
 <td>string</td>
-<td>An alias to display for the room in which the
-event occurred.</td>
-</tr>
-<tr><td>user_is_target</td>
-<td>boolean</td>
-<td>This is true if the user receiving the
-notification is the subject of a member event
-(i.e. the <tt class="docutils literal">state_key</tt> of the member event is
-equal to the user's Matrix ID).</td>
-</tr>
-<tr><td>prio</td>
-<td>enum</td>
-<td>The priority of the notification. If omitted,
-<tt class="docutils literal">high</tt> is assumed. This may be used by push
-gateways to deliver less time-sensitive
-notifications in a way that will preserve battery
-power on mobile devices. One of: [&quot;high&quot;, &quot;low&quot;]</td>
+<td>If this key is present, the event is a state
+event, and it will replace previous events with
+the same <tt class="docutils literal">type</tt> and <tt class="docutils literal">state_key</tt> in the room
+state.</td>
 </tr>
 <tr><td>content</td>
-<td>EventContent</td>
-<td>The <tt class="docutils literal">content</tt> field from the event, if present.
-The pusher may omit this if the event had no
-content or for any other reason.</td>
+<td>object</td>
+<td><strong>Required.</strong> The content of the event.</td>
 </tr>
-<tr><td>counts</td>
-<td>Counts</td>
-<td>This is a dictionary of the current number of
-unacknowledged communications for the recipient
-user. Counts whose value is zero should be
-omitted.</td>
-</tr>
-<tr><td>devices</td>
-<td>[Device]</td>
-<td><strong>Required.</strong> This is an array of devices that the
-notification should be sent to.</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="colwidths-auto docutils">
-<caption>Counts</caption>
-<thead valign="bottom">
-<tr><th class="head">Parameter</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>unread</td>
-<td>integer</td>
-<td>The number of unread messages a user has across
-all of the rooms they are a member of.</td>
-</tr>
-<tr><td>missed_calls</td>
-<td>integer</td>
-<td>The number of unacknowledged missed calls a user
-has across all rooms of which they are a member.</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="colwidths-auto docutils">
-<caption>Device</caption>
-<thead valign="bottom">
-<tr><th class="head">Parameter</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>app_id</td>
-<td>string</td>
-<td><strong>Required.</strong> The <tt class="docutils literal">app_id</tt> given when the pusher
-was created.</td>
-</tr>
-<tr><td>pushkey</td>
-<td>string</td>
-<td><strong>Required.</strong> The <tt class="docutils literal">pushkey</tt> given when the
-pusher was created.</td>
-</tr>
-<tr><td>pushkey_ts</td>
-<td>integer</td>
-<td>The unix timestamp (in seconds) when the pushkey
-was last updated.</td>
-</tr>
-<tr><td>data</td>
-<td>PusherData</td>
-<td>A dictionary of additional pusher-specific data.
-For 'http' pushers, this is the data dictionary
-passed in at pusher creation minus the <tt class="docutils literal">url</tt>
-key.</td>
-</tr>
-<tr><td>tweaks</td>
-<td>Tweaks</td>
-<td>A dictionary of customisations made to the way
-this notification is to be presented. These are
-added by push rules.</td>
-</tr>
-</tbody>
-</table>
-<p class="httpheaders">Response format:</p>
-<table border="1" class="colwidths-auto docutils">
-<thead valign="bottom">
-<tr><th class="head">Parameter</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>rejected</td>
+<tr><td>prev_events</td>
 <td>[string]</td>
-<td><strong>Required.</strong> A list of all pushkeys given in the
-notification request that are not valid. These
-could have been rejected by an upstream gateway
-because they have expired or have never been
-valid. Homeservers must cease sending notification
-requests for these pushkeys and remove the
-associated pushers. It may not necessarily be the
-notification in the request that failed: it could
-be that a previous notification to the same
-pushkey failed. May be empty.</td>
+<td><strong>Required.</strong> Event IDs for the most recent events
+in the room that the homeserver was aware of when
+it made this event.</td>
+</tr>
+<tr><td>depth</td>
+<td>integer</td>
+<td><strong>Required.</strong> The maximum depth of the
+<tt class="docutils literal">prev_events</tt>, plus one. Must be less than the
+maximum value for an integer (2^63 - 1). If the
+room's depth is already at the limit, the depth
+must be set to the limit.</td>
+</tr>
+<tr><td>auth_events</td>
+<td>[string]</td>
+<td><strong>Required.</strong> Event IDs for the authorization
+events that would allow this event to be in the
+room.</td>
+</tr>
+<tr><td>redacts</td>
+<td>string</td>
+<td>For redaction events, the ID of the event being
+redacted.</td>
+</tr>
+<tr><td>unsigned</td>
+<td>Example Unsigned Data</td>
+<td>Additional data added by the origin server but not
+covered by the <tt class="docutils literal">signatures</tt>. More keys than
+those defined here may be used.</td>
+</tr>
+<tr><td>hashes</td>
+<td>Event Hash</td>
+<td><strong>Required.</strong> Content hashes of the PDU, following
+the algorithm specified in <a class="reference external" href="../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
+</tr>
+<tr><td>signatures</td>
+<td>{string: {string: string}}</td>
+<td><strong>Required.</strong> Signatures for the PDU, following
+the algorithm specified in <a class="reference external" href="../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 </tbody>
 </table>
-<p class="httpheaders">Example request:</p>
-<pre class="code http literal-block">
-<span class="name function">POST</span> <span class="name namespace">/_matrix/push/v1/notify</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
-<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
-
-<span class="punctuation">{</span>
-  <span class="name tag">&quot;notification&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-    <span class="name tag">&quot;id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$3957tyerfgewrf384&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!slw48wfj34rtnrf:example.com&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;type&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.room.message&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;exampleuser:matrix.org&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;sender_display_name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Major Tom&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;room_name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Mission Control&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;room_alias&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;#exampleroom:matrix.org&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;prio&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;high&quot;</span><span class="punctuation">,</span>
-    <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-      <span class="name tag">&quot;msgtype&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.text&quot;</span><span class="punctuation">,</span>
-      <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;I'm floating in a most peculiar way.&quot;</span>
-    <span class="punctuation">},</span>
-    <span class="name tag">&quot;counts&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-      <span class="name tag">&quot;unread&quot;</span><span class="punctuation">:</span> <span class="literal number integer">2</span><span class="punctuation">,</span>
-      <span class="name tag">&quot;missed_calls&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1</span>
-    <span class="punctuation">},</span>
-    <span class="name tag">&quot;devices&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
-      <span class="punctuation">{</span>
-        <span class="name tag">&quot;app_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;org.matrix.matrixConsole.ios&quot;</span><span class="punctuation">,</span>
-        <span class="name tag">&quot;pushkey&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;V2h5IG9uIGVhcnRoIGRpZCB5b3UgZGVjb2RlIHRoaXM/&quot;</span><span class="punctuation">,</span>
-        <span class="name tag">&quot;pushkey_ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">12345678</span><span class="punctuation">,</span>
-        <span class="name tag">&quot;data&quot;</span><span class="punctuation">:</span> <span class="punctuation">{},</span>
-        <span class="name tag">&quot;tweaks&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-          <span class="name tag">&quot;sound&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;bing&quot;</span>
-        <span class="punctuation">}</span>
-      <span class="punctuation">}</span>
-    <span class="punctuation">]</span>
-  <span class="punctuation">}</span>
-<span class="punctuation">}</span>
-</pre>
-<p class="httpheaders">Response:</p>
-<p><strong>Status code 200:</strong></p>
-<p>A list of rejected push keys.</p>
-<p class="httpheaders">Example</p>
+<p><tt class="docutils literal">Example Unsigned Data</tt></p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>age</td>
+<td>integer</td>
+<td>The number of milliseconds that have passed since
+this message was sent.</td>
+</tr>
+<tr><td>replaces_state</td>
+<td>string</td>
+<td>The event ID of the state event this event
+replaces.</td>
+</tr>
+<tr><td>prev_sender</td>
+<td>string</td>
+<td>The sender of the replaced state event.</td>
+</tr>
+<tr><td>prev_content</td>
+<td>object</td>
+<td>The content of the replaced state event.</td>
+</tr>
+<tr><td>redacted_because</td>
+<td>string</td>
+<td>A reason for why the event was redacted.</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal">Event Hash</tt></p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>sha256</td>
+<td>string</td>
+<td><strong>Required.</strong> The hash.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
-  <span class="name tag">&quot;rejected&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
-    <span class="literal string double">&quot;V2h5IG9uIGVhcnRoIGRpZCB5b3UgZGVjb2RlIHRoaXM/&quot;</span>
-  <span class="punctuation">]</span>
+    <span class="name tag">&quot;auth_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
+        <span class="literal string double">&quot;$URLsafe-base64EncodedHash&quot;</span><span class="punctuation">,</span>
+        <span class="literal string double">&quot;$Another_Event&quot;</span>
+    <span class="punctuation">],</span>
+    <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+        <span class="name tag">&quot;key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;value&quot;</span>
+    <span class="punctuation">},</span>
+    <span class="name tag">&quot;depth&quot;</span><span class="punctuation">:</span> <span class="literal number integer">12</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;hashes&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+        <span class="name tag">&quot;sha256&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;ThisHashCoversAllFieldsInCaseThisIsRedacted&quot;</span>
+    <span class="punctuation">},</span>
+    <span class="name tag">&quot;origin&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;matrix.org&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;origin_server_ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1234567890</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;prev_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
+        <span class="literal string double">&quot;$URLsafe-base64EncodedHash&quot;</span><span class="punctuation">,</span>
+        <span class="literal string double">&quot;$Another_Event&quot;</span>
+    <span class="punctuation">],</span>
+    <span class="name tag">&quot;redacts&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$def_456-oldevent&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!abc123:matrix.org&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;someone:matrix.org&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+        <span class="name tag">&quot;example.com&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+            <span class="name tag">&quot;ed25519:key_version:&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;86BytesOfSignatureOfTheRedactedEvent&quot;</span>
+        <span class="punctuation">}</span>
+    <span class="punctuation">},</span>
+    <span class="name tag">&quot;state_key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;my_key&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;type&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.room.message&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;unsigned&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+        <span class="name tag">&quot;key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;value&quot;</span>
+    <span class="punctuation">}</span>
 <span class="punctuation">}</span>
 </pre>
+</div>
 </div>
 </div>
 </div>

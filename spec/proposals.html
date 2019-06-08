@@ -905,6 +905,14 @@ div.admonition-example {
 
 
 </style>
+<style type="text/css">
+
+/* Column with header cells */
+table.docutils tbody th.stub {
+    background: #eeeeee;
+}
+
+</style>
 </head>
 <body>
 <div class="document">
@@ -915,10 +923,11 @@ div.admonition-example {
 <ul class="auto-toc simple">
 <li><a class="reference internal" href="#proposals-for-spec-changes-to-matrix" id="id5">1&nbsp;&nbsp;&nbsp;Proposals for Spec Changes to Matrix</a></li>
 <li><a class="reference internal" href="#guiding-principles" id="id6">2&nbsp;&nbsp;&nbsp;Guiding Principles</a></li>
-<li><a class="reference internal" href="#process" id="id7">3&nbsp;&nbsp;&nbsp;Process</a></li>
-<li><a class="reference internal" href="#lifetime-states" id="id8">4&nbsp;&nbsp;&nbsp;Lifetime States</a></li>
-<li><a class="reference internal" href="#proposal-tracking" id="id9">5&nbsp;&nbsp;&nbsp;Proposal Tracking</a></li>
-<li><a class="reference internal" href="#tables-of-tracked-proposals" id="id10">6&nbsp;&nbsp;&nbsp;Tables of Tracked Proposals</a></li>
+<li><a class="reference internal" href="#technical-notes" id="id7">3&nbsp;&nbsp;&nbsp;Technical notes</a></li>
+<li><a class="reference internal" href="#process" id="id8">4&nbsp;&nbsp;&nbsp;Process</a></li>
+<li><a class="reference internal" href="#lifetime-states" id="id9">5&nbsp;&nbsp;&nbsp;Lifetime States</a></li>
+<li><a class="reference internal" href="#proposal-tracking" id="id10">6&nbsp;&nbsp;&nbsp;Proposal Tracking</a></li>
+<li><a class="reference internal" href="#tables-of-tracked-proposals" id="id11">7&nbsp;&nbsp;&nbsp;Tables of Tracked Proposals</a></li>
 </ul>
 </div>
 <p><a class="anchor" id="proposals-for-spec-changes-to-matrix"></a></p>
@@ -926,13 +935,16 @@ div.admonition-example {
 <h1><a class="toc-backref" href="#id5">1&nbsp;&nbsp;&nbsp;Proposals for Spec Changes to Matrix</a></h1>
 <p>If you are interested in submitting a change to the Matrix Specification,
 please take note of the following guidelines.</p>
-<p>All changes to Specification content require a formal proposal process. This
-involves writing a proposal, having it reviewed by everyone, having the
-proposal being accepted, then actually having your ideas implemented as
-committed changes to the <a class="reference external" href="https://github.com/matrix-org/matrix-doc">Specification repository</a>.</p>
-<p>Meet the <a class="reference external" href="https://github.com/orgs/matrix-org/teams/spec-core-team/members">members of the Core Team</a>, a group of
+<p>Most changes to the Specification require a formal proposal. Bug fixes, typos,
+and clarifications to existing behaviour do not need proposals - see the
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/CONTRIBUTING.rst">contributing guide</a>
+for more information on what does and does not need a proposal.</p>
+<p>The proposal process involves some technical writing, having it reviewed by
+everyone, having the proposal being accepted, then actually having your ideas
+implemented as committed changes to the <a class="reference external" href="https://github.com/matrix-org/matrix-doc">Specification repository</a>.</p>
+<p>Meet the <a class="reference external" href="https://matrix.org/foundation">members of the Core Team</a>, a group of
 individuals tasked with ensuring the spec process is as smooth and painless as
-possible. Members of the Core Team will do their best to participate in
+possible. Members of the Spec Core Team will do their best to participate in
 discussion, summarise when things become long-winded, and generally try to act
 towards the benefit of everyone. As a majority, team members have the ability
 to change the state of a proposal, and individually have the final say in
@@ -943,13 +955,14 @@ proposal discussion.</p>
 <h1><a class="toc-backref" href="#id6">2&nbsp;&nbsp;&nbsp;Guiding Principles</a></h1>
 <p>Proposals <strong>must</strong> act to the greater benefit of the entire Matrix ecosystem,
 rather than benefiting or privileging any single player or subset of players -
-and must not contain any patent encumbered intellectual property. Members of the Core Team pledge to act as
-a neutral custodian for Matrix on behalf of the whole ecosystem.</p>
+and must not contain any patent encumbered intellectual property. Members of
+the Core Team pledge to act as a neutral custodian for Matrix on behalf of the
+whole ecosystem.</p>
 <p>For clarity: the Matrix ecosystem is anyone who uses the Matrix protocol. That
 includes client users, server admins, client developers, bot developers,
-bridge and application service developers, users and admins who are indirectly using Matrix via
-3rd party networks which happen to be bridged, server developers, room
-moderators and admins, companies/projects building products or services on
+bridge and application service developers, users and admins who are indirectly
+using Matrix via 3rd party networks which happen to be bridged, server developers,
+room moderators and admins, companies/projects building products or services on
 Matrix, spec contributors, translators, and those who created it in
 the first place.</p>
 <p>&quot;Greater benefit&quot; could include maximising:</p>
@@ -960,13 +973,21 @@ federated users)</li>
 <li>the number of online servers in the open federation</li>
 <li>the number of developers building on Matrix</li>
 <li>the number of independent implementations which use Matrix</li>
-<li>the quality and utility of the Matrix spec</li>
+<li>the number of bridged end-users reachable on the open Matrix network</li>
+<li>the signal-to-noise ratio of the content on the open Matrix network (i.e. minimising spam)</li>
+<li>the ability for users to discover content on their terms (empowering them to select what to see and what not to see)</li>
+<li>the quality and utility of the Matrix spec (as defined by ease and ability
+with which a developer can implement spec-compliant clients, servers, bots,
+bridges, and other integrations without needing to refer to any other
+external material)</li>
 </ul>
 <p>In addition, proposal authors are expected to uphold the following values in
 their proposed changes to the Matrix protocol:</p>
 <ul class="simple">
 <li>Supporting the whole long-term ecosystem rather than individual stakeholder gain</li>
-<li>Openness rather than proprietariness</li>
+<li>Openness rather than proprietary lock-in</li>
+<li>Interoperability rather than fragmentation</li>
+<li>Cross-platform rather than platform-specific</li>
 <li>Collaboration rather than competition</li>
 <li>Accessibility rather than elitism</li>
 <li>Transparency rather than stealth</li>
@@ -974,10 +995,85 @@ their proposed changes to the Matrix protocol:</p>
 <li>Pragmatism rather than perfection</li>
 <li>Proof rather than conjecture</li>
 </ul>
+<p>Please see [MSC1779](<a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/matthew/msc1779/proposals/1779-open-governance.md">https://github.com/matrix-org/matrix-doc/blob/matthew/msc1779/proposals/1779-open-governance.md</a>)
+for full details of the project's Guiding Principles.</p>
+</div>
+<p><a class="anchor" id="technical-notes"></a></p>
+<div class="section" id="technical-notes">
+<h1><a class="toc-backref" href="#id7">3&nbsp;&nbsp;&nbsp;Technical notes</a></h1>
+<p>Proposals <strong>must</strong> develop Matrix as a layered protocol: with new features
+building on layers of shared abstractions rather than introducing tight vertical
+coupling within the stack.  This ensures that new features can evolve rapidly by
+building on existing layers and swapping out old features without impacting the
+rest of the stack or requiring substantial upgrades to the whole ecosystem.
+This is critical for Matrix to rapidly evolve and compete effectively with
+centralised systems, despite being a federated protocol.</p>
+<p>For instance, new features should be implemented using the highest layer
+abstractions possible (e.g. new event types, which layer on top of the existing
+room semantics, and so don't even require any API changes). Failing that, the
+next recourse would be backwards-compatible changes to the next layer down (e.g.
+room APIs); failing that, considering changes to the format of events or the
+DAG; etc.  It would be a very unusual feature which doesn't build on the
+existing infrastructure provided by the spec and instead created new primitives
+or low level APIs.</p>
+<p>Backwards compatibility is very important for Matrix, but not at the expense of
+hindering the protocol's evolution.  Backwards incompatible changes to endpoints
+are allowed when no other alternative exists, and must be versioned under a new
+major release of the API.  Backwards incompatible changes to the room algorithm
+are also allowed when no other alternative exists, and must be versioned under a
+new version of the room algorithm.</p>
+<p>There is sometimes a dilemma over where to include higher level features: for
+instance, should video conferencing be formalised in the spec, or should it be
+implemented via widgets? Should reputation systems be specified? Should search
+engine behaviour be specified?</p>
+<p>There is no universal answer to this, but the following guidelines should be
+applied:</p>
+<ol class="arabic simple">
+<li>If the feature would benefit the whole Matrix ecosystem and is aligned with
+the guiding principles above, then it should be supported by the spec.</li>
+<li>If the spec already makes the feature possible without changing any of the
+implementations and spec, then it may not need to be added to the spec.</li>
+<li>However, if the best user experience for a feature does require custom
+implementation behaviour then the behaviour should be defined in the spec
+such that all implementations may implement it.</li>
+<li>However, the spec must never add dependencies on unspecified/nonstandardised
+3rd party behaviour.</li>
+</ol>
+<p>As a worked example:</p>
+<ol class="arabic simple">
+<li>Video conferencing is clearly a feature which would benefit
+the whole ecosystem, and so the spec should find a way to make it happen.</li>
+<li>Video conferencing can be achieved by widgets without requiring any
+compulsory changes to changes to clients nor servers to work, and so could be
+omitted from the spec.</li>
+<li>A better experience could be achieved by embedding Jitsi natively into clients
+rather than using a widget...</li>
+<li>...except that would add a dependency on unspecified/nonstandardised 3rd party
+behaviour, so must not be added to the spec.</li>
+</ol>
+<p>Therefore, our two options in the specific case of video conferencing are
+either to spec SFU conferencing semantics for WebRTC (or refer to an existing spec
+for doing so), or to keep it as a widget-based approach (optionally with widget
+extensions specific for more deeply integrating video conferencing use cases).</p>
+<p>As an alternative example: it's very unlikely that &quot;how to visualise Magnetic
+Resonsance Imaging data over Matrix&quot; would ever be added to the Matrix spec
+(other than perhaps a custom event type in a wider standardised Matrix event
+registry) given that the spec's existing primitives of file transfer and
+extensible events (MSC1767) give excellent tools for transfering and
+visualising arbitrary rich data.</p>
+<p>Supporting public search engines are likely to not require custom spec features
+(other than possibly better bulk access APIs), given they can be implemented as
+clients using the existing CS API.  An exception could be API features required
+by decentralised search infrastructure (avoiding centralisation of power by
+a centralised search engine).</p>
+<p>Features such as reactions, threaded messages, editable messages,
+spam/abuse/content filtering (and reputation systems), are all features which
+would clearly benefit the whole Matrix ecosystem, and cannot be implemented in an
+interoperable way using the current spec; so they necessitate a spec change.</p>
 </div>
 <p><a class="anchor" id="process"></a></p>
 <div class="section" id="process">
-<h1><a class="toc-backref" href="#id7">3&nbsp;&nbsp;&nbsp;Process</a></h1>
+<h1><a class="toc-backref" href="#id8">4&nbsp;&nbsp;&nbsp;Process</a></h1>
 <p>The process for submitting a Matrix Spec Change (MSC) Proposal in detail is as
 follows:</p>
 <ul class="simple">
@@ -1027,26 +1123,26 @@ set of trade-offs. The author should neutrally gather the various
 viewpoints and get consensus, but this can sometimes be time-consuming (or
 the author may be biased), in which case an impartial 'shepherd' can be
 assigned to help guide the proposal through this process instead. A shepherd is
-typically a neutral party from the Core Team or an experienced member of
+typically a neutral party from the Spec Core Team or an experienced member of
 the community. There is no formal process for assignment. Simply ask for a
 shepherd to help get your proposal through and one will be assigned based
 on availability. Having a shepherd is not a requirement for proposal
 acceptance.</li>
 </ul>
 </li>
-<li>Members of the Core Team and community will review and discuss the PR in the
+<li>Members of the Spec Core Team and community will review and discuss the PR in the
 comments and in relevant rooms on Matrix. Discussion outside of GitHub should
 be summarised in a comment on the PR.</li>
-<li>When a member of the Core Team believes that no new discussion points are
+<li>When a member of the Spec Core Team believes that no new discussion points are
 being made, they will propose a motion for a final comment period (FCP),
 along with a <em>disposition</em> of either merge, close or postpone. This FCP is
 provided to allow a short period of time for any invested party to provide a
 final objection before a major decision is made. If sufficient reasoning is
 given, an FCP can be cancelled. It is often preceded by a comment summarising
 the current state of the discussion, along with reasoning for its occurrence.</li>
-<li>A concern can be raised by a Core Team member at any time, which will block
-an FCP from beginning. An FCP will only begin when a <strong>75% majority</strong> of core
-team members agree on its outcome, and all existing concerns have been
+<li>A concern can be raised by a Spec Core Team member at any time, which will block
+an FCP from beginning. An FCP will only begin when 75% of the members of the
+Spec Core Team team agree on its outcome, and all existing concerns have been
 resolved.</li>
 <li>The FCP will then begin and last for 5 days, giving anyone else some time to
 speak up before it concludes. On its conclusion, the disposition of the FCP
@@ -1126,7 +1222,7 @@ labels for each stage on the <a class="reference external" href="https://github.
 </div>
 <p><a class="anchor" id="lifetime-states"></a></p>
 <div class="section" id="lifetime-states">
-<h1><a class="toc-backref" href="#id8">4&nbsp;&nbsp;&nbsp;Lifetime States</a></h1>
+<h1><a class="toc-backref" href="#id9">5&nbsp;&nbsp;&nbsp;Lifetime States</a></h1>
 <p><strong>Note:</strong> All labels are to be placed on the proposal PR.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1147,7 +1243,7 @@ labels for each stage on the <a class="reference external" href="https://github.
 </tr>
 <tr><td>Proposal In Review</td>
 <td>proposal-in-review</td>
-<td>A proposal document which is now ready and waiting for review by the Core Team and community</td>
+<td>A proposal document which is now ready and waiting for review by the Spec Core Team and community</td>
 </tr>
 <tr><td>Proposed Final Comment Period</td>
 <td>proposed-final-comment-period</td>
@@ -1182,16 +1278,20 @@ sometime in the future</td>
 <td>proposal-closed</td>
 <td>A proposal which has been reviewed and deemed unsuitable for acceptance</td>
 </tr>
+<tr><td>Obsolete</td>
+<td>obsolete</td>
+<td>A proposal which has been made obsolete by another proposal or decision elsewhere.</td>
+</tr>
 </tbody>
 </table>
 </div>
 <p><a class="anchor" id="proposal-tracking"></a></p>
 <div class="section" id="proposal-tracking">
-<h1><a class="toc-backref" href="#id9">5&nbsp;&nbsp;&nbsp;Proposal Tracking</a></h1>
+<h1><a class="toc-backref" href="#id10">6&nbsp;&nbsp;&nbsp;Proposal Tracking</a></h1>
 <p>This is a living document generated from the list of proposals on the issue and
 pull request trackers of the <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> repo.</p>
 <p>We use labels and some metadata in MSC PR descriptions to generate this page.
-Labels are assigned by the Core Team whilst triaging the proposals based on those
+Labels are assigned by the Spec Core Team whilst triaging the proposals based on those
 which exist in the <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a>
 repo already.</p>
 <p>It is worth mentioning that a previous version of the MSC process used a
@@ -1220,7 +1320,7 @@ issue description. Again, make sure this is a real GitHub user.</li>
 </div>
 <p><a class="anchor" id="tables-of-tracked-proposals"></a></p>
 <div class="section" id="tables-of-tracked-proposals">
-<h1><a class="toc-backref" href="#id10">6&nbsp;&nbsp;&nbsp;Tables of Tracked Proposals</a></h1>
+<h1><a class="toc-backref" href="#id11">7&nbsp;&nbsp;&nbsp;Tables of Tracked Proposals</a></h1>
 <p>This file is generated by an automated process on our build server.</p>
 <p>View the current live version <a class="reference external" href="https://matrix.org/docs/spec/proposals">at https://matrix.org/docs/spec/proposals</a>.</p>
 </div>

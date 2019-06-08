@@ -907,6 +907,14 @@ div.admonition-example {
 </style>
 <style type="text/css">
 
+/* Column with header cells */
+table.docutils tbody th.stub {
+    background: #eeeeee;
+}
+
+</style>
+<style type="text/css">
+
 /*
 *   math2html: convert LaTeX equations to HTML output.
 *
@@ -1314,7 +1322,7 @@ reject.</li>
 <li>Reject if event has <tt class="docutils literal">auth_events</tt> that:<ol class="loweralpha">
 <li>have duplicate entries for a given <tt class="docutils literal">type</tt> and <tt class="docutils literal">state_key</tt> pair</li>
 <li>have entries whose <tt class="docutils literal">type</tt> and <tt class="docutils literal">state_key</tt> don't match those
-specified by the <a class="reference external" href="../../server_server/r0.1.1.html#auth-events-selection">auth events selection</a> algorithm described in the
+specified by the <a class="reference external" href="../server_server/r0.1.1.html#auth-events-selection">auth events selection</a> algorithm described in the
 server specification.</li>
 </ol>
 </li>
@@ -1535,12 +1543,12 @@ those defined here may be used.</td>
 <tr><td>hashes</td>
 <td>Event Hash</td>
 <td><strong>Required.</strong> Content hashes of the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 <tr><td>signatures</td>
 <td>{string: {string: string}}</td>
 <td><strong>Required.</strong> Signatures for the PDU, following
-the algorithm specified in <a class="reference external" href="../../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
+the algorithm specified in <a class="reference external" href="../server_server/r0.1.1.html#signing-events">Signing Events</a>.</td>
 </tr>
 </tbody>
 </table>

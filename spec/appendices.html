@@ -905,6 +905,14 @@ div.admonition-example {
 
 
 </style>
+<style type="text/css">
+
+/* Column with header cells */
+table.docutils tbody th.stub {
+    background: #eeeeee;
+}
+
+</style>
 </head>
 <body>
 <div class="document">
@@ -1960,11 +1968,17 @@ KEY_ID = &quot;ed25519:1&quot;
 <p>Given the following minimally-sized event:</p>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
-    <span class="name tag">&quot;event_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$0:domain&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!x:domain&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;a:domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;origin&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;origin_server_ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1000000</span><span class="punctuation">,</span>
     <span class="name tag">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">{},</span>
+    <span class="name tag">&quot;hashes&quot;</span><span class="punctuation">:</span> <span class="punctuation">{},</span>
     <span class="name tag">&quot;type&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;X&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{},</span>
+    <span class="name tag">&quot;prev_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="name tag">&quot;auth_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="name tag">&quot;depth&quot;</span><span class="punctuation">:</span> <span class="literal number integer">3</span><span class="punctuation">,</span>
     <span class="name tag">&quot;unsigned&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
         <span class="name tag">&quot;age_ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1000000</span>
     <span class="punctuation">}</span>
@@ -1973,15 +1987,20 @@ KEY_ID = &quot;ed25519:1&quot;
 <p>The event signing algorithm should emit the following signed event:</p>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
-    <span class="name tag">&quot;event_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$0:domain&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;auth_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{},</span>
+    <span class="name tag">&quot;depth&quot;</span><span class="punctuation">:</span> <span class="literal number integer">3</span><span class="punctuation">,</span>
     <span class="name tag">&quot;hashes&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-        <span class="name tag">&quot;sha256&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;6tJjLpXtggfke8UxFhAKg82QVkJzvKOVOOSjUDK4ZSI&quot;</span>
+        <span class="name tag">&quot;sha256&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;5jM4wQpv6lnBo7CLIghJuHdW+s2CMBJPUOGOC89ncos&quot;</span>
     <span class="punctuation">},</span>
     <span class="name tag">&quot;origin&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;origin_server_ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1000000</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;prev_events&quot;</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!x:domain&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;a:domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
         <span class="name tag">&quot;domain&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-            <span class="name tag">&quot;ed25519:1&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;2Wptgo4CwmLo/Y8B8qinxApKaCkBG2fjTWB7AbP5Uy+aIbygsSdLOFzvdDjww8zUVKCmI02eP9xtyJxc/cLiBA&quot;</span>
+            <span class="name tag">&quot;ed25519:1&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;KxwGjPSDEtvnFgU00fwFz+l6d2pJM6XBIaMEn81SXPTRl16AqLAYqfIReFGZlHi5KLjAWbOoMszkwsQma+lYAg&quot;</span>
         <span class="punctuation">}</span>
     <span class="punctuation">},</span>
     <span class="name tag">&quot;type&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;X&quot;</span><span class="punctuation">,</span>
@@ -1994,7 +2013,7 @@ KEY_ID = &quot;ed25519:1&quot;
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
     <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Here is the message content&quot;</span><span class="punctuation">,</span>
+        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Here is the message content&quot;</span>
     <span class="punctuation">},</span>
     <span class="name tag">&quot;event_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$0:domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;origin&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;domain&quot;</span><span class="punctuation">,</span>
@@ -2012,7 +2031,7 @@ KEY_ID = &quot;ed25519:1&quot;
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
     <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Here is the message content&quot;</span><span class="punctuation">,</span>
+        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Here is the message content&quot;</span>
     <span class="punctuation">},</span>
     <span class="name tag">&quot;event_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;$0:domain&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;hashes&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
