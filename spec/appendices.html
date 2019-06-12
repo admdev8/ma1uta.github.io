@@ -1418,11 +1418,10 @@ with an extension for IPv6 literals.</p>
 number of entities, including users, events and rooms. Each identifier takes
 the form:</p>
 <pre class="literal-block">
-&amp;localpart:domain
+&amp;string
 </pre>
-<p>where <tt class="docutils literal">&amp;</tt> represents a 'sigil' character; <tt class="docutils literal">domain</tt> is the <a class="reference internal" href="#server-name">server name</a> of
-the homeserver which allocated the identifier, and <tt class="docutils literal">localpart</tt> is an
-identifier allocated by that homeserver.</p>
+<p>where <tt class="docutils literal">&amp;</tt> represents a 'sigil' character; <tt class="docutils literal">string</tt> is the string which makes
+up the identifier.</p>
 <p>The sigil characters are as follows:</p>
 <ul class="simple">
 <li><tt class="docutils literal">&#64;</tt>: User ID</li>
@@ -1431,8 +1430,16 @@ identifier allocated by that homeserver.</p>
 <li><tt class="docutils literal">+</tt>: Group ID</li>
 <li><tt class="docutils literal">#</tt>: Room alias</li>
 </ul>
+<p>User IDs, group IDs, room IDs, room aliases, and sometimes event IDs take the form:</p>
+<pre class="literal-block">
+&amp;localpart:domain
+</pre>
+<p>where <tt class="docutils literal">domain</tt> is the <a class="reference internal" href="#server-name">server name</a> of the homeserver which allocated the
+identifier, and <tt class="docutils literal">localpart</tt> is an identifier allocated by that homeserver.</p>
 <p>The precise grammar defining the allowable format of an identifier depends on
-the type of identifier.</p>
+the type of identifier. For example, event IDs can sometimes be represented with
+a <tt class="docutils literal">domain</tt> component under some conditions - see the <a class="reference external" href="#room-ids-and-event-ids">Event IDs</a>
+section below for more information.</p>
 <p><a class="anchor" id="user-identifiers"></a></p>
 <div class="section" id="user-identifiers">
 <h3><a class="toc-backref" href="#id12">4.2.1&nbsp;&nbsp;&nbsp;User Identifiers</a></h3>

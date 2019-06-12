@@ -950,79 +950,76 @@ given it is VERY implementation specific. -->
 <div class="contents topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#changelog" id="id3">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
-<li><a class="reference internal" href="#other-versions-of-this-specification" id="id4">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
+<li><a class="reference internal" href="#changelog" id="id1">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#other-versions-of-this-specification" id="id2">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#application-services" id="id5">2&nbsp;&nbsp;&nbsp;Application Services</a><ul class="auto-toc">
-<li><a class="reference internal" href="#registration" id="id6">2.1&nbsp;&nbsp;&nbsp;Registration</a></li>
-<li><a class="reference internal" href="#homeserver-application-service-api" id="id7">2.2&nbsp;&nbsp;&nbsp;Homeserver -&gt; Application Service API</a><ul class="auto-toc">
-<li><a class="reference internal" href="#authorization" id="id8">2.2.1&nbsp;&nbsp;&nbsp;Authorization</a></li>
-<li><a class="reference internal" href="#legacy-routes" id="id9">2.2.2&nbsp;&nbsp;&nbsp;Legacy routes</a></li>
-<li><a class="reference internal" href="#pushing-events" id="id10">2.2.3&nbsp;&nbsp;&nbsp;Pushing events</a><ul class="auto-toc">
-<li><a class="reference internal" href="#put-matrix-app-v1-transactions-txnid" id="id11">2.2.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt></a></li>
+<li><a class="reference internal" href="#application-services" id="id3">2&nbsp;&nbsp;&nbsp;Application Services</a><ul class="auto-toc">
+<li><a class="reference internal" href="#registration" id="id4">2.1&nbsp;&nbsp;&nbsp;Registration</a></li>
+<li><a class="reference internal" href="#homeserver-application-service-api" id="id5">2.2&nbsp;&nbsp;&nbsp;Homeserver -&gt; Application Service API</a><ul class="auto-toc">
+<li><a class="reference internal" href="#authorization" id="id6">2.2.1&nbsp;&nbsp;&nbsp;Authorization</a></li>
+<li><a class="reference internal" href="#legacy-routes" id="id7">2.2.2&nbsp;&nbsp;&nbsp;Legacy routes</a></li>
+<li><a class="reference internal" href="#pushing-events" id="id8">2.2.3&nbsp;&nbsp;&nbsp;Pushing events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#put-matrix-app-v1-transactions-txnid" id="id9">2.2.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#querying" id="id12">2.2.4&nbsp;&nbsp;&nbsp;Querying</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-app-v1-users-userid" id="id13">2.2.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/users/{userId}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-app-v1-rooms-roomalias" id="id14">2.2.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt></a></li>
+<li><a class="reference internal" href="#querying" id="id10">2.2.4&nbsp;&nbsp;&nbsp;Querying</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-app-v1-users-userid" id="id11">2.2.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/users/{userId}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-app-v1-rooms-roomalias" id="id12">2.2.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#third-party-networks" id="id15">2.2.5&nbsp;&nbsp;&nbsp;Third party networks</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-protocol-protocol" id="id16">2.2.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-user-protocol" id="id17">2.2.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/user/{protocol}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-location-protocol" id="id18">2.2.5.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/location/{protocol}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-location" id="id19">2.2.5.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/location</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-user" id="id20">2.2.5.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/user</tt></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#client-server-api-extensions" id="id21">2.3&nbsp;&nbsp;&nbsp;Client-Server API Extensions</a><ul class="auto-toc">
-<li><a class="reference internal" href="#identity-assertion" id="id22">2.3.1&nbsp;&nbsp;&nbsp;Identity assertion</a></li>
-<li><a class="reference internal" href="#timestamp-massaging" id="id23">2.3.2&nbsp;&nbsp;&nbsp;Timestamp massaging</a></li>
-<li><a class="reference internal" href="#server-admin-style-permissions" id="id24">2.3.3&nbsp;&nbsp;&nbsp;Server admin style permissions</a></li>
-<li><a class="reference internal" href="#using-sync-and-events" id="id25">2.3.4&nbsp;&nbsp;&nbsp;Using <tt class="docutils literal">/sync</tt> and <tt class="docutils literal">/events</tt></a></li>
-<li><a class="reference internal" href="#application-service-room-directories" id="id26">2.3.5&nbsp;&nbsp;&nbsp;Application service room directories</a><ul class="auto-toc">
-<li><a class="reference internal" href="#put-matrix-client-r0-directory-list-appservice-networkid-roomid" id="id27">2.3.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#third-party-networks" id="id13">2.2.5&nbsp;&nbsp;&nbsp;Third party networks</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-protocol-protocol" id="id14">2.2.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-user-protocol" id="id15">2.2.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/user/{protocol}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-location-protocol" id="id16">2.2.5.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/location/{protocol}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-location" id="id17">2.2.5.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/location</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-app-v1-thirdparty-user" id="id18">2.2.5.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/user</tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#referencing-messages-from-a-third-party-network" id="id28">2.4&nbsp;&nbsp;&nbsp;Referencing messages from a third party network</a></li>
+<li><a class="reference internal" href="#client-server-api-extensions" id="id19">2.3&nbsp;&nbsp;&nbsp;Client-Server API Extensions</a><ul class="auto-toc">
+<li><a class="reference internal" href="#identity-assertion" id="id20">2.3.1&nbsp;&nbsp;&nbsp;Identity assertion</a></li>
+<li><a class="reference internal" href="#timestamp-massaging" id="id21">2.3.2&nbsp;&nbsp;&nbsp;Timestamp massaging</a></li>
+<li><a class="reference internal" href="#server-admin-style-permissions" id="id22">2.3.3&nbsp;&nbsp;&nbsp;Server admin style permissions</a></li>
+<li><a class="reference internal" href="#using-sync-and-events" id="id23">2.3.4&nbsp;&nbsp;&nbsp;Using <tt class="docutils literal">/sync</tt> and <tt class="docutils literal">/events</tt></a></li>
+<li><a class="reference internal" href="#application-service-room-directories" id="id24">2.3.5&nbsp;&nbsp;&nbsp;Application service room directories</a><ul class="auto-toc">
+<li><a class="reference internal" href="#put-matrix-client-r0-directory-list-appservice-networkid-roomid" id="id25">2.3.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#referencing-messages-from-a-third-party-network" id="id26">2.4&nbsp;&nbsp;&nbsp;Referencing messages from a third party network</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <p><a class="anchor" id="changelog"></a></p>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id3">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
 <div class="topic">
 <p class="topic-title first">Version: unstable</p>
-<p>Spec Clarifications</p>
-<ul class="simple">
-<li>Change examples to use example.org instead of a real domain. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/1650">#1650</a>)</li>
-<li>Add missing definition for how appservices verify requests came from a homeserver. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2037">#2037</a>)</li>
-</ul>
+<p>No significant changes.</p>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/3438ea50">master,3438ea50</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/19a3d574">master,19a3d574</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/application_service.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/application_service.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
 <div class="section" id="other-versions-of-this-specification">
-<h2><a class="toc-backref" href="#id4">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
+<h2><a class="toc-backref" href="#id2">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
 <p>The following other versions are also available, in reverse chronological order:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://matrix.org/docs/spec/application_service/unstable.html">HEAD</a>: Includes all changes since the latest versioned release.</li>
+<li><a class="reference external" href="https://matrix.org/docs/spec/application_service/r0.1.1.html">r0.1.1</a></li>
 <li><a class="reference external" href="https://matrix.org/docs/spec/application_service/r0.1.0.html">r0.1.0</a></li>
 </ul>
 </div>
 </div>
 <p><a class="anchor" id="application-services"></a></p>
 <div class="section" id="application-services">
-<h1><a class="toc-backref" href="#id5">2&nbsp;&nbsp;&nbsp;Application Services</a></h1>
+<h1><a class="toc-backref" href="#id3">2&nbsp;&nbsp;&nbsp;Application Services</a></h1>
 <p>Application services are passive and can only observe events from homeserver.
 They can inject events into rooms they are participating in.
 They cannot prevent events from being sent, nor can they modify the content of
@@ -1032,7 +1029,7 @@ application service.  This is achieved by manually configuring the homeserver
 with information about the application service.</p>
 <p><a class="anchor" id="registration"></a></p>
 <div class="section" id="registration">
-<h2><a class="toc-backref" href="#id6">2.1&nbsp;&nbsp;&nbsp;Registration</a></h2>
+<h2><a class="toc-backref" href="#id4">2.1&nbsp;&nbsp;&nbsp;Registration</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Previously, application services could register with a homeserver via HTTP
@@ -1184,10 +1181,10 @@ used to identify the application service. The homeserver MUST enforce this.</p>
 </div>
 <p><a class="anchor" id="homeserver-application-service-api"></a></p>
 <div class="section" id="homeserver-application-service-api">
-<h2><a class="toc-backref" href="#id7">2.2&nbsp;&nbsp;&nbsp;Homeserver -&gt; Application Service API</a></h2>
+<h2><a class="toc-backref" href="#id5">2.2&nbsp;&nbsp;&nbsp;Homeserver -&gt; Application Service API</a></h2>
 <p><a class="anchor" id="authorization"></a></p>
 <div class="section" id="authorization">
-<h3><a class="toc-backref" href="#id8">2.2.1&nbsp;&nbsp;&nbsp;Authorization</a></h3>
+<h3><a class="toc-backref" href="#id6">2.2.1&nbsp;&nbsp;&nbsp;Authorization</a></h3>
 <p>Homeservers MUST include a query parameter named <tt class="docutils literal">access_token</tt> containing the
 <tt class="docutils literal">hs_token</tt> from the application service's registration when making requests to
 the application service. Application services MUST verify the provided <tt class="docutils literal">access_token</tt>
@@ -1196,7 +1193,7 @@ if it does not match.</p>
 </div>
 <p><a class="anchor" id="legacy-routes"></a></p>
 <div class="section" id="legacy-routes">
-<h3><a class="toc-backref" href="#id9">2.2.2&nbsp;&nbsp;&nbsp;Legacy routes</a></h3>
+<h3><a class="toc-backref" href="#id7">2.2.2&nbsp;&nbsp;&nbsp;Legacy routes</a></h3>
 <p>Previous drafts of the application service specification had a mix of endpoints
 that have been used in the wild for a significant amount of time. The application
 service specification now defines a version on all endpoints to be more compatible
@@ -1222,7 +1219,7 @@ application service may have been updated.</p>
 </div>
 <p><a class="anchor" id="pushing-events"></a></p>
 <div class="section" id="pushing-events">
-<h3><a class="toc-backref" href="#id10">2.2.3&nbsp;&nbsp;&nbsp;Pushing events</a></h3>
+<h3><a class="toc-backref" href="#id8">2.2.3&nbsp;&nbsp;&nbsp;Pushing events</a></h3>
 <p>The application service API provides a transaction API for sending a list of
 events. Each list of events includes a transaction ID, which works as follows:</p>
 <pre class="literal-block">
@@ -1248,7 +1245,7 @@ alter (e.g. add more) events they were going to send within that transaction ID
 on retries, as the application service may have already processed the events.</p>
 <p><a class="anchor" id="put-matrix-app-v1-transactions-txnid"></a></p>
 <div class="section" id="put-matrix-app-v1-transactions-txnid">
-<h4><a class="toc-backref" href="#id11">2.2.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id9">2.2.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt></a></h4>
 <p>This API is called by the homeserver when it wants to push an event
 (or batch of events) to the application service.</p>
 <p>Note that the application service should distinguish state events
@@ -1300,7 +1297,7 @@ the Client-Server API.</td>
     <span class="punctuation">{</span>
       <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
         <span class="name tag">&quot;membership&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;join&quot;</span><span class="punctuation">,</span>
-        <span class="name tag">&quot;avatar_url&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;mxc://example.org/SEsfnsuifSDFSSEF#auto&quot;</span><span class="punctuation">,</span>
+        <span class="name tag">&quot;avatar_url&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;mxc://example.org/SEsfnsuifSDFSSEF&quot;</span><span class="punctuation">,</span>
         <span class="name tag">&quot;displayname&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Alice Margatroid&quot;</span>
       <span class="punctuation">},</span>
       <span class="name tag">&quot;type&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.room.member&quot;</span><span class="punctuation">,</span>
@@ -1343,7 +1340,7 @@ the Client-Server API.</td>
 </div>
 <p><a class="anchor" id="querying"></a></p>
 <div class="section" id="querying">
-<h3><a class="toc-backref" href="#id12">2.2.4&nbsp;&nbsp;&nbsp;Querying</a></h3>
+<h3><a class="toc-backref" href="#id10">2.2.4&nbsp;&nbsp;&nbsp;Querying</a></h3>
 <p>The application service API includes two querying APIs: for room aliases and for
 user IDs. The application service SHOULD create the queried entity if it desires.
 During this process, the application service is blocking the homeserver until the
@@ -1362,7 +1359,7 @@ room alias mappings.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-users-userid"></a></p>
 <div class="section" id="get-matrix-app-v1-users-userid">
-<h4><a class="toc-backref" href="#id13">2.2.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/users/{userId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id11">2.2.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/users/{userId}</span></tt></a></h4>
 <p>This endpoint is invoked by the homeserver on an application service to query
 the existence of a given user ID. The homeserver will only query user IDs
 inside the application service's <tt class="docutils literal">users</tt> namespace. The homeserver will
@@ -1436,7 +1433,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-rooms-roomalias"></a></p>
 <div class="section" id="get-matrix-app-v1-rooms-roomalias">
-<h4><a class="toc-backref" href="#id14">2.2.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id12">2.2.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt></a></h4>
 <p>This endpoint is invoked by the homeserver on an application service to query
 the existence of a given room alias. The homeserver will only query room
 aliases inside the application service's <tt class="docutils literal">aliases</tt> namespace. The
@@ -1514,7 +1511,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="third-party-networks"></a></p>
 <div class="section" id="third-party-networks">
-<h3><a class="toc-backref" href="#id15">2.2.5&nbsp;&nbsp;&nbsp;Third party networks</a></h3>
+<h3><a class="toc-backref" href="#id13">2.2.5&nbsp;&nbsp;&nbsp;Third party networks</a></h3>
 <p>Application services may declare which protocols they support via their registration
 configuration for the homeserver. These networks are generally for third party services
 such as IRC that the application service is managing. Application services may populate
@@ -1529,7 +1526,7 @@ in a particular &quot;network&quot; (protocol), the search fields will be passed
 application service for filtering.</p>
 <p><a class="anchor" id="get-matrix-app-v1-thirdparty-protocol-protocol"></a></p>
 <div class="section" id="get-matrix-app-v1-thirdparty-protocol-protocol">
-<h4><a class="toc-backref" href="#id16">2.2.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id14">2.2.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt></a></h4>
 <p>This API is called by the homeserver when it wants to present clients
 with specific information about the various third party networks that
 an application service supports.</p>
@@ -1769,7 +1766,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-thirdparty-user-protocol"></a></p>
 <div class="section" id="get-matrix-app-v1-thirdparty-user-protocol">
-<h4><a class="toc-backref" href="#id17">2.2.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/user/{protocol}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id15">2.2.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/user/{protocol}</span></tt></a></h4>
 <p>This API is called by the homeserver in order to retrieve a Matrix
 User ID linked to a user on the third party network, given a set of
 user parameters.</p>
@@ -1895,7 +1892,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-thirdparty-location-protocol"></a></p>
 <div class="section" id="get-matrix-app-v1-thirdparty-location-protocol">
-<h4><a class="toc-backref" href="#id18">2.2.5.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/location/{protocol}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id16">2.2.5.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/app/v1/thirdparty/location/{protocol}</span></tt></a></h4>
 <p>Retrieve a list of Matrix portal rooms that lead to the matched third party location.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2020,7 +2017,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-thirdparty-location"></a></p>
 <div class="section" id="get-matrix-app-v1-thirdparty-location">
-<h4><a class="toc-backref" href="#id19">2.2.5.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/location</tt></a></h4>
+<h4><a class="toc-backref" href="#id17">2.2.5.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/location</tt></a></h4>
 <p>Retrieve an array of third party network locations from a Matrix room
 alias.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2138,7 +2135,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="get-matrix-app-v1-thirdparty-user"></a></p>
 <div class="section" id="get-matrix-app-v1-thirdparty-user">
-<h4><a class="toc-backref" href="#id20">2.2.5.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/user</tt></a></h4>
+<h4><a class="toc-backref" href="#id18">2.2.5.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/app/v1/thirdparty/user</tt></a></h4>
 <p>Retrieve an array of third party users from a Matrix User ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2257,7 +2254,7 @@ Optional error information can be included in the body of this response.</p>
 </div>
 <p><a class="anchor" id="client-server-api-extensions"></a></p>
 <div class="section" id="client-server-api-extensions">
-<h2><a class="toc-backref" href="#id21">2.3&nbsp;&nbsp;&nbsp;Client-Server API Extensions</a></h2>
+<h2><a class="toc-backref" href="#id19">2.3&nbsp;&nbsp;&nbsp;Client-Server API Extensions</a></h2>
 <p>Application services can use a more powerful version of the
 client-server API by identifying itself as an application service to the
 homeserver.</p>
@@ -2265,7 +2262,7 @@ homeserver.</p>
 client-server API as accessible only by application services.</p>
 <p><a class="anchor" id="identity-assertion"></a></p>
 <div class="section" id="identity-assertion">
-<h3><a class="toc-backref" href="#id22">2.3.1&nbsp;&nbsp;&nbsp;Identity assertion</a></h3>
+<h3><a class="toc-backref" href="#id20">2.3.1&nbsp;&nbsp;&nbsp;Identity assertion</a></h3>
 <p>The client-server API infers the user ID from the <tt class="docutils literal">access_token</tt> provided in
 every request. To avoid the application service from having to keep track of each
 user's access token, the application service should identify itself to the Client-Server
@@ -2323,7 +2320,7 @@ Notes:
 </div>
 <p><a class="anchor" id="timestamp-massaging"></a></p>
 <div class="section" id="timestamp-massaging">
-<h3><a class="toc-backref" href="#id23">2.3.2&nbsp;&nbsp;&nbsp;Timestamp massaging</a></h3>
+<h3><a class="toc-backref" href="#id21">2.3.2&nbsp;&nbsp;&nbsp;Timestamp massaging</a></h3>
 <p>Previous drafts of the Application Service API permitted application services
 to alter the timestamp of their sent events by providing a <tt class="docutils literal">ts</tt> query parameter
 when sending an event. This API has been excluded from the first release due to
@@ -2333,7 +2330,7 @@ information.</p>
 </div>
 <p><a class="anchor" id="server-admin-style-permissions"></a></p>
 <div class="section" id="server-admin-style-permissions">
-<h3><a class="toc-backref" href="#id24">2.3.3&nbsp;&nbsp;&nbsp;Server admin style permissions</a></h3>
+<h3><a class="toc-backref" href="#id22">2.3.3&nbsp;&nbsp;&nbsp;Server admin style permissions</a></h3>
 <p id="sect-asapi-permissions">The homeserver needs to give the application service <em>full control</em> over its
 namespace, both for users and for room aliases. This means that the AS should
 be able to create/edit/delete any room alias in its namespace, as well as
@@ -2365,7 +2362,7 @@ but only if the application service has defined the namespace as <tt class="docu
 </div>
 <p><a class="anchor" id="using-sync-and-events"></a></p>
 <div class="section" id="using-sync-and-events">
-<h3><a class="toc-backref" href="#id25">2.3.4&nbsp;&nbsp;&nbsp;Using <tt class="docutils literal">/sync</tt> and <tt class="docutils literal">/events</tt></a></h3>
+<h3><a class="toc-backref" href="#id23">2.3.4&nbsp;&nbsp;&nbsp;Using <tt class="docutils literal">/sync</tt> and <tt class="docutils literal">/events</tt></a></h3>
 <p>Application services wishing to use <tt class="docutils literal">/sync</tt> or <tt class="docutils literal">/events</tt> from the Client-Server
 API MUST do so with a virtual user (provide a <tt class="docutils literal">user_id</tt> via the query string). It
 is expected that the application service use the transactions pushed to it to
@@ -2373,13 +2370,13 @@ handle events rather than syncing with the user implied by <tt class="docutils l
 </div>
 <p><a class="anchor" id="application-service-room-directories"></a></p>
 <div class="section" id="application-service-room-directories">
-<h3><a class="toc-backref" href="#id26">2.3.5&nbsp;&nbsp;&nbsp;Application service room directories</a></h3>
+<h3><a class="toc-backref" href="#id24">2.3.5&nbsp;&nbsp;&nbsp;Application service room directories</a></h3>
 <p>Application services can maintain their own room directories for their defined
 third party protocols. These room directories may be accessed by clients through
 additional parameters on the <tt class="docutils literal">/publicRooms</tt> client-server endpoint.</p>
 <p><a class="anchor" id="put-matrix-client-r0-directory-list-appservice-networkid-roomid"></a></p>
 <div class="section" id="put-matrix-client-r0-directory-list-appservice-networkid-roomid">
-<h4><a class="toc-backref" href="#id27">2.3.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id25">2.3.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}</span></tt></a></h4>
 <p>Updates the visibility of a given room on the application service's room
 directory.</p>
 <p>This API is similar to the room directory visibility API used by clients
@@ -2450,7 +2447,7 @@ of: [&quot;public&quot;, &quot;private&quot;]</td>
 </div>
 <p><a class="anchor" id="referencing-messages-from-a-third-party-network"></a></p>
 <div class="section" id="referencing-messages-from-a-third-party-network">
-<h2><a class="toc-backref" href="#id28">2.4&nbsp;&nbsp;&nbsp;Referencing messages from a third party network</a></h2>
+<h2><a class="toc-backref" href="#id26">2.4&nbsp;&nbsp;&nbsp;Referencing messages from a third party network</a></h2>
 <p>Application services should include an <tt class="docutils literal">external_url</tt> in the <tt class="docutils literal">content</tt> of
 events it emits to indicate where the message came from. This typically applies
 to application services that bridge other networks into Matrix, such as IRC,
