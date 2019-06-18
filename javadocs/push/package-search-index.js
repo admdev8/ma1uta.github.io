@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"matrix.push.api","l":"io.github.ma1uta.matrix.push"},{"m":"matrix.push.api","l":"io.github.ma1uta.matrix.push.api"},{"m":"matrix.push.api","l":"io.github.ma1uta.matrix.push.model"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"io.github.ma1uta.matrix.push"},{"l":"io.github.ma1uta.matrix.push.api"},{"l":"io.github.ma1uta.matrix.push.model"}]
