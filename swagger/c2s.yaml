@@ -12,7 +12,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: r0.5.0-1
+  version: 0.5.0
 security:
 - accessToken: []
 paths:
@@ -142,6 +142,114 @@ paths:
       security:
       - Authorization: []
       - accessToken: []
+  /_matrix/client/r0/account/deactivate:
+    post:
+      tags:
+      - User data
+      summary: Deactivate the user's account, removing all ability for the user to
+        login again.
+      description: This API endpoint uses the User-Interactive Authentication API.An
+        access token should be submitted to this endpoint if the client has an active
+        session.The homeserver may change the flows available depending on whether
+        a valid access token is provided.
+      operationId: deactivate
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeactivateRequest'
+      responses:
+        200:
+          description: The account has been deactivated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeactivateResponse'
+        401:
+          description: The homeserver requires additional authentication information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/register/email/requestToken:
+    post:
+      tags:
+      - User data
+      summary: Request email token.
+      description: Proxies the identity server API validate/email/emailRequestToken,
+        but first checks that the given email address is not already associated with
+        an account on this Home Server. Note that, for consistency, this API takes
+        JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters.
+        See the Identity Server API for further information.
+      operationId: emailRequestToken
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequestToken'
+      responses:
+        200:
+          description: An email has been sent to the specified address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        400:
+          description: Part of the request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: The homeserver does not permit the address to be bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/client/r0/register/msisdn/requestToken:
+    post:
+      tags:
+      - User data
+      summary: Request msisdn token.
+      description: Proxies the Identity Service API validate/msisdn/requestToken,
+        but first checks that the given phone number is not already associated with
+        an account on this homeserver. See the Identity Service API for further information.
+      operationId: msisdnRequestToken
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MsisdnRequestToken'
+      responses:
+        200:
+          description: An SMS message has been sent to the specified phone number.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        400:
+          description: Part of the request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: The homeserver does not permit the address to be bound.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/client/r0/account/password/email/requestToken:
     post:
       tags:
@@ -270,114 +378,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/account/deactivate:
-    post:
-      tags:
-      - User data
-      summary: Deactivate the user's account, removing all ability for the user to
-        login again.
-      description: This API endpoint uses the User-Interactive Authentication API.An
-        access token should be submitted to this endpoint if the client has an active
-        session.The homeserver may change the flows available depending on whether
-        a valid access token is provided.
-      operationId: deactivate
-      requestBody:
-        description: request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeactivateRequest'
-      responses:
-        200:
-          description: The account has been deactivated.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        401:
-          description: The homeserver requires additional authentication information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/register/email/requestToken:
-    post:
-      tags:
-      - User data
-      summary: Request email token.
-      description: Proxies the identity server API validate/email/emailRequestToken,
-        but first checks that the given email address is not already associated with
-        an account on this Home Server. Note that, for consistency, this API takes
-        JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters.
-        See the Identity Server API for further information.
-      operationId: emailRequestToken
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailRequestToken'
-      responses:
-        200:
-          description: An email has been sent to the specified address.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SessionResponse'
-        400:
-          description: Part of the request was invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: The homeserver does not permit the address to be bound.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/client/r0/register/msisdn/requestToken:
-    post:
-      tags:
-      - User data
-      summary: Request msisdn token.
-      description: Proxies the Identity Service API validate/msisdn/requestToken,
-        but first checks that the given phone number is not already associated with
-        an account on this homeserver. See the Identity Service API for further information.
-      operationId: msisdnRequestToken
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MsisdnRequestToken'
-      responses:
-        200:
-          description: An SMS message has been sent to the specified phone number.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SessionResponse'
-        400:
-          description: Part of the request was invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: The homeserver does not permit the address to be bound.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/client/r0/account/3pid/delete:
     post:
       tags:
@@ -399,7 +399,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
+                $ref: '#/components/schemas/DeactivateResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/account/3pid/email/requestToken:
@@ -532,7 +532,7 @@ paths:
         description: The use to look up
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The lookup was successful.
@@ -665,77 +665,6 @@ paths:
                 $ref: '#/components/schemas/RateLimitedErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/user/{userId}/account_data/{type}:
-    get:
-      tags:
-      - User data
-      summary: Set some account_data for the client.
-      description: This config is only visible to the user that set the account_data.
-        The config will be synced to clients in the top-level account_data.
-      operationId: getConfig
-      parameters:
-      - name: userId
-        in: path
-        description: The id of the user to get account_data for. The access token
-          must be authorized to make requests for this user id.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: type
-        in: path
-        description: The event type of the account_data to get. Custom types should
-          be namespaced to avoid clashes.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The account_data was successfully added.
-          content:
-            application/json:
-              schema:
-                type: string
-      security:
-      - accessToken: []
-    put:
-      tags:
-      - User data
-      summary: Set some account_data for the client.
-      description: This config is only visible to the user that set the account_data.
-        The config will be synced to clients in the top-level account_data.
-      operationId: addConfig
-      parameters:
-      - name: userId
-        in: path
-        description: The id of the user to set account_data for. The access token
-          must be authorized to make requests for this user id.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: type
-        in: path
-        description: The event type of the account_data to set. Custom types should
-          be namespaced to avoid clashes.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: Account data
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties:
-                type: object
-      responses:
-        200:
-          description: The account_data was successfully added.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/user/{userId}/rooms/{roomId}/account_data/{type}:
     get:
       tags:
@@ -751,13 +680,13 @@ paths:
           must be authorized to make requests for this user id.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: roomId
         in: path
         description: The id of the room to get account_data on.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: type
         in: path
         description: The event type of the account_data to set. Custom types should
@@ -788,13 +717,84 @@ paths:
           must be authorized to make requests for this user id.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: roomId
         in: path
         description: The id of the room to set account_data on.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
+      - name: type
+        in: path
+        description: The event type of the account_data to set. Custom types should
+          be namespaced to avoid clashes.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Account data
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        200:
+          description: The account_data was successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/user/{userId}/account_data/{type}:
+    get:
+      tags:
+      - User data
+      summary: Set some account_data for the client.
+      description: This config is only visible to the user that set the account_data.
+        The config will be synced to clients in the top-level account_data.
+      operationId: getConfig
+      parameters:
+      - name: userId
+        in: path
+        description: The id of the user to get account_data for. The access token
+          must be authorized to make requests for this user id.
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: path
+        description: The event type of the account_data to get. Custom types should
+          be namespaced to avoid clashes.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The account_data was successfully added.
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+      - accessToken: []
+    put:
+      tags:
+      - User data
+      summary: Set some account_data for the client.
+      description: This config is only visible to the user that set the account_data.
+        The config will be synced to clients in the top-level account_data.
+      operationId: addConfig
+      parameters:
+      - name: userId
+        in: path
+        description: The id of the user to set account_data for. The access token
+          must be authorized to make requests for this user id.
+        required: true
+        schema:
+          type: string
       - name: type
         in: path
         description: The event type of the account_data to set. Custom types should
@@ -1070,7 +1070,7 @@ paths:
         description: The event ID to get.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The full event.
@@ -1103,7 +1103,7 @@ paths:
         description: The room to get the data.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The current state of the room.
@@ -1156,21 +1156,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       deprecated: true
-      security:
-      - accessToken: []
-  /_matrix/client/r0/devices:
-    get:
-      tags:
-      - Device management
-      summary: Gets information about all devices for the current user.
-      operationId: devices
-      responses:
-        200:
-          description: A list of all registered devices for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DevicesResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/devices/{deviceId}:
@@ -1301,6 +1286,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
+  /_matrix/client/r0/devices:
+    get:
+      tags:
+      - Device management
+      summary: Gets information about all devices for the current user.
+      operationId: devices
+      responses:
+        200:
+          description: A list of all registered devices for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DevicesResponse'
+      security:
+      - accessToken: []
   /_matrix/client/r0/keys/query:
     post:
       tags:
@@ -1320,6 +1320,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/QueryResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/keys/claim:
+    post:
+      tags:
+      - End-to-end encryption
+      summary: Claims one-time keys for use in pre-key messages.
+      operationId: claim
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+      responses:
+        200:
+          description: The claimed keys.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/keys/upload:
+    post:
+      tags:
+      - End-to-end encryption
+      summary: Publishes end-to-end encryption keys for the device.
+      operationId: uploadKey
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest'
+      responses:
+        200:
+          description: The provided keys were sucessfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/keys/changes:
@@ -1360,48 +1402,6 @@ paths:
                 $ref: '#/components/schemas/ChangesResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/keys/upload:
-    post:
-      tags:
-      - End-to-end encryption
-      summary: Publishes end-to-end encryption keys for the device.
-      operationId: uploadKey
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UploadRequest'
-      responses:
-        200:
-          description: The provided keys were sucessfully uploaded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UploadResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/keys/claim:
-    post:
-      tags:
-      - End-to-end encryption
-      summary: Claims one-time keys for use in pre-key messages.
-      operationId: claim
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClaimRequest'
-      responses:
-        200:
-          description: The claimed keys.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClaimResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/members:
     get:
       tags:
@@ -1414,7 +1414,7 @@ paths:
         description: The room to get the member events for.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: A list of members of the room. If you are joined to the room
@@ -1427,6 +1427,42 @@ paths:
         403:
           description: You aren't a member of the room and weren't previously a member
             of the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/event/{eventId}:
+    get:
+      tags:
+      - Room participation
+      summary: Get a single event based on roomId/eventId. You must have permission
+        to retrieve this event e.g. by being a member in the room for this event.
+      operationId: roomEvent
+      parameters:
+      - name: roomId
+        in: path
+        description: The ID of the room the event is in.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The full event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        404:
+          description: The event was not found or you do not have permission to read
+            this event.
           content:
             application/json:
               schema:
@@ -1447,7 +1483,7 @@ paths:
         description: The room to get events from.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: from
         in: query
         description: The token to start returning events from. This token can be obtained
@@ -1499,127 +1535,64 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/send/{eventType}/{txnId}:
-    put:
-      tags:
-      - Room participation
-      summary: This endpoint is used to send a message event to a room.
-      description: Message events allow access to historical events and pagination,
-        making them suited for "once-off" activity in a room. The body of the request
-        should be the content object of the event; the fields in this object will
-        vary depending on the type of event. See Room Events for the m. event specification.
-      operationId: sendEvent
-      parameters:
-      - name: roomId
-        in: path
-        description: The room to send the event to.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: eventType
-        in: path
-        description: The type of event to send.
-        required: true
-        schema:
-          type: string
-      - name: txnId
-        in: path
-        description: The transaction ID for this event. Clients should generate an
-          ID unique across requests with the same access token; it will be used by
-          the server to ensure idempotency of requests.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: Event
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EventContent'
-      responses:
-        200:
-          description: An ID for the sent event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SendEventResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/redact/{eventId}/{txnId}:
-    put:
-      tags:
-      - Room participation
-      summary: Strips all information out of an event which isn't critical to the
-        integrity of the server-side representation of the room.
-      description: This cannot be undone. Users may redact their own events, and any
-        user with a power level greater than or equal to the redact power level of
-        the room may redact events there.
-      operationId: redact
-      parameters:
-      - name: roomId
-        in: path
-        description: The room from which to redact the event.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: eventId
-        in: path
-        description: The ID of the event to redact.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: txnId
-        in: path
-        description: The transaction ID for this event. Clients should generate a
-          unique ID; it will be used by the server to ensure idempotency of requests.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        description: The reason for the event being redacted.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RedactRequest'
-      responses:
-        200:
-          description: An ID for the redaction event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SendEventResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/event/{eventId}:
+  /_matrix/client/r0/rooms/{roomId}/state:
     get:
       tags:
       - Room participation
-      summary: Get a single event based on roomId/eventId. You must have permission
-        to retrieve this event e.g. by being a member in the room for this event.
-      operationId: roomEvent
+      summary: Get the state events for the current state of a room.
+      operationId: roomState
       parameters:
       - name: roomId
         in: path
-        description: The ID of the room the event is in.
+        description: The room to look up the state for.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
-      - name: eventId
-        in: path
-        description: The event ID to get.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
-          description: The full event.
+          description: The current state of the room.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
-        404:
-          description: The event was not found or you do not have permission to read
-            this event.
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        403:
+          description: You aren't a member of the room and weren't previously a member
+            of the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/joined_members:
+    get:
+      tags:
+      - Room participation
+      summary: This API returns a map of MXIDs to member info objects for members
+        of the room.
+      description: The current user must be in the room for it to work, unless it
+        is an Application Service in which case any of the AS's users must be in the
+        room. This API is primarily for Application Services and should be faster
+        to respond than/members as it can be implemented more efficiently on the server.
+      operationId: joinedMembers
+      parameters:
+      - name: roomId
+        in: path
+        description: The room to get the members of.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: A map of MXID to room member objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinedMembersResponse'
+        403:
+          description: You aren't a member of the room.
           content:
             application/json:
               schema:
@@ -1641,7 +1614,7 @@ paths:
         description: The room to look up the state in.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: eventType
         in: path
         description: The type of state to look up.
@@ -1693,7 +1666,7 @@ paths:
         description: The room to set the state in.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: eventType
         in: path
         description: The type of event to send.
@@ -1729,50 +1702,6 @@ paths:
       security:
       - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/state/{eventType}:
-    get:
-      tags:
-      - Room participation
-      summary: Looks up the contents of a state event in a room. If the user is joined
-        to the room then the state is taken from the current state of the room. If
-        the user has left the room then the state is taken from the state of the room
-        when they left.
-      description: This looks up the state event with the empty state key.
-      operationId: roomEventWithType
-      parameters:
-      - name: roomId
-        in: path
-        description: The room to look up the state in.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: eventType
-        in: path
-        description: The type of state to look up.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The content of the state event.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventContent'
-        403:
-          description: You aren't a member of the room and weren't previously a member
-            of the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: The room has no state with the given type or key.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
     put:
       tags:
       - Room participation
@@ -1792,7 +1721,7 @@ paths:
         description: The room to set the state in.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: eventType
         in: path
         description: The type of event to send.
@@ -1821,68 +1750,95 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/state:
-    get:
+  /_matrix/client/r0/rooms/{roomId}/send/{eventType}/{txnId}:
+    put:
       tags:
       - Room participation
-      summary: Get the state events for the current state of a room.
-      operationId: roomState
+      summary: This endpoint is used to send a message event to a room.
+      description: Message events allow access to historical events and pagination,
+        making them suited for "once-off" activity in a room. The body of the request
+        should be the content object of the event; the fields in this object will
+        vary depending on the type of event. See Room Events for the m. event specification.
+      operationId: sendEvent
       parameters:
       - name: roomId
         in: path
-        description: The room to look up the state for.
+        description: The room to send the event to.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
+      - name: eventType
+        in: path
+        description: The type of event to send.
+        required: true
+        schema:
+          type: string
+      - name: txnId
+        in: path
+        description: The transaction ID for this event. Clients should generate an
+          ID unique across requests with the same access token; it will be used by
+          the server to ensure idempotency of requests.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventContent'
       responses:
         200:
-          description: The current state of the room.
+          description: An ID for the sent event.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Event'
-        403:
-          description: You aren't a member of the room and weren't previously a member
-            of the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/SendEventResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/joined_members:
-    get:
+  /_matrix/client/r0/rooms/{roomId}/redact/{eventId}/{txnId}:
+    put:
       tags:
       - Room participation
-      summary: This API returns a map of MXIDs to member info objects for members
-        of the room.
-      description: The current user must be in the room for it to work, unless it
-        is an Application Service in which case any of the AS's users must be in the
-        room. This API is primarily for Application Services and should be faster
-        to respond than/members as it can be implemented more efficiently on the server.
-      operationId: joinedMembers
+      summary: Strips all information out of an event which isn't critical to the
+        integrity of the server-side representation of the room.
+      description: This cannot be undone. Users may redact their own events, and any
+        user with a power level greater than or equal to the redact power level of
+        the room may redact events there.
+      operationId: redact
       parameters:
       - name: roomId
         in: path
-        description: The room to get the members of.
+        description: The room from which to redact the event.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
+      - name: eventId
+        in: path
+        description: The ID of the event to redact.
+        required: true
+        schema:
+          type: string
+      - name: txnId
+        in: path
+        description: The transaction ID for this event. Clients should generate a
+          unique ID; it will be used by the server to ensure idempotency of requests.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The reason for the event being redacted.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedactRequest'
       responses:
         200:
-          description: A map of MXID to room member objects.
+          description: An ID for the redaction event.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JoinedMembersResponse'
-        403:
-          description: You aren't a member of the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/SendEventResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/context/{eventId}:
@@ -1899,13 +1855,13 @@ paths:
         description: The room to get events from.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: eventId
         in: path
         description: The event to get context around.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: limit
         in: query
         description: 'The maximum number of events to return. Default: 10.'
@@ -1968,7 +1924,7 @@ paths:
         description: The user ID to download a filter for.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: filterId
         in: path
         description: The filter ID to download.
@@ -2005,7 +1961,7 @@ paths:
           be authorized to make requests for this user id.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body parameters
         content:
@@ -2039,7 +1995,7 @@ paths:
           who is authenticated for the request.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: OpenID token information. This response is nearly compatible
@@ -2070,7 +2026,7 @@ paths:
         description: The user whose presence state to get.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The presence state for this user.
@@ -2107,7 +2063,7 @@ paths:
         description: The user whose presence state to update.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -2144,7 +2100,7 @@ paths:
         description: The user whose profile information to get.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The avatar URL for this user.
@@ -2159,69 +2115,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/client/r0/profile/{userId}/avatar_url:
-    get:
-      tags:
-      - User data
-      summary: Get the user's avatar URL. This API may be used to fetch the user's
-        own avatar URL or to query the URL of other users;  either locally or on remote
-        homeservers.
-      operationId: showAvatarUrl
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose avatar URL to get.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      responses:
-        200:
-          description: The avatar URL for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AvatarUrl'
-        404:
-          description: There is no avatar URL for this user or this user does not
-            exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      tags:
-      - User data
-      summary: This API sets the given user's avatar URL. You must have permission
-        to set this user's avatar URL, e.g. you need to have their access_token.
-      operationId: setAvatarUrl
-      parameters:
-      - name: userId
-        in: path
-        description: The user whose avatar URL to set.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AvatarUrl'
-      responses:
-        200:
-          description: The avatar URL was set.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/profile/{userId}/displayname:
     get:
       tags:
@@ -2236,7 +2129,7 @@ paths:
         description: The user whose display name to get.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The display name for this user.
@@ -2263,7 +2156,7 @@ paths:
         description: The user whose display name to set.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -2273,6 +2166,69 @@ paths:
       responses:
         200:
           description: The display name was set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/profile/{userId}/avatar_url:
+    get:
+      tags:
+      - User data
+      summary: Get the user's avatar URL. This API may be used to fetch the user's
+        own avatar URL or to query the URL of other users;  either locally or on remote
+        homeservers.
+      operationId: showAvatarUrl
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose avatar URL to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The avatar URL for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvatarUrl'
+        404:
+          description: There is no avatar URL for this user or this user does not
+            exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - User data
+      summary: This API sets the given user's avatar URL. You must have permission
+        to set this user's avatar URL, e.g. you need to have their access_token.
+      operationId: setAvatarUrl
+      parameters:
+      - name: userId
+        in: path
+        description: The user whose avatar URL to set.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvatarUrl'
+      responses:
+        200:
+          description: The avatar URL was set.
           content:
             application/json:
               schema:
@@ -2457,6 +2413,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/pushers:
+    get:
+      tags:
+      - Push notifications
+      summary: Gets all currently active pushers for the authenticated user.
+      operationId: showPushers
+      responses:
+        200:
+          description: The pushers for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushersResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/pushers/set:
+    post:
+      tags:
+      - Push notifications
+      summary: This endpoint allows the creation, modification and deletion of pushers
+        for this user ID. The behaviour of this endpoint varies depending on the values
+        in the JSON body.
+      operationId: setPushers
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushersRequest'
+      responses:
+        200:
+          description: The pusher was set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        400:
+          description: One or more of the pusher values were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/pushrules:
+    get:
+      tags:
+      - Push notifications
+      summary: Retrieve all push rulesets for this user. Clients can "drill-down]"on
+        the rulesets by suffixing a scope to this path e.g. /pushrules/global/. This
+        will return a subset of this data under the specified key e.g. the global
+        key.
+      operationId: pushRules
+      responses:
+        200:
+          description: All the push rulesets for this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushRulesResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/pushrules/{scope}/{kind}/{ruleId}:
@@ -2645,74 +2669,6 @@ paths:
                 $ref: '#/components/schemas/NotificationResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/pushers:
-    get:
-      tags:
-      - Push notifications
-      summary: Gets all currently active pushers for the authenticated user.
-      operationId: showPushers
-      responses:
-        200:
-          description: The pushers for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PushersResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/pushers/set:
-    post:
-      tags:
-      - Push notifications
-      summary: This endpoint allows the creation, modification and deletion of pushers
-        for this user ID. The behaviour of this endpoint varies depending on the values
-        in the JSON body.
-      operationId: setPushers
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PushersRequest'
-      responses:
-        200:
-          description: The pusher was set.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        400:
-          description: One or more of the pusher values were invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/pushrules:
-    get:
-      tags:
-      - Push notifications
-      summary: Retrieve all push rulesets for this user. Clients can "drill-down]"on
-        the rulesets by suffixing a scope to this path e.g. /pushrules/global/. This
-        will return a subset of this data under the specified key e.g. the global
-        key.
-      operationId: pushRules
-      responses:
-        200:
-          description: All the push rulesets for this user.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PushRulesResponse'
-      security:
-      - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/receipt/{receiptType}/{eventId}:
     post:
       tags:
@@ -2726,7 +2682,7 @@ paths:
         description: The room in which to send the event.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: receiptType
         in: path
         description: The type of receipt to send.
@@ -2740,7 +2696,7 @@ paths:
         description: The event ID to acknowledge up to.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The receipt was sent.
@@ -2769,7 +2725,7 @@ paths:
         description: The room ID to set the read marker in for the user.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -2804,13 +2760,13 @@ paths:
         description: The room in which the event being reported is located.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: eventId
         in: path
         description: The event to report.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -2856,6 +2812,259 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/upgrade:
+    post:
+      tags:
+      - Room directory
+      summary: Upgrades the given room to a particular room version, migrating as
+        much data as possible over to the new room. See the room_upgrades module for
+        more information on what this entails.
+      operationId: upgrade
+      parameters:
+      - name: roomId
+        in: path
+        description: The ID of the room to upgrade.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The new version for the room.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewVersion'
+        required: true
+      responses:
+        200:
+          description: The room was successfully upgraded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplacementRoom'
+        400:
+          description: The request was invalid. One way this can happen is if the
+            room version requested is not supported by the homeserver.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: |
+            The user is not permitted to upgrade the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/directory/list/room/{roomId}:
+    get:
+      tags:
+      - Room discovery
+      summary: Gets the visibility of a given room on the server's public room directory.
+      operationId: getVisibility
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The visibility of the room in the directory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomVisibility'
+        404:
+          description: The room is not known to the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Room discovery
+      summary: Sets the visibility of a given room in the server's public room directory.
+      operationId: setVisibility
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomVisibility'
+      responses:
+        200:
+          description: The visibility was updated, or no change was needed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        404:
+          description: The room is not known to the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/leave:
+    post:
+      tags:
+      - Room membership
+      summary: This API stops a user participating in a particular room.
+      description: If the user was already in the room, they will no longer be able
+        to see new events in the room. If the room requires an invite to join, they
+        will need to be re-invited before they can re-join. If the user was invited
+        to the room, but had not joined, this call serves to reject the invite.The
+        user will still be allowed to retrieve history from the room which they were
+        previously allowed to see.
+      operationId: leave
+      parameters:
+      - name: roomId
+        in: path
+        description: The room identifier to leave.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The room has been left.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/invite:
+    post:
+      tags:
+      - Room membership
+      summary: This API invites a user to participate in a particular room. They do
+        not start participating in the room until they actually join the room.
+      operationId: invite
+      parameters:
+      - name: roomId
+        in: path
+        description: The room identifier (not alias) to which to invite the user.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteRequest'
+      responses:
+        200:
+          description: The user has been invited to join the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        403:
+          description: 'You do not have permission to invite the user to the room.
+            A meaningful errcode and description error text will be returned. '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        429:
+          description: This request was rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/kick:
+    post:
+      tags:
+      - Room membership
+      summary: Kick a user from the room.
+      operationId: kick
+      parameters:
+      - name: roomId
+        in: path
+        description: The room identifier (not alias) from which the user should be
+          kicked.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KickRequest'
+      responses:
+        200:
+          description: The user has been kicked from the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        403:
+          description: You do not have permission to kick the user from the room.
+            A meaningful errcode and description error text will be returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
+  /_matrix/client/r0/rooms/{roomId}/ban:
+    post:
+      tags:
+      - Room membership
+      summary: Ban a user in the room. If the user is currently in the room, also
+        kick them.
+      operationId: ban
+      parameters:
+      - name: roomId
+        in: path
+        description: The room identifier (not alias) from which the user should be
+          banned.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON body request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KickRequest'
+      responses:
+        200:
+          description: The user has been kicked and banned from the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        403:
+          description: You do not have permission to ban the user from the room. A
+            meaningful errcode and description error text will be returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
   /_matrix/client/r0/directory/room/{roomAlias}:
     get:
       tags:
@@ -2870,7 +3079,7 @@ paths:
         description: The room alias
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The room ID and other information for this alias.
@@ -2895,7 +3104,7 @@ paths:
         description: The room alias to set
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request
         content:
@@ -2928,7 +3137,7 @@ paths:
         description: The room alias to remove.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The mapping was deleted.
@@ -2953,7 +3162,7 @@ paths:
           unbanned.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -3071,7 +3280,7 @@ paths:
         description: The room identifier (not alias) to join.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request
         content:
@@ -3116,7 +3325,7 @@ paths:
         description: The room identifier or alias to join.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: server_name
         in: query
         description: The servers to attempt to join the room through. One of the servers
@@ -3170,7 +3379,7 @@ paths:
         description: The room identifier to forget.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The room has been forgotten.
@@ -3190,259 +3399,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/upgrade:
-    post:
-      tags:
-      - Room directory
-      summary: Upgrades the given room to a particular room version, migrating as
-        much data as possible over to the new room. See the room_upgrades module for
-        more information on what this entails.
-      operationId: upgrade
-      parameters:
-      - name: roomId
-        in: path
-        description: The ID of the room to upgrade.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: The new version for the room.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewVersion'
-        required: true
-      responses:
-        200:
-          description: The room was successfully upgraded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReplacementRoom'
-        400:
-          description: The request was invalid. One way this can happen is if the
-            room version requested is not supported by the homeserver.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: |
-            The user is not permitted to upgrade the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/leave:
-    post:
-      tags:
-      - Room membership
-      summary: This API stops a user participating in a particular room.
-      description: If the user was already in the room, they will no longer be able
-        to see new events in the room. If the room requires an invite to join, they
-        will need to be re-invited before they can re-join. If the user was invited
-        to the room, but had not joined, this call serves to reject the invite.The
-        user will still be allowed to retrieve history from the room which they were
-        previously allowed to see.
-      operationId: leave
-      parameters:
-      - name: roomId
-        in: path
-        description: The room identifier to leave.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      responses:
-        200:
-          description: The room has been left.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/directory/list/room/{roomId}:
-    get:
-      tags:
-      - Room discovery
-      summary: Gets the visibility of a given room on the server's public room directory.
-      operationId: getVisibility
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      responses:
-        200:
-          description: The visibility of the room in the directory
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RoomVisibility'
-        404:
-          description: The room is not known to the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      tags:
-      - Room discovery
-      summary: Sets the visibility of a given room in the server's public room directory.
-      operationId: setVisibility
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RoomVisibility'
-      responses:
-        200:
-          description: The visibility was updated, or no change was needed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        404:
-          description: The room is not known to the server.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/invite:
-    post:
-      tags:
-      - Room membership
-      summary: This API invites a user to participate in a particular room. They do
-        not start participating in the room until they actually join the room.
-      operationId: invite
-      parameters:
-      - name: roomId
-        in: path
-        description: The room identifier (not alias) to which to invite the user.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InviteRequest'
-      responses:
-        200:
-          description: The user has been invited to join the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        403:
-          description: 'You do not have permission to invite the user to the room.
-            A meaningful errcode and description error text will be returned. '
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        429:
-          description: This request was rate-limited.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimitedErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/kick:
-    post:
-      tags:
-      - Room membership
-      summary: Kick a user from the room.
-      operationId: kick
-      parameters:
-      - name: roomId
-        in: path
-        description: The room identifier (not alias) from which the user should be
-          kicked.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: JSON body request
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KickRequest'
-      responses:
-        200:
-          description: The user has been kicked from the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        403:
-          description: You do not have permission to kick the user from the room.
-            A meaningful errcode and description error text will be returned.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-      - accessToken: []
-  /_matrix/client/r0/rooms/{roomId}/ban:
-    post:
-      tags:
-      - Room membership
-      summary: Ban a user in the room. If the user is currently in the room, also
-        kick them.
-      operationId: ban
-      parameters:
-      - name: roomId
-        in: path
-        description: The room identifier (not alias) from which the user should be
-          banned.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      requestBody:
-        description: JSON body request.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KickRequest'
-      responses:
-        200:
-          description: The user has been kicked and banned from the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        403:
-          description: You do not have permission to ban the user from the room. A
-            meaningful errcode and description error text will be returned.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/search:
@@ -3651,7 +3607,7 @@ paths:
         in: query
         description: The room ID for which events should be returned.
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The events received, which may be none.
@@ -3667,35 +3623,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
-  /_matrix/client/r0/user/{userId}/rooms/{roomId}/tags:
-    get:
-      tags:
-      - User data
-      summary: List the tags set by a user on a room.
-      operationId: showTags
-      parameters:
-      - name: userId
-        in: path
-        description: The id of the user to get tags for. The access token must be
-          authorized to make requests for this user id.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      - name: roomId
-        in: path
-        description: The id of the room to get tags for.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      responses:
-        200:
-          description: The list of tags for the user for the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Tags'
-      security:
-      - accessToken: []
   /_matrix/client/r0/user/{userId}/rooms/{roomId}/tags/{tag}:
     put:
       tags:
@@ -3709,13 +3636,13 @@ paths:
           authorized to make requests for this user id.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: roomId
         in: path
         description: The id of the room to add a tag to.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: tag
         in: path
         description: The tag to add.
@@ -3749,13 +3676,13 @@ paths:
           be authorized to make requests for this user id.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: roomId
         in: path
         description: The id of the room to remove a tag from.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: tag
         in: path
         description: The tag to remove.
@@ -3771,6 +3698,35 @@ paths:
                 $ref: '#/components/schemas/EmptyResponse'
       security:
       - accessToken: []
+  /_matrix/client/r0/user/{userId}/rooms/{roomId}/tags:
+    get:
+      tags:
+      - User data
+      summary: List the tags set by a user on a room.
+      operationId: showTags
+      parameters:
+      - name: userId
+        in: path
+        description: The id of the user to get tags for. The access token must be
+          authorized to make requests for this user id.
+        required: true
+        schema:
+          type: string
+      - name: roomId
+        in: path
+        description: The id of the room to get tags for.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The list of tags for the user for the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tags'
+      security:
+      - accessToken: []
   /_matrix/client/r0/thirdparty/location:
     get:
       tags:
@@ -3784,7 +3740,7 @@ paths:
         description: The Matrix room alias to look up
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: At least one portal room was found.
@@ -3840,10 +3796,10 @@ paths:
       parameters:
       - name: userid
         in: query
-        description: The Matrix User Id to look up
+        description: The Matrix User String to look up
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The Matrix User IDs found with the given parameters.
@@ -3876,37 +3832,6 @@ paths:
             application/json:
               schema:
                 type: string
-      security:
-      - accessToken: []
-  /_matrix/client/r0/thirdparty/user/{protocol}:
-    get:
-      tags:
-      - Third party protocols
-      summary: Retrieve a Matrix User ID linked to a user on the third party service,
-        given a set of user parameters.
-      operationId: userProtocol
-      parameters:
-      - name: protocol
-        in: path
-        description: The name of the protocol
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The Matrix User IDs found with the given parameters.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProtocolUser'
-        404:
-          description: The Matrix User ID was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
   /_matrix/client/r0/thirdparty/location/{protocol}:
@@ -3946,6 +3871,37 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - accessToken: []
+  /_matrix/client/r0/thirdparty/user/{protocol}:
+    get:
+      tags:
+      - Third party protocols
+      summary: Retrieve a Matrix User ID linked to a user on the third party service,
+        given a set of user parameters.
+      operationId: userProtocol
+      parameters:
+      - name: protocol
+        in: path
+        description: The name of the protocol
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The Matrix User IDs found with the given parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProtocolUser'
+        404:
+          description: The Matrix User ID was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - accessToken: []
   /_matrix/client/r0/rooms/{roomId}/typing/{userId}:
     put:
       tags:
@@ -3960,13 +3916,13 @@ paths:
         description: The user who has started to type.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       - name: userId
         in: path
         description: The room in which the user is typing.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -4066,14 +4022,6 @@ components:
           type: string
           description: The base URL for the homeserver for client-server connections.
       description: Homeserver information.
-    Id:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        sigil:
-          type: string
-      description: The user's matrix user ID.
     IdentityServerInfo:
       type: object
       properties:
@@ -4085,7 +4033,8 @@ components:
       type: object
       properties:
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The fully-qualified Matrix ID that has been registered.
         access_token:
           type: string
           description: An access token for the account. This access token can then
@@ -4187,6 +4136,10 @@ components:
           type: boolean
           description: If true, the server binds the email used for authentication
             to the Matrix ID with the ID Server.
+        bind_msisdn:
+          type: boolean
+          description: If true, the server binds the phone number used for authentication
+            to the Matrix ID with the identity server.
         device_id:
           type: string
           description: ID of the client device. If this does not correspond to a known
@@ -4243,6 +4196,37 @@ components:
             type: string
             description: The new password for the account.
       description: Request for changes the password for an account on this homeserver.
+    DeactivateResponse:
+      required:
+      - id_server_unding_result
+      type: object
+      properties:
+        id_server_unding_result:
+          type: string
+          description: An indicator as to whether or not the homeserver was able to
+            unbind the user's 3PIDs from the identity server(s). success indicates
+            that all identifiers have been unbound from the identity server while
+            no-support indicates that one or more identifiers failed to unbind due
+            to the identity server refusing the request or the homeserver being unable
+            to determine an identity server to unbind from. This must be success if
+            the homeserver has no identifiers to unbind for the user.
+          enum:
+          - success
+          - no-support
+      description: Deactivate response.
+    DeactivateRequest:
+      type: object
+      properties:
+        auth:
+          $ref: '#/components/schemas/AuthenticationData'
+        id_server:
+          type: string
+          description: tThe identity server to unbind all of the user's 3PIDs from.
+            If not provided, the homeserver MUST use the id_server that was originally
+            use to bind each identifier. If the homeserver does not know which id_server
+            that was, it must return an id_server_unbind_result of no-support.
+      description: Request for deactivate the user's account, removing all ability
+        for the user to login again.
     SessionResponse:
       required:
       - sid
@@ -4361,13 +4345,6 @@ components:
             $ref: '#/components/schemas/ThirdPartyIdentifier'
       description: Response for gets a list of the third party identifiers that the
         homeserver has associated with the user's account
-    DeactivateRequest:
-      type: object
-      properties:
-        auth:
-          $ref: '#/components/schemas/AuthenticationData'
-      description: Request for deactivate the user's account, removing all ability
-        for the user to login again.
     ThreePidRequest:
       type: object
       properties:
@@ -4397,7 +4374,8 @@ components:
       type: object
       properties:
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The user id that owns the access token.
       description: Response for gets information about the owner of a given access
         token
     AdminResponse:
@@ -4409,7 +4387,8 @@ components:
             $ref: '#/components/schemas/DeviceInfo'
           description: Each key is an identitfier for one of the user's devices
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: he Matrix user ID of the user.
       description: Response for gets information about a particular user.
     ConnectionInfo:
       type: object
@@ -4444,6 +4423,22 @@ components:
           items:
             $ref: '#/components/schemas/ConnectionInfo'
       description: Session info.
+    LoginType:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the authentication stage.
+      description: Login type.
+    SupportedLoginResponse:
+      type: object
+      properties:
+        flows:
+          type: array
+          description: Supported login types.
+          items:
+            $ref: '#/components/schemas/LoginType'
+      description: Supported login types.
     Identifier:
       type: object
       properties:
@@ -4491,22 +4486,6 @@ components:
             if device_id corresponds to a known device.
       description: Authenticates the user, and issues an access token they can use
         to authorize themself in subsequent requests
-    LoginType:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of the authentication stage.
-      description: Login type.
-    SupportedLoginResponse:
-      type: object
-      properties:
-        flows:
-          type: array
-          description: Supported login types.
-          items:
-            $ref: '#/components/schemas/LoginType'
-      description: Supported login types.
     CapabilitiesResponse:
       type: object
       properties:
@@ -4656,6 +4635,15 @@ components:
           description: The version of the VoIP specification this message adheres
             to. This specification is version 0.
           format: int64
+        reason:
+          type: string
+          description: Optional error reason for the hangup. This should not be provided
+            when the user naturally ends or rejects the call. When there was an error
+            in the call negotiation, this should be ice_failed for when ICE negotiation
+            fails or invite_timeout for when the other party did not answer in time.
+          enum:
+          - ice_failed
+          - invite_timeout
         call_id:
           type: string
           description: The ID of the call this event relates to.
@@ -4849,7 +4837,8 @@ components:
           description: Required. The encryption algorithm the key in this event is
             to be used with.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         sender_key:
           type: string
           description: Required. The Curve25519 key of the device which initiated
@@ -4891,7 +4880,8 @@ components:
       type: object
       properties:
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event the user's read marker is located at in the room.
       description: The current location of the user's read marker in a room. This
         event appears in the user's room account data for the room the marker is applicable
         for.
@@ -5135,9 +5125,11 @@ components:
       type: object
       properties:
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the old room.
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event ID of the last known event in the old room.
       description: A reference to the room this room replaces, if the previous room
         was upgraded.
     PublicKeys:
@@ -5198,7 +5190,8 @@ components:
       type: object
       properties:
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The origin event id.
       description: Reply model.
     RequestedKeyInfo:
       required:
@@ -5213,7 +5206,8 @@ components:
           description: Required. The encryption algorithm the requested key in this
             event is to be used with.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         sender_key:
           type: string
           description: The Curve25519 key of the device which initiated the session
@@ -5231,7 +5225,8 @@ components:
           type: array
           description: A list of room aliases.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room aliases.
       description: This event is sent by a homeserver directly to inform of changes
         to the list of aliases it knows about for that room. The state_key for this
         event is set to the homeserver which owns the room alias. The entire set of
@@ -5263,7 +5258,8 @@ components:
       type: object
       properties:
         alias:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The canonical alias
       description: This event is used to inform the room about which alias should
         be considered the canonical one. This could be for display purposes or as
         suggestion to users which alias to use to advertise the room. A room with
@@ -5277,7 +5273,8 @@ components:
       type: object
       properties:
         creator:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The user_id of the room creator. This is set by the homeserver.
         predecessor:
           $ref: '#/components/schemas/PreviousRoom'
         m.federate:
@@ -5351,13 +5348,16 @@ components:
       type: object
       properties:
         sender:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: Contains the fully-qualified ID of the user who sent this event.
         unsigned:
           $ref: '#/components/schemas/UnsignedEventContent'
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The globally unique event identifier.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the room associated with this event.
         origin_server_ts:
           type: integer
           description: Timestamp in milliseconds on originating homeserver when this
@@ -5424,7 +5424,8 @@ components:
           description: The encryption algorithm the key in this event is to be used
             with. Must be 'm.megolm.v1.aes-sha2'.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         session_id:
           type: string
           description: The ID of the session that the key is for.
@@ -5473,7 +5474,7 @@ components:
           enum:
           - invite, join, knock, leave, ban
         unsigned:
-          $ref: '#/components/schemas/RoomMemberUnsigned'
+          $ref: '#/components/schemas/Unsigned'
         avatar_url:
           type: string
           description: The avatar URL for this user, if any. This is added by the
@@ -5493,23 +5494,6 @@ components:
         a room, and trying to force this state change directly will fail.
       allOf:
       - $ref: '#/components/schemas/EventContent'
-    RoomMemberUnsigned:
-      type: object
-      properties:
-        events:
-          type: array
-          description: A subset of the state of the room at the time of the invite,
-            if membership is invite. Note that this state is informational, and SHOULD
-            NOT be trusted; once the client has joined the room, it SHOULD fetch the
-            live state from the server and discard the invite_room_state. Also, clients
-            must not rely on any particular state being present here; they SHOULD
-            behave properly (with possibly a degraded but not a broken experience)
-            in the absence of any particular events here. If they are set on the room,
-            at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules,
-            and m.room.name SHOULD be included.
-          items:
-            $ref: '#/components/schemas/Event'
-      description: Unsigned data.
     RoomMessageContent:
       type: object
       properties:
@@ -5557,7 +5541,8 @@ components:
           type: array
           description: An ordered list of event IDs to pin.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: An ordered list of event IDs to pin.
       description: This event is used to "pin" particular events in a room for other
         participants to review later. The order of the pinned events is guaranteed
         and based upon the order supplied in the event. Clients should be aware that
@@ -5745,6 +5730,25 @@ components:
         also be set when creating a room using /createRoom with the topic key.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+    ServerNotice:
+      required:
+      - server_notice_type
+      type: object
+      properties:
+        server_notice_type:
+          type: string
+          description: The type of notice being represented.
+        admin_contact:
+          type: string
+          description: A URI giving a contact method for the server administrator.
+            Required if the notice type is m.server_notice.usage_limit_reached.
+        limit_type:
+          type: string
+          description: The kind of usage limit the server has exceeded. Required if
+            the notice type is m.server_notice.usage_limit_reached.
+      description: Represents a server notice for a user.
+      allOf:
+      - $ref: '#/components/schemas/RoomMessageContent'
     Signed:
       required:
       - mxid
@@ -5753,7 +5757,9 @@ components:
       type: object
       properties:
         mxid:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The invited matrix user ID. Must be equal to the user_id property
+            of the event.
         token:
           type: string
           description: The token property of the containing third_party_invite object.
@@ -5781,13 +5787,16 @@ components:
       type: object
       properties:
         sender:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: Contains the fully-qualified ID of the user who sent this event.
         unsigned:
           $ref: '#/components/schemas/UnsignedEventContent'
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The globally unique event identifier.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the room associated with this event.
         origin_server_ts:
           type: integer
           description: Timestamp in milliseconds on originating homeserver when this
@@ -5889,10 +5898,36 @@ components:
           type: array
           description: The list of user IDs typing in this room, if any.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: The list of user IDs typing in this room, if any.
       description: Informs the client of the list of users currently typing.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+    Unsigned:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/EventContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
     UnsignedEventContent:
       type: object
       properties:
@@ -5986,7 +6021,8 @@ components:
           type: string
           description: Whether this room is visible to the /publicRooms API or not.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of this room.
         account_data:
           type: array
           description: The private data that this user has attached to this room.
@@ -6007,6 +6043,16 @@ components:
         chunk:
           type: array
           description: A list of room events.
+          items:
+            $ref: '#/components/schemas/Event'
+        state:
+          type: array
+          description: A list of state events relevant to showing the chunk. For example,
+            if lazy_load_members is enabled in the filter then this may contain the
+            membership events for the senders of events in the chunk. Unless include_redundant_members
+            is true, the server may remove membership events which would have already
+            been sent to the client in prior calls to this endpoint, assuming the
+            membership of those members has not changed.
           items:
             $ref: '#/components/schemas/Event'
       description: Pagination.
@@ -6054,15 +6100,18 @@ components:
             reasons).
           format: int64
       description: Device
-    DevicesResponse:
+    DevicesDeleteRequest:
       type: object
       properties:
         devices:
           type: array
-          description: A list of all registered devices for this user.
+          description: The list of device IDs to delete.
           items:
-            $ref: '#/components/schemas/Device'
-      description: Information about all devices for the current user.
+            type: string
+            description: The list of device IDs to delete.
+        auth:
+          $ref: '#/components/schemas/AuthenticationData'
+      description: JSON body request for bulk devices delete.
     DeviceUpdateRequest:
       type: object
       properties:
@@ -6078,18 +6127,15 @@ components:
           $ref: '#/components/schemas/AuthenticationData'
       description: Additional authentication information for the user-interactive
         authentication API.
-    DevicesDeleteRequest:
+    DevicesResponse:
       type: object
       properties:
         devices:
           type: array
-          description: The list of device IDs to delete.
+          description: A list of all registered devices for this user.
           items:
-            type: string
-            description: The list of device IDs to delete.
-        auth:
-          $ref: '#/components/schemas/AuthenticationData'
-      description: JSON body request for bulk devices delete.
+            $ref: '#/components/schemas/Device'
+      description: Information about all devices for the current user.
     DeviceKeys:
       type: object
       properties:
@@ -6124,7 +6170,9 @@ components:
         unsignedDeviceInfo:
           $ref: '#/components/schemas/UnsignedDeviceInfo'
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the user the device belongs to. Must match the user
+            ID used when logging in.
         device_id:
           type: string
           description: The ID of the device these keys belong to. Must match the device
@@ -6195,52 +6243,6 @@ components:
             user.
       description: JSON body parameters for Returns the current devices and identity
         keys for the given users.
-    ChangesResponse:
-      type: object
-      properties:
-        changed:
-          type: array
-          description: The Matrix User IDs of all users who updated their device identity
-            keys.
-          items:
-            $ref: '#/components/schemas/Id'
-        left:
-          type: array
-          description: The Matrix User IDs of all users who may have left all the
-            end-to-end encrypted rooms they previously shared with the user.
-          items:
-            $ref: '#/components/schemas/Id'
-      description: The list of users who updated their devices.
-    UploadResponse:
-      type: object
-      properties:
-        one_time_key_counts:
-          type: object
-          additionalProperties:
-            type: integer
-            description: For each key algorithm, the number of unclaimed one-time
-              keys of that type currently held on the server for this device.
-            format: int64
-          description: For each key algorithm, the number of unclaimed one-time keys
-            of that type currently held on the server for this device.
-      description: Response format.
-    UploadRequest:
-      type: object
-      properties:
-        device_keys:
-          $ref: '#/components/schemas/DeviceKeys'
-        one_time_keys:
-          type: object
-          additionalProperties:
-            type: object
-            description: One-time public keys for "pre-key" messages. The names of
-              the properties should be in the format (algorithm):(key_id). The format
-              of the key is determined by the key algorithm.
-          description: One-time public keys for "pre-key" messages. The names of the
-            properties should be in the format (algorithm):(key_id). The format of
-            the key is determined by the key algorithm.
-      description: JSON body parameters for Publishes end-to-end encryption keys for
-        the device.
     ClaimResponse:
       type: object
       properties:
@@ -6288,6 +6290,56 @@ components:
             ID to algorithm name.
       description: JSON body parameters for Claims one-time keys for use in pre-key
         messages.
+    UploadResponse:
+      type: object
+      properties:
+        one_time_key_counts:
+          type: object
+          additionalProperties:
+            type: integer
+            description: For each key algorithm, the number of unclaimed one-time
+              keys of that type currently held on the server for this device.
+            format: int64
+          description: For each key algorithm, the number of unclaimed one-time keys
+            of that type currently held on the server for this device.
+      description: Response format.
+    UploadRequest:
+      type: object
+      properties:
+        device_keys:
+          $ref: '#/components/schemas/DeviceKeys'
+        one_time_keys:
+          type: object
+          additionalProperties:
+            type: object
+            description: One-time public keys for "pre-key" messages. The names of
+              the properties should be in the format (algorithm):(key_id). The format
+              of the key is determined by the key algorithm.
+          description: One-time public keys for "pre-key" messages. The names of the
+            properties should be in the format (algorithm):(key_id). The format of
+            the key is determined by the key algorithm.
+      description: JSON body parameters for Publishes end-to-end encryption keys for
+        the device.
+    ChangesResponse:
+      type: object
+      properties:
+        changed:
+          type: array
+          description: The Matrix User IDs of all users who updated their device identity
+            keys.
+          items:
+            type: string
+            description: The Matrix User IDs of all users who updated their device
+              identity keys.
+        left:
+          type: array
+          description: The Matrix User IDs of all users who may have left all the
+            end-to-end encrypted rooms they previously shared with the user.
+          items:
+            type: string
+            description: The Matrix User IDs of all users who may have left all the
+              end-to-end encrypted rooms they previously shared with the user.
+      description: The list of users who updated their devices.
     MembersResponse:
       type: object
       properties:
@@ -6314,20 +6366,17 @@ components:
           items:
             type: object
             description: A list of room events.
+        state:
+          type: array
+          description: A list of state events relevant to showing the chunk. For example,
+            if lazy_load_members is enabled in the filter then this may contain the
+            membership events for the senders of events in the chunk. Unless include_redundant_members
+            is true, the server may remove membership events which would have already
+            been sent to the client in prior calls to this endpoint, assuming the
+            membership of those members has not changed.
+          items:
+            $ref: '#/components/schemas/Event'
       description: Pagination.
-    SendEventResponse:
-      type: object
-      properties:
-        event_id:
-          $ref: '#/components/schemas/Id'
-      description: Sent event.
-    RedactRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason for the event being redacted.
-      description: Request for the redaction.
     JoinedMembersResponse:
       type: object
       properties:
@@ -6347,6 +6396,20 @@ components:
           type: string
           description: The mxc avatar url of the user this object is representing.
       description: Room member.
+    SendEventResponse:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: A unique identifier for the event.
+      description: Sent event.
+    RedactRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason for the event being redacted.
+      description: Request for the redaction.
     EventContextResponse:
       type: object
       properties:
@@ -6385,7 +6448,9 @@ components:
           description: A list of senders IDs to include. If this list is absent then
             all senders are included.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of senders IDs to include. If this list is absent
+              then all senders are included.
         types:
           type: array
           description: A list of event types to include. If this list is absent then
@@ -6402,7 +6467,10 @@ components:
             no senders are excluded. A matching sender will be excluded even if it
             is listed in the 'senders' filter.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of sender IDs to exclude. If this list is absent then
+              no senders are excluded. A matching sender will be excluded even if
+              it is listed in the 'senders' filter.
         not_types:
           type: array
           description: A list of event types to exclude. If this list is absent then
@@ -6457,7 +6525,9 @@ components:
           description: A list of senders IDs to include. If this list is absent then
             all senders are included.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of senders IDs to include. If this list is absent
+              then all senders are included.
         types:
           type: array
           description: A list of event types to include. If this list is absent then
@@ -6473,7 +6543,9 @@ components:
           description: A list of room IDs to include. If this list is absent then
             all rooms are included.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to include. If this list is absent then
+              all rooms are included.
         not_senders:
           type: array
           description: A list of sender IDs to exclude. If this list is absent then
@@ -6496,13 +6568,36 @@ components:
               then no event types are excluded. A matching type will be excluded even
               if it is listed in the 'types' filter. A '*' can be used as a wildcard
               to match any sequence of characters.
+        lazy_load_members:
+          type: boolean
+          description: If true, the only m.room.member events returned in the state
+            section of the /sync response are those which are definitely necessary
+            for a client to display the sender of the timeline events in that response.
+            If false, m.room.member events are not filtered. By default, servers should
+            suppress duplicate redundant lazy-loaded m.room.member events from being
+            sent to a given client across multiple calls to /sync, given that most
+            clients cache membership events (see include_redundant_members to change
+            this behaviour).
+        include_redundant_members:
+          type: boolean
+          description: If true, the state section of the /sync response will always
+            contain the m.room.member events required to display the sender of the
+            timeline events in that response, assuming lazy_load_members is enabled.
+            This means that redundant duplicate member events may be returned across
+            multiple calls to /sync. This is useful for naive clients who never track
+            membership data. If false, duplicate m.room.member events may be suppressed
+            by the server across multiple calls to /sync. If lazy_load_members is
+            false this field is ignored.
         not_rooms:
           type: array
           description: A list of room IDs to exclude. If this list is absent then
             no rooms are excluded. A matching room will be excluded even if it is
             listed in the 'rooms' filter.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to exclude. If this list is absent then
+              no rooms are excluded. A matching room will be excluded even if it is
+              listed in the 'rooms' filter.
         contains_url:
           type: boolean
           description: If true, includes only events with a url key in their content.
@@ -6517,7 +6612,10 @@ components:
             all rooms are included. This filter is applied before the filters in ephemeral,
             state, timeline or account_data.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to include. If this list is absent then
+              all rooms are included. This filter is applied before the filters in
+              ephemeral, state, timeline or account_data.
         ephemeral:
           $ref: '#/components/schemas/RoomEventFilter'
         state:
@@ -6531,7 +6629,11 @@ components:
             listed in the 'rooms' filter. This filter is applied before the filters
             in ephemeral, state, timeline or account_data.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to exclude. If this list is absent then
+              no rooms are excluded. A matching room will be excluded even if it is
+              listed in the 'rooms' filter. This filter is applied before the filters
+              in ephemeral, state, timeline or account_data.
         include_leave:
           type: boolean
           description: Include rooms that the user has left in the sync, default false.
@@ -6607,19 +6709,19 @@ components:
           description: The user's display name if they have set one, otherwise not
             present.
       description: JSON body for profile api (profile).
-    AvatarUrl:
-      type: object
-      properties:
-        avatar_url:
-          type: string
-          description: The new avatar URL for this user.
-      description: JSON body request for profile api.
     DisplayName:
       type: object
       properties:
         displayname:
           type: string
           description: The new display name for this user.
+      description: JSON body request for profile api.
+    AvatarUrl:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          description: The new avatar URL for this user.
       description: JSON body request for profile api.
     PushActions:
       type: object
@@ -6638,96 +6740,6 @@ components:
           type: boolean
           description: Whether the push rule is enabled or not.
       description: JSON body request/response for enable/disable push api.
-    PushCondition:
-      required:
-      - kind
-      type: object
-      properties:
-        kind:
-          type: string
-          enum:
-          - event_match, contains_display_name, room_member_count]
-        key:
-          type: string
-          description: Required for event_match conditions. The dot- separated field
-            of the event to match.
-        pattern:
-          type: string
-          description: Required for event_match conditions. The glob- style pattern
-            to match against. Patterns with no special glob characters should be treated
-            as having asterisks prepended and appended when testing the condition.
-        is:
-          type: string
-          description: Required for room_member_count conditions. A decimal integer
-            optionally prefixed by one of, ==, <, >, >= or <=. A prefix of < matches
-            rooms where the member count is strictly less than the given number and
-            so forth. If no prefix is present, this parameter defaults to==.
-      description: Push condition.
-    PushUpdateRequest:
-      type: object
-      properties:
-        actions:
-          type: array
-          description: The action(s) to perform when the conditions for this rule
-            are met.
-          items:
-            type: string
-            description: The action(s) to perform when the conditions for this rule
-              are met.
-        conditions:
-          type: array
-          description: The conditions that must hold true for an event in order for
-            a rule to be applied to an event. A rule with no conditions always matches.
-            Only applicable to underride and override rules.
-          items:
-            $ref: '#/components/schemas/PushCondition'
-        pattern:
-          type: string
-          description: Only applicable to content rules. The glob- style pattern to
-            match against.
-      description: JSON body request for push update api.
-    Notification:
-      type: object
-      properties:
-        actions:
-          type: array
-          description: 'The action(s) to perform when the conditions for this rule
-            are met. See Push Rules: API.'
-          items:
-            type: object
-            description: 'The action(s) to perform when the conditions for this rule
-              are met. See Push Rules: API.'
-        event:
-          $ref: '#/components/schemas/Event'
-        read:
-          type: boolean
-          description: Indicates whether the user has sent a read receipt indicating
-            that they have read this message.
-        ts:
-          type: integer
-          description: The unix timestamp at which the event notification was sent,
-            in milliseconds.
-          format: int64
-        profile_tag:
-          type: string
-          description: The profile tag of the rule that matched this event.
-        room_id:
-          $ref: '#/components/schemas/Id'
-      description: Notification
-    NotificationResponse:
-      type: object
-      properties:
-        notifications:
-          type: array
-          description: The list of events that triggered notifications.
-          items:
-            $ref: '#/components/schemas/Notification'
-        next_token:
-          type: string
-          description: The token to supply in the from param of the next /notifications
-            request in order to request more events. If this is absent, there are
-            no more results.
-      description: JSON body response for push notifications.
     Pusher:
       type: object
       properties:
@@ -6822,6 +6834,31 @@ components:
           description: This string determines which set of device specific rules this
             pusher executes.
       description: JSON body request to create a new pusher.
+    PushCondition:
+      required:
+      - kind
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+          - event_match, contains_display_name, room_member_count]
+        key:
+          type: string
+          description: Required for event_match conditions. The dot- separated field
+            of the event to match.
+        pattern:
+          type: string
+          description: Required for event_match conditions. The glob- style pattern
+            to match against. Patterns with no special glob characters should be treated
+            as having asterisks prepended and appended when testing the condition.
+        is:
+          type: string
+          description: Required for room_member_count conditions. A decimal integer
+            optionally prefixed by one of, ==, <, >, >= or <=. A prefix of < matches
+            rooms where the member count is strictly less than the given number and
+            so forth. If no prefix is present, this parameter defaults to==.
+      description: Push condition.
     PushRule:
       type: object
       properties:
@@ -6887,13 +6924,84 @@ components:
           items:
             $ref: '#/components/schemas/PushRule'
       description: Ruleset.
+    PushUpdateRequest:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The action(s) to perform when the conditions for this rule
+            are met.
+          items:
+            type: string
+            description: The action(s) to perform when the conditions for this rule
+              are met.
+        conditions:
+          type: array
+          description: The conditions that must hold true for an event in order for
+            a rule to be applied to an event. A rule with no conditions always matches.
+            Only applicable to underride and override rules.
+          items:
+            $ref: '#/components/schemas/PushCondition'
+        pattern:
+          type: string
+          description: Only applicable to content rules. The glob- style pattern to
+            match against.
+      description: JSON body request for push update api.
+    Notification:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: 'The action(s) to perform when the conditions for this rule
+            are met. See Push Rules: API.'
+          items:
+            type: object
+            description: 'The action(s) to perform when the conditions for this rule
+              are met. See Push Rules: API.'
+        event:
+          $ref: '#/components/schemas/Event'
+        read:
+          type: boolean
+          description: Indicates whether the user has sent a read receipt indicating
+            that they have read this message.
+        ts:
+          type: integer
+          description: The unix timestamp at which the event notification was sent,
+            in milliseconds.
+          format: int64
+        profile_tag:
+          type: string
+          description: The profile tag of the rule that matched this event.
+        room_id:
+          type: string
+          description: The ID of the room in which the event was posted.
+      description: Notification
+    NotificationResponse:
+      type: object
+      properties:
+        notifications:
+          type: array
+          description: The list of events that triggered notifications.
+          items:
+            $ref: '#/components/schemas/Notification'
+        next_token:
+          type: string
+          description: The token to supply in the from param of the next /notifications
+            request in order to request more events. If this is absent, there are
+            no more results.
+      description: JSON body response for push notifications.
     ReadMarkersRequest:
       type: object
       properties:
         m.fully_read:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event ID the read marker should be located at. The event
+            MUST belong to the room.
         m.read:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event ID to set the read receipt location at. This is equivalent
+            to calling /receipt/m.read/$elsewhere:domain.com and is provided here
+            to save that extra call.
       description: JSON body of the read marker request.
     ReportRequest:
       type: object
@@ -6911,7 +7019,8 @@ components:
       type: object
       properties:
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The created room's ID.
       description: JSON body with roomId used in the room apis.
     CreateRoomRequest:
       type: object
@@ -6941,13 +7050,20 @@ components:
           description: A list of user IDs to invite to the room. This will tell the
             server to invite everyone in the list to the newly created room.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of user IDs to invite to the room. This will tell
+              the server to invite everyone in the list to the newly created room.
         preset:
           type: string
           description: Convenience parameter for setting various default state events
             based on a preset.
         room_alias_name:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: 'The desired room alias local part. If this is included, a
+            room alias will be created and mapped to the newly created room. The alias
+            will belong on the same homeserver which created the room. For example,
+            if this was set to "foo" and sent to the homeserver "example.com". The
+            complete room alias would be #foo:example.com.'
         invite_3pid:
           type: array
           description: A list of objects representing third party IDs to invite into
@@ -6993,6 +7109,59 @@ components:
           description: The hostname+port of the identity server which should be used
             for third party identifier lookups.
       description: Invite 3pid.
+    ReplacementRoom:
+      required:
+      - replacement_room
+      type: object
+      properties:
+        replacement_room:
+          type: string
+          description: The ID of the new room.
+      description: The ID of the new room.
+    NewVersion:
+      required:
+      - new_version
+      type: object
+      properties:
+        new_version:
+          type: string
+          description: The new version for the room.
+      description: The new version for the room.
+    RoomVisibility:
+      type: object
+      properties:
+        visibility:
+          type: string
+          description: The visibility of the room in the directory.
+      description: JSON body request and response for listing room api.
+    InviteRequest:
+      type: object
+      properties:
+        medium:
+          type: string
+          description: The kind of address being passed in the address field, for
+            example email.
+        address:
+          type: string
+          description: The invitee's third party identifier.
+        user_id:
+          type: string
+          description: The fully qualified user ID of the invitee.
+        id_server:
+          type: string
+          description: The hostname+port of the identity server which should be used
+            for third party identifier lookups.
+      description: Invite request.
+    KickRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason the user has been kicked.
+        user_id:
+          type: string
+          description: The fully qualified user ID of the user being kicked.
+      description: Kick JSON body request.
     RoomResolveResponse:
       type: object
       properties:
@@ -7003,13 +7172,15 @@ components:
             type: string
             description: A list of servers that are aware of this room alias.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The created room's ID.
       description: JSON body response of the room response api.
     UnbanRequest:
       type: object
       properties:
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The fully qualified user ID of the user being unbanned.
       description: Unban JSON body request.
     PublicRoomsChunk:
       type: object
@@ -7018,7 +7189,8 @@ components:
           type: array
           description: Aliases of the room. May be empty.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: Aliases of the room. May be empty.
         name:
           type: string
           description: The name of the room, if any.
@@ -7026,13 +7198,15 @@ components:
           type: string
           description: The topic of the room, if any.
         canonical_alias:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The canonical alias of the room, if any.
         num_joined_members:
           type: integer
           description: The number of members joined to the room.
           format: int64
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the room.
         world_readable:
           type: boolean
           description: Whether the room may be viewed by guest users without joining.
@@ -7108,7 +7282,8 @@ components:
           type: array
           description: The ID of each room in which the user has joined membership.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: The ID of each room in which the user has joined membership.
       description: JSON body resposnse with joined rooms.
     JoinRequest:
       type: object
@@ -7120,9 +7295,11 @@ components:
       type: object
       properties:
         sender:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The Matrix ID of the user who issued the invite.
         mxid:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The Matrix ID of the invitee.
         token:
           type: string
           description: The state key of the m.third_party_invite event.
@@ -7139,56 +7316,6 @@ components:
           description: A signatures object containing a signature of the entire signed
             object.
       description: Third party signed.
-    ReplacementRoom:
-      required:
-      - replacement_room
-      type: object
-      properties:
-        replacement_room:
-          $ref: '#/components/schemas/Id'
-      description: The ID of the new room.
-    NewVersion:
-      required:
-      - new_version
-      type: object
-      properties:
-        new_version:
-          type: string
-          description: The new version for the room.
-      description: The new version for the room.
-    RoomVisibility:
-      type: object
-      properties:
-        visibility:
-          type: string
-          description: The visibility of the room in the directory.
-      description: JSON body request and response for listing room api.
-    InviteRequest:
-      type: object
-      properties:
-        medium:
-          type: string
-          description: The kind of address being passed in the address field, for
-            example email.
-        address:
-          type: string
-          description: The invitee's third party identifier.
-        user_id:
-          $ref: '#/components/schemas/Id'
-        id_server:
-          type: string
-          description: The hostname+port of the identity server which should be used
-            for third party identifier lookups.
-      description: Invite request.
-    KickRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason the user has been kicked.
-        user_id:
-          $ref: '#/components/schemas/Id'
-      description: Kick JSON body request.
     EventContext:
       type: object
       properties:
@@ -7217,7 +7344,9 @@ components:
           description: A list of senders IDs to include. If this list is absent then
             all senders are included.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of senders IDs to include. If this list is absent
+              then all senders are included.
         types:
           type: array
           description: A list of event types to include. If this list is absent then
@@ -7233,14 +7362,19 @@ components:
           description: A list of room IDs to include. If this list is absent then
             all rooms are included.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to include. If this list is absent then
+              all rooms are included.
         not_senders:
           type: array
           description: A list of sender IDs to exclude. If this list is absent then
             no senders are excluded. A matching sender will be excluded even if it
             is listed in the 'senders' filter.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of sender IDs to exclude. If this list is absent then
+              no senders are excluded. A matching sender will be excluded even if
+              it is listed in the 'senders' filter.
         not_types:
           type: array
           description: A list of event types to exclude. If this list is absent then
@@ -7253,13 +7387,27 @@ components:
               then no event types are excluded. A matching type will be excluded even
               if it is listed in the 'types' filter. A '*' can be used as a wildcard
               to match any sequence of characters.
+        lazy_load_members:
+          type: boolean
+          description: If true, enables lazy-loading of membership events. See Lazy-loading
+            room members for more information.
+          default: false
+        include_redundant_members:
+          type: boolean
+          description: If true, sends all membership events for all events, even if
+            they have already been sent to the client. Does not apply unless lazy_load_members
+            is true. See Lazy- loading room members for more information.
+          default: false
         not_rooms:
           type: array
           description: A list of room IDs to exclude. If this list is absent then
             no rooms are excluded. A matching room will be excluded even if it is
             listed in the 'rooms' filter.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room IDs to exclude. If this list is absent then
+              no rooms are excluded. A matching room will be excluded even if it is
+              listed in the 'rooms' filter.
         contains_url:
           type: boolean
           description: If true, includes only events with a url key in their content.
@@ -7285,9 +7433,9 @@ components:
       type: object
       properties:
         room_events:
-          $ref: '#/components/schemas/RoomEvents'
+          $ref: '#/components/schemas/RoomEventsCriteria'
       description: Categories.
-    RoomEvents:
+    RoomEventsCriteria:
       type: object
       properties:
         keys:
@@ -7357,13 +7505,17 @@ components:
           description: List of users who have updated their device identity keys since
             the previous sync response.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: List of users who have updated their device identity keys
+              since the previous sync response.
         left:
           type: array
           description: List of users with whom we do not share any encrypted rooms
             anymore since the previous sync response.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: List of users with whom we do not share any encrypted rooms
+              anymore since the previous sync response.
       description: Device lists.
     Ephemeral:
       type: object
@@ -7392,6 +7544,8 @@ components:
     JoinedRoom:
       type: object
       properties:
+        summary:
+          $ref: '#/components/schemas/RoomSummary'
         state:
           $ref: '#/components/schemas/State'
         timeline:
@@ -7422,6 +7576,50 @@ components:
           items:
             $ref: '#/components/schemas/Event'
       description: PresenceContent.
+    RoomSummary:
+      type: object
+      properties:
+        m.heroes:
+          type: array
+          description: The users which can be used to generate a room name if the
+            room does not have one. Required if the room's m.room.name or m.room.canonical_alias
+            state events are unset or empty. This should be the first 5 members of
+            the room, ordered by stream ordering, which are joined or invited. The
+            list must never include the client's own user ID. When no joined or invited
+            members are available, this should consist of the banned and left users.
+            More than 5 members may be provided, however less than 5 should only be
+            provided when there are less than 5 members to represent. When lazy-loading
+            room members is enabled, the membership events for the heroes MUST be
+            included in the state, unless they are redundant. When the list of users
+            changes, the server notifies the client by sending a fresh list of heroes.
+            If there are no changes since the last sync, this field may be omitted.
+          items:
+            type: string
+            description: The users which can be used to generate a room name if the
+              room does not have one. Required if the room's m.room.name or m.room.canonical_alias
+              state events are unset or empty. This should be the first 5 members
+              of the room, ordered by stream ordering, which are joined or invited.
+              The list must never include the client's own user ID. When no joined
+              or invited members are available, this should consist of the banned
+              and left users. More than 5 members may be provided, however less than
+              5 should only be provided when there are less than 5 members to represent.
+              When lazy-loading room members is enabled, the membership events for
+              the heroes MUST be included in the state, unless they are redundant.
+              When the list of users changes, the server notifies the client by sending
+              a fresh list of heroes. If there are no changes since the last sync,
+              this field may be omitted.
+        m.joined_member_count:
+          type: integer
+          description: The number of users with membership of join, including the
+            client's own user ID. If this field has not changed since the last sync,
+            it may be omitted. Required otherwise.
+          format: int64
+        m.invited_member_count:
+          type: integer
+          description: The number of users with membership of invite. If this field
+            has not changed since the last sync, it may be omitted. Required otherwise.
+          format: int64
+      description: Room summary.
     Rooms:
       type: object
       properties:
@@ -7533,7 +7731,8 @@ components:
       type: object
       properties:
         alias:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: An alias for a matrix room.
         protocol:
           type: string
           description: The protocol ID that the third party location is a part of.
@@ -7626,7 +7825,8 @@ components:
       type: object
       properties:
         userid:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: A Matrix User ID represting a third party user.
         protocol:
           type: string
           description: The protocol ID that the third party location is a part of.
@@ -7665,7 +7865,8 @@ components:
       type: object
       properties:
         user_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The user's matrix user ID.
         display_name:
           type: string
           description: The display name of the user, if one exists.

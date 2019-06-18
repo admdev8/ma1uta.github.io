@@ -14,7 +14,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: r0.1.0-5
+  version: 0.1.1
 paths:
   /_matrix/app/v1/users/{userId}:
     get:
@@ -30,7 +30,7 @@ paths:
         description: The user ID being queried.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: The application service indicates that this user exists. The
@@ -56,53 +56,6 @@ paths:
         404:
           description: The application service indicates that this user does not exist.
             Optional error information can be included in the body of this response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/app/v1/rooms/{roomAlias}:
-    get:
-      summary: This endpoint is invoked by the homeserver on an application service
-        to query the existence of a given room alias.
-      description: The homeserver will only query room aliases inside the application
-        service's aliases namespace. The homeserver will send this request when it
-        receives a request to join a room alias within the application service's namespace.
-      operationId: rooms
-      parameters:
-      - name: roomAlias
-        in: path
-        description: The room alias being queried.
-        required: true
-        schema:
-          $ref: '#/components/schemas/Id'
-      responses:
-        200:
-          description: The application service indicates that this room alias exists.
-            The application service MUST have created a room and associated it with
-            the queried room alias using the client-server API. Additional information
-            about the room such as its name and topic can be set before responding.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-        401:
-          description: The homeserver has not supplied credentials to the application
-            service. Optional error information can be included in the body of this
-            response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: The credentials supplied by the homeserver were rejected.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: The application service indicates that this room alias does
-            not exist. Optional error information can be included in the body of this
-            response.
           content:
             application/json:
               schema:
@@ -136,6 +89,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
+  /_matrix/app/v1/rooms/{roomAlias}:
+    get:
+      summary: This endpoint is invoked by the homeserver on an application service
+        to query the existence of a given room alias.
+      description: The homeserver will only query room aliases inside the application
+        service's aliases namespace. The homeserver will send this request when it
+        receives a request to join a room alias within the application service's namespace.
+      operationId: rooms
+      parameters:
+      - name: roomAlias
+        in: path
+        description: The room alias being queried.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The application service indicates that this room alias exists.
+            The application service MUST have created a room and associated it with
+            the queried room alias using the client-server API. Additional information
+            about the room such as its name and topic can be set before responding.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        401:
+          description: The homeserver has not supplied credentials to the application
+            service. Optional error information can be included in the body of this
+            response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: The credentials supplied by the homeserver were rejected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: The application service indicates that this room alias does
+            not exist. Optional error information can be included in the body of this
+            response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/app/v1/thirdparty/location:
     get:
       summary: Retrieve an array of third party network locations from a Matrix room
@@ -147,7 +147,7 @@ paths:
         description: The Matrix room alias to look up.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: At least one portal room was found.
@@ -213,7 +213,7 @@ paths:
         description: The Matrix User Id to look up
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       responses:
         200:
           description: An array of third party users.
@@ -223,6 +223,47 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProtocolUser'
+        401:
+          description: The homeserver has not supplied credentials to the application
+            service. Optional error information can be included in the body of this
+            response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: The credentials supplied by the homeserver were rejected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: No mappings were found with the given parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/app/v1/thirdparty/location/{protocol}:
+    get:
+      summary: Retrieve a list of Matrix portal rooms that lead to the matched third
+        party location.
+      operationId: locationProtocol
+      parameters:
+      - name: protocol
+        in: path
+        description: The protocol ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: At least one portal room was found.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProtocolLocation'
         401:
           description: The homeserver has not supplied credentials to the application
             service. Optional error information can be included in the body of this
@@ -284,47 +325,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/app/v1/thirdparty/location/{protocol}:
-    get:
-      summary: Retrieve a list of Matrix portal rooms that lead to the matched third
-        party location.
-      operationId: locationProtocol
-      parameters:
-      - name: protocol
-        in: path
-        description: The protocol ID.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: At least one portal room was found.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProtocolLocation'
-        401:
-          description: The homeserver has not supplied credentials to the application
-            service. Optional error information can be included in the body of this
-            response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: The credentials supplied by the homeserver were rejected.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: No mappings were found with the given parameters.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/client/r0/directory/list/appservice/{networkId}/{roomId}:
     put:
       summary: Updates the visibility of a given room on the application service's
@@ -347,7 +347,7 @@ paths:
         description: The room ID to add to the directory.
         required: true
         schema:
-          $ref: '#/components/schemas/Id'
+          type: string
       requestBody:
         description: JSON body request.
         content:
@@ -373,13 +373,6 @@ components:
         errcode:
           type: string
         error:
-          type: string
-    Id:
-      type: object
-      properties:
-        valid:
-          type: boolean
-        sigil:
           type: string
     Answer:
       required:
@@ -480,6 +473,15 @@ components:
           description: The version of the VoIP specification this message adheres
             to. This specification is version 0.
           format: int64
+        reason:
+          type: string
+          description: Optional error reason for the hangup. This should not be provided
+            when the user naturally ends or rejects the call. When there was an error
+            in the call negotiation, this should be ice_failed for when ICE negotiation
+            fails or invite_timeout for when the other party did not answer in time.
+          enum:
+          - ice_failed
+          - invite_timeout
         call_id:
           type: string
           description: The ID of the call this event relates to.
@@ -673,7 +675,8 @@ components:
           description: Required. The encryption algorithm the key in this event is
             to be used with.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         sender_key:
           type: string
           description: Required. The Curve25519 key of the device which initiated
@@ -715,7 +718,8 @@ components:
       type: object
       properties:
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event the user's read marker is located at in the room.
       description: The current location of the user's read marker in a room. This
         event appears in the user's room account data for the room the marker is applicable
         for.
@@ -959,9 +963,11 @@ components:
       type: object
       properties:
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the old room.
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The event ID of the last known event in the old room.
       description: A reference to the room this room replaces, if the previous room
         was upgraded.
     PublicKeys:
@@ -1022,7 +1028,8 @@ components:
       type: object
       properties:
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The origin event id.
       description: Reply model.
     RequestedKeyInfo:
       required:
@@ -1037,7 +1044,8 @@ components:
           description: Required. The encryption algorithm the requested key in this
             event is to be used with.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         sender_key:
           type: string
           description: The Curve25519 key of the device which initiated the session
@@ -1055,7 +1063,8 @@ components:
           type: array
           description: A list of room aliases.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: A list of room aliases.
       description: This event is sent by a homeserver directly to inform of changes
         to the list of aliases it knows about for that room. The state_key for this
         event is set to the homeserver which owns the room alias. The entire set of
@@ -1087,7 +1096,8 @@ components:
       type: object
       properties:
         alias:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The canonical alias
       description: This event is used to inform the room about which alias should
         be considered the canonical one. This could be for display purposes or as
         suggestion to users which alias to use to advertise the room. A room with
@@ -1101,7 +1111,8 @@ components:
       type: object
       properties:
         creator:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The user_id of the room creator. This is set by the homeserver.
         predecessor:
           $ref: '#/components/schemas/PreviousRoom'
         m.federate:
@@ -1175,13 +1186,16 @@ components:
       type: object
       properties:
         sender:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: Contains the fully-qualified ID of the user who sent this event.
         unsigned:
           $ref: '#/components/schemas/UnsignedEventContent'
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The globally unique event identifier.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the room associated with this event.
         origin_server_ts:
           type: integer
           description: Timestamp in milliseconds on originating homeserver when this
@@ -1248,7 +1262,8 @@ components:
           description: The encryption algorithm the key in this event is to be used
             with. Must be 'm.megolm.v1.aes-sha2'.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The room where the key is used.
         session_id:
           type: string
           description: The ID of the session that the key is for.
@@ -1297,7 +1312,7 @@ components:
           enum:
           - invite, join, knock, leave, ban
         unsigned:
-          $ref: '#/components/schemas/RoomMemberUnsigned'
+          $ref: '#/components/schemas/Unsigned'
         avatar_url:
           type: string
           description: The avatar URL for this user, if any. This is added by the
@@ -1317,23 +1332,6 @@ components:
         a room, and trying to force this state change directly will fail.
       allOf:
       - $ref: '#/components/schemas/EventContent'
-    RoomMemberUnsigned:
-      type: object
-      properties:
-        events:
-          type: array
-          description: A subset of the state of the room at the time of the invite,
-            if membership is invite. Note that this state is informational, and SHOULD
-            NOT be trusted; once the client has joined the room, it SHOULD fetch the
-            live state from the server and discard the invite_room_state. Also, clients
-            must not rely on any particular state being present here; they SHOULD
-            behave properly (with possibly a degraded but not a broken experience)
-            in the absence of any particular events here. If they are set on the room,
-            at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules,
-            and m.room.name SHOULD be included.
-          items:
-            $ref: '#/components/schemas/Event'
-      description: Unsigned data.
     RoomMessageContent:
       type: object
       properties:
@@ -1381,7 +1379,8 @@ components:
           type: array
           description: An ordered list of event IDs to pin.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: An ordered list of event IDs to pin.
       description: This event is used to "pin" particular events in a room for other
         participants to review later. The order of the pinned events is guaranteed
         and based upon the order supplied in the event. Clients should be aware that
@@ -1569,6 +1568,25 @@ components:
         also be set when creating a room using /createRoom with the topic key.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+    ServerNotice:
+      required:
+      - server_notice_type
+      type: object
+      properties:
+        server_notice_type:
+          type: string
+          description: The type of notice being represented.
+        admin_contact:
+          type: string
+          description: A URI giving a contact method for the server administrator.
+            Required if the notice type is m.server_notice.usage_limit_reached.
+        limit_type:
+          type: string
+          description: The kind of usage limit the server has exceeded. Required if
+            the notice type is m.server_notice.usage_limit_reached.
+      description: Represents a server notice for a user.
+      allOf:
+      - $ref: '#/components/schemas/RoomMessageContent'
     Signed:
       required:
       - mxid
@@ -1577,7 +1595,9 @@ components:
       type: object
       properties:
         mxid:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The invited matrix user ID. Must be equal to the user_id property
+            of the event.
         token:
           type: string
           description: The token property of the containing third_party_invite object.
@@ -1605,13 +1625,16 @@ components:
       type: object
       properties:
         sender:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: Contains the fully-qualified ID of the user who sent this event.
         unsigned:
           $ref: '#/components/schemas/UnsignedEventContent'
         event_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The globally unique event identifier.
         room_id:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: The ID of the room associated with this event.
         origin_server_ts:
           type: integer
           description: Timestamp in milliseconds on originating homeserver when this
@@ -1724,10 +1747,36 @@ components:
           type: array
           description: The list of user IDs typing in this room, if any.
           items:
-            $ref: '#/components/schemas/Id'
+            type: string
+            description: The list of user IDs typing in this room, if any.
       description: Informs the client of the list of users currently typing.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+    Unsigned:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/EventContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
     UnsignedEventContent:
       type: object
       properties:
@@ -1808,7 +1857,8 @@ components:
       type: object
       properties:
         alias:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: An alias for a matrix room.
         protocol:
           type: string
           description: The protocol ID that the third party location is a part of.
@@ -1901,7 +1951,8 @@ components:
       type: object
       properties:
         userid:
-          $ref: '#/components/schemas/Id'
+          type: string
+          description: A Matrix User ID represting a third party user.
         protocol:
           type: string
           description: The protocol ID that the third party location is a part of.

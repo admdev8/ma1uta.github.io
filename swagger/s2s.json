@@ -11,7 +11,7 @@
       "name" : "Apache 2.0",
       "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "r0.1.1-1"
+    "version" : "0.1.2"
   },
   "paths" : {
     "/_matrix/federation/v1/event/{eventId}" : {
@@ -112,6 +112,109 @@
         }
       }
     },
+    "/_matrix/federation/v1/get_missing_events/{roomId}" : {
+      "post" : {
+        "summary" : "Retrieves previous events that the sender is missing.",
+        "description" : "This is done by doing a breadth-first walk of the prev_events for the latest_events, ignoring any events in earliest_events and stopping at the limit.",
+        "operationId" : "getMissingEvents",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID to search in.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The maximum number of events to retrieve.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 10
+          }
+        }, {
+          "name" : "min_depth",
+          "in" : "query",
+          "description" : "The minimum depth of events to retrieve.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          }
+        }, {
+          "name" : "earliest_events",
+          "in" : "query",
+          "description" : "The latest event IDs that the sender already has. These are skipped when retrieving the previous events of latest_events.",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "latest_events",
+          "in" : "query",
+          "description" : "The event IDs to retrieve the previous events for.",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The previous events for latest_events, excluding any earliest_events, up to the provided limit.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/federation/v1/state_ids/{roomId}" : {
+      "get" : {
+        "summary" : "Retrieves a snapshot of a room's state at a given event, in the form of event IDs.",
+        "operationId" : "stateIds",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID to get state for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "event_id",
+          "in" : "query",
+          "description" : "An event ID in the room to retrieve the state at.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The fully resolved state for the room, prior to considering any state changes induced by the requested event. Includes the authorization chain for the events.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/StateIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_matrix/federation/v1/send/{txnId}" : {
       "put" : {
         "summary" : "Push messages representing live activity to another server.",
@@ -175,6 +278,179 @@
           },
           "403" : {
             "description" : "The invite is not allowed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/federation/v1/event_auth/{roomId}/{eventId}" : {
+      "get" : {
+        "summary" : "Retrieves the complete auth chain for a given event.",
+        "operationId" : "eventAuth",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID to get the auth chain for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event ID to get the auth chain of.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The auth chain for the event.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/federation/v1/backfill/{roomId}" : {
+      "get" : {
+        "summary" : "Retrieves a sliding-window history of previous PDUs that occurred on the given room.",
+        "description" : "Starting from the PDU ID(s) given in the \"v\" argument, the PDUs that preceded it are retrieved, up to a total number given by the \"limit\".",
+        "operationId" : "backfill",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID to backfill.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "v",
+          "in" : "query",
+          "description" : "The event IDs to backfill from.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The maximum number of PDUs to retrieve, including the given events.",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A transaction containing the PDUs that preceded the given event(s), including the given event(s), up to the given limit.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Transaction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/federation/v1/query_auth/{roomId}/{eventId}" : {
+      "post" : {
+        "summary" : "Compares the auth chain provided with what the receiving server has for the room ID and event ID combination.",
+        "description" : "The auth difference can be calculated in two parts, where the \"remote auth\" is the auth chain provided by the sending server and the \"local auth\" is the auth chain the receiving server has. With those lists, the algorithm works bottom-up after sorting each chain by depth then by event ID.The differences are then discovered and returned as the response to this API call.",
+        "operationId" : "queryAuth",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID to compare the auth chain in.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event ID to compare the auth chain of.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The auth chain differences, as determined by the receiver.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QueryAuth"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/federation/v1/make_join/{roomId}/{userId}" : {
+      "get" : {
+        "summary" : "Asks the receiving server to return information that the sending server will need to prepare a join event to get into the room.",
+        "operationId" : "makeJoin",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room ID that is about to be joined.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "The user ID the join event will be for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ver",
+          "in" : "query",
+          "description" : "The room versions the sending server has support for.",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "default" : "1"
+            },
+            "default" : "1"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A template to be used for the rest of the Joining Rooms handshake. Note that events have a different format depending on the room version - check the room version specification for precise event formats. The response body here describes the common event fields in more detail and may be missing other required fields for a PDU.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MakeResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The request is invalid or the room the server is attempting to join has a version that is not listed in the ver parameters. The error should be passed through to clients so that they may give better feedback to users.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -334,282 +610,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/backfill/{roomId}" : {
-      "get" : {
-        "summary" : "Retrieves a sliding-window history of previous PDUs that occurred on the given room.",
-        "description" : "Starting from the PDU ID(s) given in the \"v\" argument, the PDUs that preceded it are retrieved, up to a total number given by the \"limit\".",
-        "operationId" : "backfill",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID to backfill.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "v",
-          "in" : "query",
-          "description" : "The event IDs to backfill from.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "The maximum number of PDUs to retrieve, including the given events.",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A transaction containing the PDUs that preceded the given event(s), including the given event(s), up to the given limit.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Transaction"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/get_missing_events/{roomId}" : {
-      "post" : {
-        "summary" : "Retrieves previous events that the sender is missing.",
-        "description" : "This is done by doing a breadth-first walk of the prev_events for the latest_events, ignoring any events in earliest_events and stopping at the limit.",
-        "operationId" : "getMissingEvents",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID to search in.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "The maximum number of events to retrieve.",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32",
-            "default" : 10
-          }
-        }, {
-          "name" : "min_depth",
-          "in" : "query",
-          "description" : "The minimum depth of events to retrieve.",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32",
-            "default" : 0
-          }
-        }, {
-          "name" : "earliest_events",
-          "in" : "query",
-          "description" : "The latest event IDs that the sender already has. These are skipped when retrieving the previous events of latest_events.",
-          "required" : true,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          }
-        }, {
-          "name" : "latest_events",
-          "in" : "query",
-          "description" : "The event IDs to retrieve the previous events for.",
-          "required" : true,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The previous events for latest_events, excluding any earliest_events, up to the provided limit.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/event_auth/{roomId}/{eventId}" : {
-      "get" : {
-        "summary" : "Retrieves the complete auth chain for a given event.",
-        "operationId" : "eventAuth",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID to get the auth chain for.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "eventId",
-          "in" : "path",
-          "description" : "The event ID to get the auth chain of.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The auth chain for the event.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/query_auth/{roomId}/{eventId}" : {
-      "post" : {
-        "summary" : "Compares the auth chain provided with what the receiving server has for the room ID and event ID combination.",
-        "description" : "The auth difference can be calculated in two parts, where the \"remote auth\" is the auth chain provided by the sending server and the \"local auth\" is the auth chain the receiving server has. With those lists, the algorithm works bottom-up after sorting each chain by depth then by event ID.The differences are then discovered and returned as the response to this API call.",
-        "operationId" : "queryAuth",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID to compare the auth chain in.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "eventId",
-          "in" : "path",
-          "description" : "The event ID to compare the auth chain of.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The auth chain differences, as determined by the receiver.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/QueryAuth"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/state_ids/{roomId}" : {
-      "get" : {
-        "summary" : "Retrieves a snapshot of a room's state at a given event, in the form of event IDs.",
-        "operationId" : "stateIds",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID to get state for.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "event_id",
-          "in" : "query",
-          "description" : "An event ID in the room to retrieve the state at.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The fully resolved state for the room, prior to considering any state changes induced by the requested event. Includes the authorization chain for the events.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/StateIdResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/federation/v1/make_join/{roomId}/{userId}" : {
-      "get" : {
-        "summary" : "Asks the receiving server to return information that the sending server will need to prepare a join event to get into the room.",
-        "operationId" : "makeJoin",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room ID that is about to be joined.",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Id"
-          }
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "The user ID the join event will be for.",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Id"
-          }
-        }, {
-          "name" : "ver",
-          "in" : "query",
-          "description" : "The room versions the sending server has support for.",
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string",
-              "default" : "1"
-            },
-            "default" : "1"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A template to be used for the rest of the Joining Rooms handshake. Note that events have a different format depending on the room version - check the room version specification for precise event formats. The response body here describes the common event fields in more detail and may be missing other required fields for a PDU.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/MakeResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "The request is invalid or the room the server is attempting to join has a version that is not listed in the ver parameters. The error should be passed through to clients so that they may give better feedback to users.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -887,7 +887,7 @@
         }
       }
     },
-    "/_matrix/key/v2/query/${serverName}/${keyId}" : {
+    "/_matrix/key/v2/query/{serverName}/{keyId}" : {
       "get" : {
         "summary" : "Query for another server's keys. The receiving (notary) server must sign the keys returned by the queried server.",
         "operationId" : "query",
@@ -1000,7 +1000,7 @@
     "schemas" : {
       "PersistedDataUnit" : {
         "type" : "object",
-        "description" : "The auth chain (the \"remote auth\"). Note that events have a different format depending on the room version - check the room version specification for precise event formats."
+        "description" : "The auth chain. Note that events have a different format depending on the room version - check the room version specification for precise event formats."
       },
       "UserInfoResponse" : {
         "required" : [ "sub" ],
@@ -1044,6 +1044,29 @@
           }
         },
         "description" : "Response of the state methods."
+      },
+      "StateIdResponse" : {
+        "required" : [ "auth_chain", "pdus" ],
+        "type" : "object",
+        "properties" : {
+          "pdus" : {
+            "type" : "array",
+            "description" : "The fully resolved state of the room at the given event.",
+            "items" : {
+              "type" : "string",
+              "description" : "The fully resolved state of the room at the given event."
+            }
+          },
+          "auth_chain" : {
+            "type" : "array",
+            "description" : "The full set of authorization events that make up the state of the room, and their authorization events, recursively.",
+            "items" : {
+              "type" : "string",
+              "description" : "The full set of authorization events that make up the state of the room, and their authorization events, recursively."
+            }
+          }
+        },
+        "description" : "Response of the state methods, in the form of event IDs."
       },
       "EphemeralDataUnit" : {
         "required" : [ "edu_type" ],
@@ -1204,6 +1227,11 @@
             "type" : "integer",
             "description" : "The version of the VoIP specification this message adheres to. This specification is version 0.",
             "format" : "int64"
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "Optional error reason for the hangup. This should not be provided when the user naturally ends or rejects the call. When there was an error in the call negotiation, this should be ice_failed for when ICE negotiation fails or invite_timeout for when the other party did not answer in time.",
+            "enum" : [ "ice_failed", "invite_timeout" ]
           },
           "call_id" : {
             "type" : "string",
@@ -1423,7 +1451,8 @@
             "description" : "Required. The encryption algorithm the key in this event is to be used with."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The room where the key is used."
           },
           "sender_key" : {
             "type" : "string",
@@ -1460,25 +1489,14 @@
         "type" : "object",
         "properties" : {
           "event_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The event the user's read marker is located at in the room."
           }
         },
         "description" : "The current location of the user's read marker in a room. This event appears in the user's room account data for the room the marker is applicable for.",
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
-      },
-      "Id" : {
-        "type" : "object",
-        "properties" : {
-          "valid" : {
-            "type" : "boolean"
-          },
-          "sigil" : {
-            "type" : "string"
-          }
-        },
-        "description" : "The ID of the room associated with this event."
       },
       "IgnoredUserListContent" : {
         "required" : [ "ignored_users" ],
@@ -1568,11 +1586,12 @@
         "description" : "Third-party invites."
       },
       "InviteEvent" : {
-        "required" : [ "origin", "origin_server_ts", "state_key", "type" ],
+        "required" : [ "origin", "origin_server_ts", "sender", "state_key", "type" ],
         "type" : "object",
         "properties" : {
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The matrix ID of the user who sent the original m.room.third_party_invite."
           },
           "origin" : {
             "type" : "string",
@@ -1783,10 +1802,12 @@
         "type" : "object",
         "properties" : {
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The ID of the old room."
           },
           "event_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The event ID of the last known event in the old room."
           }
         },
         "description" : "A reference to the room this room replaces, if the previous room was upgraded."
@@ -1859,7 +1880,8 @@
         "type" : "object",
         "properties" : {
           "event_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The origin event id."
           }
         },
         "description" : "Reply model."
@@ -1873,7 +1895,8 @@
             "description" : "Required. The encryption algorithm the requested key in this event is to be used with."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The room where the key is used."
           },
           "sender_key" : {
             "type" : "string",
@@ -1894,7 +1917,8 @@
             "type" : "array",
             "description" : "A list of room aliases.",
             "items" : {
-              "$ref" : "#/components/schemas/Id"
+              "type" : "string",
+              "description" : "A list of room aliases."
             }
           }
         },
@@ -1925,7 +1949,8 @@
         "type" : "object",
         "properties" : {
           "alias" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The canonical alias"
           }
         },
         "description" : "This event is used to inform the room about which alias should be considered the canonical one. This could be for display purposes or as suggestion to users which alias to use to advertise the room. A room with an m.room.canonical_alias event with an absent, null, or empty alias field should be treated the same as a room with no m.room.canonical_alias event.",
@@ -1938,7 +1963,8 @@
         "type" : "object",
         "properties" : {
           "creator" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The user_id of the room creator. This is set by the homeserver."
           },
           "predecessor" : {
             "$ref" : "#/components/schemas/PreviousRoom"
@@ -2013,16 +2039,19 @@
         "type" : "object",
         "properties" : {
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "Contains the fully-qualified ID of the user who sent this event."
           },
           "unsigned" : {
             "$ref" : "#/components/schemas/UnsignedEventContent"
           },
           "event_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The globally unique event identifier."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The ID of the room associated with this event."
           },
           "origin_server_ts" : {
             "type" : "integer",
@@ -2087,7 +2116,8 @@
             "description" : "The encryption algorithm the key in this event is to be used with. Must be 'm.megolm.v1.aes-sha2'."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The room where the key is used."
           },
           "session_id" : {
             "type" : "string",
@@ -2139,7 +2169,7 @@
             "enum" : [ "invite, join, knock, leave, ban" ]
           },
           "unsigned" : {
-            "$ref" : "#/components/schemas/RoomMemberUnsigned"
+            "$ref" : "#/components/schemas/Unsigned"
           },
           "avatar_url" : {
             "type" : "string",
@@ -2157,19 +2187,6 @@
           }
         },
         "description" : "Adjusts the membership state for a user in a room. It is preferable to use the membership APIs (/rooms/<room id>/invite etc) when performing membership actions rather than adjusting the state directly as there are a restricted set of valid transformations. For example, user A cannot force user B to join a room, and trying to force this state change directly will fail."
-      },
-      "RoomMemberUnsigned" : {
-        "type" : "object",
-        "properties" : {
-          "events" : {
-            "type" : "array",
-            "description" : "A subset of the state of the room at the time of the invite, if membership is invite. Note that this state is informational, and SHOULD NOT be trusted; once the client has joined the room, it SHOULD fetch the live state from the server and discard the invite_room_state. Also, clients must not rely on any particular state being present here; they SHOULD behave properly (with possibly a degraded but not a broken experience) in the absence of any particular events here. If they are set on the room, at least the state for m.room.avatar, m.room.canonical_alias, m.room.join_rules, and m.room.name SHOULD be included.",
-            "items" : {
-              "$ref" : "#/components/schemas/Event"
-            }
-          }
-        },
-        "description" : "Unsigned data."
       },
       "RoomMessageContent" : {
         "type" : "object",
@@ -2214,7 +2231,8 @@
             "type" : "array",
             "description" : "An ordered list of event IDs to pin.",
             "items" : {
-              "$ref" : "#/components/schemas/Id"
+              "type" : "string",
+              "description" : "An ordered list of event IDs to pin."
             }
           }
         },
@@ -2373,12 +2391,35 @@
           "$ref" : "#/components/schemas/EventContent"
         } ]
       },
+      "ServerNotice" : {
+        "required" : [ "server_notice_type" ],
+        "type" : "object",
+        "properties" : {
+          "server_notice_type" : {
+            "type" : "string",
+            "description" : "The type of notice being represented."
+          },
+          "admin_contact" : {
+            "type" : "string",
+            "description" : "A URI giving a contact method for the server administrator. Required if the notice type is m.server_notice.usage_limit_reached."
+          },
+          "limit_type" : {
+            "type" : "string",
+            "description" : "The kind of usage limit the server has exceeded. Required if the notice type is m.server_notice.usage_limit_reached."
+          }
+        },
+        "description" : "Represents a server notice for a user.",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/RoomMessageContent"
+        } ]
+      },
       "Signed" : {
         "required" : [ "mxid", "signatures", "token" ],
         "type" : "object",
         "properties" : {
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The invited matrix user ID. Must be equal to the user_id property of the event."
           },
           "token" : {
             "type" : "string",
@@ -2404,16 +2445,19 @@
         "type" : "object",
         "properties" : {
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "Contains the fully-qualified ID of the user who sent this event."
           },
           "unsigned" : {
             "$ref" : "#/components/schemas/UnsignedEventContent"
           },
           "event_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The globally unique event identifier."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The ID of the room associated with this event."
           },
           "origin_server_ts" : {
             "type" : "integer",
@@ -2531,7 +2575,8 @@
             "type" : "array",
             "description" : "The list of user IDs typing in this room, if any.",
             "items" : {
-              "$ref" : "#/components/schemas/Id"
+              "type" : "string",
+              "description" : "The list of user IDs typing in this room, if any."
             }
           }
         },
@@ -2539,6 +2584,34 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventContent"
         } ]
+      },
+      "Unsigned" : {
+        "type" : "object",
+        "properties" : {
+          "age" : {
+            "type" : "integer",
+            "description" : "The time in milliseconds that has elapsed since the event was sent. This field is generated by the local homeserver, and may be incorrect if the local time on at least one of the two servers is out of sync, which can cause the age to either be negative or greater than it actually is.",
+            "format" : "int64"
+          },
+          "redacted_because" : {
+            "$ref" : "#/components/schemas/Event"
+          },
+          "transaction_id" : {
+            "type" : "string",
+            "description" : "The client-supplied transaction ID, if the client being given the event is the same one which sent it."
+          },
+          "prev_content" : {
+            "$ref" : "#/components/schemas/EventContent"
+          },
+          "invite_room_state" : {
+            "type" : "array",
+            "description" : "This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.",
+            "items" : {
+              "$ref" : "#/components/schemas/Event"
+            }
+          }
+        },
+        "description" : "Unsigned addition data."
       },
       "UnsignedEventContent" : {
         "type" : "object",
@@ -2629,11 +2702,12 @@
         "description" : "Video info."
       },
       "InviteV1Request" : {
-        "required" : [ "origin", "origin_server_ts", "state_key", "type" ],
+        "required" : [ "origin", "origin_server_ts", "sender", "state_key", "type" ],
         "type" : "object",
         "properties" : {
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The matrix ID of the user who sent the original m.room.third_party_invite."
           },
           "origin" : {
             "type" : "string",
@@ -2661,186 +2735,6 @@
           }
         },
         "description" : "V1 Invite JSON request."
-      },
-      "Unsigned" : {
-        "type" : "object",
-        "properties" : {
-          "age" : {
-            "type" : "integer",
-            "description" : "The time in milliseconds that has elapsed since the event was sent. This field is generated by the local homeserver, and may be incorrect if the local time on at least one of the two servers is out of sync, which can cause the age to either be negative or greater than it actually is.",
-            "format" : "int64"
-          },
-          "redacted_because" : {
-            "$ref" : "#/components/schemas/Event"
-          },
-          "transaction_id" : {
-            "type" : "string",
-            "description" : "The client-supplied transaction ID, if the client being given the event is the same one which sent it."
-          },
-          "prev_content" : {
-            "$ref" : "#/components/schemas/EventContent"
-          },
-          "invite_room_state" : {
-            "type" : "array",
-            "description" : "This contains an array of StrippedState Events. These events provide information on a subset of state events such as the room name.",
-            "items" : {
-              "$ref" : "#/components/schemas/Event"
-            }
-          }
-        },
-        "description" : "Unsigned addition data."
-      },
-      "RoomStateResponse" : {
-        "required" : [ "auth_chain", "origin", "state" ],
-        "type" : "object",
-        "properties" : {
-          "origin" : {
-            "type" : "string",
-            "description" : "The resident server's DNS name."
-          },
-          "state" : {
-            "type" : "array",
-            "description" : "The room state. The event format varies depending on the room version - check the room version specification for precise event formats.",
-            "items" : {
-              "$ref" : "#/components/schemas/PersistedDataUnit"
-            }
-          },
-          "auth_chain" : {
-            "type" : "array",
-            "description" : "The auth chain. Note that events have a different format depending on the room version - check the room version specification for precise event formats.",
-            "items" : {
-              "$ref" : "#/components/schemas/PersistedDataUnit"
-            }
-          }
-        },
-        "description" : "Room state response."
-      },
-      "SendRequest" : {
-        "required" : [ "origin", "origin_server_ts", "state_key", "type" ],
-        "type" : "object",
-        "properties" : {
-          "sender" : {
-            "$ref" : "#/components/schemas/Id"
-          },
-          "origin" : {
-            "type" : "string",
-            "description" : "The name of the joining homeserver."
-          },
-          "type" : {
-            "type" : "string",
-            "description" : "The value m.room.member.",
-            "default" : "m.room.member"
-          },
-          "content" : {
-            "$ref" : "#/components/schemas/RoomMemberContent"
-          },
-          "origin_server_ts" : {
-            "type" : "integer",
-            "description" : "A timestamp added by the joining homeserver.",
-            "format" : "int64"
-          },
-          "state_key" : {
-            "type" : "string",
-            "description" : "The user ID of the joining member."
-          }
-        },
-        "description" : "JSON request of the send_join/send_leave requests."
-      },
-      "EventTemplate" : {
-        "required" : [ "origin", "origin_server_ts", "sender", "state_key", "type" ],
-        "type" : "object",
-        "properties" : {
-          "sender" : {
-            "$ref" : "#/components/schemas/Id"
-          },
-          "origin" : {
-            "type" : "string",
-            "description" : "The name of the resident homeserver."
-          },
-          "type" : {
-            "type" : "string",
-            "description" : "The value m.room.member.",
-            "default" : "m.room.member"
-          },
-          "content" : {
-            "$ref" : "#/components/schemas/RoomMemberContent"
-          },
-          "origin_server_ts" : {
-            "type" : "integer",
-            "description" : "A timestamp added by the resident homeserver.",
-            "format" : "int64"
-          },
-          "state_key" : {
-            "$ref" : "#/components/schemas/Id"
-          }
-        },
-        "description" : "Event Template."
-      },
-      "MakeResponse" : {
-        "type" : "object",
-        "properties" : {
-          "event" : {
-            "$ref" : "#/components/schemas/EventTemplate"
-          },
-          "room_version" : {
-            "type" : "string",
-            "description" : "The version of the room where the server is trying to join. If not provided, the room version is assumed to be either \"1\" or \"2\"."
-          }
-        },
-        "description" : "Response of the make_join/make_leave requests."
-      },
-      "EmptyResponse" : {
-        "type" : "object",
-        "description" : "Empty response"
-      },
-      "ThirdPartyInvite" : {
-        "required" : [ "type" ],
-        "type" : "object",
-        "properties" : {
-          "type" : {
-            "type" : "string",
-            "description" : "The event type. Must be m.room.member",
-            "default" : "m.room.member"
-          },
-          "sender" : {
-            "$ref" : "#/components/schemas/Id"
-          },
-          "content" : {
-            "$ref" : "#/components/schemas/RoomMemberContent"
-          },
-          "room_id" : {
-            "$ref" : "#/components/schemas/Id"
-          },
-          "state_key" : {
-            "$ref" : "#/components/schemas/Id"
-          }
-        },
-        "description" : "Third party invite event."
-      },
-      "OnBindRequest" : {
-        "required" : [ "address", "invites", "medium" ],
-        "type" : "object",
-        "properties" : {
-          "medium" : {
-            "type" : "string",
-            "description" : "The type of third party identifier. Currently only \"email\" is a possible value."
-          },
-          "address" : {
-            "type" : "string",
-            "description" : "The third party identifier itself. For example, an email address."
-          },
-          "mxid" : {
-            "$ref" : "#/components/schemas/Id"
-          },
-          "invites" : {
-            "type" : "array",
-            "description" : "A list of pending invites that the third party identifier has received.",
-            "items" : {
-              "$ref" : "#/components/schemas/Invite"
-            }
-          }
-        },
-        "description" : "Bind request."
       },
       "QueryAuth" : {
         "required" : [ "auth_chain" ],
@@ -2883,28 +2777,164 @@
         },
         "description" : "Reject reason."
       },
-      "StateIdResponse" : {
-        "required" : [ "auth_chain", "pdus" ],
+      "EventTemplate" : {
+        "required" : [ "origin", "origin_server_ts", "sender", "state_key", "type" ],
         "type" : "object",
         "properties" : {
-          "pdus" : {
+          "sender" : {
+            "type" : "string",
+            "description" : "The user ID of the joining member."
+          },
+          "origin" : {
+            "type" : "string",
+            "description" : "The name of the resident homeserver."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The value m.room.member.",
+            "default" : "m.room.member"
+          },
+          "content" : {
+            "$ref" : "#/components/schemas/RoomMemberContent"
+          },
+          "origin_server_ts" : {
+            "type" : "integer",
+            "description" : "A timestamp added by the resident homeserver.",
+            "format" : "int64"
+          },
+          "state_key" : {
+            "type" : "string",
+            "default" : "The user ID of the joining member."
+          }
+        },
+        "description" : "Event Template."
+      },
+      "MakeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "event" : {
+            "$ref" : "#/components/schemas/EventTemplate"
+          },
+          "room_version" : {
+            "type" : "string",
+            "description" : "The version of the room where the server is trying to join. If not provided, the room version is assumed to be either \"1\" or \"2\"."
+          }
+        },
+        "description" : "Response of the make_join/make_leave requests."
+      },
+      "RoomStateResponse" : {
+        "required" : [ "auth_chain", "origin", "state" ],
+        "type" : "object",
+        "properties" : {
+          "origin" : {
+            "type" : "string",
+            "description" : "The resident server's DNS name."
+          },
+          "state" : {
             "type" : "array",
-            "description" : "The fully resolved state of the room at the given event.",
+            "description" : "The room state. The event format varies depending on the room version - check the room version specification for precise event formats.",
             "items" : {
-              "type" : "string",
-              "description" : "The fully resolved state of the room at the given event."
+              "$ref" : "#/components/schemas/PersistedDataUnit"
             }
           },
           "auth_chain" : {
             "type" : "array",
-            "description" : "The full set of authorization events that make up the state of the room, and their authorization events, recursively.",
+            "description" : "The auth chain. Note that events have a different format depending on the room version - check the room version specification for precise event formats.",
             "items" : {
-              "type" : "string",
-              "description" : "The full set of authorization events that make up the state of the room, and their authorization events, recursively."
+              "$ref" : "#/components/schemas/PersistedDataUnit"
             }
           }
         },
-        "description" : "Response of the state methods, in the form of event IDs."
+        "description" : "Room state response."
+      },
+      "SendRequest" : {
+        "required" : [ "origin", "origin_server_ts", "sender", "state_key", "type" ],
+        "type" : "object",
+        "properties" : {
+          "sender" : {
+            "type" : "string",
+            "description" : "The user ID of the joining member."
+          },
+          "origin" : {
+            "type" : "string",
+            "description" : "The name of the joining homeserver."
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The value m.room.member.",
+            "default" : "m.room.member"
+          },
+          "content" : {
+            "$ref" : "#/components/schemas/RoomMemberContent"
+          },
+          "origin_server_ts" : {
+            "type" : "integer",
+            "description" : "A timestamp added by the joining homeserver.",
+            "format" : "int64"
+          },
+          "state_key" : {
+            "type" : "string",
+            "description" : "The user ID of the joining member."
+          }
+        },
+        "description" : "JSON request of the send_join/send_leave requests."
+      },
+      "EmptyResponse" : {
+        "type" : "object",
+        "description" : "Empty response"
+      },
+      "ThirdPartyInvite" : {
+        "required" : [ "room_id", "sender", "state_key", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "The event type. Must be m.room.member",
+            "default" : "m.room.member"
+          },
+          "sender" : {
+            "type" : "string",
+            "description" : "The user ID of the user who sent the original m.room.third_party_invite event."
+          },
+          "content" : {
+            "$ref" : "#/components/schemas/RoomMemberContent"
+          },
+          "room_id" : {
+            "type" : "string",
+            "description" : "The room ID the event is for. Must match the ID given in the path."
+          },
+          "state_key" : {
+            "type" : "string",
+            "description" : "The user ID of the invited user."
+          }
+        },
+        "description" : "Third party invite event."
+      },
+      "OnBindRequest" : {
+        "required" : [ "address", "invites", "medium", "mxid" ],
+        "type" : "object",
+        "properties" : {
+          "medium" : {
+            "type" : "string",
+            "description" : "The type of third party identifier. Currently only \"email\" is a possible value."
+          },
+          "address" : {
+            "type" : "string",
+            "description" : "The third party identifier itself. For example, an email address."
+          },
+          "mxid" : {
+            "type" : "string",
+            "description" : "The user that is now bound to the third party identifier."
+          },
+          "invites" : {
+            "type" : "array",
+            "description" : "A list of pending invites that the third party identifier has received.",
+            "items" : {
+              "$ref" : "#/components/schemas/Invite"
+            }
+          }
+        },
+        "description" : "Bind request."
       },
       "PublicRoomsChunk" : {
         "required" : [ "guest_can_join", "num_joined_members", "room_id", "world_readable" ],
@@ -2914,7 +2944,8 @@
             "type" : "array",
             "description" : "Aliases of the room. May be empty.",
             "items" : {
-              "$ref" : "#/components/schemas/Id"
+              "type" : "string",
+              "description" : "Aliases of the room. May be empty."
             }
           },
           "name" : {
@@ -2926,7 +2957,8 @@
             "description" : "The topic of the room, if any."
           },
           "canonical_alias" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The canonical alias of the room, if any."
           },
           "num_joined_members" : {
             "type" : "integer",
@@ -2992,7 +3024,8 @@
             }
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The room ID mapped to the queried room alias."
           }
         },
         "description" : "Directory response."
@@ -3044,7 +3077,8 @@
             "description" : "Required. Signatures for the device key object. A map from user ID, to a map from <algorithm>:<device_id> to the signature. The signature is calculated using the process described at Signing JS"
           },
           "user_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The ID of the user the device belongs to. Must match the user ID used when logging in."
           },
           "device_id" : {
             "type" : "string",
@@ -3065,7 +3099,8 @@
             }
           },
           "user_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The user ID devices were requested for."
           },
           "stream_id" : {
             "type" : "integer",
@@ -3167,7 +3202,8 @@
             "$ref" : "#/components/schemas/UnsignedDeviceInfo"
           },
           "user_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The ID of the user the device belongs to. Must match the user ID used when logging in."
           },
           "device_id" : {
             "type" : "string",

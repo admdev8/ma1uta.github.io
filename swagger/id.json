@@ -11,97 +11,9 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "r0.1.0-4"
+    "version" : "0.2.1"
   },
   "paths" : {
-    "/_matrix/identity/api/v1/validate/msisdn/requestToken" : {
-      "post" : {
-        "summary" : "Create a session for validating a phone number.",
-        "description" : "The identity server will send an SMS message containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the SMS for that phone number, and so we validate ownership of the phone number.\nNote that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example, /register/msisdn/requestToken is designed specifically for use when registering an account and therefore will inform the user if the phone number given is already registered on the server.",
-        "operationId" : "createPhoneSession",
-        "requestBody" : {
-          "description" : "JSON body request",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PhoneRequestToken"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Session created.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "An error occured.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/identity/api/v1/validate/email/requestToken" : {
-      "post" : {
-        "summary" : "Create a session for validating an email address.",
-        "description" : "The identity server will send an email containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the email for that email address, and so we validate ownership of the email address.\nNote that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example,/register/email/requestToken is designed specifically for use when registering an account and therefore will inform the user if the email address given is already registered on the server.",
-        "operationId" : "createEmailSession",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/EmailRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "default" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Session created.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "An error ocurred.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_matrix/identity/api/v1/validate/email/submitToken" : {
       "get" : {
         "summary" : "Validate ownership of an email address.",
@@ -194,17 +106,17 @@
         }
       }
     },
-    "/_matrix/identity/api/v1/bind" : {
+    "/_matrix/identity/api/v1/validate/msisdn/requestToken" : {
       "post" : {
-        "summary" : "Publish an association between a session and a Matrix user ID.",
-        "description" : "Future calls to /lookup for any of the session's 3pids will return this association.",
-        "operationId" : "publish",
+        "summary" : "Create a session for validating a phone number.",
+        "description" : "The identity server will send an SMS message containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the SMS for that phone number, and so we validate ownership of the phone number.\nNote that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example, /register/msisdn/requestToken is designed specifically for use when registering an account and therefore will inform the user if the phone number given is already registered on the server.",
+        "operationId" : "createPhoneSession",
         "requestBody" : {
-          "description" : "JSON boy request",
+          "description" : "JSON body request",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/PublishRequest"
+                "$ref" : "#/components/schemas/PhoneRequestToken"
               }
             }
           },
@@ -212,17 +124,17 @@
         },
         "responses" : {
           "200" : {
-            "description" : "The association was published.",
+            "description" : "Session created.",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/PublishResponse"
+                  "$ref" : "#/components/schemas/SessionResponse"
                 }
               }
             }
           },
           "400" : {
-            "description" : "The association was not published. If the session has not been validated, then errcode will be M_SESSION_NOT_VALIDATED. If the session has timed out, then errcode will be M_SESSION_EXPIRED.",
+            "description" : "An error occured.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -230,9 +142,47 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/_matrix/identity/api/v1/validate/email/requestToken" : {
+      "post" : {
+        "summary" : "Create a session for validating an email address.",
+        "description" : "The identity server will send an email containing a token. If that token is presented to the identity server in the future, it indicates that that user was able to read the email for that email address, and so we validate ownership of the email address.\nNote that homeservers offer APIs that proxy this API, adding additional behaviour on top, for example,/register/email/requestToken is designed specifically for use when registering an account and therefore will inform the user if the email address given is already registered on the server.",
+        "operationId" : "createEmailSession",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EmailRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
           },
-          "404" : {
-            "description" : "he Session ID or client secret were not found.",
+          "200" : {
+            "description" : "Session created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "An error ocurred.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -329,6 +279,56 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ValidationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/identity/api/v1/bind" : {
+      "post" : {
+        "summary" : "Publish an association between a session and a Matrix user ID.",
+        "description" : "Future calls to /lookup for any of the session's 3pids will return this association.",
+        "operationId" : "bind",
+        "requestBody" : {
+          "description" : "JSON body request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PublishRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The association was published.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublishResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The association was not published. If the session has not been validated, then errcode will be M_SESSION_NOT_VALIDATED. If the session has timed out, then errcode will be M_SESSION_EXPIRED.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "he Session ID or client secret were not found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -644,10 +644,100 @@
           }
         }
       }
+    },
+    "/_matrix/identity/api/v1/unbind" : {
+      "post" : {
+        "summary" : "Remove an association between a session and a Matrix user ID.",
+        "description" : "Future calls to /lookup for any of the session's 3pids will not return the removed association.",
+        "operationId" : "unbind",
+        "requestBody" : {
+          "description" : "JSON body request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UnbindRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The association was successfully removed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "If the response body is not a JSON Matrix error, the identity server does not support unbinds. If a JSON Matrix error is in the response body, the requesting party should respect the error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The credentials supplied to authenticate the request were invalid. This may also be returned if the identity server does not support the chosen authentication method(such as blocking homeservers from unbinding identifiers).",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "If the response body is not a JSON Matrix error, the identity server does not support unbinds. If a JSON Matrix error is in the response body, the requesting party should respect the error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "If the response body is not a JSON Matrix error, the identity server does not support unbinds. If a JSON Matrix error is in the response body, the requesting party should respect the error.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
     "schemas" : {
+      "ValidationResponse" : {
+        "required" : [ "address", "medium", "validated_at" ],
+        "type" : "object",
+        "properties" : {
+          "medium" : {
+            "type" : "string",
+            "description" : "The medium type of the 3pid."
+          },
+          "address" : {
+            "type" : "string",
+            "description" : "The address of the 3pid being looked up."
+          },
+          "validated_at" : {
+            "type" : "integer",
+            "description" : "Timestamp, in milliseconds, indicating the time that the 3pid was validated.",
+            "format" : "int64"
+          }
+        },
+        "description" : "Validation result."
+      },
       "SessionResponse" : {
         "required" : [ "sid" ],
         "type" : "object",
@@ -670,38 +760,6 @@
           }
         }
       },
-      "ValidationResponse" : {
-        "required" : [ "address", "medium", "validated_at" ],
-        "type" : "object",
-        "properties" : {
-          "medium" : {
-            "type" : "string",
-            "description" : "The medium type of the 3pid."
-          },
-          "address" : {
-            "type" : "string",
-            "description" : "The address of the 3pid being looked up."
-          },
-          "validated_at" : {
-            "type" : "integer",
-            "description" : "Timestamp, in milliseconds, indicating the time that the 3pid was validated.",
-            "format" : "int64"
-          }
-        },
-        "description" : "Validation result."
-      },
-      "Id" : {
-        "type" : "object",
-        "properties" : {
-          "valid" : {
-            "type" : "boolean"
-          },
-          "sigil" : {
-            "type" : "string"
-          }
-        },
-        "description" : "The Matrix user ID to associate with the 3pids."
-      },
       "PublishResponse" : {
         "required" : [ "address", "medium", "mxid", "not_after", "not_before", "signatures", "ts" ],
         "type" : "object",
@@ -715,7 +773,8 @@
             "description" : "The medium type of the 3pid."
           },
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID associated with the 3pid."
           },
           "ts" : {
             "type" : "integer",
@@ -780,13 +839,14 @@
             "type" : "string"
           },
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The MXID."
           }
         },
         "description" : "The Matrix error response with the MXID."
       },
       "InvitationRequest" : {
-        "required" : [ "address", "medium" ],
+        "required" : [ "address", "medium", "room_id", "sender" ],
         "type" : "object",
         "properties" : {
           "medium" : {
@@ -798,10 +858,12 @@
             "description" : "The email address of the invited user."
           },
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID of the inviting user."
           },
           "room_id" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix room ID to which the user is invited."
           }
         },
         "description" : "JSON boy request of the invitation api."
@@ -841,7 +903,8 @@
             "description" : "A medium from the 3PID Types Appendix, matching the medium requested."
           },
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID associated with the 3pid."
           },
           "ts" : {
             "type" : "integer",
@@ -991,10 +1054,12 @@
         "type" : "object",
         "properties" : {
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID of the user accepting the invitation."
           },
           "sender" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID of the user who sent the invitation."
           },
           "signatures" : {
             "type" : "object",
@@ -1016,11 +1081,12 @@
         "description" : "JSON body response of the signing api."
       },
       "SigningRequest" : {
-        "required" : [ "private_key", "token" ],
+        "required" : [ "mxid", "private_key", "token" ],
         "type" : "object",
         "properties" : {
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID of the user accepting the invitation."
           },
           "token" : {
             "type" : "string",
@@ -1034,7 +1100,7 @@
         "description" : "JSON body request of the signing api."
       },
       "PublishRequest" : {
-        "required" : [ "client_secret", "sid" ],
+        "required" : [ "client_secret", "mxid", "sid" ],
         "type" : "object",
         "properties" : {
           "sid" : {
@@ -1042,7 +1108,8 @@
             "description" : "The Session ID generated by the requestToken call."
           },
           "mxid" : {
-            "$ref" : "#/components/schemas/Id"
+            "type" : "string",
+            "description" : "The Matrix user ID to associate with the 3pids."
           },
           "client_secret" : {
             "type" : "string",
@@ -1050,6 +1117,43 @@
           }
         },
         "description" : "JSON body request of the bind api."
+      },
+      "ThreePid" : {
+        "required" : [ "address", "medium" ],
+        "type" : "object",
+        "properties" : {
+          "medium" : {
+            "type" : "string",
+            "description" : "A medium from the 3PID Types Appendix, matching the medium of the identifier to unbind."
+          },
+          "address" : {
+            "type" : "string",
+            "description" : "The 3PID address to remove."
+          }
+        },
+        "description" : "3PID."
+      },
+      "UnbindRequest" : {
+        "required" : [ "mxid" ],
+        "type" : "object",
+        "properties" : {
+          "sid" : {
+            "type" : "string",
+            "description" : "The Session ID generated by the requestToken call."
+          },
+          "mxid" : {
+            "type" : "string",
+            "description" : "The Matrix user ID to remove from the 3pids."
+          },
+          "threepid" : {
+            "$ref" : "#/components/schemas/ThreePid"
+          },
+          "client_secret" : {
+            "type" : "string",
+            "description" : "The client secret passed to the requestToken call."
+          }
+        },
+        "description" : "Unbind request."
       }
     }
   }
