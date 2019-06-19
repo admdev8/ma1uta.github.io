@@ -82,86 +82,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StateResponse'
-  /_matrix/federation/v1/get_missing_events/{roomId}:
-    post:
-      summary: Retrieves previous events that the sender is missing.
-      description: This is done by doing a breadth-first walk of the prev_events for
-        the latest_events, ignoring any events in earliest_events and stopping at
-        the limit.
-      operationId: getMissingEvents
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID to search in.
-        required: true
-        schema:
-          type: string
-      - name: limit
-        in: query
-        description: The maximum number of events to retrieve.
-        schema:
-          type: integer
-          format: int32
-          default: 10
-      - name: min_depth
-        in: query
-        description: The minimum depth of events to retrieve.
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: earliest_events
-        in: query
-        description: The latest event IDs that the sender already has. These are skipped
-          when retrieving the previous events of latest_events.
-        required: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: latest_events
-        in: query
-        description: The event IDs to retrieve the previous events for.
-        required: true
-        schema:
-          type: array
-          items:
-            type: string
-      responses:
-        200:
-          description: The previous events for latest_events, excluding any earliest_events,
-            up to the provided limit.
-          content:
-            application/json:
-              schema:
-                type: string
-  /_matrix/federation/v1/state_ids/{roomId}:
-    get:
-      summary: Retrieves a snapshot of a room's state at a given event, in the form
-        of event IDs.
-      operationId: stateIds
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID to get state for.
-        required: true
-        schema:
-          type: string
-      - name: event_id
-        in: query
-        description: An event ID in the room to retrieve the state at.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The fully resolved state for the room, prior to considering
-            any state changes induced by the requested event. Includes the authorization
-            chain for the events.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StateIdResponse'
   /_matrix/federation/v1/send/{txnId}:
     put:
       summary: Push messages representing live activity to another server.
@@ -251,6 +171,85 @@ paths:
             application/json:
               schema:
                 type: string
+  /_matrix/federation/v1/query/profile:
+    get:
+      summary: Performs a query to get profile information, such as a display name
+        or avatar, for a given user.
+      description: ' Homeservers should only query profiles for users that belong
+        to the target server (identified by the DNS Name in the user ID). Servers
+        may wish to cache the response to this query to avoid requesting the information
+        too often.'
+      operationId: queryProfile
+      parameters:
+      - name: user_id
+        in: query
+        description: The user ID to query.
+        required: true
+        schema:
+          type: string
+      - name: field
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: The profile for the user. If a field is specified in the request,
+            only the matching field should be included in the response. If no field
+            was specified, the response should include the fields of the user's profile
+            that can be made public, such as the display name and avatar.If the user
+            does not have a particular field set on their profile, the server should
+            exclude it from the response body or give it the value null.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        404:
+          description: The room alias was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/user/devices/{userId}:
+    get:
+      summary: Gets information on all of the user's devices.
+      operationId: userDevices
+      parameters:
+      - name: userId
+        in: path
+        description: The user ID to retrieve devices for. Must be a user local to
+          the receiving homeserver.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The user's devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+  /_matrix/federation/v1/user/keys/claim:
+    post:
+      summary: Claims one-time keys for use in pre-key messages.
+      operationId: userKeysClaim
+      responses:
+        200:
+          description: The claimed keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyClaimResponse'
+  /_matrix/federation/v1/user/keys/query:
+    post:
+      summary: Returns the current devices and identity keys for the given users.
+      operationId: userKeysQuery
+      responses:
+        200:
+          description: The device information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyQueryResponse'
   /_matrix/federation/v1/backfill/{roomId}:
     get:
       summary: Retrieves a sliding-window history of previous PDUs that occurred on
@@ -286,36 +285,152 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-  /_matrix/federation/v1/query_auth/{roomId}/{eventId}:
+  /_matrix/federation/v1/get_missing_events/{roomId}:
     post:
-      summary: Compares the auth chain provided with what the receiving server has
-        for the room ID and event ID combination.
-      description: The auth difference can be calculated in two parts, where the "remote
-        auth" is the auth chain provided by the sending server and the "local auth"
-        is the auth chain the receiving server has. With those lists, the algorithm
-        works bottom-up after sorting each chain by depth then by event ID.The differences
-        are then discovered and returned as the response to this API call.
-      operationId: queryAuth
+      summary: Retrieves previous events that the sender is missing.
+      description: This is done by doing a breadth-first walk of the prev_events for
+        the latest_events, ignoring any events in earliest_events and stopping at
+        the limit.
+      operationId: getMissingEvents
       parameters:
       - name: roomId
         in: path
-        description: The room ID to compare the auth chain in.
+        description: The room ID to search in.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The maximum number of events to retrieve.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: min_depth
+        in: query
+        description: The minimum depth of events to retrieve.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: earliest_events
+        in: query
+        description: The latest event IDs that the sender already has. These are skipped
+          when retrieving the previous events of latest_events.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: latest_events
+        in: query
+        description: The event IDs to retrieve the previous events for.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: The previous events for latest_events, excluding any earliest_events,
+            up to the provided limit.
+          content:
+            application/json:
+              schema:
+                type: string
+  /_matrix/federation/v1/send_join/{roomId}/{eventId}:
+    put:
+      summary: Submits a signed join event to the resident server for it to accept
+        it into the room's graph.
+      description: Note that events have a different format depending on the room
+        version - check the room version specification for precise event formats.
+        The request and response body here describes the common event fields in more
+        detail and may be missing other required fields for a PDU.
+      operationId: sendJoin
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID that is about to be joined.
         required: true
         schema:
           type: string
       - name: eventId
         in: path
-        description: The event ID to compare the auth chain of.
+        description: The event ID for the join event.
         required: true
         schema:
           type: string
       responses:
         200:
-          description: The auth chain differences, as determined by the receiver.
+          description: The full state for the room, having accepted the join event.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueryAuth'
+                type: array
+        400:
+          description: The request is invalid or the room the server is attempting
+            to join has a version that is not listed in the ver parameters. The error
+            should be passed through to clients so that they may give better feedback
+            to users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/query/directory:
+    get:
+      summary: Performs a query to get the mapped room ID and list of resident homeservers
+        in the room for a given room alias.
+      description: Servers may wish to cache the response to this query to avoid requesting
+        the information too often.
+      operationId: queryDirectory
+      parameters:
+      - name: room_alias
+        in: query
+        description: The room alias to query.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The corresponding room ID and list of known resident homeservers
+            for the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryResponse'
+        404:
+          description: The room alias was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/state_ids/{roomId}:
+    get:
+      summary: Retrieves a snapshot of a room's state at a given event, in the form
+        of event IDs.
+      operationId: stateIds
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID to get state for.
+        required: true
+        schema:
+          type: string
+      - name: event_id
+        in: query
+        description: An event ID in the room to retrieve the state at.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The fully resolved state for the room, prior to considering
+            any state changes induced by the requested event. Includes the authorization
+            chain for the events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateIdResponse'
   /_matrix/federation/v1/make_join/{roomId}/{userId}:
     get:
       summary: Asks the receiving server to return information that the sending server
@@ -354,44 +469,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MakeResponse'
-        400:
-          description: The request is invalid or the room the server is attempting
-            to join has a version that is not listed in the ver parameters. The error
-            should be passed through to clients so that they may give better feedback
-            to users.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/send_join/{roomId}/{eventId}:
-    put:
-      summary: Submits a signed join event to the resident server for it to accept
-        it into the room's graph.
-      description: Note that events have a different format depending on the room
-        version - check the room version specification for precise event formats.
-        The request and response body here describes the common event fields in more
-        detail and may be missing other required fields for a PDU.
-      operationId: sendJoin
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID that is about to be joined.
-        required: true
-        schema:
-          type: string
-      - name: eventId
-        in: path
-        description: The event ID for the join event.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The full state for the room, having accepted the join event.
-          content:
-            application/json:
-              schema:
-                type: array
         400:
           description: The request is invalid or the room the server is attempting
             to join has a version that is not listed in the ver parameters. The error
@@ -528,113 +605,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PublicRoomsResponse'
-  /_matrix/federation/v1/query/directory:
-    get:
-      summary: Performs a query to get the mapped room ID and list of resident homeservers
-        in the room for a given room alias.
-      description: Servers may wish to cache the response to this query to avoid requesting
-        the information too often.
-      operationId: queryDirectory
+  /_matrix/federation/v1/query_auth/{roomId}/{eventId}:
+    post:
+      summary: Compares the auth chain provided with what the receiving server has
+        for the room ID and event ID combination.
+      description: The auth difference can be calculated in two parts, where the "remote
+        auth" is the auth chain provided by the sending server and the "local auth"
+        is the auth chain the receiving server has. With those lists, the algorithm
+        works bottom-up after sorting each chain by depth then by event ID.The differences
+        are then discovered and returned as the response to this API call.
+      operationId: queryAuth
       parameters:
-      - name: room_alias
-        in: query
-        description: The room alias to query.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The corresponding room ID and list of known resident homeservers
-            for the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DirectoryResponse'
-        404:
-          description: The room alias was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/query/profile:
-    get:
-      summary: Performs a query to get profile information, such as a display name
-        or avatar, for a given user.
-      description: ' Homeservers should only query profiles for users that belong
-        to the target server (identified by the DNS Name in the user ID). Servers
-        may wish to cache the response to this query to avoid requesting the information
-        too often.'
-      operationId: queryProfile
-      parameters:
-      - name: user_id
-        in: query
-        description: The user ID to query.
-        required: true
-        schema:
-          type: string
-      - name: field
-        in: query
-        schema:
-          type: string
-      responses:
-        200:
-          description: The profile for the user. If a field is specified in the request,
-            only the matching field should be included in the response. If no field
-            was specified, the response should include the fields of the user's profile
-            that can be made public, such as the display name and avatar.If the user
-            does not have a particular field set on their profile, the server should
-            exclude it from the response body or give it the value null.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProfileResponse'
-        404:
-          description: The room alias was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/user/devices/{userId}:
-    get:
-      summary: Gets information on all of the user's devices.
-      operationId: userDevices
-      parameters:
-      - name: userId
+      - name: roomId
         in: path
-        description: The user ID to retrieve devices for. Must be a user local to
-          the receiving homeserver.
+        description: The room ID to compare the auth chain in.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID to compare the auth chain of.
         required: true
         schema:
           type: string
       responses:
         200:
-          description: The user's devices
+          description: The auth chain differences, as determined by the receiver.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeviceResponse'
-  /_matrix/federation/v1/user/keys/claim:
-    post:
-      summary: Claims one-time keys for use in pre-key messages.
-      operationId: userKeysClaim
-      responses:
-        200:
-          description: The claimed keys
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KeyClaimResponse'
-  /_matrix/federation/v1/user/keys/query:
-    post:
-      summary: Returns the current devices and identity keys for the given users.
-      operationId: userKeysQuery
-      responses:
-        200:
-          description: The device information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KeyQueryResponse'
+                $ref: '#/components/schemas/QueryAuth'
   /_matrix/federation/v2/invite/{roomId}/{eventId}:
     put:
       summary: Invites a remote user to a room.
@@ -779,9 +779,9 @@ components:
   schemas:
     PersistedDataUnit:
       type: object
-      description: The auth chain. Note that events have a different format depending
-        on the room version - check the room version specification for precise event
-        formats.
+      description: The auth chain (the "remote auth"). Note that events have a different
+        format depending on the room version - check the room version specification
+        for precise event formats.
     UserInfoResponse:
       required:
       - sub
@@ -820,27 +820,6 @@ components:
           items:
             $ref: '#/components/schemas/PersistedDataUnit'
       description: Response of the state methods.
-    StateIdResponse:
-      required:
-      - auth_chain
-      - pdus
-      type: object
-      properties:
-        pdus:
-          type: array
-          description: The fully resolved state of the room at the given event.
-          items:
-            type: string
-            description: The fully resolved state of the room at the given event.
-        auth_chain:
-          type: array
-          description: The full set of authorization events that make up the state
-            of the room, and their authorization events, recursively.
-          items:
-            type: string
-            description: The full set of authorization events that make up the state
-              of the room, and their authorization events, recursively.
-      description: Response of the state methods, in the form of event IDs.
     EphemeralDataUnit:
       required:
       - edu_type
@@ -2412,277 +2391,6 @@ components:
           type: string
           description: The user ID of the invited member.
       description: V1 Invite JSON request.
-    QueryAuth:
-      required:
-      - auth_chain
-      type: object
-      properties:
-        missing:
-          type: array
-          description: A list of event IDs that the sender thinks the receiver is
-            missing.
-          items:
-            type: string
-            description: A list of event IDs that the sender thinks the receiver is
-              missing.
-        rejects:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RejectReason'
-          description: The set of events that the sending server has rejected from
-            the provided auth chain.
-        auth_chain:
-          type: array
-          description: The auth chain (the "remote auth"). Note that events have a
-            different format depending on the room version - check the room version
-            specification for precise event formats.
-          items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-      description: Query auth.
-    RejectReason:
-      required:
-      - reason
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason for the event being rejected.
-          enum:
-          - auth_error
-          - replaced
-          - not_ancestor
-      description: Reject reason.
-    EventTemplate:
-      required:
-      - origin
-      - origin_server_ts
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        sender:
-          type: string
-          description: The user ID of the joining member.
-        origin:
-          type: string
-          description: The name of the resident homeserver.
-        type:
-          type: string
-          description: The value m.room.member.
-          default: m.room.member
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        origin_server_ts:
-          type: integer
-          description: A timestamp added by the resident homeserver.
-          format: int64
-        state_key:
-          type: string
-          default: The user ID of the joining member.
-      description: Event Template.
-    MakeResponse:
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/EventTemplate'
-        room_version:
-          type: string
-          description: The version of the room where the server is trying to join.
-            If not provided, the room version is assumed to be either "1" or "2".
-      description: Response of the make_join/make_leave requests.
-    RoomStateResponse:
-      required:
-      - auth_chain
-      - origin
-      - state
-      type: object
-      properties:
-        origin:
-          type: string
-          description: The resident server's DNS name.
-        state:
-          type: array
-          description: The room state. The event format varies depending on the room
-            version - check the room version specification for precise event formats.
-          items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-        auth_chain:
-          type: array
-          description: The auth chain. Note that events have a different format depending
-            on the room version - check the room version specification for precise
-            event formats.
-          items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-      description: Room state response.
-    SendRequest:
-      required:
-      - origin
-      - origin_server_ts
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        sender:
-          type: string
-          description: The user ID of the joining member.
-        origin:
-          type: string
-          description: The name of the joining homeserver.
-        type:
-          type: string
-          description: The value m.room.member.
-          default: m.room.member
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        origin_server_ts:
-          type: integer
-          description: A timestamp added by the joining homeserver.
-          format: int64
-        state_key:
-          type: string
-          description: The user ID of the joining member.
-      description: JSON request of the send_join/send_leave requests.
-    EmptyResponse:
-      type: object
-      description: Empty response
-    ThirdPartyInvite:
-      required:
-      - room_id
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: The event type. Must be m.room.member
-          default: m.room.member
-        sender:
-          type: string
-          description: The user ID of the user who sent the original m.room.third_party_invite
-            event.
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        room_id:
-          type: string
-          description: The room ID the event is for. Must match the ID given in the
-            path.
-        state_key:
-          type: string
-          description: The user ID of the invited user.
-      description: Third party invite event.
-    OnBindRequest:
-      required:
-      - address
-      - invites
-      - medium
-      - mxid
-      type: object
-      properties:
-        medium:
-          type: string
-          description: The type of third party identifier. Currently only "email"
-            is a possible value.
-        address:
-          type: string
-          description: The third party identifier itself. For example, an email address.
-        mxid:
-          type: string
-          description: The user that is now bound to the third party identifier.
-        invites:
-          type: array
-          description: A list of pending invites that the third party identifier has
-            received.
-          items:
-            $ref: '#/components/schemas/Invite'
-      description: Bind request.
-    PublicRoomsChunk:
-      required:
-      - guest_can_join
-      - num_joined_members
-      - room_id
-      - world_readable
-      type: object
-      properties:
-        aliases:
-          type: array
-          description: Aliases of the room. May be empty.
-          items:
-            type: string
-            description: Aliases of the room. May be empty.
-        name:
-          type: string
-          description: The name of the room, if any.
-        topic:
-          type: string
-          description: The topic of the room, if any.
-        canonical_alias:
-          type: string
-          description: The canonical alias of the room, if any.
-        num_joined_members:
-          type: integer
-          description: The number of members joined to the room.
-          format: int64
-        room_id:
-          type: string
-          description: The ID of the room.
-        world_readable:
-          type: boolean
-          description: Whether the room may be viewed by guest users without joining.
-        guest_can_join:
-          type: boolean
-          description: Whether guest users may join the room and participate in it.
-            If they can, they will be subject to ordinary power level rules like any
-            other user.
-        avatar_url:
-          type: string
-          description: The URL for the room's avatar, if one is set.
-      description: Public rooms chunk.
-    PublicRoomsResponse:
-      required:
-      - chunk
-      type: object
-      properties:
-        chunk:
-          type: array
-          description: A paginated chunk of public rooms.
-          items:
-            $ref: '#/components/schemas/PublicRoomsChunk'
-        next_batch:
-          type: string
-          description: A pagination token for the response. The absence of this token
-            means there are no more results to fetch and the client should stop paginating.
-        prev_batch:
-          type: string
-          description: A pagination token that allows fetching previous results. The
-            absence of this token means there are no results before this batch, i.e.
-            this is the first batch.
-        total_room_count_estimate:
-          type: integer
-          description: An estimate on the total number of public rooms, if the server
-            has an estimate.
-          format: int64
-      description: Public rooms response.
-    DirectoryResponse:
-      required:
-      - room_id
-      - servers
-      type: object
-      properties:
-        servers:
-          type: array
-          description: An array of server names that are likely to hold the given
-            room. This list may or may not include the server answering the query.
-          items:
-            type: string
-            description: An array of server names that are likely to hold the given
-              room. This list may or may not include the server answering the query.
-        room_id:
-          type: string
-          description: The room ID mapped to the queried room alias.
-      description: Directory response.
     ProfileResponse:
       type: object
       properties:
@@ -2919,6 +2627,298 @@ components:
             device IDs, or to an empty list to indicate all devices for the corresponding
             user.
       description: Key query request.
+    RoomStateResponse:
+      required:
+      - auth_chain
+      - origin
+      - state
+      type: object
+      properties:
+        origin:
+          type: string
+          description: The resident server's DNS name.
+        state:
+          type: array
+          description: The room state. The event format varies depending on the room
+            version - check the room version specification for precise event formats.
+          items:
+            $ref: '#/components/schemas/PersistedDataUnit'
+        auth_chain:
+          type: array
+          description: The auth chain. Note that events have a different format depending
+            on the room version - check the room version specification for precise
+            event formats.
+          items:
+            $ref: '#/components/schemas/PersistedDataUnit'
+      description: Room state response.
+    SendRequest:
+      required:
+      - origin
+      - origin_server_ts
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        sender:
+          type: string
+          description: The user ID of the joining member.
+        origin:
+          type: string
+          description: The name of the joining homeserver.
+        type:
+          type: string
+          description: The value m.room.member.
+          default: m.room.member
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        origin_server_ts:
+          type: integer
+          description: A timestamp added by the joining homeserver.
+          format: int64
+        state_key:
+          type: string
+          description: The user ID of the joining member.
+      description: JSON request of the send_join/send_leave requests.
+    DirectoryResponse:
+      required:
+      - room_id
+      - servers
+      type: object
+      properties:
+        servers:
+          type: array
+          description: An array of server names that are likely to hold the given
+            room. This list may or may not include the server answering the query.
+          items:
+            type: string
+            description: An array of server names that are likely to hold the given
+              room. This list may or may not include the server answering the query.
+        room_id:
+          type: string
+          description: The room ID mapped to the queried room alias.
+      description: Directory response.
+    StateIdResponse:
+      required:
+      - auth_chain
+      - pdus
+      type: object
+      properties:
+        pdus:
+          type: array
+          description: The fully resolved state of the room at the given event.
+          items:
+            type: string
+            description: The fully resolved state of the room at the given event.
+        auth_chain:
+          type: array
+          description: The full set of authorization events that make up the state
+            of the room, and their authorization events, recursively.
+          items:
+            type: string
+            description: The full set of authorization events that make up the state
+              of the room, and their authorization events, recursively.
+      description: Response of the state methods, in the form of event IDs.
+    EventTemplate:
+      required:
+      - origin
+      - origin_server_ts
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        sender:
+          type: string
+          description: The user ID of the joining member.
+        origin:
+          type: string
+          description: The name of the resident homeserver.
+        type:
+          type: string
+          description: The value m.room.member.
+          default: m.room.member
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        origin_server_ts:
+          type: integer
+          description: A timestamp added by the resident homeserver.
+          format: int64
+        state_key:
+          type: string
+          default: The user ID of the joining member.
+      description: Event Template.
+    MakeResponse:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/EventTemplate'
+        room_version:
+          type: string
+          description: The version of the room where the server is trying to join.
+            If not provided, the room version is assumed to be either "1" or "2".
+      description: Response of the make_join/make_leave requests.
+    EmptyResponse:
+      type: object
+      description: Empty response
+    ThirdPartyInvite:
+      required:
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The event type. Must be m.room.member
+          default: m.room.member
+        sender:
+          type: string
+          description: The user ID of the user who sent the original m.room.third_party_invite
+            event.
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        room_id:
+          type: string
+          description: The room ID the event is for. Must match the ID given in the
+            path.
+        state_key:
+          type: string
+          description: The user ID of the invited user.
+      description: Third party invite event.
+    OnBindRequest:
+      required:
+      - address
+      - invites
+      - medium
+      - mxid
+      type: object
+      properties:
+        medium:
+          type: string
+          description: The type of third party identifier. Currently only "email"
+            is a possible value.
+        address:
+          type: string
+          description: The third party identifier itself. For example, an email address.
+        mxid:
+          type: string
+          description: The user that is now bound to the third party identifier.
+        invites:
+          type: array
+          description: A list of pending invites that the third party identifier has
+            received.
+          items:
+            $ref: '#/components/schemas/Invite'
+      description: Bind request.
+    PublicRoomsChunk:
+      required:
+      - guest_can_join
+      - num_joined_members
+      - room_id
+      - world_readable
+      type: object
+      properties:
+        aliases:
+          type: array
+          description: Aliases of the room. May be empty.
+          items:
+            type: string
+            description: Aliases of the room. May be empty.
+        name:
+          type: string
+          description: The name of the room, if any.
+        topic:
+          type: string
+          description: The topic of the room, if any.
+        canonical_alias:
+          type: string
+          description: The canonical alias of the room, if any.
+        num_joined_members:
+          type: integer
+          description: The number of members joined to the room.
+          format: int64
+        room_id:
+          type: string
+          description: The ID of the room.
+        world_readable:
+          type: boolean
+          description: Whether the room may be viewed by guest users without joining.
+        guest_can_join:
+          type: boolean
+          description: Whether guest users may join the room and participate in it.
+            If they can, they will be subject to ordinary power level rules like any
+            other user.
+        avatar_url:
+          type: string
+          description: The URL for the room's avatar, if one is set.
+      description: Public rooms chunk.
+    PublicRoomsResponse:
+      required:
+      - chunk
+      type: object
+      properties:
+        chunk:
+          type: array
+          description: A paginated chunk of public rooms.
+          items:
+            $ref: '#/components/schemas/PublicRoomsChunk'
+        next_batch:
+          type: string
+          description: A pagination token for the response. The absence of this token
+            means there are no more results to fetch and the client should stop paginating.
+        prev_batch:
+          type: string
+          description: A pagination token that allows fetching previous results. The
+            absence of this token means there are no results before this batch, i.e.
+            this is the first batch.
+        total_room_count_estimate:
+          type: integer
+          description: An estimate on the total number of public rooms, if the server
+            has an estimate.
+          format: int64
+      description: Public rooms response.
+    QueryAuth:
+      required:
+      - auth_chain
+      type: object
+      properties:
+        missing:
+          type: array
+          description: A list of event IDs that the sender thinks the receiver is
+            missing.
+          items:
+            type: string
+            description: A list of event IDs that the sender thinks the receiver is
+              missing.
+        rejects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RejectReason'
+          description: The set of events that the sending server has rejected from
+            the provided auth chain.
+        auth_chain:
+          type: array
+          description: The auth chain (the "remote auth"). Note that events have a
+            different format depending on the room version - check the room version
+            specification for precise event formats.
+          items:
+            $ref: '#/components/schemas/PersistedDataUnit'
+      description: Query auth.
+    RejectReason:
+      required:
+      - reason
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason for the event being rejected.
+          enum:
+          - auth_error
+          - replaced
+          - not_ancestor
+      description: Reject reason.
     InviteV2Request:
       required:
       - room_version

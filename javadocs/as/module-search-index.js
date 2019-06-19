@@ -1,1 +1,0 @@
-moduleSearchIndex = [{"l":"matrix.application.api"}]

@@ -190,109 +190,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/account/deactivate" : {
-      "post" : {
-        "tags" : [ "User data" ],
-        "summary" : "Deactivate the user's account, removing all ability for the user to login again.",
-        "description" : "This API endpoint uses the User-Interactive Authentication API.An access token should be submitted to this endpoint if the client has an active session.The homeserver may change the flows available depending on whether a valid access token is provided.",
-        "operationId" : "deactivate",
-        "requestBody" : {
-          "description" : "request",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/DeactivateRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The account has been deactivated.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DeactivateResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "The homeserver requires additional authentication information.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "This request was rate-limited.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RateLimitedErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
-    "/_matrix/client/r0/register/email/requestToken" : {
-      "post" : {
-        "tags" : [ "User data" ],
-        "summary" : "Request email token.",
-        "description" : "Proxies the identity server API validate/email/emailRequestToken, but first checks that the given email address is not already associated with an account on this Home Server. Note that, for consistency, this API takes JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters. See the Identity Server API for further information.",
-        "operationId" : "emailRequestToken",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/EmailRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "An email has been sent to the specified address.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Part of the request was invalid.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The homeserver does not permit the address to be bound.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_matrix/client/r0/register/msisdn/requestToken" : {
       "post" : {
         "tags" : [ "User data" ],
@@ -332,106 +229,6 @@
           },
           "403" : {
             "description" : "The homeserver does not permit the address to be bound.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/client/r0/account/password/email/requestToken" : {
-      "post" : {
-        "tags" : [ "User data" ],
-        "summary" : "Proxies the identity server API validate/email/requestToken, but first checks that the given email address is associated with an account on this Home Server.",
-        "description" : "This API should be used to request validation tokens when authenticating for the account/password endpoint. This API's parameters and response are identical to that of the HS API /register/email/requestToken except that M_THREEPID_NOT_FOUND may be returned if no account matching the given email address could be found. The server may instead send an email to the given address prompting the user to create an account. M_THREEPID_IN_USE may not be returned.",
-        "operationId" : "passwordEmailRequestToken",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/EmailRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "An email was sent to the given address",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "The referenced third party identifier is not recognised by the homeserver, or the request was invalid.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The homeserver does not allow the third party identifier as a contact option.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_matrix/client/r0/account/password/msisdn/requestToken" : {
-      "post" : {
-        "tags" : [ "User data" ],
-        "summary" : "Proxies the identity server API validate/email/requestToken, but first checks that the given email address is associated with an account on this Home Server.",
-        "description" : "This API should be used to request validation tokens when authenticating for the account/password endpoint. This API's parameters and response are identical to that of the HS API /register/email/requestToken except that M_THREEPID_NOT_FOUND may be returned if no account matching the given email address could be found. The server may instead send an email to the given address prompting the user to create an account. M_THREEPID_IN_USE may not be returned.",
-        "operationId" : "passwordMsisdnRequestToken",
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/MsisdnRequestToken"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "An SMS message was sent to the given phone number.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SessionResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "The referenced third party identifier is not recognised by the homeserver, or the request was invalid.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The homeserver does not allow the third party identifier as a contact option.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -692,6 +489,209 @@
         } ]
       }
     },
+    "/_matrix/client/r0/account/deactivate" : {
+      "post" : {
+        "tags" : [ "User data" ],
+        "summary" : "Deactivate the user's account, removing all ability for the user to login again.",
+        "description" : "This API endpoint uses the User-Interactive Authentication API.An access token should be submitted to this endpoint if the client has an active session.The homeserver may change the flows available depending on whether a valid access token is provided.",
+        "operationId" : "deactivate",
+        "requestBody" : {
+          "description" : "request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DeactivateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The account has been deactivated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DeactivateResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "The homeserver requires additional authentication information.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429" : {
+            "description" : "This request was rate-limited.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RateLimitedErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/account/password/email/requestToken" : {
+      "post" : {
+        "tags" : [ "User data" ],
+        "summary" : "Proxies the identity server API validate/email/requestToken, but first checks that the given email address is associated with an account on this Home Server.",
+        "description" : "This API should be used to request validation tokens when authenticating for the account/password endpoint. This API's parameters and response are identical to that of the HS API /register/email/requestToken except that M_THREEPID_NOT_FOUND may be returned if no account matching the given email address could be found. The server may instead send an email to the given address prompting the user to create an account. M_THREEPID_IN_USE may not be returned.",
+        "operationId" : "passwordEmailRequestToken",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EmailRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An email was sent to the given address",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The referenced third party identifier is not recognised by the homeserver, or the request was invalid.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The homeserver does not allow the third party identifier as a contact option.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/client/r0/register/email/requestToken" : {
+      "post" : {
+        "tags" : [ "User data" ],
+        "summary" : "Request email token.",
+        "description" : "Proxies the identity server API validate/email/emailRequestToken, but first checks that the given email address is not already associated with an account on this Home Server. Note that, for consistency, this API takes JSON objects, though the Identity Server API takes x-www-form-urlencoded parameters. See the Identity Server API for further information.",
+        "operationId" : "emailRequestToken",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EmailRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An email has been sent to the specified address.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Part of the request was invalid.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The homeserver does not permit the address to be bound.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_matrix/client/r0/account/password/msisdn/requestToken" : {
+      "post" : {
+        "tags" : [ "User data" ],
+        "summary" : "Proxies the identity server API validate/email/requestToken, but first checks that the given email address is associated with an account on this Home Server.",
+        "description" : "This API should be used to request validation tokens when authenticating for the account/password endpoint. This API's parameters and response are identical to that of the HS API /register/email/requestToken except that M_THREEPID_NOT_FOUND may be returned if no account matching the given email address could be found. The server may instead send an email to the given address prompting the user to create an account. M_THREEPID_IN_USE may not be returned.",
+        "operationId" : "passwordMsisdnRequestToken",
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MsisdnRequestToken"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "An SMS message was sent to the given phone number.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The referenced third party identifier is not recognised by the homeserver, or the request was invalid.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The homeserver does not allow the third party identifier as a contact option.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_matrix/client/r0/admin/whois/{userId}" : {
       "get" : {
         "tags" : [ "Server administration" ],
@@ -888,6 +888,97 @@
         } ]
       }
     },
+    "/_matrix/client/r0/user/{userId}/account_data/{type}" : {
+      "get" : {
+        "tags" : [ "User data" ],
+        "summary" : "Set some account_data for the client.",
+        "description" : "This config is only visible to the user that set the account_data. The config will be synced to clients in the top-level account_data.",
+        "operationId" : "getConfig",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "The id of the user to get account_data for. The access token must be authorized to make requests for this user id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "description" : "The event type of the account_data to get. Custom types should be namespaced to avoid clashes.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The account_data was successfully added.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "User data" ],
+        "summary" : "Set some account_data for the client.",
+        "description" : "This config is only visible to the user that set the account_data. The config will be synced to clients in the top-level account_data.",
+        "operationId" : "addConfig",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "The id of the user to set account_data for. The access token must be authorized to make requests for this user id.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "description" : "The event type of the account_data to set. Custom types should be namespaced to avoid clashes.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Account data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "additionalProperties" : {
+                  "type" : "object"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The account_data was successfully added.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
     "/_matrix/client/r0/user/{userId}/rooms/{roomId}/account_data/{type}" : {
       "get" : {
         "tags" : [ "User data" ],
@@ -952,97 +1043,6 @@
           "name" : "roomId",
           "in" : "path",
           "description" : "The id of the room to set account_data on.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "path",
-          "description" : "The event type of the account_data to set. Custom types should be namespaced to avoid clashes.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "Account data",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "additionalProperties" : {
-                  "type" : "object"
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The account_data was successfully added.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
-    "/_matrix/client/r0/user/{userId}/account_data/{type}" : {
-      "get" : {
-        "tags" : [ "User data" ],
-        "summary" : "Set some account_data for the client.",
-        "description" : "This config is only visible to the user that set the account_data. The config will be synced to clients in the top-level account_data.",
-        "operationId" : "getConfig",
-        "parameters" : [ {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "The id of the user to get account_data for. The access token must be authorized to make requests for this user id.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "type",
-          "in" : "path",
-          "description" : "The event type of the account_data to get. Custom types should be namespaced to avoid clashes.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The account_data was successfully added.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      },
-      "put" : {
-        "tags" : [ "User data" ],
-        "summary" : "Set some account_data for the client.",
-        "description" : "This config is only visible to the user that set the account_data. The config will be synced to clients in the top-level account_data.",
-        "operationId" : "addConfig",
-        "parameters" : [ {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "The id of the user to set account_data for. The access token must be authorized to make requests for this user id.",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -1733,38 +1733,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/keys/query" : {
-      "post" : {
-        "tags" : [ "End-to-end encryption" ],
-        "summary" : "Returns the current devices and identity keys for the given users.",
-        "operationId" : "query",
-        "requestBody" : {
-          "description" : "JSON body request",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/QueryRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The device information.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/QueryResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
     "/_matrix/client/r0/keys/claim" : {
       "post" : {
         "tags" : [ "End-to-end encryption" ],
@@ -1787,6 +1755,38 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClaimResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/keys/query" : {
+      "post" : {
+        "tags" : [ "End-to-end encryption" ],
+        "summary" : "Returns the current devices and identity keys for the given users.",
+        "operationId" : "query",
+        "requestBody" : {
+          "description" : "JSON body request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QueryRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The device information.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QueryResponse"
                 }
               }
             }
@@ -1910,55 +1910,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/rooms/{roomId}/event/{eventId}" : {
-      "get" : {
-        "tags" : [ "Room participation" ],
-        "summary" : "Get a single event based on roomId/eventId. You must have permission to retrieve this event e.g. by being a member in the room for this event.",
-        "operationId" : "roomEvent",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The ID of the room the event is in.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "eventId",
-          "in" : "path",
-          "description" : "The event ID to get.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The full event.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Event"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The event was not found or you do not have permission to read this event.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
     "/_matrix/client/r0/rooms/{roomId}/messages" : {
       "get" : {
         "tags" : [ "Room participation" ],
@@ -2041,15 +1992,23 @@
         } ]
       }
     },
-    "/_matrix/client/r0/rooms/{roomId}/state" : {
+    "/_matrix/client/r0/rooms/{roomId}/event/{eventId}" : {
       "get" : {
         "tags" : [ "Room participation" ],
-        "summary" : "Get the state events for the current state of a room.",
-        "operationId" : "roomState",
+        "summary" : "Get a single event based on roomId/eventId. You must have permission to retrieve this event e.g. by being a member in the room for this event.",
+        "operationId" : "roomEvent",
         "parameters" : [ {
           "name" : "roomId",
           "in" : "path",
-          "description" : "The room to look up the state for.",
+          "description" : "The ID of the room the event is in.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event ID to get.",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -2057,62 +2016,17 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "The current state of the room.",
+            "description" : "The full event.",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Event"
-                  }
+                  "$ref" : "#/components/schemas/Event"
                 }
               }
             }
           },
-          "403" : {
-            "description" : "You aren't a member of the room and weren't previously a member of the room.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
-    "/_matrix/client/r0/rooms/{roomId}/joined_members" : {
-      "get" : {
-        "tags" : [ "Room participation" ],
-        "summary" : "This API returns a map of MXIDs to member info objects for members of the room.",
-        "description" : "The current user must be in the room for it to work, unless it is an Application Service in which case any of the AS's users must be in the room. This API is primarily for Application Services and should be faster to respond than/members as it can be implemented more efficiently on the server.",
-        "operationId" : "joinedMembers",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room to get the members of.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A map of MXID to room member objects.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/JoinedMembersResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "You aren't a member of the room.",
+          "404" : {
+            "description" : "The event was not found or you do not have permission to read this event.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2246,6 +2160,92 @@
           },
           "403" : {
             "description" : "The sender doesn't have permission to send the event into the room.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/rooms/{roomId}/state" : {
+      "get" : {
+        "tags" : [ "Room participation" ],
+        "summary" : "Get the state events for the current state of a room.",
+        "operationId" : "roomState",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room to look up the state for.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The current state of the room.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "You aren't a member of the room and weren't previously a member of the room.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/rooms/{roomId}/joined_members" : {
+      "get" : {
+        "tags" : [ "Room participation" ],
+        "summary" : "This API returns a map of MXIDs to member info objects for members of the room.",
+        "description" : "The current user must be in the room for it to work, unless it is an Application Service in which case any of the AS's users must be in the room. This API is primarily for Application Services and should be faster to respond than/members as it can be implemented more efficiently on the server.",
+        "operationId" : "joinedMembers",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room to get the members of.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A map of MXID to room member objects.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/JoinedMembersResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "You aren't a member of the room.",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2757,44 +2757,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/profile/{userId}" : {
-      "get" : {
-        "tags" : [ "User data" ],
-        "summary" : "Get the combined profile information for this user. This API may be used to fetch the user's own profile information or other users; either locally or on remote homeservers. This API may return keys which are not limited to displayname or avatar_url.",
-        "operationId" : "profile",
-        "parameters" : [ {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "The user whose profile information to get.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "The avatar URL for this user.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Profile"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "There is no profile information for this user or this user does not exist.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_matrix/client/r0/profile/{userId}/displayname" : {
       "get" : {
         "tags" : [ "User data" ],
@@ -2880,6 +2842,44 @@
         "security" : [ {
           "accessToken" : [ ]
         } ]
+      }
+    },
+    "/_matrix/client/r0/profile/{userId}" : {
+      "get" : {
+        "tags" : [ "User data" ],
+        "summary" : "Get the combined profile information for this user. This API may be used to fetch the user's own profile information or other users; either locally or on remote homeservers. This API may return keys which are not limited to displayname or avatar_url.",
+        "operationId" : "profile",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "The user whose profile information to get.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The avatar URL for this user.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Profile"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "There is no profile information for this user or this user does not exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/_matrix/client/r0/profile/{userId}/avatar_url" : {
@@ -3177,6 +3177,51 @@
         } ]
       }
     },
+    "/_matrix/client/r0/notifications" : {
+      "get" : {
+        "tags" : [ "Push notifications" ],
+        "summary" : "This API is used to paginate through the list of events that the user has been, or would have been notified about.",
+        "operationId" : "notifications",
+        "parameters" : [ {
+          "name" : "from",
+          "in" : "query",
+          "description" : "Pagination token given to retrieve the next set of events.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "only",
+          "in" : "query",
+          "description" : "Allows basic filtering of events returned.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit on the number of events to return in this request.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A batch of events is being returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NotificationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
     "/_matrix/client/r0/pushers" : {
       "get" : {
         "tags" : [ "Push notifications" ],
@@ -3457,51 +3502,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/notifications" : {
-      "get" : {
-        "tags" : [ "Push notifications" ],
-        "summary" : "This API is used to paginate through the list of events that the user has been, or would have been notified about.",
-        "operationId" : "notifications",
-        "parameters" : [ {
-          "name" : "from",
-          "in" : "query",
-          "description" : "Pagination token given to retrieve the next set of events.",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "only",
-          "in" : "query",
-          "description" : "Allows basic filtering of events returned.",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "Limit on the number of events to return in this request.",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A batch of events is being returned.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/NotificationResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
     "/_matrix/client/r0/rooms/{roomId}/receipt/{receiptType}/{eventId}" : {
       "post" : {
         "tags" : [ "Room participation" ],
@@ -3703,68 +3703,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/rooms/{roomId}/upgrade" : {
-      "post" : {
-        "tags" : [ "Room directory" ],
-        "summary" : "Upgrades the given room to a particular room version, migrating as much data as possible over to the new room. See the room_upgrades module for more information on what this entails.",
-        "operationId" : "upgrade",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The ID of the room to upgrade.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "The new version for the room.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewVersion"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The room was successfully upgraded.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ReplacementRoom"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "The request was invalid. One way this can happen is if the room version requested is not supported by the homeserver.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The user is not permitted to upgrade the room.\n",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
     "/_matrix/client/r0/directory/list/room/{roomId}" : {
       "get" : {
         "tags" : [ "Room discovery" ],
@@ -3838,6 +3776,68 @@
           },
           "404" : {
             "description" : "The room is not known to the server.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/rooms/{roomId}/upgrade" : {
+      "post" : {
+        "tags" : [ "Room directory" ],
+        "summary" : "Upgrades the given room to a particular room version, migrating as much data as possible over to the new room. See the room_upgrades module for more information on what this entails.",
+        "operationId" : "upgrade",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The ID of the room to upgrade.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The new version for the room.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewVersion"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The room was successfully upgraded.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ReplacementRoom"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "The request was invalid. One way this can happen is if the room version requested is not supported by the homeserver.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The user is not permitted to upgrade the room.\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4173,137 +4173,6 @@
         } ]
       }
     },
-    "/_matrix/client/r0/rooms/{roomId}/unban" : {
-      "post" : {
-        "tags" : [ "Room membership" ],
-        "summary" : "Unban a user from the room. This allows them to be invited to the room, and join if they would otherwise be allowed to join according to its join rules.",
-        "operationId" : "unban",
-        "parameters" : [ {
-          "name" : "roomId",
-          "in" : "path",
-          "description" : "The room identifier (not alias) from which the user should be unbanned.",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/UnbanRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "The user has been unbanned from the room.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EmptyResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "You do not have permission to unban the user from the room. A meaningful errcode and description error text will be returned.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
-    "/_matrix/client/r0/publicRooms" : {
-      "get" : {
-        "tags" : [ "Room discovery" ],
-        "summary" : "Lists the public rooms on the server. This API returns paginated responses. The rooms are ordered by the number of joined members, with the largest rooms first.",
-        "operationId" : "showPublicRooms",
-        "parameters" : [ {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "Limit the number of results returned.",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "since",
-          "in" : "query",
-          "description" : "A pagination token from a previous request, allowing clients to get the next (or previous) batch of rooms. The direction of pagination is specified solely by which token is supplied, rather than via an explicit flag.",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "server",
-          "in" : "query",
-          "description" : "The server to fetch the public room lists from. Defaults to the local server.",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A list of the rooms on the server.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PublicRoomsResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "Room discovery" ],
-        "summary" : "Lists the public rooms on the server, with optional filter. This API returns paginated responses. The rooms are ordered by the number of joined members, with the largest rooms first.",
-        "operationId" : "searchPublicRooms",
-        "parameters" : [ {
-          "name" : "server",
-          "in" : "query",
-          "description" : "The server to fetch the public room lists from. Defaults to the local server.",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "JSON body request.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PublicRoomsRequest"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "A list of the rooms on the server.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PublicRoomsResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "accessToken" : [ ]
-        } ]
-      }
-    },
     "/_matrix/client/r0/joined_rooms" : {
       "get" : {
         "tags" : [ "Room membership" ],
@@ -4499,6 +4368,137 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/RateLimitedErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/rooms/{roomId}/unban" : {
+      "post" : {
+        "tags" : [ "Room membership" ],
+        "summary" : "Unban a user from the room. This allows them to be invited to the room, and join if they would otherwise be allowed to join according to its join rules.",
+        "operationId" : "unban",
+        "parameters" : [ {
+          "name" : "roomId",
+          "in" : "path",
+          "description" : "The room identifier (not alias) from which the user should be unbanned.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UnbanRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "The user has been unbanned from the room.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "You do not have permission to unban the user from the room. A meaningful errcode and description error text will be returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "accessToken" : [ ]
+        } ]
+      }
+    },
+    "/_matrix/client/r0/publicRooms" : {
+      "get" : {
+        "tags" : [ "Room discovery" ],
+        "summary" : "Lists the public rooms on the server. This API returns paginated responses. The rooms are ordered by the number of joined members, with the largest rooms first.",
+        "operationId" : "showPublicRooms",
+        "parameters" : [ {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Limit the number of results returned.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "since",
+          "in" : "query",
+          "description" : "A pagination token from a previous request, allowing clients to get the next (or previous) batch of rooms. The direction of pagination is specified solely by which token is supplied, rather than via an explicit flag.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "server",
+          "in" : "query",
+          "description" : "The server to fetch the public room lists from. Defaults to the local server.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of the rooms on the server.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublicRoomsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Room discovery" ],
+        "summary" : "Lists the public rooms on the server, with optional filter. This API returns paginated responses. The rooms are ordered by the number of joined members, with the largest rooms first.",
+        "operationId" : "searchPublicRooms",
+        "parameters" : [ {
+          "name" : "server",
+          "in" : "query",
+          "description" : "The server to fetch the public room lists from. Defaults to the local server.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "JSON body request.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PublicRoomsRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "A list of the rooms on the server.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublicRoomsResponse"
                 }
               }
             }
@@ -5560,31 +5560,6 @@
         },
         "description" : "Request for changes the password for an account on this homeserver."
       },
-      "DeactivateResponse" : {
-        "required" : [ "id_server_unding_result" ],
-        "type" : "object",
-        "properties" : {
-          "id_server_unding_result" : {
-            "type" : "string",
-            "description" : "An indicator as to whether or not the homeserver was able to unbind the user's 3PIDs from the identity server(s). success indicates that all identifiers have been unbound from the identity server while no-support indicates that one or more identifiers failed to unbind due to the identity server refusing the request or the homeserver being unable to determine an identity server to unbind from. This must be success if the homeserver has no identifiers to unbind for the user.",
-            "enum" : [ "success", "no-support" ]
-          }
-        },
-        "description" : "Deactivate response."
-      },
-      "DeactivateRequest" : {
-        "type" : "object",
-        "properties" : {
-          "auth" : {
-            "$ref" : "#/components/schemas/AuthenticationData"
-          },
-          "id_server" : {
-            "type" : "string",
-            "description" : "tThe identity server to unbind all of the user's 3PIDs from. If not provided, the homeserver MUST use the id_server that was originally use to bind each identifier. If the homeserver does not know which id_server that was, it must return an id_server_unbind_result of no-support."
-          }
-        },
-        "description" : "Request for deactivate the user's account, removing all ability for the user to login again."
-      },
       "SessionResponse" : {
         "required" : [ "sid" ],
         "type" : "object",
@@ -5595,34 +5570,6 @@
           }
         },
         "description" : "The sid generated for this session to the caller, in a JSON object containing the sid key."
-      },
-      "EmailRequestToken" : {
-        "required" : [ "client_secret", "email", "id_server", "send_attempt" ],
-        "type" : "object",
-        "properties" : {
-          "email" : {
-            "type" : "string",
-            "description" : "The email address to validate"
-          },
-          "id_server" : {
-            "type" : "string",
-            "description" : "The hostname of the identity server to communicate with. May optionally include a port."
-          },
-          "client_secret" : {
-            "type" : "string",
-            "description" : "A unique string generated by the client, and used to identify the validation attempt. It must be a string consisting of the characters [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must not be empty."
-          },
-          "send_attempt" : {
-            "type" : "integer",
-            "description" : "The server will only send an email if the send_attempt is a number greater than the most recent one which it has seen, scoped to that email + client_secret pair. This is to avoid repeatedly sending the same email in the case of request retries between the POSTing user and the identity server.The client should increment this value if they desire a new email(e.g.a reminder) to be sent .",
-            "format" : "int64"
-          },
-          "next_link" : {
-            "type" : "string",
-            "description" : "When the validation is completed, the identity server will redirect the user to this URL."
-          }
-        },
-        "description" : "Request for the proxies the identity server API validate/email/requestToken."
       },
       "MsisdnRequestToken" : {
         "required" : [ "client_secret", "country", "id_server", "phone_number", "send_attempt" ],
@@ -5655,6 +5602,98 @@
           }
         },
         "description" : "Request for the proxies the identity server API validate/msisdn/requestToken."
+      },
+      "ThreePidRequest" : {
+        "type" : "object",
+        "properties" : {
+          "bind" : {
+            "type" : "boolean",
+            "description" : "Whether the homeserver should also bind this third party identifier to the account's Matrix ID with the passed identity server"
+          },
+          "three_pid_creds" : {
+            "$ref" : "#/components/schemas/ThreePidCred"
+          }
+        },
+        "description" : "Request for adds contact information to the user's account"
+      },
+      "DeactivateResponse" : {
+        "required" : [ "id_server_unding_result" ],
+        "type" : "object",
+        "properties" : {
+          "id_server_unding_result" : {
+            "type" : "string",
+            "description" : "An indicator as to whether or not the homeserver was able to unbind the user's 3PIDs from the identity server(s). success indicates that all identifiers have been unbound from the identity server while no-support indicates that one or more identifiers failed to unbind due to the identity server refusing the request or the homeserver being unable to determine an identity server to unbind from. This must be success if the homeserver has no identifiers to unbind for the user.",
+            "enum" : [ "success", "no-support" ]
+          }
+        },
+        "description" : "Deactivate response."
+      },
+      "Delete3PidRequest" : {
+        "required" : [ "address", "medium" ],
+        "type" : "object",
+        "properties" : {
+          "medium" : {
+            "type" : "string",
+            "description" : "The medium of the third party identifier being removed"
+          },
+          "address" : {
+            "type" : "string",
+            "description" : "The third party address neing removed."
+          }
+        },
+        "description" : "JSON body request to delte 3pid."
+      },
+      "EmailRequestToken" : {
+        "required" : [ "client_secret", "email", "id_server", "send_attempt" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "The email address to validate"
+          },
+          "id_server" : {
+            "type" : "string",
+            "description" : "The hostname of the identity server to communicate with. May optionally include a port."
+          },
+          "client_secret" : {
+            "type" : "string",
+            "description" : "A unique string generated by the client, and used to identify the validation attempt. It must be a string consisting of the characters [0-9a-zA-Z.=_-]. Its length must not exceed 255 characters and it must not be empty."
+          },
+          "send_attempt" : {
+            "type" : "integer",
+            "description" : "The server will only send an email if the send_attempt is a number greater than the most recent one which it has seen, scoped to that email + client_secret pair. This is to avoid repeatedly sending the same email in the case of request retries between the POSTing user and the identity server.The client should increment this value if they desire a new email(e.g.a reminder) to be sent .",
+            "format" : "int64"
+          },
+          "next_link" : {
+            "type" : "string",
+            "description" : "When the validation is completed, the identity server will redirect the user to this URL."
+          }
+        },
+        "description" : "Request for the proxies the identity server API validate/email/requestToken."
+      },
+      "WhoamiResponse" : {
+        "required" : [ "user_id" ],
+        "type" : "object",
+        "properties" : {
+          "user_id" : {
+            "type" : "string",
+            "description" : "The user id that owns the access token."
+          }
+        },
+        "description" : "Response for gets information about the owner of a given access token"
+      },
+      "DeactivateRequest" : {
+        "type" : "object",
+        "properties" : {
+          "auth" : {
+            "$ref" : "#/components/schemas/AuthenticationData"
+          },
+          "id_server" : {
+            "type" : "string",
+            "description" : "tThe identity server to unbind all of the user's 3PIDs from. If not provided, the homeserver MUST use the id_server that was originally use to bind each identifier. If the homeserver does not know which id_server that was, it must return an id_server_unbind_result of no-support."
+          }
+        },
+        "description" : "Request for deactivate the user's account, removing all ability for the user to login again."
       },
       "ThirdPartyIdentifier" : {
         "type" : "object",
@@ -5692,45 +5731,6 @@
           }
         },
         "description" : "Response for gets a list of the third party identifiers that the homeserver has associated with the user's account"
-      },
-      "ThreePidRequest" : {
-        "type" : "object",
-        "properties" : {
-          "bind" : {
-            "type" : "boolean",
-            "description" : "Whether the homeserver should also bind this third party identifier to the account's Matrix ID with the passed identity server"
-          },
-          "three_pid_creds" : {
-            "$ref" : "#/components/schemas/ThreePidCred"
-          }
-        },
-        "description" : "Request for adds contact information to the user's account"
-      },
-      "Delete3PidRequest" : {
-        "required" : [ "address", "medium" ],
-        "type" : "object",
-        "properties" : {
-          "medium" : {
-            "type" : "string",
-            "description" : "The medium of the third party identifier being removed"
-          },
-          "address" : {
-            "type" : "string",
-            "description" : "The third party address neing removed."
-          }
-        },
-        "description" : "JSON body request to delte 3pid."
-      },
-      "WhoamiResponse" : {
-        "required" : [ "user_id" ],
-        "type" : "object",
-        "properties" : {
-          "user_id" : {
-            "type" : "string",
-            "description" : "The user id that owns the access token."
-          }
-        },
-        "description" : "Response for gets information about the owner of a given access token"
       },
       "AdminResponse" : {
         "type" : "object",
@@ -5794,29 +5794,6 @@
         },
         "description" : "Session info."
       },
-      "LoginType" : {
-        "type" : "object",
-        "properties" : {
-          "type" : {
-            "type" : "string",
-            "description" : "Type of the authentication stage."
-          }
-        },
-        "description" : "Login type."
-      },
-      "SupportedLoginResponse" : {
-        "type" : "object",
-        "properties" : {
-          "flows" : {
-            "type" : "array",
-            "description" : "Supported login types.",
-            "items" : {
-              "$ref" : "#/components/schemas/LoginType"
-            }
-          }
-        },
-        "description" : "Supported login types."
-      },
       "Identifier" : {
         "type" : "object",
         "properties" : {
@@ -5872,6 +5849,29 @@
           }
         },
         "description" : "Authenticates the user, and issues an access token they can use to authorize themself in subsequent requests"
+      },
+      "LoginType" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Type of the authentication stage."
+          }
+        },
+        "description" : "Login type."
+      },
+      "SupportedLoginResponse" : {
+        "type" : "object",
+        "properties" : {
+          "flows" : {
+            "type" : "array",
+            "description" : "Supported login types.",
+            "items" : {
+              "$ref" : "#/components/schemas/LoginType"
+            }
+          }
+        },
+        "description" : "Supported login types."
       },
       "CapabilitiesResponse" : {
         "type" : "object",
@@ -7619,6 +7619,19 @@
         },
         "description" : "JSON body request for bulk devices delete."
       },
+      "DevicesResponse" : {
+        "type" : "object",
+        "properties" : {
+          "devices" : {
+            "type" : "array",
+            "description" : "A list of all registered devices for this user.",
+            "items" : {
+              "$ref" : "#/components/schemas/Device"
+            }
+          }
+        },
+        "description" : "Information about all devices for the current user."
+      },
       "DeviceUpdateRequest" : {
         "type" : "object",
         "properties" : {
@@ -7638,18 +7651,54 @@
         },
         "description" : "Additional authentication information for the user-interactive authentication API."
       },
-      "DevicesResponse" : {
+      "ClaimResponse" : {
         "type" : "object",
         "properties" : {
-          "devices" : {
-            "type" : "array",
-            "description" : "A list of all registered devices for this user.",
-            "items" : {
-              "$ref" : "#/components/schemas/Device"
-            }
+          "failures" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "description" : "If any remote homeservers could not be reached, they are recorded here. The names of the properties are the names of the unreachable servers."
+            },
+            "description" : "If any remote homeservers could not be reached, they are recorded here. The names of the properties are the names of the unreachable servers."
+          },
+          "one_time_keys" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object",
+                "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
+              },
+              "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
+            },
+            "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
           }
         },
-        "description" : "Information about all devices for the current user."
+        "description" : "Claim response format."
+      },
+      "ClaimRequest" : {
+        "type" : "object",
+        "properties" : {
+          "timeout" : {
+            "type" : "integer",
+            "description" : "The time (in milliseconds) to wait when downloading keys from remote servers. 10 seconds is the recommended default.",
+            "format" : "int64"
+          },
+          "one_time_keys" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string",
+                "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
+              },
+              "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
+            },
+            "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
+          }
+        },
+        "description" : "JSON body parameters for Claims one-time keys for use in pre-key messages."
       },
       "DeviceKeys" : {
         "type" : "object",
@@ -7757,55 +7806,6 @@
           }
         },
         "description" : "JSON body parameters for Returns the current devices and identity keys for the given users."
-      },
-      "ClaimResponse" : {
-        "type" : "object",
-        "properties" : {
-          "failures" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "description" : "If any remote homeservers could not be reached, they are recorded here. The names of the properties are the names of the unreachable servers."
-            },
-            "description" : "If any remote homeservers could not be reached, they are recorded here. The names of the properties are the names of the unreachable servers."
-          },
-          "one_time_keys" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "additionalProperties" : {
-                "type" : "object",
-                "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
-              },
-              "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
-            },
-            "description" : "One-time keys for the queried devices. A map from user ID, to a map from &lt;algorithm&gt;:&lt;key_id&gt; to the key object."
-          }
-        },
-        "description" : "Claim response format."
-      },
-      "ClaimRequest" : {
-        "type" : "object",
-        "properties" : {
-          "timeout" : {
-            "type" : "integer",
-            "description" : "The time (in milliseconds) to wait when downloading keys from remote servers. 10 seconds is the recommended default.",
-            "format" : "int64"
-          },
-          "one_time_keys" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "additionalProperties" : {
-                "type" : "string",
-                "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
-              },
-              "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
-            },
-            "description" : "The keys to be claimed. A map from user ID, to a map from device ID to algorithm name."
-          }
-        },
-        "description" : "JSON body parameters for Claims one-time keys for use in pre-key messages."
       },
       "UploadResponse" : {
         "type" : "object",
@@ -8196,20 +8196,6 @@
         },
         "description" : "JSON body response of the OpenID API."
       },
-      "PresenceRequest" : {
-        "type" : "object",
-        "properties" : {
-          "presence" : {
-            "type" : "string",
-            "description" : "The new presence state."
-          },
-          "status_msg" : {
-            "type" : "string",
-            "description" : "The status message to attach to this state."
-          }
-        },
-        "description" : "JSON body request for presence api."
-      },
       "PresenceStatus" : {
         "type" : "object",
         "properties" : {
@@ -8233,6 +8219,30 @@
         },
         "description" : "JSON body request for presence api."
       },
+      "PresenceRequest" : {
+        "type" : "object",
+        "properties" : {
+          "presence" : {
+            "type" : "string",
+            "description" : "The new presence state."
+          },
+          "status_msg" : {
+            "type" : "string",
+            "description" : "The status message to attach to this state."
+          }
+        },
+        "description" : "JSON body request for presence api."
+      },
+      "DisplayName" : {
+        "type" : "object",
+        "properties" : {
+          "displayname" : {
+            "type" : "string",
+            "description" : "The new display name for this user."
+          }
+        },
+        "description" : "JSON body request for profile api."
+      },
       "Profile" : {
         "type" : "object",
         "properties" : {
@@ -8246,16 +8256,6 @@
           }
         },
         "description" : "JSON body for profile api (profile)."
-      },
-      "DisplayName" : {
-        "type" : "object",
-        "properties" : {
-          "displayname" : {
-            "type" : "string",
-            "description" : "The new display name for this user."
-          }
-        },
-        "description" : "JSON body request for profile api."
       },
       "AvatarUrl" : {
         "type" : "object",
@@ -8290,6 +8290,57 @@
           }
         },
         "description" : "JSON body request/response for enable/disable push api."
+      },
+      "Notification" : {
+        "type" : "object",
+        "properties" : {
+          "actions" : {
+            "type" : "array",
+            "description" : "The action(s) to perform when the conditions for this rule are met. See Push Rules: API.",
+            "items" : {
+              "type" : "object",
+              "description" : "The action(s) to perform when the conditions for this rule are met. See Push Rules: API."
+            }
+          },
+          "event" : {
+            "$ref" : "#/components/schemas/Event"
+          },
+          "read" : {
+            "type" : "boolean",
+            "description" : "Indicates whether the user has sent a read receipt indicating that they have read this message."
+          },
+          "ts" : {
+            "type" : "integer",
+            "description" : "The unix timestamp at which the event notification was sent, in milliseconds.",
+            "format" : "int64"
+          },
+          "profile_tag" : {
+            "type" : "string",
+            "description" : "The profile tag of the rule that matched this event."
+          },
+          "room_id" : {
+            "type" : "string",
+            "description" : "The ID of the room in which the event was posted."
+          }
+        },
+        "description" : "Notification"
+      },
+      "NotificationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "notifications" : {
+            "type" : "array",
+            "description" : "The list of events that triggered notifications.",
+            "items" : {
+              "$ref" : "#/components/schemas/Notification"
+            }
+          },
+          "next_token" : {
+            "type" : "string",
+            "description" : "The token to supply in the from param of the next /notifications request in order to request more events. If this is absent, there are no more results."
+          }
+        },
+        "description" : "JSON body response for push notifications."
       },
       "Pusher" : {
         "type" : "object",
@@ -8531,57 +8582,6 @@
         },
         "description" : "JSON body request for push update api."
       },
-      "Notification" : {
-        "type" : "object",
-        "properties" : {
-          "actions" : {
-            "type" : "array",
-            "description" : "The action(s) to perform when the conditions for this rule are met. See Push Rules: API.",
-            "items" : {
-              "type" : "object",
-              "description" : "The action(s) to perform when the conditions for this rule are met. See Push Rules: API."
-            }
-          },
-          "event" : {
-            "$ref" : "#/components/schemas/Event"
-          },
-          "read" : {
-            "type" : "boolean",
-            "description" : "Indicates whether the user has sent a read receipt indicating that they have read this message."
-          },
-          "ts" : {
-            "type" : "integer",
-            "description" : "The unix timestamp at which the event notification was sent, in milliseconds.",
-            "format" : "int64"
-          },
-          "profile_tag" : {
-            "type" : "string",
-            "description" : "The profile tag of the rule that matched this event."
-          },
-          "room_id" : {
-            "type" : "string",
-            "description" : "The ID of the room in which the event was posted."
-          }
-        },
-        "description" : "Notification"
-      },
-      "NotificationResponse" : {
-        "type" : "object",
-        "properties" : {
-          "notifications" : {
-            "type" : "array",
-            "description" : "The list of events that triggered notifications.",
-            "items" : {
-              "$ref" : "#/components/schemas/Notification"
-            }
-          },
-          "next_token" : {
-            "type" : "string",
-            "description" : "The token to supply in the from param of the next /notifications request in order to request more events. If this is absent, there are no more results."
-          }
-        },
-        "description" : "JSON body response for push notifications."
-      },
       "ReadMarkersRequest" : {
         "type" : "object",
         "properties" : {
@@ -8702,6 +8702,16 @@
         },
         "description" : "Invite 3pid."
       },
+      "RoomVisibility" : {
+        "type" : "object",
+        "properties" : {
+          "visibility" : {
+            "type" : "string",
+            "description" : "The visibility of the room in the directory."
+          }
+        },
+        "description" : "JSON body request and response for listing room api."
+      },
       "ReplacementRoom" : {
         "required" : [ "replacement_room" ],
         "type" : "object",
@@ -8723,16 +8733,6 @@
           }
         },
         "description" : "The new version for the room."
-      },
-      "RoomVisibility" : {
-        "type" : "object",
-        "properties" : {
-          "visibility" : {
-            "type" : "string",
-            "description" : "The visibility of the room in the directory."
-          }
-        },
-        "description" : "JSON body request and response for listing room api."
       },
       "InviteRequest" : {
         "type" : "object",
@@ -8787,6 +8787,59 @@
           }
         },
         "description" : "JSON body response of the room response api."
+      },
+      "JoinedRoomsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "joined_rooms" : {
+            "type" : "array",
+            "description" : "The ID of each room in which the user has joined membership.",
+            "items" : {
+              "type" : "string",
+              "description" : "The ID of each room in which the user has joined membership."
+            }
+          }
+        },
+        "description" : "JSON body resposnse with joined rooms."
+      },
+      "JoinRequest" : {
+        "type" : "object",
+        "properties" : {
+          "third_party_signed" : {
+            "$ref" : "#/components/schemas/ThirdPartySigned"
+          }
+        },
+        "description" : "Join request."
+      },
+      "ThirdPartySigned" : {
+        "type" : "object",
+        "properties" : {
+          "sender" : {
+            "type" : "string",
+            "description" : "The Matrix ID of the user who issued the invite."
+          },
+          "mxid" : {
+            "type" : "string",
+            "description" : "The Matrix ID of the invitee."
+          },
+          "token" : {
+            "type" : "string",
+            "description" : "The state key of the m.third_party_invite event."
+          },
+          "signatures" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "string",
+                "description" : "A signatures object containing a signature of the entire signed object."
+              },
+              "description" : "A signatures object containing a signature of the entire signed object."
+            },
+            "description" : "A signatures object containing a signature of the entire signed object."
+          }
+        },
+        "description" : "Third party signed."
       },
       "UnbanRequest" : {
         "type" : "object",
@@ -8907,59 +8960,6 @@
           }
         },
         "description" : "JSON body request."
-      },
-      "JoinedRoomsResponse" : {
-        "type" : "object",
-        "properties" : {
-          "joined_rooms" : {
-            "type" : "array",
-            "description" : "The ID of each room in which the user has joined membership.",
-            "items" : {
-              "type" : "string",
-              "description" : "The ID of each room in which the user has joined membership."
-            }
-          }
-        },
-        "description" : "JSON body resposnse with joined rooms."
-      },
-      "JoinRequest" : {
-        "type" : "object",
-        "properties" : {
-          "third_party_signed" : {
-            "$ref" : "#/components/schemas/ThirdPartySigned"
-          }
-        },
-        "description" : "Join request."
-      },
-      "ThirdPartySigned" : {
-        "type" : "object",
-        "properties" : {
-          "sender" : {
-            "type" : "string",
-            "description" : "The Matrix ID of the user who issued the invite."
-          },
-          "mxid" : {
-            "type" : "string",
-            "description" : "The Matrix ID of the invitee."
-          },
-          "token" : {
-            "type" : "string",
-            "description" : "The state key of the m.third_party_invite event."
-          },
-          "signatures" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object",
-              "additionalProperties" : {
-                "type" : "string",
-                "description" : "A signatures object containing a signature of the entire signed object."
-              },
-              "description" : "A signatures object containing a signature of the entire signed object."
-            },
-            "description" : "A signatures object containing a signature of the entire signed object."
-          }
-        },
-        "description" : "Third party signed."
       },
       "EventContext" : {
         "type" : "object",
