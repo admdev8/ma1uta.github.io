@@ -1,0 +1,8 @@
+io.github.ma1uta.matrix
+io.github.ma1uta.matrix.event
+io.github.ma1uta.matrix.event.content
+io.github.ma1uta.matrix.event.encrypted
+io.github.ma1uta.matrix.event.message
+io.github.ma1uta.matrix.event.nested
+io.github.ma1uta.matrix.protocol
+io.github.ma1uta.matrix.thirdpid
