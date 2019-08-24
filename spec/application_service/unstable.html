@@ -1003,7 +1003,7 @@ given it is VERY implementation specific. -->
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/204601d9">master,204601d9</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/4ad9bf70">master,4ad9bf70</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/application_service.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/application_service.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -1205,14 +1205,14 @@ should fall back to the older endpoints for the application service.</p>
 <p>The older endpoints have the exact same request body and response format, they
 just belong at a different path. The equivalent path for each is as follows:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt> becomes <tt class="docutils literal"><span class="pre">/transactions/{txnId}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/users/{userId}</span></tt> becomes <tt class="docutils literal"><span class="pre">/users/{userId}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt> becomes <tt class="docutils literal"><span class="pre">/rooms/{roomAlias}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt> becomes <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/protocol/{protocol}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/user/{user}</span></tt> becomes <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/user/{user}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/location/{location}</span></tt> becomes <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/location/{location}</span></tt></li>
-<li><tt class="docutils literal">/_matrix/app/v1/thirdparty/user</tt> becomes <tt class="docutils literal">/_matrix/app/unstable/thirdparty/user</tt></li>
-<li><tt class="docutils literal">/_matrix/app/v1/thirdparty/location</tt> becomes <tt class="docutils literal">/_matrix/app/unstable/thirdparty/location</tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/transactions/{txnId}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/transactions/{txnId}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/users/{userId}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/users/{userId}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/rooms/{roomAlias}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/rooms/{roomAlias}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/protocol/{protocol}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/protocol/{protocol}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/user/{user}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/user/{user}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/_matrix/app/v1/thirdparty/location/{location}</span></tt> should fall back to <tt class="docutils literal"><span class="pre">/_matrix/app/unstable/thirdparty/location/{location}</span></tt></li>
+<li><tt class="docutils literal">/_matrix/app/v1/thirdparty/user</tt> should fall back to <tt class="docutils literal">/_matrix/app/unstable/thirdparty/user</tt></li>
+<li><tt class="docutils literal">/_matrix/app/v1/thirdparty/location</tt> should fall back to <tt class="docutils literal">/_matrix/app/unstable/thirdparty/location</tt></li>
 </ul>
 <p>Homeservers should periodically try again for the newer endpoints because the
 application service may have been updated.</p>

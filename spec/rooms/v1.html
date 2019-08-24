@@ -1307,6 +1307,12 @@ affected are said to be <em>conflicting</em> events.</p>
 <li><tt class="docutils literal">m.room.power_levels</tt></li>
 <li><tt class="docutils literal">m.room.third_party_invite</tt></li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Power levels are inferred from defaults when not explicitly supplied.
+For example, mentions of the <tt class="docutils literal">sender</tt>'s power level can also refer
+to the default power level for users in the room.</p>
+</div>
 <p>The rules are as follows:</p>
 <ol class="arabic simple">
 <li>If type is <tt class="docutils literal">m.room.create</tt>:<ol class="loweralpha">
@@ -1413,9 +1419,17 @@ the <tt class="docutils literal">sender</tt>, reject.</li>
 valid user IDs with values that are integers (or a string that is an
 integer), reject.</li>
 <li>If there is no previous <tt class="docutils literal">m.room.power_levels</tt> event in the room, allow.</li>
-<li>For each of the keys <tt class="docutils literal">users_default</tt>, <tt class="docutils literal">events_default</tt>,
-<tt class="docutils literal">state_default</tt>, <tt class="docutils literal">ban</tt>, <tt class="docutils literal">redact</tt>, <tt class="docutils literal">kick</tt>, <tt class="docutils literal">invite</tt>, as well as
-each entry being changed under the <tt class="docutils literal">events</tt> or <tt class="docutils literal">users</tt> keys:<ol class="lowerroman">
+<li>For the keys <tt class="docutils literal">users_default</tt>, <tt class="docutils literal">events_default</tt>,
+<tt class="docutils literal">state_default</tt>, <tt class="docutils literal">ban</tt>, <tt class="docutils literal">redact</tt>, <tt class="docutils literal">kick</tt>, <tt class="docutils literal">invite</tt> check if they
+were added, changed or removed. For each found alteration:<ol class="lowerroman">
+<li>If the current value is higher than the <tt class="docutils literal">sender</tt>'s current power level,
+reject.</li>
+<li>If the new value is higher than the <tt class="docutils literal">sender</tt>'s current power level,
+reject.</li>
+</ol>
+</li>
+<li>For each entry being added, changed or removed in both the <tt class="docutils literal">events</tt> and
+<tt class="docutils literal">users</tt> keys:<ol class="lowerroman">
 <li>If the current value is higher than the <tt class="docutils literal">sender</tt>'s current power level,
 reject.</li>
 <li>If the new value is higher than the <tt class="docutils literal">sender</tt>'s current power level,
