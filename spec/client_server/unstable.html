@@ -1259,7 +1259,7 @@ local persistent copy of server state.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#fallback" id="id183">5.3.5&nbsp;&nbsp;&nbsp;Fallback</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id15" id="id184">5.3.5.1&nbsp;&nbsp;&nbsp;Example</a></li>
+<li><a class="reference internal" href="#id16" id="id184">5.3.5.1&nbsp;&nbsp;&nbsp;Example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#identifier-types" id="id185">5.3.6&nbsp;&nbsp;&nbsp;Identifier types</a><ul class="auto-toc">
@@ -1340,9 +1340,9 @@ local persistent copy of server state.</p>
 </li>
 <li><a class="reference internal" href="#syncing" id="id237">9.4&nbsp;&nbsp;&nbsp;Syncing</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-client-r0-sync" id="id238">9.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/sync</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-client-r0-events" id="id239">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-client-r0-initialsync" id="id240">9.4.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/initialSync</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-client-r0-events-eventid" id="id241">9.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/events/{eventId}</span></tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-client-r0-events" id="id239">9.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-client-r0-initialsync" id="id240">9.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/client/r0/initialSync</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-client-r0-events-eventid" id="id241">9.4.4&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/events/{eventId}</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#getting-events-for-a-room" id="id242">9.5&nbsp;&nbsp;&nbsp;Getting events for a room</a><ul class="auto-toc">
@@ -1352,7 +1352,7 @@ local persistent copy of server state.</p>
 <li><a class="reference internal" href="#get-matrix-client-r0-rooms-roomid-members" id="id246">9.5.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/members</span></tt></a></li>
 <li><a class="reference internal" href="#get-matrix-client-r0-rooms-roomid-joined-members" id="id247">9.5.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/joined_members</span></tt></a></li>
 <li><a class="reference internal" href="#get-matrix-client-r0-rooms-roomid-messages" id="id248">9.5.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/messages</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-client-r0-rooms-roomid-initialsync" id="id249">9.5.7&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/initialSync</span></tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-client-r0-rooms-roomid-initialsync" id="id249">9.5.7&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/initialSync</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sending-events-to-a-room" id="id250">9.6&nbsp;&nbsp;&nbsp;Sending events to a room</a><ul class="auto-toc">
@@ -1361,8 +1361,8 @@ local persistent copy of server state.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#redactions" id="id253">9.7&nbsp;&nbsp;&nbsp;Redactions</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id31" id="id254">9.7.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id32" id="id255">9.7.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.redaction</tt></a></li>
+<li><a class="reference internal" href="#id32" id="id254">9.7.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id33" id="id255">9.7.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.redaction</tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#client-behaviour" id="id256">9.7.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
@@ -1452,8 +1452,8 @@ local persistent copy of server state.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id34" id="id307">13.2&nbsp;&nbsp;&nbsp;Instant Messaging</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id35" id="id308">13.2.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id35" id="id307">13.2&nbsp;&nbsp;&nbsp;Instant Messaging</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id36" id="id308">13.2.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-room-message" id="id309">13.2.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.message</tt></a></li>
 <li><a class="reference internal" href="#m-room-message-feedback" id="id310">13.2.1.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.message.feedback</tt></a></li>
 <li><a class="reference internal" href="#m-room-name" id="id311">13.2.1.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.name</tt></a></li>
@@ -1473,7 +1473,7 @@ local persistent copy of server state.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id36" id="id324">13.2.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id37" id="id324">13.2.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#recommendations-when-sending-messages" id="id325">13.2.2.1&nbsp;&nbsp;&nbsp;Recommendations when sending messages</a></li>
 <li><a class="reference internal" href="#local-echo" id="id326">13.2.2.2&nbsp;&nbsp;&nbsp;Local echo</a></li>
 <li><a class="reference internal" href="#calculating-the-display-name-for-a-user" id="id327">13.2.2.3&nbsp;&nbsp;&nbsp;Calculating the display name for a user</a></li>
@@ -1499,79 +1499,79 @@ local persistent copy of server state.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#voice-over-ip" id="id339">13.3&nbsp;&nbsp;&nbsp;Voice over IP</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id37" id="id340">13.3.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id38" id="id340">13.3.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-call-invite" id="id341">13.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.call.invite</tt></a></li>
 <li><a class="reference internal" href="#m-call-candidates" id="id342">13.3.1.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.call.candidates</tt></a></li>
 <li><a class="reference internal" href="#m-call-answer" id="id343">13.3.1.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.call.answer</tt></a></li>
 <li><a class="reference internal" href="#m-call-hangup" id="id344">13.3.1.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.call.hangup</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id38" id="id345">13.3.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id39" id="id345">13.3.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#glare" id="id346">13.3.2.1&nbsp;&nbsp;&nbsp;Glare</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id39" id="id347">13.3.3&nbsp;&nbsp;&nbsp;Server behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id40" id="id347">13.3.3&nbsp;&nbsp;&nbsp;Server behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-client-r0-voip-turnserver" id="id348">13.3.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/voip/turnServer</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id40" id="id349">13.3.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id41" id="id349">13.3.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id41" id="id350">13.4&nbsp;&nbsp;&nbsp;Typing Notifications</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id42" id="id351">13.4.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id42" id="id350">13.4&nbsp;&nbsp;&nbsp;Typing Notifications</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id43" id="id351">13.4.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-typing" id="id352">13.4.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.typing</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id43" id="id353">13.4.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id44" id="id353">13.4.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#put-matrix-client-r0-rooms-roomid-typing-userid" id="id354">13.4.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/rooms/{roomId}/typing/{userId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id44" id="id355">13.4.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id45" id="id355">13.4.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id45" id="id356">13.5&nbsp;&nbsp;&nbsp;Receipts</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id46" id="id357">13.5.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id46" id="id356">13.5&nbsp;&nbsp;&nbsp;Receipts</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id47" id="id357">13.5.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-receipt" id="id358">13.5.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.receipt</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id47" id="id359">13.5.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id48" id="id359">13.5.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#post-matrix-client-r0-rooms-roomid-receipt-receipttype-eventid" id="id360">13.5.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/client/r0/rooms/{roomId}/receipt/{receiptType}/{eventId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id48" id="id361">13.5.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
-<li><a class="reference internal" href="#id49" id="id362">13.5.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id49" id="id361">13.5.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id50" id="id362">13.5.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id50" id="id363">13.6&nbsp;&nbsp;&nbsp;Fully read markers</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id51" id="id364">13.6.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id51" id="id363">13.6&nbsp;&nbsp;&nbsp;Fully read markers</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id52" id="id364">13.6.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-fully-read" id="id365">13.6.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.fully_read</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id52" id="id366">13.6.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id53" id="id366">13.6.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#post-matrix-client-r0-rooms-roomid-read-markers" id="id367">13.6.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/client/r0/rooms/{roomId}/read_markers</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id53" id="id368">13.6.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id54" id="id368">13.6.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id54" id="id369">13.7&nbsp;&nbsp;&nbsp;Presence</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id55" id="id370">13.7.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id55" id="id369">13.7&nbsp;&nbsp;&nbsp;Presence</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id56" id="id370">13.7.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-presence" id="id371">13.7.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.presence</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id56" id="id372">13.7.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id57" id="id372">13.7.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#put-matrix-client-r0-presence-userid-status" id="id373">13.7.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/presence/{userId}/status</span></tt></a></li>
 <li><a class="reference internal" href="#get-matrix-client-r0-presence-userid-status" id="id374">13.7.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/presence/{userId}/status</span></tt></a></li>
 <li><a class="reference internal" href="#last-active-ago" id="id375">13.7.2.3&nbsp;&nbsp;&nbsp;Last active ago</a></li>
 <li><a class="reference internal" href="#idle-timeout" id="id376">13.7.2.4&nbsp;&nbsp;&nbsp;Idle timeout</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id57" id="id377">13.7.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id58" id="id377">13.7.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id58" id="id378">13.8&nbsp;&nbsp;&nbsp;Content repository</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id59" id="id378">13.8&nbsp;&nbsp;&nbsp;Content repository</a><ul class="auto-toc">
 <li><a class="reference internal" href="#matrix-content-mxc-uris" id="id379">13.8.1&nbsp;&nbsp;&nbsp;Matrix Content (MXC) URIs</a></li>
-<li><a class="reference internal" href="#id59" id="id380">13.8.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id60" id="id380">13.8.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#post-matrix-media-r0-upload" id="id381">13.8.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/media/r0/upload</tt></a></li>
 <li><a class="reference internal" href="#get-matrix-media-r0-download-servername-mediaid" id="id382">13.8.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/media/r0/download/{serverName}/{mediaId}</span></tt></a></li>
 <li><a class="reference internal" href="#get-matrix-media-r0-download-servername-mediaid-filename" id="id383">13.8.2.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/media/r0/download/{serverName}/{mediaId}/{fileName}</span></tt></a></li>
@@ -1581,12 +1581,12 @@ local persistent copy of server state.</p>
 <li><a class="reference internal" href="#thumbnails" id="id387">13.8.2.7&nbsp;&nbsp;&nbsp;Thumbnails</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id61" id="id388">13.8.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id62" id="id388">13.8.3&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id62" id="id389">13.9&nbsp;&nbsp;&nbsp;Send-to-Device messaging</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id63" id="id390">13.9.1&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
-<li><a class="reference internal" href="#id64" id="id391">13.9.2&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id63" id="id389">13.9&nbsp;&nbsp;&nbsp;Send-to-Device messaging</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id64" id="id390">13.9.1&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
+<li><a class="reference internal" href="#id65" id="id391">13.9.2&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
 <li><a class="reference internal" href="#protocol-definitions" id="id392">13.9.3&nbsp;&nbsp;&nbsp;Protocol definitions</a><ul class="auto-toc">
 <li><a class="reference internal" href="#put-matrix-client-r0-sendtodevice-eventtype-txnid" id="id393">13.9.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/sendToDevice/{eventType}/{txnId}</span></tt></a></li>
 <li><a class="reference internal" href="#extensions-to-sync" id="id394">13.9.3.2&nbsp;&nbsp;&nbsp;Extensions to /sync</a></li>
@@ -1594,8 +1594,8 @@ local persistent copy of server state.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id65" id="id395">13.10&nbsp;&nbsp;&nbsp;Device Management</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id66" id="id396">13.10.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id66" id="id395">13.10&nbsp;&nbsp;&nbsp;Device Management</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id67" id="id396">13.10.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-client-r0-devices" id="id397">13.10.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/devices</tt></a></li>
 <li><a class="reference internal" href="#get-matrix-client-r0-devices-deviceid" id="id398">13.10.1.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/devices/{deviceId}</span></tt></a></li>
 <li><a class="reference internal" href="#put-matrix-client-r0-devices-deviceid" id="id399">13.10.1.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/client/r0/devices/{deviceId}</span></tt></a></li>
@@ -1603,14 +1603,14 @@ local persistent copy of server state.</p>
 <li><a class="reference internal" href="#post-matrix-client-r0-delete-devices" id="id401">13.10.1.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/client/r0/delete_devices</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id67" id="id402">13.10.2&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id68" id="id402">13.10.2&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id68" id="id403">13.11&nbsp;&nbsp;&nbsp;End-to-End Encryption</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id69" id="id403">13.11&nbsp;&nbsp;&nbsp;End-to-End Encryption</a><ul class="auto-toc">
 <li><a class="reference internal" href="#key-distribution" id="id404">13.11.1&nbsp;&nbsp;&nbsp;Key Distribution</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id69" id="id405">13.11.1.1&nbsp;&nbsp;&nbsp;Overview</a></li>
+<li><a class="reference internal" href="#id70" id="id405">13.11.1.1&nbsp;&nbsp;&nbsp;Overview</a></li>
 <li><a class="reference internal" href="#key-algorithms" id="id406">13.11.1.2&nbsp;&nbsp;&nbsp;Key algorithms</a></li>
-<li><a class="reference internal" href="#id70" id="id407">13.11.1.3&nbsp;&nbsp;&nbsp;Device keys</a></li>
+<li><a class="reference internal" href="#id71" id="id407">13.11.1.3&nbsp;&nbsp;&nbsp;Device keys</a></li>
 <li><a class="reference internal" href="#uploading-keys" id="id408">13.11.1.4&nbsp;&nbsp;&nbsp;Uploading keys</a></li>
 <li><a class="reference internal" href="#tracking-the-device-list-for-a-user" id="id409">13.11.1.5&nbsp;&nbsp;&nbsp;Tracking the device list for a user</a></li>
 <li><a class="reference internal" href="#sending-encrypted-attachments" id="id410">13.11.1.6&nbsp;&nbsp;&nbsp;Sending encrypted attachments</a><ul class="auto-toc">
@@ -1658,14 +1658,14 @@ local persistent copy of server state.</p>
 <li><a class="reference internal" href="#m-megolm-v1-aes-sha2" id="id436">13.11.4.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal"><span class="pre">m.megolm.v1.aes-sha2</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id72" id="id437">13.11.5&nbsp;&nbsp;&nbsp;Protocol definitions</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id73" id="id438">13.11.5.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id73" id="id437">13.11.5&nbsp;&nbsp;&nbsp;Protocol definitions</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id74" id="id438">13.11.5.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-room-encryption" id="id439">13.11.5.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.encryption</tt></a></li>
 <li><a class="reference internal" href="#m-room-encrypted" id="id440">13.11.5.1.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.encrypted</tt></a></li>
 <li><a class="reference internal" href="#m-room-key" id="id441">13.11.5.1.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room_key</tt></a></li>
 <li><a class="reference internal" href="#m-room-key-request" id="id442">13.11.5.1.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room_key_request</tt></a></li>
 <li><a class="reference internal" href="#m-forwarded-room-key" id="id443">13.11.5.1.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.forwarded_room_key</tt></a></li>
-<li><a class="reference internal" href="#id74" id="id444">13.11.5.1.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.dummy</tt></a></li>
+<li><a class="reference internal" href="#id75" id="id444">13.11.5.1.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.dummy</tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#key-management-api" id="id445">13.11.5.2&nbsp;&nbsp;&nbsp;Key management API</a><ul class="auto-toc">
@@ -1675,30 +1675,30 @@ local persistent copy of server state.</p>
 <li><a class="reference internal" href="#get-matrix-client-r0-keys-changes" id="id449">13.11.5.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/keys/changes</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id76" id="id450">13.11.5.3&nbsp;&nbsp;&nbsp;Extensions to /sync</a></li>
+<li><a class="reference internal" href="#id77" id="id450">13.11.5.3&nbsp;&nbsp;&nbsp;Extensions to /sync</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#room-history-visibility" id="id451">13.12&nbsp;&nbsp;&nbsp;Room History Visibility</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id77" id="id452">13.12.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id78" id="id452">13.12.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-room-history-visibility" id="id453">13.12.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.history_visibility</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id78" id="id454">13.12.2&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
-<li><a class="reference internal" href="#id79" id="id455">13.12.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
-<li><a class="reference internal" href="#id80" id="id456">13.12.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id79" id="id454">13.12.2&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
+<li><a class="reference internal" href="#id80" id="id455">13.12.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id81" id="id456">13.12.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id81" id="id457">13.13&nbsp;&nbsp;&nbsp;Push Notifications</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id82" id="id458">13.13.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id82" id="id457">13.13&nbsp;&nbsp;&nbsp;Push Notifications</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id83" id="id458">13.13.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-client-r0-pushers" id="id459">13.13.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/pushers</tt></a></li>
 <li><a class="reference internal" href="#post-matrix-client-r0-pushers-set" id="id460">13.13.1.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/client/r0/pushers/set</tt></a></li>
 <li><a class="reference internal" href="#listing-notifications" id="id461">13.13.1.3&nbsp;&nbsp;&nbsp;Listing Notifications</a><ul class="auto-toc">
 <li><a class="reference internal" href="#get-matrix-client-r0-notifications" id="id462">13.13.1.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/notifications</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id83" id="id463">13.13.1.4&nbsp;&nbsp;&nbsp;Receiving notifications</a></li>
+<li><a class="reference internal" href="#id84" id="id463">13.13.1.4&nbsp;&nbsp;&nbsp;Receiving notifications</a></li>
 <li><a class="reference internal" href="#push-rules" id="id464">13.13.1.5&nbsp;&nbsp;&nbsp;Push Rules</a><ul class="auto-toc">
 <li><a class="reference internal" href="#actions" id="id465">13.13.1.5.1&nbsp;&nbsp;&nbsp;Actions</a><ul class="auto-toc">
 <li><a class="reference internal" href="#tweaks" id="id466">13.13.1.5.1.1&nbsp;&nbsp;&nbsp;Tweaks</a></li>
@@ -1750,55 +1750,55 @@ local persistent copy of server state.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id88" id="id497">13.13.2&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id89" id="id497">13.13.2&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
 <li><a class="reference internal" href="#push-gateway-behaviour" id="id498">13.13.3&nbsp;&nbsp;&nbsp;Push Gateway behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#recommendations-for-apns" id="id499">13.13.3.1&nbsp;&nbsp;&nbsp;Recommendations for APNS</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id89" id="id500">13.13.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id90" id="id500">13.13.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#third-party-invites" id="id501">13.14&nbsp;&nbsp;&nbsp;Third party invites</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id91" id="id502">13.14.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id92" id="id502">13.14.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-room-third-party-invite" id="id503">13.14.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.third_party_invite</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id92" id="id504">13.14.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id93" id="id505">13.14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/client/r0/rooms/{roomId}/invite</span></tt></a></li>
+<li><a class="reference internal" href="#id93" id="id504">13.14.2&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id94" id="id505">13.14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/client/r0/rooms/{roomId}/invite</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id94" id="id506">13.14.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
-<li><a class="reference internal" href="#id95" id="id507">13.14.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id95" id="id506">13.14.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id96" id="id507">13.14.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id96" id="id508">13.15&nbsp;&nbsp;&nbsp;Server Side Search</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id97" id="id509">13.15.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id97" id="id508">13.15&nbsp;&nbsp;&nbsp;Server Side Search</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id98" id="id509">13.15.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
 <li><a class="reference internal" href="#post-matrix-client-r0-search" id="id510">13.15.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/client/r0/search</tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#search-categories" id="id511">13.15.2&nbsp;&nbsp;&nbsp;Search Categories</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id100" id="id512">13.15.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">room_events</tt></a></li>
+<li><a class="reference internal" href="#id101" id="id512">13.15.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">room_events</tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#ordering" id="id513">13.15.3&nbsp;&nbsp;&nbsp;Ordering</a></li>
 <li><a class="reference internal" href="#groups" id="id514">13.15.4&nbsp;&nbsp;&nbsp;Groups</a></li>
-<li><a class="reference internal" href="#id101" id="id515">13.15.5&nbsp;&nbsp;&nbsp;Pagination</a></li>
-<li><a class="reference internal" href="#id102" id="id516">13.15.6&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id102" id="id515">13.15.5&nbsp;&nbsp;&nbsp;Pagination</a></li>
+<li><a class="reference internal" href="#id103" id="id516">13.15.6&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#guest-access" id="id517">13.16&nbsp;&nbsp;&nbsp;Guest Access</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id103" id="id518">13.16.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id104" id="id518">13.16.1&nbsp;&nbsp;&nbsp;Events</a><ul class="auto-toc">
 <li><a class="reference internal" href="#m-room-guest-access" id="id519">13.16.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.guest_access</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id104" id="id520">13.16.2&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
-<li><a class="reference internal" href="#id106" id="id521">13.16.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
-<li><a class="reference internal" href="#id107" id="id522">13.16.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#id105" id="id520">13.16.2&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
+<li><a class="reference internal" href="#id107" id="id521">13.16.3&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#id108" id="id522">13.16.4&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id108" id="id523">13.17&nbsp;&nbsp;&nbsp;Room Previews</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id109" id="id524">13.17.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
-<li><a class="reference internal" href="#id113" id="id525">13.17.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></li>
+<li><a class="reference internal" href="#id109" id="id523">13.17&nbsp;&nbsp;&nbsp;Room Previews</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id110" id="id524">13.17.1&nbsp;&nbsp;&nbsp;Client behaviour</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-client-r0-events" id="id525">13.17.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#id114" id="id526">13.17.2&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
@@ -1964,11 +1964,12 @@ local persistent copy of server state.</p>
 <li>Clarify the encryption algorithms supported by the device of the device keys example. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2157">#2157</a>)</li>
 <li>Clarify that <tt class="docutils literal"><span class="pre">/rooms/:roomId/event/:eventId</span></tt> returns a Matrix error. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2204">#2204</a>)</li>
 <li>Add a missing <tt class="docutils literal">state_key</tt> check on <tt class="docutils literal">.m.rule.tombstone</tt>. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2223">#2223</a>)</li>
+<li>Fix the <tt class="docutils literal">m.room_key_request</tt> <tt class="docutils literal">action</tt> value, setting it from <tt class="docutils literal">cancel_request</tt> to <tt class="docutils literal">request_cancellation</tt>. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2247">#2247</a>)</li>
 </ul>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/4ad9bf70">master,4ad9bf70</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/1f2acbcf">master,1f2acbcf</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/client_server.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -2513,7 +2514,7 @@ are complete, authentication is complete and the API call succeeds.</p>
 client and server exchanging JSON dictionaries. The server indicates what
 authentication data it requires via the body of an HTTP 401 response, and the
 client submits that authentication data via the <tt class="docutils literal">auth</tt> request parameter.</p>
-<p>A client should first make a request with no <tt class="docutils literal">auth</tt> parameter <a class="footnote-reference" href="#id14" id="id13">[1]</a>. The
+<p>A client should first make a request with no <tt class="docutils literal">auth</tt> parameter <a class="footnote-reference" href="#id15" id="id14">[1]</a>. The
 homeserver returns an HTTP 401 response, with a JSON body, as follows:</p>
 <pre class="code literal-block">
 HTTP/1.1 401 Unauthorized
@@ -2652,10 +2653,10 @@ the same as if the client were attempting to complete an auth state normally,
 i.e. the request will either complete or request auth, with the presence or
 absence of that auth type in the 'completed' array indicating whether
 that stage is complete.</p>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
+<table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[1]</a></td><td>A request to an endpoint that uses User-Interactive Authentication never
+<tr><td class="label"><a class="fn-backref" href="#id14">[1]</a></td><td>A request to an endpoint that uses User-Interactive Authentication never
 succeeds without auth. Homeservers may allow requests that don't require
 auth by offering a stage with only the <tt class="docutils literal">m.login.dummy</tt> auth type, but
 they must still give a 401 response to requests with no auth data.</td></tr>
@@ -2994,8 +2995,8 @@ session ID:</p>
   <span class="name tag">&quot;session&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&lt;session ID&gt;&quot;</span>
 <span class="punctuation">}</span>
 </pre>
-<p><a class="anchor" id="id15"></a></p>
-<div class="section" id="id15">
+<p><a class="anchor" id="id16"></a></p>
+<div class="section" id="id16">
 <h4><a class="toc-backref" href="#id184">5.3.5.1&nbsp;&nbsp;&nbsp;Example</a></h4>
 <p>A client webapp might use the following javascript to open a popup window which will
 handle unknown login types:</p>
@@ -8610,9 +8611,9 @@ conventions e.g.
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="get-matrix-client-r0-events"></a></p>
-<div class="section" id="get-matrix-client-r0-events">
-<h3><a class="toc-backref" href="#id239">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-client-r0-events"></a></p>
+<div class="section" id="deprecated-get-matrix-client-r0-events">
+<h3><a class="toc-backref" href="#id239">9.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -8800,9 +8801,9 @@ it.</td>
 <p><strong>Status code 400:</strong></p>
 <p>Bad pagination <tt class="docutils literal">from</tt> parameter.</p>
 </div>
-<p><a class="anchor" id="get-matrix-client-r0-initialsync"></a></p>
-<div class="section" id="get-matrix-client-r0-initialsync">
-<h3><a class="toc-backref" href="#id240">9.4.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/initialSync</tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-client-r0-initialsync"></a></p>
+<div class="section" id="deprecated-get-matrix-client-r0-initialsync">
+<h3><a class="toc-backref" href="#id240">9.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/client/r0/initialSync</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -9503,9 +9504,9 @@ conventions e.g.
 <p><strong>Status code 404:</strong></p>
 <p>There is no avatar URL for this user or this user does not exist.</p>
 </div>
-<p><a class="anchor" id="get-matrix-client-r0-events-eventid"></a></p>
-<div class="section" id="get-matrix-client-r0-events-eventid">
-<h3><a class="toc-backref" href="#id241">9.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/events/{eventId}</span></tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-client-r0-events-eventid"></a></p>
+<div class="section" id="deprecated-get-matrix-client-r0-events-eventid">
+<h3><a class="toc-backref" href="#id241">9.4.4&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/events/{eventId}</span></tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -10753,9 +10754,9 @@ it.</td>
 <p><strong>Status code 403:</strong></p>
 <p>You aren't a member of the room.</p>
 </div>
-<p><a class="anchor" id="get-matrix-client-r0-rooms-roomid-initialsync"></a></p>
-<div class="section" id="get-matrix-client-r0-rooms-roomid-initialsync">
-<h3><a class="toc-backref" href="#id249">9.5.7&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/initialSync</span></tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-client-r0-rooms-roomid-initialsync"></a></p>
+<div class="section" id="deprecated-get-matrix-client-r0-rooms-roomid-initialsync">
+<h3><a class="toc-backref" href="#id249">9.5.7&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/client/r0/rooms/{roomId}/initialSync</span></tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -11468,11 +11469,11 @@ a redacted <tt class="docutils literal">join</tt> event will still result in the
 Similarly, a redacted topic does not necessarily cause the topic to revert to
 what is was prior to the event - it causes the topic to be removed from the room.</p>
 </div>
-<p><a class="anchor" id="id31"></a></p>
-<div class="section" id="id31">
-<h3><a class="toc-backref" href="#id254">9.7.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="id32"></a></p>
 <div class="section" id="id32">
+<h3><a class="toc-backref" href="#id254">9.7.1&nbsp;&nbsp;&nbsp;Events</a></h3>
+<p><a class="anchor" id="id33"></a></p>
+<div class="section" id="id33">
 <h4><a class="toc-backref" href="#id255">9.7.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.room.redaction</tt></a></h4>
 <p><em>Message Event</em></p>
 <p>Events can be redacted by either room or server admins. Redacting an event means that all keys not required by the protocol are stripped off, allowing admins to remove offensive or illegal content that may have been attached to any event. This cannot be undone, allowing server owners to physically delete the offending data.  There is also a concept of a moderator hiding a message event, which can be undone, but cannot be applied to state events. The event that has been redacted is specified in the <tt class="docutils literal">redacts</tt> event level key.</p>
@@ -14468,14 +14469,14 @@ not intended to be fully-fledged communication systems.</p>
 </div>
 </div>
 </div>
-<p><a class="anchor" id="id34"></a></p>
-<div class="section" id="id34">
+<p><a class="anchor" id="id35"></a></p>
+<div class="section" id="id35">
 <h2><a class="toc-backref" href="#id307">13.2&nbsp;&nbsp;&nbsp;Instant Messaging</a></h2>
 <p id="module-im">This module adds support for sending human-readable messages to a room. It also
 adds support for associating human-readable information with the room itself
 such as a room name and topic.</p>
-<p><a class="anchor" id="id35"></a></p>
-<div class="section" id="id35">
+<p><a class="anchor" id="id36"></a></p>
+<div class="section" id="id36">
 <h3><a class="toc-backref" href="#id308">13.2.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-room-message"></a></p>
 <div class="section" id="m-room-message">
@@ -15894,8 +15895,8 @@ the image file.</td>
 </div>
 </div>
 </div>
-<p><a class="anchor" id="id36"></a></p>
-<div class="section" id="id36">
+<p><a class="anchor" id="id37"></a></p>
+<div class="section" id="id37">
 <h3><a class="toc-backref" href="#id324">13.2.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients SHOULD verify the structure of incoming events to ensure that the
 expected keys exist and that they are of the right type. Clients can discard
@@ -16265,8 +16266,8 @@ version of the spec, only two-party communication is supported (e.g. between two
 peers, or between a peer and a multi-point conferencing unit).
 This means that clients MUST only send call events to rooms with exactly two
 participants.</p>
-<p><a class="anchor" id="id37"></a></p>
-<div class="section" id="id37">
+<p><a class="anchor" id="id38"></a></p>
+<div class="section" id="id38">
 <h3><a class="toc-backref" href="#id340">13.3.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-call-invite"></a></p>
 <div class="section" id="m-call-invite">
@@ -16558,8 +16559,8 @@ not answer in time. One of: [&quot;ice_failed&quot;,
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id38"></a></p>
-<div class="section" id="id38">
+<p><a class="anchor" id="id39"></a></p>
+<div class="section" id="id39">
 <h3><a class="toc-backref" href="#id345">13.3.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>A call is set up with message events exchanged as follows:</p>
 <pre class="literal-block">
@@ -16617,8 +16618,8 @@ setup for use on a call should be transferred and used for the call that
 replaces it.</p>
 </div>
 </div>
-<p><a class="anchor" id="id39"></a></p>
-<div class="section" id="id39">
+<p><a class="anchor" id="id40"></a></p>
+<div class="section" id="id40">
 <h3><a class="toc-backref" href="#id347">13.3.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>The homeserver MAY provide a TURN server which clients can use to contact the
 remote party. The following HTTP API endpoints will be used by clients in order
@@ -16699,8 +16700,8 @@ calls.</p>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id40"></a></p>
-<div class="section" id="id40">
+<p><a class="anchor" id="id41"></a></p>
+<div class="section" id="id41">
 <h3><a class="toc-backref" href="#id349">13.3.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Calls should only be placed to rooms with one other user in them. If they are
 placed to group chat rooms it is possible that another user will intercept and
@@ -16720,15 +16721,15 @@ answer the call.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id41"></a></p>
-<div class="section" id="id41">
+<p><a class="anchor" id="id42"></a></p>
+<div class="section" id="id42">
 <h2><a class="toc-backref" href="#id350">13.4&nbsp;&nbsp;&nbsp;Typing Notifications</a></h2>
 <p id="module-typing">Users may wish to be informed when another user is typing in a room. This can be
 achieved using typing notifications. These are ephemeral events scoped to a
 <tt class="docutils literal">room_id</tt>. This means they do not form part of the
 <a class="reference external" href="index.html#event-graphs">Event Graph</a> but still have a <tt class="docutils literal">room_id</tt> key.</p>
-<p><a class="anchor" id="id42"></a></p>
-<div class="section" id="id42">
+<p><a class="anchor" id="id43"></a></p>
+<div class="section" id="id43">
 <h3><a class="toc-backref" href="#id351">13.4.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-typing"></a></p>
 <div class="section" id="m-typing">
@@ -16764,8 +16765,8 @@ room, if any.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id43"></a></p>
-<div class="section" id="id43">
+<p><a class="anchor" id="id44"></a></p>
+<div class="section" id="id44">
 <h3><a class="toc-backref" href="#id353">13.4.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>When a client receives an <tt class="docutils literal">m.typing</tt> event, it MUST use the user ID list to
 <strong>REPLACE</strong> its knowledge of every user who is currently typing. The reason for
@@ -16861,8 +16862,8 @@ user as typing.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id44"></a></p>
-<div class="section" id="id44">
+<p><a class="anchor" id="id45"></a></p>
+<div class="section" id="id45">
 <h3><a class="toc-backref" href="#id355">13.4.3&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Clients may not wish to inform everyone in a room that they are typing and
 instead only specific users in the room.</p>
@@ -16881,8 +16882,8 @@ instead only specific users in the room.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id45"></a></p>
-<div class="section" id="id45">
+<p><a class="anchor" id="id46"></a></p>
+<div class="section" id="id46">
 <h2><a class="toc-backref" href="#id356">13.5&nbsp;&nbsp;&nbsp;Receipts</a></h2>
 <p id="module-receipts">This module adds in support for receipts. These receipts are a form of
 acknowledgement of an event. This module defines a single acknowledgement:
@@ -16894,8 +16895,8 @@ to all events &quot;up to and including&quot; the event specified. For example, 
 an event as &quot;read&quot; would indicate that the user had read all events <em>up to</em> the
 referenced event. See the <a class="reference external" href="#receiving-notifications">Receiving notifications</a>
 section for more information on how read receipts affect notification counts.</p>
-<p><a class="anchor" id="id46"></a></p>
-<div class="section" id="id46">
+<p><a class="anchor" id="id47"></a></p>
+<div class="section" id="id47">
 <h3><a class="toc-backref" href="#id357">13.5.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p>Each <tt class="docutils literal">user_id</tt>, <tt class="docutils literal">receipt_type</tt> pair must be associated with only a
 single <tt class="docutils literal">event_id</tt>.</p>
@@ -16985,8 +16986,8 @@ the entity who sent this receipt.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id47"></a></p>
-<div class="section" id="id47">
+<p><a class="anchor" id="id48"></a></p>
+<div class="section" id="id48">
 <h3><a class="toc-backref" href="#id359">13.5.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>In <tt class="docutils literal">/sync</tt>, receipts are listed under the <tt class="docutils literal">ephemeral</tt> array of events
 for a given room. New receipts that come down the event streams are deltas
@@ -17081,8 +17082,8 @@ specified.</p>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id48"></a></p>
-<div class="section" id="id48">
+<p><a class="anchor" id="id49"></a></p>
+<div class="section" id="id49">
 <h3><a class="toc-backref" href="#id361">13.5.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>For efficiency, receipts SHOULD be batched into one event per room before
 delivering them to clients.</p>
@@ -17102,8 +17103,8 @@ format of the EDUs are:</p>
 <p>These are always sent as deltas to previously sent receipts. Currently only a
 single <tt class="docutils literal">&lt;receipt_type&gt;</tt> should be used: <tt class="docutils literal">m.read</tt>.</p>
 </div>
-<p><a class="anchor" id="id49"></a></p>
-<div class="section" id="id49">
+<p><a class="anchor" id="id50"></a></p>
+<div class="section" id="id50">
 <h3><a class="toc-backref" href="#id362">13.5.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>As receipts are sent outside the context of the event graph, there are no
 integrity checks performed on the contents of <tt class="docutils literal">m.receipt</tt> events.</p>
@@ -17122,8 +17123,8 @@ integrity checks performed on the contents of <tt class="docutils literal">m.rec
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id50"></a></p>
-<div class="section" id="id50">
+<p><a class="anchor" id="id51"></a></p>
+<div class="section" id="id51">
 <h2><a class="toc-backref" href="#id363">13.6&nbsp;&nbsp;&nbsp;Fully read markers</a></h2>
 <p id="module-read-markers">The history for a given room may be split into three sections: messages the
 user has read (or indicated they aren't interested in them), messages the user
@@ -17131,8 +17132,8 @@ might have read some but not others, and messages the user hasn't seen yet.
 The &quot;fully read marker&quot; (also known as a &quot;read marker&quot;) marks the last event
 of the first section, whereas the user's read receipt marks the last event of
 the second section.</p>
-<p><a class="anchor" id="id51"></a></p>
-<div class="section" id="id51">
+<p><a class="anchor" id="id52"></a></p>
+<div class="section" id="id52">
 <h3><a class="toc-backref" href="#id364">13.6.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p>The user's fully read marker is kept as an event in the room's <a class="reference external" href="#client-config">account data</a>.
 The event may be read to determine the user's current fully read marker location
@@ -17172,8 +17173,8 @@ located at in the room.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id52"></a></p>
-<div class="section" id="id52">
+<p><a class="anchor" id="id53"></a></p>
+<div class="section" id="id53">
 <h3><a class="toc-backref" href="#id366">13.6.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>The client cannot update fully read markers by directly modifying the <tt class="docutils literal">m.fully_read</tt>
 account data event. Instead, the client must make use of the read markers API
@@ -17259,8 +17260,8 @@ provided here to save that extra call.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id53"></a></p>
-<div class="section" id="id53">
+<p><a class="anchor" id="id54"></a></p>
+<div class="section" id="id54">
 <h3><a class="toc-backref" href="#id368">13.6.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>The server MUST prevent clients from setting <tt class="docutils literal">m.fully_read</tt> directly in
 room account data. The server must additionally ensure that it treats the
@@ -17285,8 +17286,8 @@ satisfied.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id54"></a></p>
-<div class="section" id="id54">
+<p><a class="anchor" id="id55"></a></p>
+<div class="section" id="id55">
 <h2><a class="toc-backref" href="#id369">13.7&nbsp;&nbsp;&nbsp;Presence</a></h2>
 <p id="module-presence">Each user has the concept of presence information. This encodes:</p>
 <ul class="simple">
@@ -17309,8 +17310,8 @@ idle.</li>
 <li><tt class="docutils literal">offline</tt> : The user is not connected to an event stream or is
 explicitly suppressing their profile information from being sent.</li>
 </ul>
-<p><a class="anchor" id="id55"></a></p>
-<div class="section" id="id55">
+<p><a class="anchor" id="id56"></a></p>
+<div class="section" id="id56">
 <h3><a class="toc-backref" href="#id370">13.7.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-presence"></a></p>
 <div class="section" id="m-presence">
@@ -17368,8 +17369,8 @@ One of: [&quot;online&quot;, &quot;offline&quot;, &quot;unavailable&quot;]</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id56"></a></p>
-<div class="section" id="id56">
+<p><a class="anchor" id="id57"></a></p>
+<div class="section" id="id57">
 <h3><a class="toc-backref" href="#id372">13.7.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients can manually set/get their presence using the HTTP APIs listed below.</p>
 <p><a class="anchor" id="put-matrix-client-r0-presence-userid-status"></a></p>
@@ -17571,8 +17572,8 @@ last active time on any of the user's clients will cause the server to
 automatically set their presence to <tt class="docutils literal">online</tt>.</p>
 </div>
 </div>
-<p><a class="anchor" id="id57"></a></p>
-<div class="section" id="id57">
+<p><a class="anchor" id="id58"></a></p>
+<div class="section" id="id58">
 <h3><a class="toc-backref" href="#id377">13.7.3&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Presence information is shared with all users who share a room with the target
 user. In large public rooms this could be undesirable.</p>
@@ -17592,8 +17593,8 @@ user. In large public rooms this could be undesirable.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id58"></a></p>
-<div class="section" id="id58">
+<p><a class="anchor" id="id59"></a></p>
+<div class="section" id="id59">
 <h2><a class="toc-backref" href="#id378">13.8&nbsp;&nbsp;&nbsp;Content repository</a></h2>
 <p id="module-content">The content repository (or &quot;media repository&quot;) allows users to upload
 files to their homeserver for later user. For example, files which the
@@ -17620,8 +17621,8 @@ mxc://&lt;server-name&gt;/&lt;media-id&gt;
 &lt;media-id&gt; : An opaque ID which identifies the content.
 </pre>
 </div>
-<p><a class="anchor" id="id59"></a></p>
-<div class="section" id="id59">
+<p><a class="anchor" id="id60"></a></p>
+<div class="section" id="id60">
 <h3><a class="toc-backref" href="#id380">13.8.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients can upload and download content using the following HTTP APIs.</p>
 <p><a class="anchor" id="post-matrix-media-r0-upload"></a></p>
@@ -18288,8 +18289,8 @@ return a smaller thumbnail than requested, unless the original content makes
 that impossible.</p>
 </div>
 </div>
-<p><a class="anchor" id="id61"></a></p>
-<div class="section" id="id61">
+<p><a class="anchor" id="id62"></a></p>
+<div class="section" id="id62">
 <h3><a class="toc-backref" href="#id388">13.8.3&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>The HTTP GET endpoint does not require any authentication. Knowing the URL of
 the content is sufficient to retrieve the content, even if the entity isn't in
@@ -18337,8 +18338,8 @@ vulnerabilities in either the homeserver thumbnailing or the client decoders.</l
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id62"></a></p>
-<div class="section" id="id62">
+<p><a class="anchor" id="id63"></a></p>
+<div class="section" id="id63">
 <span id="to-device"></span><span id="module-to-device"></span><h2><a class="toc-backref" href="#id389">13.9&nbsp;&nbsp;&nbsp;Send-to-Device messaging</a></h2>
 <p>This module provides a means by which clients can exchange signalling messages
 without them being stored permanently as part of a shared communication
@@ -18348,8 +18349,8 @@ undesirable to persist in the room DAG - for example, one-time authentication
 tokens or key data. It is not intended for conversational data, which should be
 sent using the normal <a class="reference external" href="#put-matrix-client-r0-rooms-roomid-send-eventtype-txnid"><tt class="docutils literal"><span class="pre">/rooms/&lt;room_id&gt;/send</span></tt></a> API for consistency throughout
 Matrix.</p>
-<p><a class="anchor" id="id63"></a></p>
-<div class="section" id="id63">
+<p><a class="anchor" id="id64"></a></p>
+<div class="section" id="id64">
 <h3><a class="toc-backref" href="#id390">13.9.1&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>To send a message to other devices, a client should call <a class="reference external" href="#put-matrix-client-r0-sendtodevice-eventtype-txnid"><tt class="docutils literal">/sendToDevice</tt></a>.
 Only one message can be sent to each device per transaction, and they must all
@@ -18360,8 +18361,8 @@ returned by <a class="reference external" href="#get-matrix-client-r0-sync"><tt 
 inspect the <tt class="docutils literal">type</tt> of each returned event, and ignore any they do not
 understand.</p>
 </div>
-<p><a class="anchor" id="id64"></a></p>
-<div class="section" id="id64">
+<p><a class="anchor" id="id65"></a></p>
+<div class="section" id="id65">
 <h3><a class="toc-backref" href="#id391">13.9.2&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>Servers should store pending messages for local users until they are
 successfully delivered to the destination device. When a client calls <a class="reference external" href="#get-matrix-client-r0-sync"><tt class="docutils literal">/sync</tt></a>
@@ -18576,12 +18577,12 @@ event.</td>
 </div>
 </div>
 </div>
-<p><a class="anchor" id="id65"></a></p>
-<div class="section" id="id65">
-<h2><a class="toc-backref" href="#id395">13.10&nbsp;&nbsp;&nbsp;Device Management</a></h2>
-<p id="module-device-management">This module provides a means for a user to manage their <a class="reference external" href="../index.html#devices">devices</a>.</p>
 <p><a class="anchor" id="id66"></a></p>
 <div class="section" id="id66">
+<h2><a class="toc-backref" href="#id395">13.10&nbsp;&nbsp;&nbsp;Device Management</a></h2>
+<p id="module-device-management">This module provides a means for a user to manage their <a class="reference external" href="../index.html#devices">devices</a>.</p>
+<p><a class="anchor" id="id67"></a></p>
+<div class="section" id="id67">
 <h3><a class="toc-backref" href="#id396">13.10.1&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients that implement this module should offer the user a list of registered
 devices, as well as the means to update their display names. Clients should
@@ -19023,8 +19024,8 @@ previously.</p>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id67"></a></p>
-<div class="section" id="id67">
+<p><a class="anchor" id="id68"></a></p>
+<div class="section" id="id68">
 <h3><a class="toc-backref" href="#id402">13.10.2&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Deleting devices has security implications: it invalidates the access_token
 assigned to the device, so an attacker could use it to log out the real user
@@ -19050,8 +19051,8 @@ advising the user of this.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id68"></a></p>
-<div class="section" id="id68">
+<p><a class="anchor" id="id69"></a></p>
+<div class="section" id="id69">
 <h2><a class="toc-backref" href="#id403">13.11&nbsp;&nbsp;&nbsp;End-to-End Encryption</a></h2>
 <p id="module-e2e">Matrix optionally supports end-to-end encryption, allowing rooms to be created
 whose conversation contents are not decryptable or interceptable on any of the
@@ -19063,8 +19064,8 @@ participating homeservers.</p>
 cryptography. The Matrix protocol provides a basic mechanism for exchange of
 public keys, though an out-of-band channel is required to exchange fingerprints
 between users to build a web of trust.</p>
-<p><a class="anchor" id="id69"></a></p>
-<div class="section" id="id69">
+<p><a class="anchor" id="id70"></a></p>
+<div class="section" id="id70">
 <h4><a class="toc-backref" href="#id405">13.11.1.1&nbsp;&nbsp;&nbsp;Overview</a></h4>
 <pre class="code literal-block">
 1) Bob publishes the public keys and supported algorithms for his
@@ -19126,8 +19127,8 @@ signature for the key object, as described in <a class="reference external" href
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="id70"></a></p>
-<div class="section" id="id70">
+<p><a class="anchor" id="id71"></a></p>
+<div class="section" id="id71">
 <h4><a class="toc-backref" href="#id407">13.11.1.3&nbsp;&nbsp;&nbsp;Device keys</a></h4>
 <p>Each device should have one Ed25519 signing key. This key should be generated
 on the device from a cryptographically secure source, and the private part of
@@ -20551,8 +20552,8 @@ sending <a class="reference internal" href="#m-room-key-request">m.room_key_requ
 device, it can forward the keys to the first device by sending an encrypted
 <a class="reference internal" href="#m-forwarded-room-key">m.forwarded_room_key</a> to-device message. The first device should then send an
 <a class="reference internal" href="#m-room-key-request">m.room_key_request</a> to-device message with <tt class="docutils literal">action</tt> set to
-<tt class="docutils literal">cancel_request</tt> to the other devices that it had originally sent the key
-request to; a device that receives a <tt class="docutils literal">cancel_request</tt> should disregard any
+<tt class="docutils literal">request_cancellation</tt> to the other devices that it had originally sent the key
+request to; a device that receives a <tt class="docutils literal">request_cancellation</tt> should disregard any
 previously-received <tt class="docutils literal">request</tt> message with the same <tt class="docutils literal">request_id</tt> and
 <tt class="docutils literal">requesting_device_id</tt>.</p>
 <div class="admonition note">
@@ -20884,11 +20885,11 @@ must also handle <tt class="docutils literal">m.room_key</tt> events sent by oth
 messages.</p>
 </div>
 </div>
-<p><a class="anchor" id="id72"></a></p>
-<div class="section" id="id72">
-<h3><a class="toc-backref" href="#id437">13.11.5&nbsp;&nbsp;&nbsp;Protocol definitions</a></h3>
 <p><a class="anchor" id="id73"></a></p>
 <div class="section" id="id73">
+<h3><a class="toc-backref" href="#id437">13.11.5&nbsp;&nbsp;&nbsp;Protocol definitions</a></h3>
+<p><a class="anchor" id="id74"></a></p>
+<div class="section" id="id74">
 <h4><a class="toc-backref" href="#id438">13.11.5.1&nbsp;&nbsp;&nbsp;Events</a></h4>
 <p><a class="anchor" id="m-room-encryption"></a></p>
 <div class="section" id="m-room-encryption">
@@ -21122,7 +21123,7 @@ unencrypted <a class="reference internal" href="#to-device">to-device</a> event.
 <tr><td>action</td>
 <td>enum</td>
 <td><strong>Required.</strong> One of: [&quot;request&quot;,
-&quot;cancel_request&quot;]</td>
+&quot;request_cancellation&quot;]</td>
 </tr>
 <tr><td>requesting_device_id</td>
 <td>string</td>
@@ -21171,7 +21172,13 @@ is for.</td>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
     <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-        <span class="name tag">&quot;action&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;cancel_request&quot;</span><span class="punctuation">,</span>
+        <span class="name tag">&quot;action&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;request&quot;</span><span class="punctuation">,</span>
+        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+            <span class="name tag">&quot;algorithm&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.megolm.v1.aes-sha2&quot;</span><span class="punctuation">,</span>
+            <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!Cuyf34gef24t:localhost&quot;</span><span class="punctuation">,</span>
+            <span class="name tag">&quot;sender_key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;RF3s+E7RkTQTGF2d8Deol0FkQvgII2aJDf3/Jp5mxVU&quot;</span><span class="punctuation">,</span>
+            <span class="name tag">&quot;session_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;X3lUlvLELLYxeTx4yOVu6UDpasGEVO0Jbu+QFnm0cKQ&quot;</span>
+        <span class="punctuation">},</span>
         <span class="name tag">&quot;request_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1495474790150.19&quot;</span><span class="punctuation">,</span>
         <span class="name tag">&quot;requesting_device_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;RJYKSTBOIE&quot;</span>
     <span class="punctuation">},</span>
@@ -21181,13 +21188,7 @@ is for.</td>
 <pre class="code json literal-block">
 <span class="punctuation">{</span>
     <span class="name tag">&quot;content&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-        <span class="name tag">&quot;action&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;request&quot;</span><span class="punctuation">,</span>
-        <span class="name tag">&quot;body&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
-            <span class="name tag">&quot;algorithm&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;m.megolm.v1.aes-sha2&quot;</span><span class="punctuation">,</span>
-            <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!Cuyf34gef24t:localhost&quot;</span><span class="punctuation">,</span>
-            <span class="name tag">&quot;sender_key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;RF3s+E7RkTQTGF2d8Deol0FkQvgII2aJDf3/Jp5mxVU&quot;</span><span class="punctuation">,</span>
-            <span class="name tag">&quot;session_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;X3lUlvLELLYxeTx4yOVu6UDpasGEVO0Jbu+QFnm0cKQ&quot;</span>
-        <span class="punctuation">},</span>
+        <span class="name tag">&quot;action&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;request_cancellation&quot;</span><span class="punctuation">,</span>
         <span class="name tag">&quot;request_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1495474790150.19&quot;</span><span class="punctuation">,</span>
         <span class="name tag">&quot;requesting_device_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;RJYKSTBOIE&quot;</span>
     <span class="punctuation">},</span>
@@ -21271,8 +21272,8 @@ Curve25519 key between B and C.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="id74"></a></p>
-<div class="section" id="id74">
+<p><a class="anchor" id="id75"></a></p>
+<div class="section" id="id75">
 <h5><a class="toc-backref" href="#id444">13.11.5.1.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.dummy</tt></a></h5>
 <p>This event type is used to indicate new Olm sessions for end-to-end encryption.
 Typically it is encrypted as an <tt class="docutils literal">m.room.encrypted</tt> event, then sent as a <a class="reference internal" href="#to-device">to-device</a>
@@ -21857,8 +21858,8 @@ shared with the user.</td>
 <!-- anchor for link from /sync api spec -->
 </div>
 </div>
-<p><a class="anchor" id="id76"></a></p>
-<div class="section" id="id76">
+<p><a class="anchor" id="id77"></a></p>
+<div class="section" id="id77">
 <span id="device-lists-sync"></span><h4><a class="toc-backref" href="#id450">13.11.5.3&nbsp;&nbsp;&nbsp;Extensions to /sync</a></h4>
 <p>This module adds an optional <tt class="docutils literal">device_lists</tt> property to the <a class="reference external" href="#get-matrix-client-r0-sync"><tt class="docutils literal">/sync</tt></a>
 response, as specified below. The server need only populate this property for
@@ -22002,8 +22003,8 @@ event in question is added to the DAG. This means clients cannot
 retrospectively choose to show or hide history to new users if the setting at
 that time was more restrictive.</p>
 </div>
-<p><a class="anchor" id="id77"></a></p>
-<div class="section" id="id77">
+<p><a class="anchor" id="id78"></a></p>
+<div class="section" id="id78">
 <h3><a class="toc-backref" href="#id452">13.12.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-room-history-visibility"></a></p>
 <div class="section" id="m-room-history-visibility">
@@ -22048,16 +22049,16 @@ of: [&quot;invited&quot;, &quot;joined&quot;, &quot;shared&quot;,
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id78"></a></p>
-<div class="section" id="id78">
+<p><a class="anchor" id="id79"></a></p>
+<div class="section" id="id79">
 <h3><a class="toc-backref" href="#id454">13.12.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients that implement this module MUST present to the user the possible options
 for setting history visibility when creating a room.</p>
 <p>Clients may want to display a notice that their events may be read by non-joined
 people if the value is set to <tt class="docutils literal">world_readable</tt>.</p>
 </div>
-<p><a class="anchor" id="id79"></a></p>
-<div class="section" id="id79">
+<p><a class="anchor" id="id80"></a></p>
+<div class="section" id="id80">
 <h3><a class="toc-backref" href="#id455">13.12.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>By default if no <tt class="docutils literal">history_visibility</tt> is set, or if the value is not understood, the visibility is assumed to be
 <tt class="docutils literal">shared</tt>. The rules governing whether a user is allowed to see an event depend
@@ -22084,8 +22085,8 @@ would allow them to see it. (For example, a user can always see
 change their membership from <tt class="docutils literal">join</tt> to any other value, even if
 <tt class="docutils literal">history_visibility</tt> is <tt class="docutils literal">joined</tt>.)</p>
 </div>
-<p><a class="anchor" id="id80"></a></p>
-<div class="section" id="id80">
+<p><a class="anchor" id="id81"></a></p>
+<div class="section" id="id81">
 <h3><a class="toc-backref" href="#id456">13.12.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>The default value for <tt class="docutils literal">history_visibility</tt> is <tt class="docutils literal">shared</tt> for
 backwards-compatibility reasons. Clients need to be aware that by not setting
@@ -22106,8 +22107,8 @@ this event they are exposing all of their room history to anyone in the room.</p
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id81"></a></p>
-<div class="section" id="id81">
+<p><a class="anchor" id="id82"></a></p>
+<div class="section" id="id82">
 <h2><a class="toc-backref" href="#id457">13.13&nbsp;&nbsp;&nbsp;Push Notifications</a></h2>
 <pre class="literal-block" id="module-push">
                                   +--------------------+  +-------------------+
@@ -22182,8 +22183,8 @@ some rules may only be applied for messages from a particular sender,
 a particular room, or by default. The push ruleset contains the entire set
 of scopes and rules.</dd>
 </dl>
-<p><a class="anchor" id="id82"></a></p>
-<div class="section" id="id82">
+<p><a class="anchor" id="id83"></a></p>
+<div class="section" id="id83">
 <h3><a class="toc-backref" href="#id458">13.13.1&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>Clients MUST configure a Pusher before they will receive push notifications.
 There is a single API endpoint for this, as described below.</p>
@@ -22727,8 +22728,8 @@ any.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id83"></a></p>
-<div class="section" id="id83">
+<p><a class="anchor" id="id84"></a></p>
+<div class="section" id="id84">
 <h4><a class="toc-backref" href="#id463">13.13.1.4&nbsp;&nbsp;&nbsp;Receiving notifications</a></h4>
 <p>Servers MUST include the number of unread notifications in a client's <tt class="docutils literal">/sync</tt>
 stream, and MUST update it as it changes. Notifications are determined by the
@@ -24702,8 +24703,8 @@ curl -X PUT -H &quot;Content-Type: application/json&quot; &quot;https://example.
 </div>
 </div>
 </div>
-<p><a class="anchor" id="id88"></a></p>
-<div class="section" id="id88">
+<p><a class="anchor" id="id89"></a></p>
+<div class="section" id="id89">
 <h3><a class="toc-backref" href="#id497">13.13.2&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 </div>
 <p><a class="anchor" id="push-gateway-behaviour"></a></p>
@@ -24726,8 +24727,8 @@ gateway before returning and instead to store failures and return
 </ul>
 </div>
 </div>
-<p><a class="anchor" id="id89"></a></p>
-<div class="section" id="id89">
+<p><a class="anchor" id="id90"></a></p>
+<div class="section" id="id90">
 <h3><a class="toc-backref" href="#id500">13.13.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Clients specify the Push Gateway URL to use to send event notifications to. This
 URL should be over HTTPS and <em>never</em> over HTTP.</p>
@@ -24774,8 +24775,8 @@ with <tt class="docutils literal">content.membership</tt> = <tt class="docutils 
 <tt class="docutils literal">content.third_party_invite</tt> property which contains proof that the invitee
 does indeed own that third party identifier. See the <a class="reference external" href="#m-room-member">m.room.member</a>
 schema for more information.</p>
-<p><a class="anchor" id="id91"></a></p>
-<div class="section" id="id91">
+<p><a class="anchor" id="id92"></a></p>
+<div class="section" id="id92">
 <h3><a class="toc-backref" href="#id502">13.14.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-room-third-party-invite"></a></p>
 <div class="section" id="m-room-third-party-invite">
@@ -24875,12 +24876,12 @@ which token may be signed.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id92"></a></p>
-<div class="section" id="id92">
-<h3><a class="toc-backref" href="#id504">13.14.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
-<p>A client asks a server to invite a user by their third party identifier.</p>
 <p><a class="anchor" id="id93"></a></p>
 <div class="section" id="id93">
+<h3><a class="toc-backref" href="#id504">13.14.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
+<p>A client asks a server to invite a user by their third party identifier.</p>
+<p><a class="anchor" id="id94"></a></p>
+<div class="section" id="id94">
 <h4><a class="toc-backref" href="#id505">13.14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/client/r0/rooms/{roomId}/invite</span></tt></a></h4>
 <p id="invite-by-third-party-id-endpoint"><em>Note that there are two forms of this API, which are documented separately.
 This version of the API does not require that the inviter know the Matrix
@@ -25005,8 +25006,8 @@ identifier.</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id94"></a></p>
-<div class="section" id="id94">
+<p><a class="anchor" id="id95"></a></p>
+<div class="section" id="id95">
 <h3><a class="toc-backref" href="#id506">13.14.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>Upon receipt of an <tt class="docutils literal">/invite</tt>, the server is expected to look up the third party
 identifier with the provided identity server. If the lookup yields a result for
@@ -25163,8 +25164,8 @@ This relies on participating servers trusting each other, but that trust is
 already implied by the server-server protocol. Also, the public key signature
 verification must still be performed, so the attack surface here is minimized.</p>
 </div>
-<p><a class="anchor" id="id95"></a></p>
-<div class="section" id="id95">
+<p><a class="anchor" id="id96"></a></p>
+<div class="section" id="id96">
 <h3><a class="toc-backref" href="#id507">13.14.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>There are a number of privacy and trust implications to this module.</p>
 <p>It is important for user privacy that leaking the mapping between a matrix user
@@ -25200,15 +25201,15 @@ these is left to the implementer's discretion.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id96"></a></p>
-<div class="section" id="id96">
+<p><a class="anchor" id="id97"></a></p>
+<div class="section" id="id97">
 <h2><a class="toc-backref" href="#id508">13.15&nbsp;&nbsp;&nbsp;Server Side Search</a></h2>
 <p id="module-search">The search API allows clients to perform full text search across events in all
 rooms that the user has been in, including those that they have left. Only
 events that the user is allowed to see will be searched, e.g. it won't include
 events in rooms that happened after you left.</p>
-<p><a class="anchor" id="id97"></a></p>
-<div class="section" id="id97">
+<p><a class="anchor" id="id98"></a></p>
+<div class="section" id="id98">
 <h3><a class="toc-backref" href="#id509">13.15.1&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>There is a single HTTP API for performing server-side search, documented below.</p>
 <p><a class="anchor" id="post-matrix-client-r0-search"></a></p>
@@ -25879,8 +25880,8 @@ group.</td>
 <h3><a class="toc-backref" href="#id511">13.15.2&nbsp;&nbsp;&nbsp;Search Categories</a></h3>
 <p>The search API allows clients to search in different categories of items.
 Currently the only specified category is <tt class="docutils literal">room_events</tt>.</p>
-<p><a class="anchor" id="id100"></a></p>
-<div class="section" id="id100">
+<p><a class="anchor" id="id101"></a></p>
+<div class="section" id="id101">
 <h4><a class="toc-backref" href="#id512">13.15.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">room_events</tt></a></h4>
 <p>This category covers all events that the user is allowed to see, including
 events in rooms that they have left. The search is performed on certain keys of
@@ -25924,8 +25925,8 @@ as potentially other metadata about the group.</p>
 <li><tt class="docutils literal">sender</tt></li>
 </ul>
 </div>
-<p><a class="anchor" id="id101"></a></p>
-<div class="section" id="id101">
+<p><a class="anchor" id="id102"></a></p>
+<div class="section" id="id102">
 <h3><a class="toc-backref" href="#id515">13.15.5&nbsp;&nbsp;&nbsp;Pagination</a></h3>
 <p>The server may return a <tt class="docutils literal">next_batch</tt> key at various places in the response.
 These are used to paginate the results. To fetch more results, the client
@@ -25942,8 +25943,8 @@ results from within that group.</p>
 <p>A server need not support pagination, even if there are more matching results.
 In that case, they must not return a <tt class="docutils literal">next_batch</tt> token in the response.</p>
 </div>
-<p><a class="anchor" id="id102"></a></p>
-<div class="section" id="id102">
+<p><a class="anchor" id="id103"></a></p>
+<div class="section" id="id103">
 <h3><a class="toc-backref" href="#id516">13.15.6&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>The server must only return results that the user has permission to see.</p>
 <!-- Copyright 2016 OpenMarket Ltd -->
@@ -25983,8 +25984,8 @@ their username, which is otherwise optional.</p>
 <p>This module does not fully factor in federation; it relies on individual
 homeservers properly adhering to the rules set out in this module, rather than
 allowing all homeservers to enforce the rules on each other.</p>
-<p><a class="anchor" id="id103"></a></p>
-<div class="section" id="id103">
+<p><a class="anchor" id="id104"></a></p>
+<div class="section" id="id104">
 <h3><a class="toc-backref" href="#id518">13.16.1&nbsp;&nbsp;&nbsp;Events</a></h3>
 <p><a class="anchor" id="m-room-guest-access"></a></p>
 <div class="section" id="m-room-guest-access">
@@ -26028,8 +26029,8 @@ One of: [&quot;can_join&quot;, &quot;forbidden&quot;]</td>
 </pre>
 </div>
 </div>
-<p><a class="anchor" id="id104"></a></p>
-<div class="section" id="id104">
+<p><a class="anchor" id="id105"></a></p>
+<div class="section" id="id105">
 <h3><a class="toc-backref" href="#id520">13.16.2&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>The following API endpoints are allowed to be accessed by guest accounts for
 retrieving events:</p>
@@ -26067,8 +26068,8 @@ end-to-end encryption:</p>
 <li><a class="reference external" href="#post-matrix-client-r0-keys-claim">POST /keys/claim</a></li>
 </ul>
 </div>
-<p><a class="anchor" id="id106"></a></p>
-<div class="section" id="id106">
+<p><a class="anchor" id="id107"></a></p>
+<div class="section" id="id107">
 <h3><a class="toc-backref" href="#id521">13.16.3&nbsp;&nbsp;&nbsp;Server behaviour</a></h3>
 <p>Servers MUST only allow guest users to join rooms if the <tt class="docutils literal">m.room.guest_access</tt>
 state event is present on the room, and has the <tt class="docutils literal">guest_access</tt> value
@@ -26076,8 +26077,8 @@ state event is present on the room, and has the <tt class="docutils literal">gue
 being the case, the server MUST set those users' <tt class="docutils literal">m.room.member</tt> state to
 <tt class="docutils literal">leave</tt>.</p>
 </div>
-<p><a class="anchor" id="id107"></a></p>
-<div class="section" id="id107">
+<p><a class="anchor" id="id108"></a></p>
+<div class="section" id="id108">
 <h3><a class="toc-backref" href="#id522">13.16.4&nbsp;&nbsp;&nbsp;Security considerations</a></h3>
 <p>Each homeserver manages its own guest accounts itself, and whether an account
 is a guest account or not is not information passed from server to server.
@@ -26100,8 +26101,8 @@ registration to prevent spam, denial of service, and similar attacks.</p>
 <!-- limitations under the License. -->
 </div>
 </div>
-<p><a class="anchor" id="id108"></a></p>
-<div class="section" id="id108">
+<p><a class="anchor" id="id109"></a></p>
+<div class="section" id="id109">
 <h2><a class="toc-backref" href="#id523">13.17&nbsp;&nbsp;&nbsp;Room Previews</a></h2>
 <p id="module-room-previews">It is sometimes desirable to offer a preview of a room, where a user can &quot;lurk&quot;
 and read messages posted to the room, without joining the room. This can be
@@ -26109,8 +26110,8 @@ particularly effective when combined with <a class="reference internal" href="#g
 <p>Previews are implemented via the <tt class="docutils literal">world_readable</tt> <a class="reference internal" href="#room-history-visibility">Room History Visibility</a>.
 setting, along with a special version of the
 <a class="reference external" href="#get-matrix-client-r0-events">GET /events</a> endpoint.</p>
-<p><a class="anchor" id="id109"></a></p>
-<div class="section" id="id109">
+<p><a class="anchor" id="id110"></a></p>
+<div class="section" id="id110">
 <h3><a class="toc-backref" href="#id524">13.17.1&nbsp;&nbsp;&nbsp;Client behaviour</a></h3>
 <p>A client wishing to view a room without joining it should call
 <a class="reference external" href="#get-matrix-client-r0-rooms-roomid-initialsync">GET /rooms/:room_id/initialSync</a>,
@@ -26120,8 +26121,8 @@ in parallel for each room they wish to view.</p>
 <a class="reference external" href="#get-matrix-client-r0-rooms-roomid-messages">GET /rooms/:room_id/messages</a>
 and <a class="reference external" href="#get-matrix-client-r0-search">GET /search</a> to access
 events outside the <tt class="docutils literal">/events</tt> stream.</p>
-<p><a class="anchor" id="id113"></a></p>
-<div class="section" id="id113">
+<p><a class="anchor" id="get-matrix-client-r0-events"></a></p>
+<div class="section" id="get-matrix-client-r0-events">
 <span id="peeking-events-api"></span><h4><a class="toc-backref" href="#id525">13.17.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/client/r0/events</tt></a></h4>
 <p>This will listen for new events related to a particular room and return
 them to the caller. This will block until an event is received, or until

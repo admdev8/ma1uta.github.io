@@ -959,48 +959,63 @@ practice has only been applied specifically to email addresses and phone numbers
 <li><a class="reference internal" href="#privacy" id="id5">4&nbsp;&nbsp;&nbsp;Privacy</a></li>
 <li><a class="reference internal" href="#web-browser-clients" id="id6">5&nbsp;&nbsp;&nbsp;Web browser clients</a></li>
 <li><a class="reference internal" href="#status-check" id="id7">6&nbsp;&nbsp;&nbsp;Status check</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-identity-api-v1" id="id8">6.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1" id="id8">6.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2" id="id9">6.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#key-management" id="id9">7&nbsp;&nbsp;&nbsp;Key management</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-pubkey-keyid" id="id10">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-pubkey-isvalid" id="id11">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-pubkey-ephemeral-isvalid" id="id12">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></li>
+<li><a class="reference internal" href="#key-management" id="id10">7&nbsp;&nbsp;&nbsp;Key management</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-keyid" id="id11">7.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-isvalid" id="id12">7.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid" id="id13">7.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-keyid" id="id14">7.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-isvalid" id="id15">7.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-ephemeral-isvalid" id="id16">7.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#association-lookup" id="id13">8&nbsp;&nbsp;&nbsp;Association lookup</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-lookup" id="id14">8.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-bulk-lookup" id="id15">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></li>
+<li><a class="reference internal" href="#association-lookup" id="id17">8&nbsp;&nbsp;&nbsp;Association lookup</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-lookup" id="id18">8.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-bulk-lookup" id="id19">8.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#establishing-associations" id="id16">9&nbsp;&nbsp;&nbsp;Establishing associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#format-of-a-validation-token" id="id17">9.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></li>
-<li><a class="reference internal" href="#email-associations" id="id18">9.2&nbsp;&nbsp;&nbsp;Email associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-validate-email-requesttoken" id="id19">9.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-validate-email-submittoken" id="id20">9.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-validate-email-submittoken" id="id21">9.2.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#establishing-associations" id="id20">9&nbsp;&nbsp;&nbsp;Establishing associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#format-of-a-validation-token" id="id21">9.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></li>
+<li><a class="reference internal" href="#email-associations" id="id22">9.2&nbsp;&nbsp;&nbsp;Email associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-requesttoken" id="id23">9.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-submittoken" id="id24">9.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-email-submittoken" id="id25">9.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-requesttoken" id="id26">9.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-submittoken" id="id27">9.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-validate-email-submittoken" id="id28">9.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#phone-number-associations" id="id22">9.3&nbsp;&nbsp;&nbsp;Phone number associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-validate-msisdn-requesttoken" id="id23">9.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-validate-msisdn-submittoken" id="id24">9.3.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-validate-msisdn-submittoken" id="id25">9.3.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#phone-number-associations" id="id29">9.3&nbsp;&nbsp;&nbsp;Phone number associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken" id="id30">9.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken" id="id31">9.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken" id="id32">9.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-requesttoken" id="id33">9.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-submittoken" id="id34">9.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-validate-msisdn-submittoken" id="id35">9.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#general" id="id26">9.4&nbsp;&nbsp;&nbsp;General</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-identity-api-v1-3pid-getvalidated3pid" id="id27">9.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-3pid-bind" id="id28">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-3pid-unbind" id="id29">9.4.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></li>
+<li><a class="reference internal" href="#general" id="id36">9.4&nbsp;&nbsp;&nbsp;General</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid" id="id37">9.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-bind" id="id38">9.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-unbind" id="id39">9.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-3pid-getvalidated3pid" id="id40">9.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-bind" id="id41">9.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-unbind" id="id42">9.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#invitation-storage" id="id30">10&nbsp;&nbsp;&nbsp;Invitation storage</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-store-invite" id="id31">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></li>
+<li><a class="reference internal" href="#invitation-storage" id="id43">10&nbsp;&nbsp;&nbsp;Invitation storage</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-store-invite" id="id44">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-store-invite" id="id45">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ephemeral-invitation-signing" id="id32">11&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-identity-api-v1-sign-ed25519" id="id33">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></li>
+<li><a class="reference internal" href="#ephemeral-invitation-signing" id="id46">11&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-sign-ed25519" id="id47">11.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-sign-ed25519" id="id48">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -1014,7 +1029,7 @@ practice has only been applied specifically to email addresses and phone numbers
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/4ad9bf70">master,4ad9bf70</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/1f2acbcf">master,1f2acbcf</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
@@ -1031,6 +1046,7 @@ practice has only been applied specifically to email addresses and phone numbers
 <p><a class="anchor" id="general-principles"></a></p>
 <div class="section" id="general-principles">
 <h1><a class="toc-backref" href="#id3">2&nbsp;&nbsp;&nbsp;General principles</a></h1>
+<!-- TODO: TravisR - Define auth for IS v2 API in a future PR -->
 <p>The purpose of an identity server is to validate, store, and answer questions
 about the identities of users. In particular, it stores associations of the form
 &quot;identifier X represents the same user as identifier Y&quot;, where identities may
@@ -1143,9 +1159,13 @@ Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Au
 <p><a class="anchor" id="status-check"></a></p>
 <div class="section" id="status-check">
 <h1><a class="toc-backref" href="#id7">6&nbsp;&nbsp;&nbsp;Status check</a></h1>
-<p><a class="anchor" id="get-matrix-identity-api-v1"></a></p>
-<div class="section" id="get-matrix-identity-api-v1">
-<h2><a class="toc-backref" href="#id8">6.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></h2>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1">
+<h2><a class="toc-backref" href="#id8">6.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Checks that an identity server is available at this API endpoint.</p>
 <p>To discover that an identity server is available at a specific URL,
 this endpoint can be queried and will return an empty object.</p>
@@ -1175,10 +1195,42 @@ by entities acting as a client for the identity server.</p>
 <span class="punctuation">{}</span>
 </pre>
 </div>
+<p><a class="anchor" id="get-matrix-identity-v2"></a></p>
+<div class="section" id="get-matrix-identity-v2">
+<h2><a class="toc-backref" href="#id9">6.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></h2>
+<p>Checks that an identity server is available at this API endpoint.</p>
+<p>To discover that an identity server is available at a specific URL,
+this endpoint can be queried and will return an empty object.</p>
+<p>This is primarly used for auto-discovery and health check purposes
+by entities acting as a client for the identity server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">No.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<p><cite>No parameters</cite></p>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>An identity server is ready to serve requests.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{}</span>
+</pre>
+</div>
 </div>
 <p><a class="anchor" id="key-management"></a></p>
 <div class="section" id="key-management">
-<h1><a class="toc-backref" href="#id9">7&nbsp;&nbsp;&nbsp;Key management</a></h1>
+<h1><a class="toc-backref" href="#id10">7&nbsp;&nbsp;&nbsp;Key management</a></h1>
 <p>An identity server has some long-term public-private keypairs. These are named
 in a scheme <tt class="docutils literal">algorithm:identifier</tt>, e.g. <tt class="docutils literal">ed25519:0</tt>. When signing an
 association, the standard <a class="reference external" href="../appendices.html#signing-json">Signing JSON</a> algorithm applies.</p>
@@ -1190,9 +1242,13 @@ valid. -->
 <p>The identity server may also keep track of some short-term public-private
 keypairs, which may have different usage and lifetime characteristics than the
 service's long-term keys.</p>
-<p><a class="anchor" id="get-matrix-identity-api-v1-pubkey-keyid"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-pubkey-keyid">
-<h2><a class="toc-backref" href="#id10">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></h2>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-keyid"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-keyid">
+<h2><a class="toc-backref" href="#id11">7.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Get the public key for the passed key ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1262,9 +1318,13 @@ identifier is an opaque string.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="get-matrix-identity-api-v1-pubkey-isvalid"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-pubkey-isvalid">
-<h2><a class="toc-backref" href="#id11">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></h2>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-isvalid"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-isvalid">
+<h2><a class="toc-backref" href="#id12">7.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Check whether a long-term public key is valid. The response should always
 be the same, provided the key exists.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1325,9 +1385,13 @@ and is currently valid.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="get-matrix-identity-api-v1-pubkey-ephemeral-isvalid"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-pubkey-ephemeral-isvalid">
-<h2><a class="toc-backref" href="#id12">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></h2>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid">
+<h2><a class="toc-backref" href="#id13">7.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Check whether a short-term public key is valid.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1387,13 +1451,214 @@ and is currently valid.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
+<p><a class="anchor" id="get-matrix-identity-v2-pubkey-keyid"></a></p>
+<div class="section" id="get-matrix-identity-v2-pubkey-keyid">
+<h2><a class="toc-backref" href="#id14">7.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></h2>
+<p>Get the public key for the passed key ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">No.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>path parameters</em></td>
+</tr>
+<tr><td>keyId</td>
+<td>string</td>
+<td><strong>Required.</strong> The ID of the key. This should take
+the form algorithm:identifier where algorithm
+identifies the signing algorithm, and the
+identifier is an opaque string.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>public_key</td>
+<td>string</td>
+<td><strong>Required.</strong> Unpadded Base64 encoded public key.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/pubkey/ed25519%3A0</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The public key exists.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;public_key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;VXuGitF39UH5iRfvbIknlvlAVKgD1BsLDMvBf0pmp7c&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 404:</strong></p>
+<p>The public key was not found.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_NOT_FOUND&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;The public key was not found&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="get-matrix-identity-v2-pubkey-isvalid"></a></p>
+<div class="section" id="get-matrix-identity-v2-pubkey-isvalid">
+<h2><a class="toc-backref" href="#id15">7.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></h2>
+<p>Check whether a long-term public key is valid. The response should always
+be the same, provided the key exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">No.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>query parameters</em></td>
+</tr>
+<tr><td>public_key</td>
+<td>string</td>
+<td><strong>Required.</strong> The unpadded base64-encoded public
+key to check.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>valid</td>
+<td>boolean</td>
+<td><strong>Required.</strong> Whether the public key is recognised
+and is currently valid.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/pubkey/isvalid?public_key=VXuGitF39UH5iRfvbIknlvlAVKgD1BsLDMvBf0pmp7c</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The validity of the public key.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;valid&quot;</span><span class="punctuation">:</span> <span class="keyword constant">true</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="get-matrix-identity-v2-pubkey-ephemeral-isvalid"></a></p>
+<div class="section" id="get-matrix-identity-v2-pubkey-ephemeral-isvalid">
+<h2><a class="toc-backref" href="#id16">7.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></h2>
+<p>Check whether a short-term public key is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">No.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>query parameters</em></td>
+</tr>
+<tr><td>public_key</td>
+<td>string</td>
+<td><strong>Required.</strong> The unpadded base64-encoded public
+key to check.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>valid</td>
+<td>boolean</td>
+<td><strong>Required.</strong> Whether the public key is recognised
+and is currently valid.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/pubkey/ephemeral/isvalid?public_key=VXuGitF39UH5iRfvbIknlvlAVKgD1BsLDMvBf0pmp7c</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The validity of the public key.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;valid&quot;</span><span class="punctuation">:</span> <span class="keyword constant">true</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
 </div>
 <p><a class="anchor" id="association-lookup"></a></p>
 <div class="section" id="association-lookup">
-<h1><a class="toc-backref" href="#id13">8&nbsp;&nbsp;&nbsp;Association lookup</a></h1>
-<p><a class="anchor" id="get-matrix-identity-api-v1-lookup"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-lookup">
-<h2><a class="toc-backref" href="#id14">8.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></h2>
+<h1><a class="toc-backref" href="#id17">8&nbsp;&nbsp;&nbsp;Association lookup</a></h1>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-lookup"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-lookup">
+<h2><a class="toc-backref" href="#id18">8.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Look up the Matrix user ID for a 3pid.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1500,9 +1765,13 @@ identity servers.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-bulk-lookup"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-bulk-lookup">
-<h2><a class="toc-backref" href="#id15">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></h2>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-bulk-lookup"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-bulk-lookup">
+<h2><a class="toc-backref" href="#id19">8.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Lookup Matrix user IDs for a list of 3pids.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1593,11 +1862,12 @@ Matrix user ID in third position.</td>
   <span class="punctuation">]</span>
 <span class="punctuation">}</span>
 </pre>
+<!-- TODO: TravisR - Add v2 lookup API in future PR -->
 </div>
 </div>
 <p><a class="anchor" id="establishing-associations"></a></p>
 <div class="section" id="establishing-associations">
-<h1><a class="toc-backref" href="#id16">9&nbsp;&nbsp;&nbsp;Establishing associations</a></h1>
+<h1><a class="toc-backref" href="#id20">9&nbsp;&nbsp;&nbsp;Establishing associations</a></h1>
 <p>The flow for creating an association is session-based.</p>
 <p>Within a session, one may prove that one has ownership of a 3PID.
 Once this has been established, the user can form an association between that
@@ -1619,7 +1889,7 @@ session. At this point, the client should <tt class="docutils literal">/bind</tt
 or leave it for another entity to bind.</p>
 <p><a class="anchor" id="format-of-a-validation-token"></a></p>
 <div class="section" id="format-of-a-validation-token">
-<h2><a class="toc-backref" href="#id17">9.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></h2>
+<h2><a class="toc-backref" href="#id21">9.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></h2>
 <p>The format of the validation token is left up to the identity server: it
 should choose one appropriate to the 3PID type. (For example, it would be
 inappropriate to expect a user to copy a long passphrase including punctuation
@@ -1630,10 +1900,14 @@ modification.</p>
 </div>
 <p><a class="anchor" id="email-associations"></a></p>
 <div class="section" id="email-associations">
-<h2><a class="toc-backref" href="#id18">9.2&nbsp;&nbsp;&nbsp;Email associations</a></h2>
-<p><a class="anchor" id="post-matrix-identity-api-v1-validate-email-requesttoken"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-validate-email-requesttoken">
-<h3><a class="toc-backref" href="#id19">9.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></h3>
+<h2><a class="toc-backref" href="#id22">9.2&nbsp;&nbsp;&nbsp;Email associations</a></h2>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-email-requesttoken"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-validate-email-requesttoken">
+<h3><a class="toc-backref" href="#id23">9.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Create a session for validating an email address.</p>
 <p>The identity server will send an email containing a token. If that
 token is presented to the identity server in the future, it indicates
@@ -1758,9 +2032,13 @@ They must consist entirely of the characters
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-validate-email-submittoken"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id20">9.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-email-submittoken"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-validate-email-submittoken">
+<h3><a class="toc-backref" href="#id24">9.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Validate ownership of an email address.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
@@ -1851,9 +2129,13 @@ successful or not.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="get-matrix-identity-api-v1-validate-email-submittoken"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id21">9.2.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-validate-email-submittoken"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-validate-email-submittoken">
+<h3><a class="toc-backref" href="#id25">9.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Validate ownership of an email address.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
@@ -1914,13 +2196,300 @@ to the URL provided by the <tt class="docutils literal">next_link</tt> parameter
 <p><strong>Status code 4xx:</strong></p>
 <p>Validation failed.</p>
 </div>
+<p><a class="anchor" id="post-matrix-identity-v2-validate-email-requesttoken"></a></p>
+<div class="section" id="post-matrix-identity-v2-validate-email-requesttoken">
+<h3><a class="toc-backref" href="#id26">9.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></h3>
+<p>Create a session for validating an email address.</p>
+<p>The identity server will send an email containing a token. If that
+token is presented to the identity server in the future, it indicates
+that that user was able to read the email for that email address, and
+so we validate ownership of the email address.</p>
+<p>Note that homeservers offer APIs that proxy this API, adding
+additional behaviour on top, for example,
+<tt class="docutils literal">/register/email/requestToken</tt> is designed specifically for use when
+registering an account and therefore will inform the user if the email
+address given is already registered on the server.</p>
+<p>Note: for backwards compatibility with previous drafts of this
+specification, the parameters may also be specified as
+<tt class="docutils literal"><span class="pre">application/x-form-www-urlencoded</span></tt> data.  However, this usage is
+deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> A unique string generated by the
+client, and used to identify the validation
+attempt. It must be a string consisting of the
+characters <tt class="docutils literal"><span class="pre">[0-9a-zA-Z.=_-]</span></tt>. Its length must
+not exceed 255 characters and it must not be
+empty.</td>
+</tr>
+<tr><td>email</td>
+<td>string</td>
+<td><strong>Required.</strong> The email address to validate.</td>
+</tr>
+<tr><td>send_attempt</td>
+<td>integer</td>
+<td><strong>Required.</strong> The server will only send an email
+if the <tt class="docutils literal">send_attempt</tt> is a number greater than
+the most recent one which it has seen, scoped to
+that <tt class="docutils literal">email</tt> + <tt class="docutils literal">client_secret</tt> pair. This is
+to avoid repeatedly sending the same email in the
+case of request retries between the POSTing user
+and the identity server. The client should
+increment this value if they desire a new email
+(e.g. a reminder) to be sent. If they do not, the
+server should respond with success but not resend
+the email.</td>
+</tr>
+<tr><td>next_link</td>
+<td>string</td>
+<td>Optional. When the validation is completed, the
+identity server will redirect the user to this
+URL. This option is ignored when submitting 3PID
+validation information through a POST request.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID. Session IDs are
+opaque strings generated by the identity server.
+They must consist entirely of the characters
+<tt class="docutils literal"><span class="pre">[0-9a-zA-Z.=_-]</span></tt>. Their length must not exceed
+255 characters and they must not be empty.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/validate/email/requestToken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;email&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;foo&#64;example.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;send_attempt&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>Session created.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;123abc&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>An error ocurred.  Some possible errors are:</p>
+<ul class="simple">
+<li><tt class="docutils literal">M_INVALID_EMAIL</tt>: The email address provided was invalid.</li>
+<li><tt class="docutils literal">M_EMAIL_SEND_ERROR</tt>: The validation email could not be sent.</li>
+</ul>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_INVALID_EMAIL&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;The email address is not valid&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-validate-email-submittoken"></a></p>
+<div class="section" id="post-matrix-identity-v2-validate-email-submittoken">
+<h3><a class="toc-backref" href="#id27">9.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
+<p>Validate ownership of an email address.</p>
+<p>If the three parameters are consistent with a set generated by a
+<tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
+have been validated. This does not publish any information publicly, or
+associate the email address with any Matrix user ID. Specifically,
+calls to <tt class="docutils literal">/lookup</tt> will not show a binding.</p>
+<p>The identity server is free to match the token case-insensitively, or
+carry out other mapping operations such as unicode
+normalisation. Whether to do so is an implementation detail for the
+identity server. Clients must always pass on the token without
+modification.</p>
+<p>Note: for backwards compatibility with previous drafts of this
+specification, the parameters may also be specified as
+<tt class="docutils literal"><span class="pre">application/x-form-www-urlencoded</span></tt> data.  However, this usage is
+deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID, generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret that was supplied
+to the <tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token generated by the
+<tt class="docutils literal">requestToken</tt> call and emailed to the user.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>success</td>
+<td>boolean</td>
+<td><strong>Required.</strong> Whether the validation was
+successful or not.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/validate/email/submitToken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1234&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;token&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;atoken&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The success of the validation.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;success&quot;</span><span class="punctuation">:</span> <span class="keyword constant">true</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="get-matrix-identity-v2-validate-email-submittoken"></a></p>
+<div class="section" id="get-matrix-identity-v2-validate-email-submittoken">
+<h3><a class="toc-backref" href="#id28">9.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
+<p>Validate ownership of an email address.</p>
+<p>If the three parameters are consistent with a set generated by a
+<tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
+have been validated. This does not publish any information publicly, or
+associate the email address with any Matrix user ID. Specifically,
+calls to <tt class="docutils literal">/lookup</tt> will not show a binding.</p>
+<p>Note that, in contrast with the POST version, this endpoint will be
+used by end-users, and so the response should be human-readable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>query parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID, generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret that was supplied
+to the <tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token generated by the
+<tt class="docutils literal">requestToken</tt> call and emailed to the user.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/validate/email/submitToken?sid=1234&amp;client_secret=monkeys_are_GREAT&amp;token=atoken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>Email address is validated.</p>
+<p><strong>Status code 3xx:</strong></p>
+<p>Email address is validated, and the <tt class="docutils literal">next_link</tt> parameter was
+provided to the <tt class="docutils literal">requestToken</tt> call.  The user must be redirected
+to the URL provided by the <tt class="docutils literal">next_link</tt> parameter.</p>
+<p><strong>Status code 4xx:</strong></p>
+<p>Validation failed.</p>
+</div>
 </div>
 <p><a class="anchor" id="phone-number-associations"></a></p>
 <div class="section" id="phone-number-associations">
-<h2><a class="toc-backref" href="#id22">9.3&nbsp;&nbsp;&nbsp;Phone number associations</a></h2>
-<p><a class="anchor" id="post-matrix-identity-api-v1-validate-msisdn-requesttoken"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-validate-msisdn-requesttoken">
-<h3><a class="toc-backref" href="#id23">9.3.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></h3>
+<h2><a class="toc-backref" href="#id29">9.3&nbsp;&nbsp;&nbsp;Phone number associations</a></h2>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken">
+<h3><a class="toc-backref" href="#id30">9.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Create a session for validating a phone number.</p>
 <p>The identity server will send an SMS message containing a token. If
 that token is presented to the identity server in the future, it
@@ -2052,9 +2621,13 @@ SMS to the provided country or region.</li>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id24">9.3.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken">
+<h3><a class="toc-backref" href="#id31">9.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Validate ownership of a phone number.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the phone number is considered to
@@ -2145,9 +2718,13 @@ successful or not.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="get-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id25">9.3.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken">
+<h3><a class="toc-backref" href="#id32">9.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Validate ownership of a phone number.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the phone number address is
@@ -2208,13 +2785,307 @@ redirected to the URL provided by the <tt class="docutils literal">next_link</tt
 <p><strong>Status code 4xx:</strong></p>
 <p>Validation failed.</p>
 </div>
+<p><a class="anchor" id="post-matrix-identity-v2-validate-msisdn-requesttoken"></a></p>
+<div class="section" id="post-matrix-identity-v2-validate-msisdn-requesttoken">
+<h3><a class="toc-backref" href="#id33">9.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></h3>
+<p>Create a session for validating a phone number.</p>
+<p>The identity server will send an SMS message containing a token. If
+that token is presented to the identity server in the future, it
+indicates that that user was able to read the SMS for that phone
+number, and so we validate ownership of the phone number.</p>
+<p>Note that homeservers offer APIs that proxy this API, adding
+additional behaviour on top, for example,
+<tt class="docutils literal">/register/msisdn/requestToken</tt> is designed specifically for use when
+registering an account and therefore will inform the user if the phone
+number given is already registered on the server.</p>
+<p>Note: for backwards compatibility with previous drafts of this
+specification, the parameters may also be specified as
+<tt class="docutils literal"><span class="pre">application/x-form-www-urlencoded</span></tt> data. However, this usage is
+deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> A unique string generated by the
+client, and used to identify the validation
+attempt. It must be a string consisting of the
+characters <tt class="docutils literal"><span class="pre">[0-9a-zA-Z.=_-]</span></tt>. Its length must
+not exceed 255 characters and it must not be
+empty.</td>
+</tr>
+<tr><td>country</td>
+<td>string</td>
+<td><strong>Required.</strong> The two-letter uppercase ISO country
+code that the number in <tt class="docutils literal">phone_number</tt> should be
+parsed as if it were dialled from.</td>
+</tr>
+<tr><td>phone_number</td>
+<td>string</td>
+<td><strong>Required.</strong> The phone number to validate.</td>
+</tr>
+<tr><td>send_attempt</td>
+<td>integer</td>
+<td><strong>Required.</strong> The server will only send an SMS if
+the <tt class="docutils literal">send_attempt</tt> is a number greater than the
+most recent one which it has seen, scoped to that
+<tt class="docutils literal">country</tt> + <tt class="docutils literal">phone_number</tt> + <tt class="docutils literal">client_secret</tt>
+triple. This is to avoid repeatedly sending the
+same SMS in the case of request retries between
+the POSTing user and the identity server. The
+client should increment this value if they desire
+a new SMS (e.g. a reminder) to be sent.</td>
+</tr>
+<tr><td>next_link</td>
+<td>string</td>
+<td>Optional. When the validation is completed, the
+identity server will redirect the user to this
+URL. This option is ignored when submitting 3PID
+validation information through a POST request.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID. Session IDs are
+opaque strings generated by the identity server.
+They must consist entirely of the characters
+<tt class="docutils literal"><span class="pre">[0-9a-zA-Z.=_-]</span></tt>. Their length must not exceed
+255 characters and they must not be empty.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/validate/msisdn/requestToken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;country&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;GB&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;phone_number&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;07700900001&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;send_attempt&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>Session created.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;123abc&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>An error ocurred. Some possible errors are:</p>
+<ul class="simple">
+<li><tt class="docutils literal">M_INVALID_ADDRESS</tt>: The phone number provided was invalid.</li>
+<li><tt class="docutils literal">M_SEND_ERROR</tt>: The validation SMS could not be sent.</li>
+<li><tt class="docutils literal">M_DESTINATION_REJECTED</tt>: The identity server cannot deliver an
+SMS to the provided country or region.</li>
+</ul>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_INVALID_ADDRESS&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;The phone number is not valid&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-validate-msisdn-submittoken"></a></p>
+<div class="section" id="post-matrix-identity-v2-validate-msisdn-submittoken">
+<h3><a class="toc-backref" href="#id34">9.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
+<p>Validate ownership of a phone number.</p>
+<p>If the three parameters are consistent with a set generated by a
+<tt class="docutils literal">requestToken</tt> call, ownership of the phone number is considered to
+have been validated. This does not publish any information publicly, or
+associate the phone number address with any Matrix user
+ID. Specifically, calls to <tt class="docutils literal">/lookup</tt> will not show a binding.</p>
+<p>The identity server is free to match the token case-insensitively, or
+carry out other mapping operations such as unicode
+normalisation. Whether to do so is an implementation detail for the
+identity server. Clients must always pass on the token without
+modification.</p>
+<p>Note: for backwards compatibility with previous drafts of this
+specification, the parameters may also be specified as
+<tt class="docutils literal"><span class="pre">application/x-form-www-urlencoded</span></tt> data. However, this usage is
+deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID, generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret that was supplied
+to the <tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token generated by the
+<tt class="docutils literal">requestToken</tt> call and sent to the user.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>success</td>
+<td>boolean</td>
+<td><strong>Required.</strong> Whether the validation was
+successful or not.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/validate/msisdn/submitToken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1234&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;token&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;atoken&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The success of the validation.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;success&quot;</span><span class="punctuation">:</span> <span class="keyword constant">true</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="get-matrix-identity-v2-validate-msisdn-submittoken"></a></p>
+<div class="section" id="get-matrix-identity-v2-validate-msisdn-submittoken">
+<h3><a class="toc-backref" href="#id35">9.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
+<p>Validate ownership of a phone number.</p>
+<p>If the three parameters are consistent with a set generated by a
+<tt class="docutils literal">requestToken</tt> call, ownership of the phone number address is
+considered to have been validated. This does not publish any
+information publicly, or associate the phone number with any Matrix
+user ID. Specifically, calls to <tt class="docutils literal">/lookup</tt> will not show a binding.</p>
+<p>Note that, in contrast with the POST version, this endpoint will be
+used by end-users, and so the response should be human-readable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>query parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The session ID, generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret that was supplied
+to the <tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token generated by the
+<tt class="docutils literal">requestToken</tt> call and sent to the user.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/validate/msisdn/submitToken?sid=1234&amp;client_secret=monkeys_are_GREAT&amp;token=atoken</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>Phone number is validated.</p>
+<p><strong>Status code 3xx:</strong></p>
+<p>Phone number address is validated, and the <tt class="docutils literal">next_link</tt> parameter
+was provided to the <tt class="docutils literal">requestToken</tt> call. The user must be
+redirected to the URL provided by the <tt class="docutils literal">next_link</tt> parameter.</p>
+<p><strong>Status code 4xx:</strong></p>
+<p>Validation failed.</p>
+</div>
 </div>
 <p><a class="anchor" id="general"></a></p>
 <div class="section" id="general">
-<h2><a class="toc-backref" href="#id26">9.4&nbsp;&nbsp;&nbsp;General</a></h2>
-<p><a class="anchor" id="get-matrix-identity-api-v1-3pid-getvalidated3pid"></a></p>
-<div class="section" id="get-matrix-identity-api-v1-3pid-getvalidated3pid">
-<h3><a class="toc-backref" href="#id27">9.4.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></h3>
+<h2><a class="toc-backref" href="#id36">9.4&nbsp;&nbsp;&nbsp;General</a></h2>
+<p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid"></a></p>
+<div class="section" id="deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid">
+<h3><a class="toc-backref" href="#id37">9.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Determines if a given 3pid has been validated by a user.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2311,9 +3182,13 @@ indicating the time that the 3pid was validated.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-3pid-bind"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-3pid-bind">
-<h3><a class="toc-backref" href="#id28">9.4.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></h3>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-3pid-bind"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-3pid-bind">
+<h3><a class="toc-backref" href="#id38">9.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Publish an association between a session and a Matrix user ID.</p>
 <p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will return
 this association.</p>
@@ -2458,9 +3333,13 @@ identity services.</td>
 <span class="punctuation">}</span>
 </pre>
 </div>
-<p><a class="anchor" id="post-matrix-identity-api-v1-3pid-unbind"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-3pid-unbind">
-<h3><a class="toc-backref" href="#id29">9.4.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></h3>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-3pid-unbind"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-3pid-unbind">
+<h3><a class="toc-backref" href="#id39">9.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Remove an association between a session and a Matrix user ID.</p>
 <p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will not
 return the removed association.</p>
@@ -2587,11 +3466,386 @@ body, the requesting party should respect the error.</p>
 does not support unbinds. If a JSON Matrix error is in the response
 body, the requesting party should respect the error.</p>
 </div>
+<p><a class="anchor" id="get-matrix-identity-v2-3pid-getvalidated3pid"></a></p>
+<div class="section" id="get-matrix-identity-v2-3pid-getvalidated3pid">
+<h3><a class="toc-backref" href="#id40">9.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></h3>
+<p>Determines if a given 3pid has been validated by a user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>query parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Session ID generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret passed to the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>medium</td>
+<td>string</td>
+<td><strong>Required.</strong> The medium type of the 3pid.</td>
+</tr>
+<tr><td>address</td>
+<td>string</td>
+<td><strong>Required.</strong> The address of the 3pid being looked
+up.</td>
+</tr>
+<tr><td>validated_at</td>
+<td>integer</td>
+<td><strong>Required.</strong> Timestamp, in milliseconds,
+indicating the time that the 3pid was validated.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/3pid/getValidated3pid?sid=1234&amp;client_secret=monkeys_are_GREAT</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>Validation information for the session.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;medium&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;email&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;validated_at&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1457622739026</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;address&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;louise&#64;bobs.burgers&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>The session has not been validated.</p>
+<p>If the session has not been validated, then <tt class="docutils literal">errcode</tt> will be
+<tt class="docutils literal">M_SESSION_NOT_VALIDATED</tt>.  If the session has timed out, then
+<tt class="docutils literal">errcode</tt> will be <tt class="docutils literal">M_SESSION_EXPIRED</tt>.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_SESSION_NOT_VALIDATED&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;This validation session has not yet been completed&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 404:</strong></p>
+<p>The Session ID or client secret were not found.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_NO_VALID_SESSION&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;No valid session was found matching that sid and client secret&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-3pid-bind"></a></p>
+<div class="section" id="post-matrix-identity-v2-3pid-bind">
+<h3><a class="toc-backref" href="#id41">9.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></h3>
+<p>Publish an association between a session and a Matrix user ID.</p>
+<p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will return
+this association.</p>
+<p>Note: for backwards compatibility with previous drafts of this
+specification, the parameters may also be specified as
+<tt class="docutils literal"><span class="pre">application/x-form-www-urlencoded</span></tt> data.  However, this usage is
+deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Session ID generated by the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td><strong>Required.</strong> The client secret passed to the
+<tt class="docutils literal">requestToken</tt> call.</td>
+</tr>
+<tr><td>mxid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID to associate with
+the 3pids.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>address</td>
+<td>string</td>
+<td><strong>Required.</strong> The 3pid address of the user being
+looked up.</td>
+</tr>
+<tr><td>medium</td>
+<td>string</td>
+<td><strong>Required.</strong> The medium type of the 3pid.</td>
+</tr>
+<tr><td>mxid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID associated with
+the 3pid.</td>
+</tr>
+<tr><td>not_before</td>
+<td>integer</td>
+<td><strong>Required.</strong> A unix timestamp before which the
+association is not known to be valid.</td>
+</tr>
+<tr><td>not_after</td>
+<td>integer</td>
+<td><strong>Required.</strong> A unix timestamp after which the
+association is not known to be valid.</td>
+</tr>
+<tr><td>ts</td>
+<td>integer</td>
+<td><strong>Required.</strong> The unix timestamp at which the
+association was verified.</td>
+</tr>
+<tr><td>signatures</td>
+<td>{string: {string: string}}</td>
+<td><strong>Required.</strong> The signatures of the verifying
+identity servers which show that the association
+should be trusted, if you trust the verifying
+identity services.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/3pid/bind</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1234&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;ears:matrix.org&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The association was published.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;address&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;louise&#64;bobs.burgers&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;medium&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;email&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;ears:matrix.org&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;not_before&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1428825849161</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;not_after&quot;</span><span class="punctuation">:</span> <span class="literal number integer">4582425849161</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;ts&quot;</span><span class="punctuation">:</span> <span class="literal number integer">1428825849161</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+    <span class="name tag">&quot;matrix.org&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+      <span class="name tag">&quot;ed25519:0&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;ENiU2YORYUJgE6WBMitU0mppbQjidDLanAusj8XS2nVRHPu+0t42OKA/r6zV6i2MzUbNQ3c3MiLScJuSsOiVDQ&quot;</span>
+    <span class="punctuation">}</span>
+  <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>The association was not published.</p>
+<p>If the session has not been validated, then <tt class="docutils literal">errcode</tt> will be
+<tt class="docutils literal">M_SESSION_NOT_VALIDATED</tt>.  If the session has timed out, then
+<tt class="docutils literal">errcode</tt> will be <tt class="docutils literal">M_SESSION_EXPIRED</tt>.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_SESSION_NOT_VALIDATED&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;This validation session has not yet been completed&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 404:</strong></p>
+<p>The Session ID or client secret were not found</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_NO_VALID_SESSION&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;No valid session was found matching that sid and client secret&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-3pid-unbind"></a></p>
+<div class="section" id="post-matrix-identity-v2-3pid-unbind">
+<h3><a class="toc-backref" href="#id42">9.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></h3>
+<p>Remove an association between a session and a Matrix user ID.</p>
+<p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will not
+return the removed association.</p>
+<p>The identity server should authenticate the request in one of two
+ways:</p>
+<ol class="arabic simple">
+<li>The request is signed by the homeserver which controls the <tt class="docutils literal">user_id</tt>.</li>
+<li>The request includes the <tt class="docutils literal">sid</tt> and <tt class="docutils literal">client_secret</tt> parameters,
+as per <tt class="docutils literal">/3pid/bind</tt>, which proves ownership of the 3PID.</li>
+</ol>
+<p>If this endpoint returns a JSON Matrix error, that error should be passed
+through to the client requesting an unbind through a homeserver, if the
+homeserver is acting on behalf of a client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>sid</td>
+<td>string</td>
+<td>The Session ID generated by the <tt class="docutils literal">requestToken</tt>
+call.</td>
+</tr>
+<tr><td>client_secret</td>
+<td>string</td>
+<td>The client secret passed to the <tt class="docutils literal">requestToken</tt>
+call.</td>
+</tr>
+<tr><td>mxid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID to remove from
+the 3pids.</td>
+</tr>
+<tr><td>threepid</td>
+<td>3PID</td>
+<td><strong>Required.</strong> The 3PID to remove. Must match the
+3PID used to generate the session if using <tt class="docutils literal">sid</tt>
+and <tt class="docutils literal">client_secret</tt> to authenticate this
+request.</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="colwidths-auto docutils">
+<caption>3PID</caption>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>medium</td>
+<td>string</td>
+<td><strong>Required.</strong> A medium from the <a class="reference external" href="../appendices.html#pid-types">3PID Types</a>
+Appendix, matching the medium of the identifier to
+unbind.</td>
+</tr>
+<tr><td>address</td>
+<td>string</td>
+<td><strong>Required.</strong> The 3PID address to remove.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/3pid/unbind</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;sid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;1234&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;client_secret&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_are_GREAT&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;ears:example.org&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;threepid&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+    <span class="name tag">&quot;medium&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;email&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;address&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;monkeys_have_ears&#64;example.org&quot;</span>
+  <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The association was successfully removed.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>If the response body is not a JSON Matrix error, the identity server
+does not support unbinds. If a JSON Matrix error is in the response
+body, the requesting party should respect the error.</p>
+<p><strong>Status code 403:</strong></p>
+<p>The credentials supplied to authenticate the request were invalid.
+This may also be returned if the identity server does not support
+the chosen authentication method (such as blocking homeservers from
+unbinding identifiers).</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_FORBIDDEN&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Invalid homeserver signature&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 404:</strong></p>
+<p>If the response body is not a JSON Matrix error, the identity server
+does not support unbinds. If a JSON Matrix error is in the response
+body, the requesting party should respect the error.</p>
+<p><strong>Status code 501:</strong></p>
+<p>If the response body is not a JSON Matrix error, the identity server
+does not support unbinds. If a JSON Matrix error is in the response
+body, the requesting party should respect the error.</p>
+</div>
 </div>
 </div>
 <p><a class="anchor" id="invitation-storage"></a></p>
 <div class="section" id="invitation-storage">
-<h1><a class="toc-backref" href="#id30">10&nbsp;&nbsp;&nbsp;Invitation storage</a></h1>
+<h1><a class="toc-backref" href="#id43">10&nbsp;&nbsp;&nbsp;Invitation storage</a></h1>
 <p>An identity server can store pending invitations to a user's 3PID, which will
 be retrieved and can be either notified on or look up when the 3PID is
 associated with a Matrix user ID.</p>
@@ -2599,9 +3853,13 @@ associated with a Matrix user ID.</p>
 ID, the identity server will attempt to make an HTTP POST to the Matrix user's
 homeserver via the <a class="reference external" href="../server_server/unstable.html#put-matrix-federation-v1-3pid-onbind">/3pid/onbind</a> endpoint. The request MUST be signed with a
 long-term private key for the identity server.</p>
-<p><a class="anchor" id="post-matrix-identity-api-v1-store-invite"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-store-invite">
-<h2><a class="toc-backref" href="#id31">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></h2>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-store-invite"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-store-invite">
+<h2><a class="toc-backref" href="#id44">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Store pending invitations to a user's 3pid.</p>
 <p>In addition to the request parameters specified below, an arbitrary
 number of other parameters may also be specified. These may be used in
@@ -2772,17 +4030,194 @@ error code will be <tt class="docutils literal">M_UNRECOGNIZED</tt>.</p>
 <span class="punctuation">}</span>
 </pre>
 </div>
+<p><a class="anchor" id="post-matrix-identity-v2-store-invite"></a></p>
+<div class="section" id="post-matrix-identity-v2-store-invite">
+<h2><a class="toc-backref" href="#id45">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></h2>
+<p>Store pending invitations to a user's 3pid.</p>
+<p>In addition to the request parameters specified below, an arbitrary
+number of other parameters may also be specified. These may be used in
+the invite message generation described below.</p>
+<p>The service will generate a random token and an ephemeral key used for
+accepting the invite.</p>
+<p>The service also generates a <tt class="docutils literal">display_name</tt> for the inviter, which is
+a redacted version of <tt class="docutils literal">address</tt> which does not leak the full contents
+of the <tt class="docutils literal">address</tt>.</p>
+<p>The service records persistently all of the above information.</p>
+<p>It also generates an email containing all of this data, sent to the
+<tt class="docutils literal">address</tt> parameter, notifying them of the invitation.</p>
+<p>Also, the generated ephemeral public key will be listed as valid on
+requests to <tt class="docutils literal">/_matrix/identity/v2/pubkey/ephemeral/isvalid</tt>.</p>
+<p>Currently, invites may only be issued for 3pids of the <tt class="docutils literal">email</tt> medium.</p>
+<p>Optional fields in the request should be populated to the best of the
+server's ability. Identity servers may use these variables when notifying
+the <tt class="docutils literal">address</tt> of the pending invite for display purposes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>medium</td>
+<td>string</td>
+<td><strong>Required.</strong> The literal string <tt class="docutils literal">email</tt>.</td>
+</tr>
+<tr><td>address</td>
+<td>string</td>
+<td><strong>Required.</strong> The email address of the invited
+user.</td>
+</tr>
+<tr><td>room_id</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix room ID to which the user
+is invited</td>
+</tr>
+<tr><td>sender</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID of the inviting
+user</td>
+</tr>
+<tr><td>room_alias</td>
+<td>string</td>
+<td>The Matrix room alias for the room to which the
+user is invited. This should be retrieved from the
+<tt class="docutils literal">m.room.canonical_alias</tt> state event.</td>
+</tr>
+<tr><td>room_avatar_url</td>
+<td>string</td>
+<td>The Content URI for the room to which the user is
+invited. This should be retrieved from the
+<tt class="docutils literal">m.room.avatar</tt> state event.</td>
+</tr>
+<tr><td>room_join_rules</td>
+<td>string</td>
+<td>The <tt class="docutils literal">join_rule</tt> for the room to which the user
+is invited. This should be retrieved from the
+<tt class="docutils literal">m.room.join_rules</tt> state event.</td>
+</tr>
+<tr><td>room_name</td>
+<td>string</td>
+<td>The name of the room to which the user is invited.
+This should be retrieved from the <tt class="docutils literal">m.room.name</tt>
+state event.</td>
+</tr>
+<tr><td>sender_display_name</td>
+<td>string</td>
+<td>The display name of the user ID initiating the
+invite.</td>
+</tr>
+<tr><td>sender_avatar_url</td>
+<td>string</td>
+<td>The Content URI for the avatar of the user ID
+initiating the invite.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The generated token. Must be a
+string consisting of the characters
+<tt class="docutils literal"><span class="pre">[0-9a-zA-Z.=_-]</span></tt>. Its length must not exceed
+255 characters and it must not be empty.</td>
+</tr>
+<tr><td>public_keys</td>
+<td>[string]</td>
+<td><strong>Required.</strong> A list of [server's long-term public
+key, generated ephemeral public key].</td>
+</tr>
+<tr><td>display_name</td>
+<td>string</td>
+<td><strong>Required.</strong> The generated (redacted)
+display_name.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/store-invite</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;medium&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;email&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;address&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;foo&#64;example.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;room_id&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;!something:example.org&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;bob:example.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;room_alias&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;#somewhere:exmaple.org&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;room_avatar_url&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;mxc://example.org/s0meM3dia&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;room_join_rules&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;public&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;room_name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Bob's Emporium of Messages&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;sender_display_name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Bob Smith&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;sender_avatar_url&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;mxc://example.org/an0th3rM3dia&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The invitation was stored.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;application/json&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+    <span class="name tag">&quot;token&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;sometoken&quot;</span><span class="punctuation">,</span>
+    <span class="name tag">&quot;public_keys&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
+      <span class="literal string double">&quot;serverpublickey&quot;</span><span class="punctuation">,</span>
+      <span class="literal string double">&quot;ephemeralpublickey&quot;</span>
+    <span class="punctuation">],</span>
+    <span class="name tag">&quot;display_name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;f...&#64;b...&quot;</span>
+  <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>An error has occured.</p>
+<p>If the 3pid is already bound to a Matrix user ID, the error code
+will be <tt class="docutils literal">M_THREEPID_IN_USE</tt>.  If the medium is unsupported, the
+error code will be <tt class="docutils literal">M_UNRECOGNIZED</tt>.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_THREEPID_IN_USE&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Binding already known&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;alice:example.com&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
 </div>
 <p><a class="anchor" id="ephemeral-invitation-signing"></a></p>
 <div class="section" id="ephemeral-invitation-signing">
-<h1><a class="toc-backref" href="#id32">11&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a></h1>
+<h1><a class="toc-backref" href="#id46">11&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a></h1>
 <p>To aid clients who may not be able to perform crypto themselves, the identity
 server offers some crypto functionality to help in accepting invitations.
 This is less secure than the client doing it itself, but may be useful where
 this isn't possible.</p>
-<p><a class="anchor" id="post-matrix-identity-api-v1-sign-ed25519"></a></p>
-<div class="section" id="post-matrix-identity-api-v1-sign-ed25519">
-<h2><a class="toc-backref" href="#id33">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></h2>
+<p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-sign-ed25519"></a></p>
+<div class="section" id="deprecated-post-matrix-identity-api-v1-sign-ed25519">
+<h2><a class="toc-backref" href="#id47">11.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is deprecated and will be removed from a future release.</p>
+</div>
 <p>Sign invitation details.</p>
 <p>The identity server will look up <tt class="docutils literal">token</tt> which was stored in a call
 to <tt class="docutils literal"><span class="pre">store-invite</span></tt>, and fetch the sender of the invite.</p>
@@ -2857,6 +4292,117 @@ and token.</td>
 <p class="httpheaders">Example request:</p>
 <pre class="code http literal-block">
 <span class="name function">POST</span> <span class="name namespace">/_matrix/identity/api/v1/sign-ed25519</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;foo:bar.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;token&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;sometoken&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;private_key&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;base64encodedkey&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The signed JSON of the mxid, sender, and token.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;mxid&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;foo:bar.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;sender&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;baz:bar.com&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+    <span class="name tag">&quot;my.id.server&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+      <span class="name tag">&quot;ed25519:0&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;def987&quot;</span>
+    <span class="punctuation">}</span>
+  <span class="punctuation">},</span>
+  <span class="name tag">&quot;token&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;abc123&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 404:</strong></p>
+<p>The token was not found.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_UNRECOGNIZED&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Didn't recognize token&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-sign-ed25519"></a></p>
+<div class="section" id="post-matrix-identity-v2-sign-ed25519">
+<h2><a class="toc-backref" href="#id48">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></h2>
+<p>Sign invitation details.</p>
+<p>The identity server will look up <tt class="docutils literal">token</tt> which was stored in a call
+to <tt class="docutils literal"><span class="pre">store-invite</span></tt>, and fetch the sender of the invite.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>mxid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID of the user
+accepting the invitation.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token from the call to <tt class="docutils literal">store-
+invite</tt>.</td>
+</tr>
+<tr><td>private_key</td>
+<td>string</td>
+<td><strong>Required.</strong> The private key, encoded as
+<a class="reference external" href="../appendices.html#unpadded-base64">Unpadded base64</a>.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>mxid</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID of the user
+accepting the invitation.</td>
+</tr>
+<tr><td>sender</td>
+<td>string</td>
+<td><strong>Required.</strong> The Matrix user ID of the user who
+sent the invitation.</td>
+</tr>
+<tr><td>signatures</td>
+<td>{string: {string: string}}</td>
+<td><strong>Required.</strong> The signature of the mxid, sender,
+and token.</td>
+</tr>
+<tr><td>token</td>
+<td>string</td>
+<td><strong>Required.</strong> The token for the invitation.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/sign-ed25519</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
 <span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
 
 <span class="punctuation">{</span>
