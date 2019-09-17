@@ -950,97 +950,109 @@ practice has only been applied specifically to email addresses and phone numbers
 <div class="contents topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#changelog" id="id4">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
-<li><a class="reference internal" href="#other-versions-of-this-specification" id="id5">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
+<li><a class="reference internal" href="#changelog" id="id5">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#other-versions-of-this-specification" id="id6">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#general-principles" id="id6">2&nbsp;&nbsp;&nbsp;General principles</a></li>
-<li><a class="reference internal" href="#api-standards" id="id7">3&nbsp;&nbsp;&nbsp;API standards</a></li>
-<li><a class="reference internal" href="#privacy" id="id8">4&nbsp;&nbsp;&nbsp;Privacy</a></li>
-<li><a class="reference internal" href="#web-browser-clients" id="id9">5&nbsp;&nbsp;&nbsp;Web browser clients</a></li>
-<li><a class="reference internal" href="#authentication" id="id10">6&nbsp;&nbsp;&nbsp;Authentication</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-identity-v2-account-register" id="id11">6.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/register</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-account" id="id12">6.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/account</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-account-logout" id="id13">6.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/logout</tt></a></li>
+<li><a class="reference internal" href="#general-principles" id="id7">2&nbsp;&nbsp;&nbsp;General principles</a></li>
+<li><a class="reference internal" href="#api-standards" id="id8">3&nbsp;&nbsp;&nbsp;API standards</a></li>
+<li><a class="reference internal" href="#privacy" id="id9">4&nbsp;&nbsp;&nbsp;Privacy</a></li>
+<li><a class="reference internal" href="#version-1-api-deprecation" id="id10">5&nbsp;&nbsp;&nbsp;Version 1 API deprecation</a></li>
+<li><a class="reference internal" href="#web-browser-clients" id="id11">6&nbsp;&nbsp;&nbsp;Web browser clients</a></li>
+<li><a class="reference internal" href="#authentication" id="id12">7&nbsp;&nbsp;&nbsp;Authentication</a><ul class="auto-toc">
+<li><a class="reference internal" href="#post-matrix-identity-v2-account-register" id="id13">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/register</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-account" id="id14">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/account</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-account-logout" id="id15">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/logout</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#terms-of-service" id="id14">7&nbsp;&nbsp;&nbsp;Terms of service</a><ul class="auto-toc">
-<li><a class="reference internal" href="#m-accepted-terms" id="id15">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.accepted_terms</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-terms" id="id16">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/terms</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-terms" id="id17">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/terms</tt></a></li>
+<li><a class="reference internal" href="#terms-of-service" id="id16">8&nbsp;&nbsp;&nbsp;Terms of service</a><ul class="auto-toc">
+<li><a class="reference internal" href="#m-accepted-terms" id="id17">8.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.accepted_terms</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-terms" id="id18">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/terms</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-terms" id="id19">8.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/terms</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#status-check" id="id18">8&nbsp;&nbsp;&nbsp;Status check</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1" id="id19">8.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2" id="id20">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></li>
+<li><a class="reference internal" href="#status-check" id="id20">9&nbsp;&nbsp;&nbsp;Status check</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1" id="id21">9.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2" id="id22">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#key-management" id="id21">9&nbsp;&nbsp;&nbsp;Key management</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-keyid" id="id22">9.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></li>
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-isvalid" id="id23">9.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></li>
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid" id="id24">9.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-keyid" id="id25">9.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-isvalid" id="id26">9.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-ephemeral-isvalid" id="id27">9.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></li>
+<li><a class="reference internal" href="#key-management" id="id23">10&nbsp;&nbsp;&nbsp;Key management</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-keyid" id="id24">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-isvalid" id="id25">10.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid" id="id26">10.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-keyid" id="id27">10.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-isvalid" id="id28">10.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-pubkey-ephemeral-isvalid" id="id29">10.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#association-lookup" id="id28">10&nbsp;&nbsp;&nbsp;Association lookup</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-lookup" id="id29">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></li>
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-bulk-lookup" id="id30">10.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></li>
+<li><a class="reference internal" href="#association-lookup" id="id30">11&nbsp;&nbsp;&nbsp;Association lookup</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-lookup" id="id31">11.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-bulk-lookup" id="id32">11.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-hash-details" id="id33">11.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/hash_details</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-lookup" id="id34">11.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/lookup</tt></a></li>
+<li><a class="reference internal" href="#client-behaviour" id="id35">11.5&nbsp;&nbsp;&nbsp;Client behaviour</a></li>
+<li><a class="reference internal" href="#server-behaviour" id="id36">11.6&nbsp;&nbsp;&nbsp;Server behaviour</a></li>
+<li><a class="reference internal" href="#algorithms" id="id37">11.7&nbsp;&nbsp;&nbsp;Algorithms</a><ul class="auto-toc">
+<li><a class="reference internal" href="#sha256" id="id38">11.7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">sha256</tt></a></li>
+<li><a class="reference internal" href="#none" id="id39">11.7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">none</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#establishing-associations" id="id31">11&nbsp;&nbsp;&nbsp;Establishing associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#format-of-a-validation-token" id="id32">11.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></li>
-<li><a class="reference internal" href="#email-associations" id="id33">11.2&nbsp;&nbsp;&nbsp;Email associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-requesttoken" id="id34">11.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></li>
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-submittoken" id="id35">11.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-email-submittoken" id="id36">11.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-requesttoken" id="id37">11.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-submittoken" id="id38">11.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-validate-email-submittoken" id="id39">11.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#security-considerations" id="id40">11.8&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#phone-number-associations" id="id40">11.3&nbsp;&nbsp;&nbsp;Phone number associations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken" id="id41">11.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></li>
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken" id="id42">11.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken" id="id43">11.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-requesttoken" id="id44">11.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-submittoken" id="id45">11.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-validate-msisdn-submittoken" id="id46">11.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#establishing-associations" id="id41">12&nbsp;&nbsp;&nbsp;Establishing associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#format-of-a-validation-token" id="id42">12.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></li>
+<li><a class="reference internal" href="#email-associations" id="id43">12.2&nbsp;&nbsp;&nbsp;Email associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-requesttoken" id="id44">12.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-email-submittoken" id="id45">12.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-email-submittoken" id="id46">12.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-requesttoken" id="id47">12.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-email-submittoken" id="id48">12.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-validate-email-submittoken" id="id49">12.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#general" id="id47">11.4&nbsp;&nbsp;&nbsp;General</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid" id="id48">11.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></li>
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-bind" id="id49">11.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></li>
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-unbind" id="id50">11.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-identity-v2-3pid-getvalidated3pid" id="id51">11.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-bind" id="id52">11.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-unbind" id="id53">11.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></li>
+<li><a class="reference internal" href="#phone-number-associations" id="id50">12.3&nbsp;&nbsp;&nbsp;Phone number associations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken" id="id51">12.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken" id="id52">12.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken" id="id53">12.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-requesttoken" id="id54">12.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-validate-msisdn-submittoken" id="id55">12.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-validate-msisdn-submittoken" id="id56">12.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#general" id="id57">12.4&nbsp;&nbsp;&nbsp;General</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid" id="id58">12.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-bind" id="id59">12.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></li>
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-3pid-unbind" id="id60">12.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-identity-v2-3pid-getvalidated3pid" id="id61">12.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-bind" id="id62">12.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-3pid-unbind" id="id63">12.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#invitation-storage" id="id54">12&nbsp;&nbsp;&nbsp;Invitation storage</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-store-invite" id="id55">12.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-store-invite" id="id56">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></li>
+<li><a class="reference internal" href="#invitation-storage" id="id64">13&nbsp;&nbsp;&nbsp;Invitation storage</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-store-invite" id="id65">13.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-store-invite" id="id66">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ephemeral-invitation-signing" id="id57">13&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a><ul class="auto-toc">
-<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-sign-ed25519" id="id58">13.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></li>
-<li><a class="reference internal" href="#post-matrix-identity-v2-sign-ed25519" id="id59">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></li>
+<li><a class="reference internal" href="#ephemeral-invitation-signing" id="id67">14&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a><ul class="auto-toc">
+<li><a class="reference internal" href="#deprecated-post-matrix-identity-api-v1-sign-ed25519" id="id68">14.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-identity-v2-sign-ed25519" id="id69">14.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></li>
 </ul>
 </li>
 </ul>
 </div>
 <p><a class="anchor" id="changelog"></a></p>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id4">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
+<h1><a class="toc-backref" href="#id5">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
 <div class="topic">
 <p class="topic-title first">Version: unstable</p>
 <p>New Endpoints</p>
 <ul class="simple">
 <li>Add <tt class="docutils literal">/account</tt>, <tt class="docutils literal">/account/register</tt>, and <tt class="docutils literal">/account/logout</tt> to authenticate with the identity server. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2255">#2255</a>)</li>
 <li>Add endpoints for accepting and handling terms of service. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2258">#2258</a>)</li>
+<li>Add <tt class="docutils literal">/hash_details</tt> and a new <tt class="docutils literal">/lookup</tt> endpoint for performing hashed association lookups. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2287">#2287</a>)</li>
 </ul>
 <p>Backwards Compatible Changes</p>
 <ul class="simple">
@@ -1049,12 +1061,12 @@ practice has only been applied specifically to email addresses and phone numbers
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/c00fe02f">master,c00fe02f</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/2c88f02d">master,2c88f02d</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/identity_service.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
 <div class="section" id="other-versions-of-this-specification">
-<h2><a class="toc-backref" href="#id5">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
+<h2><a class="toc-backref" href="#id6">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
 <p>The following other versions are also available, in reverse chronological order:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://matrix.org/docs/spec/identity_service/unstable.html">HEAD</a>: Includes all changes since the latest versioned release.</li>
@@ -1065,7 +1077,7 @@ practice has only been applied specifically to email addresses and phone numbers
 </div>
 <p><a class="anchor" id="general-principles"></a></p>
 <div class="section" id="general-principles">
-<h1><a class="toc-backref" href="#id6">2&nbsp;&nbsp;&nbsp;General principles</a></h1>
+<h1><a class="toc-backref" href="#id7">2&nbsp;&nbsp;&nbsp;General principles</a></h1>
 <p>The purpose of an identity server is to validate, store, and answer questions
 about the identities of users. In particular, it stores associations of the form
 &quot;identifier X represents the same user as identifier Y&quot;, where identities may
@@ -1083,7 +1095,7 @@ is left as an exercise for the client.</p>
 </div>
 <p><a class="anchor" id="api-standards"></a></p>
 <div class="section" id="api-standards">
-<h1><a class="toc-backref" href="#id7">3&nbsp;&nbsp;&nbsp;API standards</a></h1>
+<h1><a class="toc-backref" href="#id8">3&nbsp;&nbsp;&nbsp;API standards</a></h1>
 <p>The mandatory baseline for identity server communication in Matrix is exchanging
 JSON objects over HTTP APIs. HTTPS is required for communication, and all API calls
 use a Content-Type of <tt class="docutils literal">application/json</tt>. In addition, strings MUST be encoded as
@@ -1150,7 +1162,7 @@ third party identifier.</td>
 </div>
 <p><a class="anchor" id="privacy"></a></p>
 <div class="section" id="privacy">
-<h1><a class="toc-backref" href="#id8">4&nbsp;&nbsp;&nbsp;Privacy</a></h1>
+<h1><a class="toc-backref" href="#id9">4&nbsp;&nbsp;&nbsp;Privacy</a></h1>
 <p>Identity is a privacy-sensitive issue. While the identity server exists to
 provide identity information, access should be restricted to avoid leaking
 potentially sensitive data. In particular, being able to construct large-scale
@@ -1159,9 +1171,23 @@ should allow a 3PID to be mapped to a Matrix user identity, but not in the other
 direction (i.e. one should not be able to get all 3PIDs associated with a Matrix
 user ID, or get all 3PIDs associated with a 3PID).</p>
 </div>
+<p><a class="anchor" id="version-1-api-deprecation"></a></p>
+<div class="section" id="version-1-api-deprecation">
+<h1><a class="toc-backref" href="#id10">5&nbsp;&nbsp;&nbsp;Version 1 API deprecation</a></h1>
+<!-- TODO: Remove this section when the v1 API is removed. -->
+<p>As described on each of the version 1 endpoints, the v1 API is deprecated in
+favour of the v2 API described here. The major difference, with the exception
+of a few isolated cases, is that the v2 API requires authentication to ensure
+the user has given permission for the identity server to operate on their data.</p>
+<p>The v1 API is planned to be removed from the specification in a future version.</p>
+<p>Clients SHOULD attempt the v2 endpoints first, and if they receive a <tt class="docutils literal">404</tt>,
+<tt class="docutils literal">400</tt>, or similar error they should try the v1 endpoint or fail the operation.
+Clients are strongly encouraged to warn the user of the risks in using the v1 API,
+if they are planning on using it.</p>
+</div>
 <p><a class="anchor" id="web-browser-clients"></a></p>
 <div class="section" id="web-browser-clients">
-<h1><a class="toc-backref" href="#id9">5&nbsp;&nbsp;&nbsp;Web browser clients</a></h1>
+<h1><a class="toc-backref" href="#id11">6&nbsp;&nbsp;&nbsp;Web browser clients</a></h1>
 <p>It is realistic to expect that some clients will be written to be run within a web
 browser or similar environment. In these cases, the identity server should respond to
 pre-flight requests and supply Cross-Origin Resource Sharing (CORS) headers on all
@@ -1177,7 +1203,7 @@ Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Au
 </div>
 <p><a class="anchor" id="authentication"></a></p>
 <div class="section" id="authentication">
-<h1><a class="toc-backref" href="#id10">6&nbsp;&nbsp;&nbsp;Authentication</a></h1>
+<h1><a class="toc-backref" href="#id12">7&nbsp;&nbsp;&nbsp;Authentication</a></h1>
 <p>Most <tt class="docutils literal">v2</tt> endpoints in the Identity Service API require authentication in order
 to ensure that the requesting user has accepted all relevant policies and is otherwise
 permitted to make the request. The <tt class="docutils literal">v1</tt> API (currently deprecated) does not require
@@ -1198,7 +1224,7 @@ in cases where the <tt class="docutils literal">Authorization</tt> header is ina
 status of 401 and the error code <tt class="docutils literal">M_UNAUTHORIZED</tt>.</p>
 <p><a class="anchor" id="post-matrix-identity-v2-account-register"></a></p>
 <div class="section" id="post-matrix-identity-v2-account-register">
-<h2><a class="toc-backref" href="#id11">6.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/register</tt></a></h2>
+<h2><a class="toc-backref" href="#id13">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/register</tt></a></h2>
 <p>Exchanges an OpenID token from the homeserver for an access token to
 access the identity server. The request body is the same as the values
 returned by <tt class="docutils literal">/openid/request_token</tt> in the Client-Server API.</p>
@@ -1290,7 +1316,7 @@ identity server.</p>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-account"></a></p>
 <div class="section" id="get-matrix-identity-v2-account">
-<h2><a class="toc-backref" href="#id12">6.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/account</tt></a></h2>
+<h2><a class="toc-backref" href="#id14">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/account</tt></a></h2>
 <p>Gets information about what user owns the access token used in the request.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1346,7 +1372,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-account-logout"></a></p>
 <div class="section" id="post-matrix-identity-v2-account-logout">
-<h2><a class="toc-backref" href="#id13">6.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/logout</tt></a></h2>
+<h2><a class="toc-backref" href="#id15">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/account/logout</tt></a></h2>
 <p>Logs out the access token, preventing it from being used to authenticate
 future requests to the server.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1395,7 +1421,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="terms-of-service"></a></p>
 <div class="section" id="terms-of-service">
-<span id="agree-to-more-terms"></span><h1><a class="toc-backref" href="#id14">7&nbsp;&nbsp;&nbsp;Terms of service</a></h1>
+<span id="agree-to-more-terms"></span><h1><a class="toc-backref" href="#id16">8&nbsp;&nbsp;&nbsp;Terms of service</a></h1>
 <p>Identity Servers are encouraged to have terms of service (or similar policies) to
 ensure that users have agreed to their data being processed by the server. To facilitate
 this, an identity server can respond to almost any authenticated API endpoint with a
@@ -1412,7 +1438,7 @@ client should not expect that the server will not respond with another <tt class
 on their next request. The terms the user has just accepted are appended to <tt class="docutils literal">m.accepted_terms</tt>.</p>
 <p><a class="anchor" id="m-accepted-terms"></a></p>
 <div class="section" id="m-accepted-terms">
-<h2><a class="toc-backref" href="#id15">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.accepted_terms</tt></a></h2>
+<h2><a class="toc-backref" href="#id17">8.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.accepted_terms</tt></a></h2>
 <p>A list of terms URLs the user has previously accepted. Clients SHOULD use this
 to avoid presenting the user with terms they have already agreed to.</p>
 <table border="1" class="colwidths-auto docutils">
@@ -1446,7 +1472,7 @@ terms.</td>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-terms"></a></p>
 <div class="section" id="get-matrix-identity-v2-terms">
-<h2><a class="toc-backref" href="#id16">7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/terms</tt></a></h2>
+<h2><a class="toc-backref" href="#id18">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/terms</tt></a></h2>
 <p>Gets all the terms of service offered by the server. The client is expected
 to filter through the terms to determine which terms need acceptance from the
 user. Note that this endpoint does not require authentication.</p>
@@ -1536,7 +1562,7 @@ arbitrary.</td>
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-terms"></a></p>
 <div class="section" id="post-matrix-identity-v2-terms">
-<h2><a class="toc-backref" href="#id17">7.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/terms</tt></a></h2>
+<h2><a class="toc-backref" href="#id19">8.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/terms</tt></a></h2>
 <p>Called by a client to indicate that the user has accepted/agreed to the included
 set of URLs. Servers MUST NOT assume that the client will be sending all previously
 accepted URLs and should therefore append the provided URLs to what the server
@@ -1594,10 +1620,10 @@ this request.</td>
 </div>
 <p><a class="anchor" id="status-check"></a></p>
 <div class="section" id="status-check">
-<h1><a class="toc-backref" href="#id18">8&nbsp;&nbsp;&nbsp;Status check</a></h1>
+<h1><a class="toc-backref" href="#id20">9&nbsp;&nbsp;&nbsp;Status check</a></h1>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1">
-<h2><a class="toc-backref" href="#id19">8.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></h2>
+<h2><a class="toc-backref" href="#id21">9.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1</tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -1633,7 +1659,7 @@ by entities acting as a client for the identity server.</p>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2"></a></p>
 <div class="section" id="get-matrix-identity-v2">
-<h2><a class="toc-backref" href="#id20">8.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></h2>
+<h2><a class="toc-backref" href="#id22">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2</tt></a></h2>
 <p>Checks that an identity server is available at this API endpoint.</p>
 <p>To discover that an identity server is available at a specific URL,
 this endpoint can be queried and will return an empty object.</p>
@@ -1666,7 +1692,7 @@ by entities acting as a client for the identity server.</p>
 </div>
 <p><a class="anchor" id="key-management"></a></p>
 <div class="section" id="key-management">
-<h1><a class="toc-backref" href="#id21">9&nbsp;&nbsp;&nbsp;Key management</a></h1>
+<h1><a class="toc-backref" href="#id23">10&nbsp;&nbsp;&nbsp;Key management</a></h1>
 <p>An identity server has some long-term public-private keypairs. These are named
 in a scheme <tt class="docutils literal">algorithm:identifier</tt>, e.g. <tt class="docutils literal">ed25519:0</tt>. When signing an
 association, the standard <a class="reference external" href="../appendices.html#signing-json">Signing JSON</a> algorithm applies.</p>
@@ -1680,7 +1706,7 @@ keypairs, which may have different usage and lifetime characteristics than the
 service's long-term keys.</p>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-keyid"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-keyid">
-<h2><a class="toc-backref" href="#id22">9.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id24">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET <span class="pre">/_matrix/identity/api/v1/pubkey/{keyId}</span></tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -1756,7 +1782,7 @@ identifier is an opaque string.</td>
 </div>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-isvalid"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-isvalid">
-<h2><a class="toc-backref" href="#id23">9.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></h2>
+<h2><a class="toc-backref" href="#id25">10.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/isvalid</tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -1823,7 +1849,7 @@ and is currently valid.</td>
 </div>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-pubkey-ephemeral-isvalid">
-<h2><a class="toc-backref" href="#id24">9.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></h2>
+<h2><a class="toc-backref" href="#id26">10.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/pubkey/ephemeral/isvalid</tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -1889,7 +1915,7 @@ and is currently valid.</td>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-pubkey-keyid"></a></p>
 <div class="section" id="get-matrix-identity-v2-pubkey-keyid">
-<h2><a class="toc-backref" href="#id25">9.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id27">10.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/identity/v2/pubkey/{keyId}</span></tt></a></h2>
 <p>Get the public key for the passed key ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1961,7 +1987,7 @@ identifier is an opaque string.</td>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-pubkey-isvalid"></a></p>
 <div class="section" id="get-matrix-identity-v2-pubkey-isvalid">
-<h2><a class="toc-backref" href="#id26">9.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></h2>
+<h2><a class="toc-backref" href="#id28">10.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/isvalid</tt></a></h2>
 <p>Check whether a long-term public key is valid. The response should always
 be the same, provided the key exists.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2024,7 +2050,7 @@ and is currently valid.</td>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-pubkey-ephemeral-isvalid"></a></p>
 <div class="section" id="get-matrix-identity-v2-pubkey-ephemeral-isvalid">
-<h2><a class="toc-backref" href="#id27">9.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></h2>
+<h2><a class="toc-backref" href="#id29">10.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/pubkey/ephemeral/isvalid</tt></a></h2>
 <p>Check whether a short-term public key is valid.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2087,10 +2113,10 @@ and is currently valid.</td>
 </div>
 <p><a class="anchor" id="association-lookup"></a></p>
 <div class="section" id="association-lookup">
-<h1><a class="toc-backref" href="#id28">10&nbsp;&nbsp;&nbsp;Association lookup</a></h1>
+<h1><a class="toc-backref" href="#id30">11&nbsp;&nbsp;&nbsp;Association lookup</a></h1>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-lookup"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-lookup">
-<h2><a class="toc-backref" href="#id29">10.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></h2>
+<h2><a class="toc-backref" href="#id31">11.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/lookup</tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -2203,7 +2229,7 @@ identity servers.</td>
 </div>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-bulk-lookup"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-bulk-lookup">
-<h2><a class="toc-backref" href="#id30">10.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></h2>
+<h2><a class="toc-backref" href="#id32">11.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/bulk_lookup</tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -2298,12 +2324,291 @@ Matrix user ID in third position.</td>
   <span class="punctuation">]</span>
 <span class="punctuation">}</span>
 </pre>
-<!-- TODO: TravisR - Add v2 lookup API in future PR -->
+</div>
+<p><a class="anchor" id="get-matrix-identity-v2-hash-details"></a></p>
+<div class="section" id="get-matrix-identity-v2-hash-details">
+<h2><a class="toc-backref" href="#id33">11.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/hash_details</tt></a></h2>
+<p>Gets parameters for hashing identifiers from the server. This can include
+any of the algorithms defined in this specification.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<p><cite>No parameters</cite></p>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>lookup_pepper</td>
+<td>string</td>
+<td><p class="first"><strong>Required.</strong> The pepper the client MUST use in
+hashing identifiers, and MUST supply to the
+<tt class="docutils literal">/lookup</tt> endpoint when performing lookups.</p>
+<p class="last">Servers SHOULD rotate this string often.</p>
+</td>
+</tr>
+<tr><td>algorithms</td>
+<td>[string]</td>
+<td><strong>Required.</strong> The algorithms the server supports.
+Must contain at least <tt class="docutils literal">sha256</tt>.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">GET</span> <span class="name namespace">/_matrix/identity/v2/hash_details</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+</pre>
+<p class="httpheaders">Response:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The hash function information.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;lookup_pepper&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;matrixrocks&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;algorithms&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
+    <span class="literal string double">&quot;none&quot;</span><span class="punctuation">,</span>
+    <span class="literal string double">&quot;sha256&quot;</span>
+  <span class="punctuation">]</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="post-matrix-identity-v2-lookup"></a></p>
+<div class="section" id="post-matrix-identity-v2-lookup">
+<h2><a class="toc-backref" href="#id34">11.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/lookup</tt></a></h2>
+<p>Looks up the set of Matrix User IDs which have bound the 3PIDs given, if
+bindings are available. Note that the format of the addresses is defined
+later in this specification.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Rate-limited:</th><td class="field-body">No.</td>
+</tr>
+<tr class="field"><th class="field-name">Requires auth:</th><td class="field-body">Yes.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Request format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td colspan="3"><em>JSON body parameters</em></td>
+</tr>
+<tr><td>algorithm</td>
+<td>string</td>
+<td><strong>Required.</strong> The algorithm the client is using to
+encode the <tt class="docutils literal">addresses</tt>. This should be one of
+the available options from <tt class="docutils literal">/hash_details</tt>.</td>
+</tr>
+<tr><td>pepper</td>
+<td>string</td>
+<td><strong>Required.</strong> The pepper from <tt class="docutils literal">/hash_details</tt>.
+This is required even when the <tt class="docutils literal">algorithm</tt> does
+not make use of it.</td>
+</tr>
+<tr><td>addresses</td>
+<td>[string]</td>
+<td><strong>Required.</strong> The addresses to look up. The format
+of the entries here depend on the <tt class="docutils literal">algorithm</tt>
+used. Note that queries which have been
+incorrectly hashed or formatted will lead to no
+matches.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Response format:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>mappings</td>
+<td>{string: string}</td>
+<td><strong>Required.</strong> Any applicable mappings of
+<tt class="docutils literal">addresses</tt> to Matrix User IDs. Addresses which
+do not have associations will not be included,
+which can make this property be an empty object.</td>
+</tr>
+</tbody>
+</table>
+<p class="httpheaders">Example request:</p>
+<pre class="code http literal-block">
+<span class="name function">POST</span> <span class="name namespace">/_matrix/identity/v2/lookup</span> <span class="keyword reserved">HTTP</span><span class="operator">/</span><span class="literal number">1.1</span>
+<span class="name attribute">Content-Type</span><span class="operator">:</span> <span class="literal">application/json</span>
+
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;algorithm&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;sha256&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;pepper&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;matrixrocks&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;addresses&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>
+    <span class="literal string double">&quot;4kenr7N9drpCJ4AfalmlGQVsOn3o2RHjkADUpXJWZUc&quot;</span><span class="punctuation">,</span>
+    <span class="literal string double">&quot;nlo35_T5fzSGZzJApqu8lgIudJvmOQtDaHtr-I4rU7I&quot;</span>
+  <span class="punctuation">]</span>
+<span class="punctuation">}</span>
+</pre>
+<p class="httpheaders">Responses:</p>
+<p><strong>Status code 200:</strong></p>
+<p>The associations for any matched <tt class="docutils literal">addresses</tt>.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;mappings&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span>
+    <span class="name tag">&quot;4kenr7N9drpCJ4AfalmlGQVsOn3o2RHjkADUpXJWZUc&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;&#64;alice:example.org&quot;</span>
+  <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</pre>
+<p><strong>Status code 400:</strong></p>
+<p>The client's request was invalid in some way. One possible problem could be the <tt class="docutils literal">pepper</tt> being invalid after the server has rotated it - this is presented with the <tt class="docutils literal">M_INVALID_PEPPER</tt> error code. Clients SHOULD make a call to <tt class="docutils literal">/hash_details</tt> to get a new pepper in this scenario, being careful to avoid retry loops.
+<tt class="docutils literal">M_INVALID_PARAM</tt> can also be returned to indicate the client supplied an <tt class="docutils literal">algorithm</tt> that is unknown to the server.</p>
+<p class="httpheaders">Example</p>
+<pre class="code json literal-block">
+<span class="punctuation">{</span>
+  <span class="name tag">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;M_INVALID_PEPPER&quot;</span><span class="punctuation">,</span>
+  <span class="name tag">&quot;error&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;Unknown or invalid pepper - has it been rotated?&quot;</span>
+<span class="punctuation">}</span>
+</pre>
+</div>
+<p><a class="anchor" id="client-behaviour"></a></p>
+<div class="section" id="client-behaviour">
+<h2><a class="toc-backref" href="#id35">11.5&nbsp;&nbsp;&nbsp;Client behaviour</a></h2>
+<!-- TODO: Remove this note when v1 is removed completely -->
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This section only covers the v2 lookup endpoint. The v1 endpoint is described
+in isolation above.</p>
+</div>
+<p>Prior to performing a lookup clients SHOULD make a request to the <tt class="docutils literal">/hash_details</tt>
+endpoint to determine what algorithms the server supports (described in more detail
+below). The client then uses this information to form a <tt class="docutils literal">/lookup</tt> request and
+receive known bindings from the server.</p>
+<p>Clients MUST support at least the <tt class="docutils literal">sha256</tt> algorithm.</p>
+</div>
+<p><a class="anchor" id="server-behaviour"></a></p>
+<div class="section" id="server-behaviour">
+<h2><a class="toc-backref" href="#id36">11.6&nbsp;&nbsp;&nbsp;Server behaviour</a></h2>
+<!-- TODO: Remove this note when v1 is removed completely -->
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This section only covers the v2 lookup endpoint. The v1 endpoint is described
+in isolation above.</p>
+</div>
+<p>Servers, upon receipt of a <tt class="docutils literal">/lookup</tt> request, will compare the query against
+known bindings it has, hashing the identifiers it knows about as needed to
+verify exact matches to the request.</p>
+<p>Servers MUST support at least the <tt class="docutils literal">sha256</tt> algorithm.</p>
+</div>
+<p><a class="anchor" id="algorithms"></a></p>
+<div class="section" id="algorithms">
+<h2><a class="toc-backref" href="#id37">11.7&nbsp;&nbsp;&nbsp;Algorithms</a></h2>
+<p>Some algorithms are defined as part of the specification, however other formats
+can be negotiated between the client and server using <tt class="docutils literal">/hash_details</tt>.</p>
+<p><a class="anchor" id="sha256"></a></p>
+<div class="section" id="sha256">
+<h3><a class="toc-backref" href="#id38">11.7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">sha256</tt></a></h3>
+<p>This algorithm MUST be supported by clients and servers at a minimum. It is
+additionally the preferred algorithm for lookups.</p>
+<p>When using this algorithm, the client converts the query first into strings
+separated by spaces in the format <tt class="docutils literal">&lt;address&gt; &lt;medium&gt; &lt;pepper&gt;</tt>. The <tt class="docutils literal">&lt;pepper&gt;</tt>
+is retrieved from <tt class="docutils literal">/hash_details</tt>, the <tt class="docutils literal">&lt;medium&gt;</tt> is typically <tt class="docutils literal">email</tt> or
+<tt class="docutils literal">msisdn</tt> (both lowercase), and the <tt class="docutils literal">&lt;address&gt;</tt> is the 3PID to search for.
+For example, if the client wanted to know about <tt class="docutils literal">alice&#64;example.org</tt>'s bindings,
+it would first format the query as <tt class="docutils literal">alice&#64;example.org email ThePepperGoesHere</tt>.</p>
+<div class="admonition admonition-rationale">
+<p class="first admonition-title">Rationale</p>
+<p class="last">Mediums and peppers are appended to the address to prevent a common prefix
+for each 3PID, helping prevent attackers from pre-computing the internal state
+of the hash function.</p>
+</div>
+<p>After formatting each query, the string is run through SHA-256 as defined by
+<a class="reference external" href="https://tools.ietf.org/html/rfc4634">RFC 4634</a>. The resulting bytes are then
+encoded using URL-Safe <a class="reference external" href="../appendices.html#unpadded-base64">Unpadded Base64</a> (similar to <a class="reference external" href="../../rooms/v4.html#event-ids">room version 4's
+event ID format</a>).</p>
+<p>An example set of queries when using the pepper <tt class="docutils literal">matrixrocks</tt> would be:</p>
+<pre class="literal-block">
+&quot;alice&#64;example.com email matrixrocks&quot; -&gt; &quot;4kenr7N9drpCJ4AfalmlGQVsOn3o2RHjkADUpXJWZUc&quot;
+&quot;bob&#64;example.com email matrixrocks&quot;   -&gt; &quot;LJwSazmv46n0hlMlsb_iYxI0_HXEqy_yj6Jm636cdT8&quot;
+&quot;18005552067 msisdn matrixrocks&quot;      -&gt; &quot;nlo35_T5fzSGZzJApqu8lgIudJvmOQtDaHtr-I4rU7I&quot;
+</pre>
+<p>The set of hashes is then given as the <tt class="docutils literal">addresses</tt> array in <tt class="docutils literal">/lookup</tt>. Note
+that the pepper used MUST be supplied as <tt class="docutils literal">pepper</tt> in the <tt class="docutils literal">/lookup</tt> request.</p>
+</div>
+<p><a class="anchor" id="none"></a></p>
+<div class="section" id="none">
+<h3><a class="toc-backref" href="#id39">11.7.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">none</tt></a></h3>
+<p>This algorithm performs plaintext lookups on the identity server. Typically this
+algorithm should not be used due to the security concerns of unhashed identifiers,
+however some scenarios (such as LDAP-backed identity servers) prevent the use of
+hashed identifiers. Identity servers (and optionally clients) can use this algorithm
+to perform those kinds of lookups.</p>
+<p>Similar to the <tt class="docutils literal">sha256</tt> algorithm, the client converts the queries into strings
+separated by spaces in the format <tt class="docutils literal">&lt;address&gt; &lt;medium&gt;</tt> - note the lack of <tt class="docutils literal">&lt;pepper&gt;</tt>.
+For example, if the client wanted to know about <tt class="docutils literal">alice&#64;example.org</tt>'s bindings,
+it would format the query as <tt class="docutils literal">alice&#64;example.org email</tt>.</p>
+<p>The formatted strings are then given as the <tt class="docutils literal">addresses</tt> in <tt class="docutils literal">/lookup</tt>. Note that
+the <tt class="docutils literal">pepper</tt> is still required, and must be provided to ensure the client has made
+an appropriate request to <tt class="docutils literal">/hash_details</tt> first.</p>
+</div>
+</div>
+<p><a class="anchor" id="security-considerations"></a></p>
+<div class="section" id="security-considerations">
+<h2><a class="toc-backref" href="#id40">11.8&nbsp;&nbsp;&nbsp;Security considerations</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="https://github.com/matrix-org/matrix-doc/pull/2134">MSC2134</a> has much more
+information about the security considerations made for this section of the
+specification. This section covers the high-level details for why the specification
+is the way it is.</p>
+</div>
+<p>Typically the lookup endpoint is used when a client has an unknown 3PID it wants to
+find a Matrix User ID for. Clients normally do this kind of lookup when inviting new
+users to a room or searching a user's address book to find any Matrix users they may
+not have discovered yet. Rogue or malicious identity servers could harvest this
+unknown information and do nefarious things with it if it were sent in plain text.
+In order to protect the privacy of users who might not have a Matrix identifier bound
+to their 3PID addresses, the specification attempts to make it difficult to harvest
+3PIDs.</p>
+<div class="admonition admonition-rationale">
+<p class="first admonition-title">Rationale</p>
+<p>Hashing identifiers, while not perfect, helps make the effort required to harvest
+identifiers significantly higher. Phone numbers in particular are still difficult
+to protect with hashing, however hashing is objectively better than not.</p>
+<p class="last">An alternative to hashing would be using bcrypt or similar with many rounds, however
+by nature of needing to serve mobile clients and clients on limited hardware the
+solution needs be kept relatively lightweight.</p>
+</div>
+<p>Clients should be cautious of servers not rotating their pepper very often, and
+potentially of servers which use a weak pepper - these servers may be attempting to
+brute force the identifiers or use rainbow tables to mine the addresses. Similarly,
+clients which support the <tt class="docutils literal">none</tt> algorithm should consider at least warning the user
+of the risks in sending identifiers in plain text to the identity server.</p>
+<p>Addresses are still potentially reversable using a calculated rainbow table given
+some identifiers, such as phone numbers, common email address domains, and leaked
+addresses are easily calculated. For example, phone numbers can have roughly 12
+digits to them, making them an easier target for attack than email addresses.</p>
 </div>
 </div>
 <p><a class="anchor" id="establishing-associations"></a></p>
 <div class="section" id="establishing-associations">
-<h1><a class="toc-backref" href="#id31">11&nbsp;&nbsp;&nbsp;Establishing associations</a></h1>
+<h1><a class="toc-backref" href="#id41">12&nbsp;&nbsp;&nbsp;Establishing associations</a></h1>
 <p>The flow for creating an association is session-based.</p>
 <p>Within a session, one may prove that one has ownership of a 3PID.
 Once this has been established, the user can form an association between that
@@ -2325,7 +2630,7 @@ session. At this point, the client should <tt class="docutils literal">/bind</tt
 or leave it for another entity to bind.</p>
 <p><a class="anchor" id="format-of-a-validation-token"></a></p>
 <div class="section" id="format-of-a-validation-token">
-<h2><a class="toc-backref" href="#id32">11.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></h2>
+<h2><a class="toc-backref" href="#id42">12.1&nbsp;&nbsp;&nbsp;Format of a validation token</a></h2>
 <p>The format of the validation token is left up to the identity server: it
 should choose one appropriate to the 3PID type. (For example, it would be
 inappropriate to expect a user to copy a long passphrase including punctuation
@@ -2336,10 +2641,10 @@ modification.</p>
 </div>
 <p><a class="anchor" id="email-associations"></a></p>
 <div class="section" id="email-associations">
-<h2><a class="toc-backref" href="#id33">11.2&nbsp;&nbsp;&nbsp;Email associations</a></h2>
+<h2><a class="toc-backref" href="#id43">12.2&nbsp;&nbsp;&nbsp;Email associations</a></h2>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-email-requesttoken"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-validate-email-requesttoken">
-<h3><a class="toc-backref" href="#id34">11.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id44">12.2.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/requestToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -2470,7 +2775,7 @@ They must consist entirely of the characters
 </div>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-email-submittoken"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id35">11.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id45">12.2.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -2567,7 +2872,7 @@ successful or not.</td>
 </div>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-validate-email-submittoken"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id36">11.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id46">12.2.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/email/submitToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -2634,7 +2939,7 @@ to the URL provided by the <tt class="docutils literal">next_link</tt> parameter
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-validate-email-requesttoken"></a></p>
 <div class="section" id="post-matrix-identity-v2-validate-email-requesttoken">
-<h3><a class="toc-backref" href="#id37">11.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id47">12.2.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/requestToken</tt></a></h3>
 <p>Create a session for validating an email address.</p>
 <p>The identity server will send an email containing a token. If that
 token is presented to the identity server in the future, it indicates
@@ -2771,7 +3076,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-validate-email-submittoken"></a></p>
 <div class="section" id="post-matrix-identity-v2-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id38">11.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id48">12.2.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
 <p>Validate ownership of an email address.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
@@ -2874,7 +3179,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-validate-email-submittoken"></a></p>
 <div class="section" id="get-matrix-identity-v2-validate-email-submittoken">
-<h3><a class="toc-backref" href="#id39">11.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id49">12.2.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/email/submitToken</tt></a></h3>
 <p>Validate ownership of an email address.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the email address is considered to
@@ -2948,10 +3253,10 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="phone-number-associations"></a></p>
 <div class="section" id="phone-number-associations">
-<h2><a class="toc-backref" href="#id40">11.3&nbsp;&nbsp;&nbsp;Phone number associations</a></h2>
+<h2><a class="toc-backref" href="#id50">12.3&nbsp;&nbsp;&nbsp;Phone number associations</a></h2>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-requesttoken">
-<h3><a class="toc-backref" href="#id41">11.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id51">12.3.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/requestToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3089,7 +3394,7 @@ SMS to the provided country or region.</li>
 </div>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id42">11.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id52">12.3.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3186,7 +3491,7 @@ successful or not.</td>
 </div>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id43">11.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id53">12.3.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/validate/msisdn/submitToken</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3253,7 +3558,7 @@ redirected to the URL provided by the <tt class="docutils literal">next_link</tt
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-validate-msisdn-requesttoken"></a></p>
 <div class="section" id="post-matrix-identity-v2-validate-msisdn-requesttoken">
-<h3><a class="toc-backref" href="#id44">11.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id54">12.3.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/requestToken</tt></a></h3>
 <p>Create a session for validating a phone number.</p>
 <p>The identity server will send an SMS message containing a token. If
 that token is presented to the identity server in the future, it
@@ -3397,7 +3702,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-validate-msisdn-submittoken"></a></p>
 <div class="section" id="post-matrix-identity-v2-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id45">11.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id55">12.3.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
 <p>Validate ownership of a phone number.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the phone number is considered to
@@ -3500,7 +3805,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-validate-msisdn-submittoken"></a></p>
 <div class="section" id="get-matrix-identity-v2-validate-msisdn-submittoken">
-<h3><a class="toc-backref" href="#id46">11.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
+<h3><a class="toc-backref" href="#id56">12.3.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/validate/msisdn/submitToken</tt></a></h3>
 <p>Validate ownership of a phone number.</p>
 <p>If the three parameters are consistent with a set generated by a
 <tt class="docutils literal">requestToken</tt> call, ownership of the phone number address is
@@ -3574,10 +3879,10 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="general"></a></p>
 <div class="section" id="general">
-<h2><a class="toc-backref" href="#id47">11.4&nbsp;&nbsp;&nbsp;General</a></h2>
+<h2><a class="toc-backref" href="#id57">12.4&nbsp;&nbsp;&nbsp;General</a></h2>
 <p><a class="anchor" id="deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid"></a></p>
 <div class="section" id="deprecated-get-matrix-identity-api-v1-3pid-getvalidated3pid">
-<h3><a class="toc-backref" href="#id48">11.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></h3>
+<h3><a class="toc-backref" href="#id58">12.4.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">GET /_matrix/identity/api/v1/3pid/getValidated3pid</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3680,7 +3985,7 @@ indicating the time that the 3pid was validated.</td>
 </div>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-3pid-bind"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-3pid-bind">
-<h3><a class="toc-backref" href="#id49">11.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></h3>
+<h3><a class="toc-backref" href="#id59">12.4.2&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/bind</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3831,7 +4136,7 @@ identity services.</td>
 </div>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-3pid-unbind"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-3pid-unbind">
-<h3><a class="toc-backref" href="#id50">11.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></h3>
+<h3><a class="toc-backref" href="#id60">12.4.3&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST /_matrix/identity/api/v1/3pid/unbind</tt></a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -3964,7 +4269,7 @@ body, the requesting party should respect the error.</p>
 </div>
 <p><a class="anchor" id="get-matrix-identity-v2-3pid-getvalidated3pid"></a></p>
 <div class="section" id="get-matrix-identity-v2-3pid-getvalidated3pid">
-<h3><a class="toc-backref" href="#id51">11.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></h3>
+<h3><a class="toc-backref" href="#id61">12.4.4&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/identity/v2/3pid/getValidated3pid</tt></a></h3>
 <p>Determines if a given 3pid has been validated by a user.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4073,7 +4378,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-3pid-bind"></a></p>
 <div class="section" id="post-matrix-identity-v2-3pid-bind">
-<h3><a class="toc-backref" href="#id52">11.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></h3>
+<h3><a class="toc-backref" href="#id62">12.4.5&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/bind</tt></a></h3>
 <p>Publish an association between a session and a Matrix user ID.</p>
 <p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will return
 this association.</p>
@@ -4230,7 +4535,7 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-3pid-unbind"></a></p>
 <div class="section" id="post-matrix-identity-v2-3pid-unbind">
-<h3><a class="toc-backref" href="#id53">11.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></h3>
+<h3><a class="toc-backref" href="#id63">12.4.6&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/identity/v2/3pid/unbind</tt></a></h3>
 <p>Remove an association between a session and a Matrix user ID.</p>
 <p>Future calls to <tt class="docutils literal">/lookup</tt> for any of the session's 3pids will not
 return the removed association.</p>
@@ -4363,7 +4668,7 @@ body, the requesting party should respect the error.</p>
 </div>
 <p><a class="anchor" id="invitation-storage"></a></p>
 <div class="section" id="invitation-storage">
-<h1><a class="toc-backref" href="#id54">12&nbsp;&nbsp;&nbsp;Invitation storage</a></h1>
+<h1><a class="toc-backref" href="#id64">13&nbsp;&nbsp;&nbsp;Invitation storage</a></h1>
 <p>An identity server can store pending invitations to a user's 3PID, which will
 be retrieved and can be either notified on or look up when the 3PID is
 associated with a Matrix user ID.</p>
@@ -4373,7 +4678,7 @@ homeserver via the <a class="reference external" href="../server_server/unstable
 long-term private key for the identity server.</p>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-store-invite"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-store-invite">
-<h2><a class="toc-backref" href="#id55">12.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id65">13.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/store-invite</span></tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -4550,7 +4855,7 @@ error code will be <tt class="docutils literal">M_UNRECOGNIZED</tt>.</p>
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-store-invite"></a></p>
 <div class="section" id="post-matrix-identity-v2-store-invite">
-<h2><a class="toc-backref" href="#id56">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id66">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/store-invite</span></tt></a></h2>
 <p>Store pending invitations to a user's 3pid.</p>
 <p>In addition to the request parameters specified below, an arbitrary
 number of other parameters may also be specified. These may be used in
@@ -4734,14 +5039,14 @@ is an <tt class="docutils literal">M_TERMS_NOT_SIGNED</tt> error where the user 
 </div>
 <p><a class="anchor" id="ephemeral-invitation-signing"></a></p>
 <div class="section" id="ephemeral-invitation-signing">
-<h1><a class="toc-backref" href="#id57">13&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a></h1>
+<h1><a class="toc-backref" href="#id67">14&nbsp;&nbsp;&nbsp;Ephemeral invitation signing</a></h1>
 <p>To aid clients who may not be able to perform crypto themselves, the identity
 server offers some crypto functionality to help in accepting invitations.
 This is less secure than the client doing it itself, but may be useful where
 this isn't possible.</p>
 <p><a class="anchor" id="deprecated-post-matrix-identity-api-v1-sign-ed25519"></a></p>
 <div class="section" id="deprecated-post-matrix-identity-api-v1-sign-ed25519">
-<h2><a class="toc-backref" href="#id58">13.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id68">14.1&nbsp;&nbsp;&nbsp;Deprecated: <tt class="docutils literal">POST <span class="pre">/_matrix/identity/api/v1/sign-ed25519</span></tt></a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is deprecated and will be removed from a future release.</p>
@@ -4856,7 +5161,7 @@ and token.</td>
 </div>
 <p><a class="anchor" id="post-matrix-identity-v2-sign-ed25519"></a></p>
 <div class="section" id="post-matrix-identity-v2-sign-ed25519">
-<h2><a class="toc-backref" href="#id59">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id69">14.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/identity/v2/sign-ed25519</span></tt></a></h2>
 <p>Sign invitation details.</p>
 <p>The identity server will look up <tt class="docutils literal">token</tt> which was stored in a call
 to <tt class="docutils literal"><span class="pre">store-invite</span></tt>, and fetch the sender of the invite.</p>
