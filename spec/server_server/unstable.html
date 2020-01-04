@@ -975,172 +975,179 @@ request.</p>
 <div class="contents topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#changelog" id="id5">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
-<li><a class="reference internal" href="#other-versions-of-this-specification" id="id6">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
+<li><a class="reference internal" href="#changelog" id="id6">1&nbsp;&nbsp;&nbsp;Changelog</a><ul class="auto-toc">
+<li><a class="reference internal" href="#other-versions-of-this-specification" id="id7">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#api-standards" id="id7">2&nbsp;&nbsp;&nbsp;API standards</a></li>
-<li><a class="reference internal" href="#server-discovery" id="id8">3&nbsp;&nbsp;&nbsp;Server discovery</a><ul class="auto-toc">
-<li><a class="reference internal" href="#resolving-server-names" id="id9">3.1&nbsp;&nbsp;&nbsp;Resolving server names</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-well-known-matrix-server" id="id10">3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/.well-known/matrix/server</span></tt></a></li>
+<li><a class="reference internal" href="#api-standards" id="id8">2&nbsp;&nbsp;&nbsp;API standards</a></li>
+<li><a class="reference internal" href="#server-discovery" id="id9">3&nbsp;&nbsp;&nbsp;Server discovery</a><ul class="auto-toc">
+<li><a class="reference internal" href="#resolving-server-names" id="id10">3.1&nbsp;&nbsp;&nbsp;Resolving server names</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-well-known-matrix-server" id="id11">3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/.well-known/matrix/server</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#server-implementation" id="id11">3.2&nbsp;&nbsp;&nbsp;Server implementation</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-version" id="id12">3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/version</tt></a></li>
+<li><a class="reference internal" href="#server-implementation" id="id12">3.2&nbsp;&nbsp;&nbsp;Server implementation</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-version" id="id13">3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/version</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#retrieving-server-keys" id="id13">3.3&nbsp;&nbsp;&nbsp;Retrieving server keys</a><ul class="auto-toc">
-<li><a class="reference internal" href="#publishing-keys" id="id14">3.3.1&nbsp;&nbsp;&nbsp;Publishing Keys</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-key-v2-server-keyid" id="id15">3.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/server/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#retrieving-server-keys" id="id14">3.3&nbsp;&nbsp;&nbsp;Retrieving server keys</a><ul class="auto-toc">
+<li><a class="reference internal" href="#publishing-keys" id="id15">3.3.1&nbsp;&nbsp;&nbsp;Publishing Keys</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-key-v2-server-keyid" id="id16">3.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/server/{keyId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#querying-keys-through-another-server" id="id16">3.3.2&nbsp;&nbsp;&nbsp;Querying Keys Through Another Server</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-key-v2-query-servername-keyid" id="id17">3.3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/query/{serverName}/{keyId}</span></tt></a></li>
-<li><a class="reference internal" href="#post-matrix-key-v2-query" id="id18">3.3.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/key/v2/query</tt></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#authentication" id="id19">4&nbsp;&nbsp;&nbsp;Authentication</a><ul class="auto-toc">
-<li><a class="reference internal" href="#request-authentication" id="id20">4.1&nbsp;&nbsp;&nbsp;Request Authentication</a></li>
-<li><a class="reference internal" href="#response-authentication" id="id21">4.2&nbsp;&nbsp;&nbsp;Response Authentication</a></li>
-<li><a class="reference internal" href="#client-tls-certificates" id="id22">4.3&nbsp;&nbsp;&nbsp;Client TLS Certificates</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#transactions" id="id23">5&nbsp;&nbsp;&nbsp;Transactions</a><ul class="auto-toc">
-<li><a class="reference internal" href="#put-matrix-federation-v1-send-txnid" id="id24">5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send/{txnId}</span></tt></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pdus" id="id25">6&nbsp;&nbsp;&nbsp;PDUs</a><ul class="auto-toc">
-<li><a class="reference internal" href="#checks-performed-on-receipt-of-a-pdu" id="id26">6.1&nbsp;&nbsp;&nbsp;Checks performed on receipt of a PDU</a><ul class="auto-toc">
-<li><a class="reference internal" href="#definitions" id="id27">6.1.1&nbsp;&nbsp;&nbsp;Definitions</a></li>
-<li><a class="reference internal" href="#id2" id="id28">6.1.2&nbsp;&nbsp;&nbsp;Authorization rules</a></li>
-<li><a class="reference internal" href="#rejection" id="id29">6.1.3&nbsp;&nbsp;&nbsp;Rejection</a></li>
-<li><a class="reference internal" href="#soft-failure" id="id30">6.1.4&nbsp;&nbsp;&nbsp;Soft failure</a></li>
-<li><a class="reference internal" href="#retrieving-event-authorization-information" id="id31">6.1.5&nbsp;&nbsp;&nbsp;Retrieving event authorization information</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-event-auth-roomid-eventid" id="id32">6.1.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event_auth/{roomId}/{eventId}</span></tt></a></li>
-<li><a class="reference internal" href="#post-matrix-federation-v1-query-auth-roomid-eventid" id="id33">6.1.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/query_auth/{roomId}/{eventId}</span></tt></a></li>
+<li><a class="reference internal" href="#querying-keys-through-another-server" id="id17">3.3.2&nbsp;&nbsp;&nbsp;Querying Keys Through Another Server</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-key-v2-query-servername-keyid" id="id18">3.3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/query/{serverName}/{keyId}</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-key-v2-query" id="id19">3.3.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/key/v2/query</tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#edus" id="id34">7&nbsp;&nbsp;&nbsp;EDUs</a><ul class="auto-toc">
-<li><a class="reference internal" href="#ephemeral-data-unit-schema" id="id35">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Ephemeral Data Unit</tt> schema</a></li>
+<li><a class="reference internal" href="#authentication" id="id20">4&nbsp;&nbsp;&nbsp;Authentication</a><ul class="auto-toc">
+<li><a class="reference internal" href="#request-authentication" id="id21">4.1&nbsp;&nbsp;&nbsp;Request Authentication</a></li>
+<li><a class="reference internal" href="#response-authentication" id="id22">4.2&nbsp;&nbsp;&nbsp;Response Authentication</a></li>
+<li><a class="reference internal" href="#client-tls-certificates" id="id23">4.3&nbsp;&nbsp;&nbsp;Client TLS Certificates</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#room-state-resolution" id="id36">8&nbsp;&nbsp;&nbsp;Room State Resolution</a></li>
-<li><a class="reference internal" href="#backfilling-and-retrieving-missing-events" id="id37">9&nbsp;&nbsp;&nbsp;Backfilling and retrieving missing events</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-backfill-roomid" id="id38">9.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/backfill/{roomId}</span></tt></a></li>
-<li><a class="reference internal" href="#post-matrix-federation-v1-get-missing-events-roomid" id="id39">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/get_missing_events/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#transactions" id="id24">5&nbsp;&nbsp;&nbsp;Transactions</a><ul class="auto-toc">
+<li><a class="reference internal" href="#put-matrix-federation-v1-send-txnid" id="id25">5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send/{txnId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#retrieving-events" id="id40">10&nbsp;&nbsp;&nbsp;Retrieving events</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-state-roomid" id="id41">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state/{roomId}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-federation-v1-state-ids-roomid" id="id42">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state_ids/{roomId}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-federation-v1-event-eventid" id="id43">10.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event/{eventId}</span></tt></a></li>
+<li><a class="reference internal" href="#pdus" id="id26">6&nbsp;&nbsp;&nbsp;PDUs</a><ul class="auto-toc">
+<li><a class="reference internal" href="#checks-performed-on-receipt-of-a-pdu" id="id27">6.1&nbsp;&nbsp;&nbsp;Checks performed on receipt of a PDU</a><ul class="auto-toc">
+<li><a class="reference internal" href="#definitions" id="id28">6.1.1&nbsp;&nbsp;&nbsp;Definitions</a></li>
+<li><a class="reference internal" href="#id3" id="id29">6.1.2&nbsp;&nbsp;&nbsp;Authorization rules</a><ul class="auto-toc">
+<li><a class="reference internal" href="#auth-events-selection" id="id30">6.1.2.1&nbsp;&nbsp;&nbsp;Auth events selection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#joining-rooms" id="id44">11&nbsp;&nbsp;&nbsp;Joining Rooms</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-make-join-roomid-userid" id="id45">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_join/{roomId}/{userId}</span></tt></a></li>
-<li><a class="reference internal" href="#put-matrix-federation-v1-send-join-roomid-eventid" id="id46">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_join/{roomId}/{eventId}</span></tt></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#inviting-to-a-room" id="id47">12&nbsp;&nbsp;&nbsp;Inviting to a room</a><ul class="auto-toc">
-<li><a class="reference internal" href="#put-matrix-federation-v1-invite-roomid-eventid" id="id48">12.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/invite/{roomId}/{eventId}</span></tt></a></li>
-<li><a class="reference internal" href="#put-matrix-federation-v2-invite-roomid-eventid" id="id49">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v2/invite/{roomId}/{eventId}</span></tt></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#leaving-rooms-rejecting-invites" id="id50">13&nbsp;&nbsp;&nbsp;Leaving Rooms (Rejecting Invites)</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-make-leave-roomid-userid" id="id51">13.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_leave/{roomId}/{userId}</span></tt></a></li>
-<li><a class="reference internal" href="#put-matrix-federation-v1-send-leave-roomid-eventid" id="id52">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_leave/{roomId}/{eventId}</span></tt></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#third-party-invites" id="id53">14&nbsp;&nbsp;&nbsp;Third-party invites</a><ul class="auto-toc">
-<li><a class="reference internal" href="#cases-where-an-association-exists-for-a-third-party-identifier" id="id54">14.1&nbsp;&nbsp;&nbsp;Cases where an association exists for a third-party identifier</a></li>
-<li><a class="reference internal" href="#cases-where-an-association-doesn-t-exist-for-a-third-party-identifier" id="id55">14.2&nbsp;&nbsp;&nbsp;Cases where an association doesn't exist for a third-party identifier</a><ul class="auto-toc">
-<li><a class="reference internal" href="#put-matrix-federation-v1-exchange-third-party-invite-roomid" id="id56">14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/exchange_third_party_invite/{roomId}</span></tt></a></li>
-<li><a class="reference internal" href="#put-matrix-federation-v1-3pid-onbind" id="id57">14.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT /_matrix/federation/v1/3pid/onbind</tt></a></li>
-<li><a class="reference internal" href="#verifying-the-invite" id="id58">14.2.3&nbsp;&nbsp;&nbsp;Verifying the invite</a></li>
+<li><a class="reference internal" href="#rejection" id="id31">6.1.3&nbsp;&nbsp;&nbsp;Rejection</a></li>
+<li><a class="reference internal" href="#soft-failure" id="id32">6.1.4&nbsp;&nbsp;&nbsp;Soft failure</a></li>
+<li><a class="reference internal" href="#retrieving-event-authorization-information" id="id33">6.1.5&nbsp;&nbsp;&nbsp;Retrieving event authorization information</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-event-auth-roomid-eventid" id="id34">6.1.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event_auth/{roomId}/{eventId}</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-federation-v1-query-auth-roomid-eventid" id="id35">6.1.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/query_auth/{roomId}/{eventId}</span></tt></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#public-room-directory" id="id59">15&nbsp;&nbsp;&nbsp;Public Room Directory</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-publicrooms" id="id60">15.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/publicRooms</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-federation-v1-publicrooms" id="id61">15.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/publicRooms</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#typing-notifications" id="id62">16&nbsp;&nbsp;&nbsp;Typing Notifications</a><ul class="auto-toc">
-<li><a class="reference internal" href="#m-typing-schema" id="id63">16.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.typing</tt> schema</a></li>
+<li><a class="reference internal" href="#edus" id="id36">7&nbsp;&nbsp;&nbsp;EDUs</a><ul class="auto-toc">
+<li><a class="reference internal" href="#ephemeral-data-unit-schema" id="id37">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Ephemeral Data Unit</tt> schema</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#presence" id="id64">17&nbsp;&nbsp;&nbsp;Presence</a><ul class="auto-toc">
-<li><a class="reference internal" href="#m-presence-schema" id="id65">17.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.presence</tt> schema</a></li>
+<li><a class="reference internal" href="#room-state-resolution" id="id38">8&nbsp;&nbsp;&nbsp;Room State Resolution</a></li>
+<li><a class="reference internal" href="#backfilling-and-retrieving-missing-events" id="id39">9&nbsp;&nbsp;&nbsp;Backfilling and retrieving missing events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-backfill-roomid" id="id40">9.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/backfill/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#post-matrix-federation-v1-get-missing-events-roomid" id="id41">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/get_missing_events/{roomId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#receipts" id="id66">18&nbsp;&nbsp;&nbsp;Receipts</a><ul class="auto-toc">
-<li><a class="reference internal" href="#m-receipt-schema" id="id67">18.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.receipt</tt> schema</a></li>
+<li><a class="reference internal" href="#retrieving-events" id="id42">10&nbsp;&nbsp;&nbsp;Retrieving events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-state-roomid" id="id43">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-federation-v1-state-ids-roomid" id="id44">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state_ids/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-federation-v1-event-eventid" id="id45">10.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event/{eventId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#querying-for-information" id="id68">19&nbsp;&nbsp;&nbsp;Querying for information</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-query-querytype" id="id69">19.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/query/{queryType}</span></tt></a></li>
-<li><a class="reference internal" href="#get-matrix-federation-v1-query-directory" id="id70">19.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/directory</tt></a></li>
-<li><a class="reference internal" href="#get-matrix-federation-v1-query-profile" id="id71">19.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/profile</tt></a></li>
+<li><a class="reference internal" href="#joining-rooms" id="id46">11&nbsp;&nbsp;&nbsp;Joining Rooms</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-make-join-roomid-userid" id="id47">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_join/{roomId}/{userId}</span></tt></a></li>
+<li><a class="reference internal" href="#put-matrix-federation-v1-send-join-roomid-eventid" id="id48">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_join/{roomId}/{eventId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#openid" id="id72">20&nbsp;&nbsp;&nbsp;OpenID</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-openid-userinfo" id="id73">20.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/openid/userinfo</tt></a></li>
+<li><a class="reference internal" href="#inviting-to-a-room" id="id49">12&nbsp;&nbsp;&nbsp;Inviting to a room</a><ul class="auto-toc">
+<li><a class="reference internal" href="#put-matrix-federation-v1-invite-roomid-eventid" id="id50">12.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/invite/{roomId}/{eventId}</span></tt></a></li>
+<li><a class="reference internal" href="#put-matrix-federation-v2-invite-roomid-eventid" id="id51">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v2/invite/{roomId}/{eventId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#device-management" id="id74">21&nbsp;&nbsp;&nbsp;Device Management</a><ul class="auto-toc">
-<li><a class="reference internal" href="#get-matrix-federation-v1-user-devices-userid" id="id75">21.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/user/devices/{userId}</span></tt></a></li>
-<li><a class="reference internal" href="#m-device-list-update-schema" id="id76">21.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.device_list_update</tt> schema</a></li>
+<li><a class="reference internal" href="#leaving-rooms-rejecting-invites" id="id52">13&nbsp;&nbsp;&nbsp;Leaving Rooms (Rejecting Invites)</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-make-leave-roomid-userid" id="id53">13.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_leave/{roomId}/{userId}</span></tt></a></li>
+<li><a class="reference internal" href="#put-matrix-federation-v1-send-leave-roomid-eventid" id="id54">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_leave/{roomId}/{eventId}</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#end-to-end-encryption" id="id77">22&nbsp;&nbsp;&nbsp;End-to-End Encryption</a><ul class="auto-toc">
-<li><a class="reference internal" href="#post-matrix-federation-v1-user-keys-claim" id="id78">22.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/claim</tt></a></li>
-<li><a class="reference internal" href="#post-matrix-federation-v1-user-keys-query" id="id79">22.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/query</tt></a></li>
+<li><a class="reference internal" href="#third-party-invites" id="id55">14&nbsp;&nbsp;&nbsp;Third-party invites</a><ul class="auto-toc">
+<li><a class="reference internal" href="#cases-where-an-association-exists-for-a-third-party-identifier" id="id56">14.1&nbsp;&nbsp;&nbsp;Cases where an association exists for a third-party identifier</a></li>
+<li><a class="reference internal" href="#cases-where-an-association-doesn-t-exist-for-a-third-party-identifier" id="id57">14.2&nbsp;&nbsp;&nbsp;Cases where an association doesn't exist for a third-party identifier</a><ul class="auto-toc">
+<li><a class="reference internal" href="#put-matrix-federation-v1-exchange-third-party-invite-roomid" id="id58">14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/exchange_third_party_invite/{roomId}</span></tt></a></li>
+<li><a class="reference internal" href="#put-matrix-federation-v1-3pid-onbind" id="id59">14.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT /_matrix/federation/v1/3pid/onbind</tt></a></li>
+<li><a class="reference internal" href="#verifying-the-invite" id="id60">14.2.3&nbsp;&nbsp;&nbsp;Verifying the invite</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#send-to-device-messaging" id="id80">23&nbsp;&nbsp;&nbsp;Send-to-device messaging</a><ul class="auto-toc">
-<li><a class="reference internal" href="#m-direct-to-device-schema" id="id81">23.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.direct_to_device</tt> schema</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#content-repository" id="id82">24&nbsp;&nbsp;&nbsp;Content Repository</a></li>
-<li><a class="reference internal" href="#server-access-control-lists-acls" id="id83">25&nbsp;&nbsp;&nbsp;Server Access Control Lists (ACLs)</a></li>
-<li><a class="reference internal" href="#id3" id="id84">26&nbsp;&nbsp;&nbsp;Signing Events</a><ul class="auto-toc">
-<li><a class="reference internal" href="#adding-hashes-and-signatures-to-outgoing-events" id="id85">26.1&nbsp;&nbsp;&nbsp;Adding hashes and signatures to outgoing events</a></li>
-<li><a class="reference internal" href="#validating-hashes-and-signatures-on-received-events" id="id86">26.2&nbsp;&nbsp;&nbsp;Validating hashes and signatures on received events</a></li>
-<li><a class="reference internal" href="#calculating-the-reference-hash-for-an-event" id="id87">26.3&nbsp;&nbsp;&nbsp;Calculating the reference hash for an event</a></li>
-<li><a class="reference internal" href="#calculating-the-content-hash-for-an-event" id="id88">26.4&nbsp;&nbsp;&nbsp;Calculating the content hash for an event</a></li>
-<li><a class="reference internal" href="#example-code" id="id89">26.5&nbsp;&nbsp;&nbsp;Example code</a></li>
+<li><a class="reference internal" href="#public-room-directory" id="id61">15&nbsp;&nbsp;&nbsp;Public Room Directory</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-publicrooms" id="id62">15.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/publicRooms</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-federation-v1-publicrooms" id="id63">15.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/publicRooms</tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#security-considerations" id="id90">27&nbsp;&nbsp;&nbsp;Security considerations</a></li>
+<li><a class="reference internal" href="#typing-notifications" id="id64">16&nbsp;&nbsp;&nbsp;Typing Notifications</a><ul class="auto-toc">
+<li><a class="reference internal" href="#m-typing-schema" id="id65">16.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.typing</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#presence" id="id66">17&nbsp;&nbsp;&nbsp;Presence</a><ul class="auto-toc">
+<li><a class="reference internal" href="#m-presence-schema" id="id67">17.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.presence</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#receipts" id="id68">18&nbsp;&nbsp;&nbsp;Receipts</a><ul class="auto-toc">
+<li><a class="reference internal" href="#m-receipt-schema" id="id69">18.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.receipt</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#querying-for-information" id="id70">19&nbsp;&nbsp;&nbsp;Querying for information</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-query-querytype" id="id71">19.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/query/{queryType}</span></tt></a></li>
+<li><a class="reference internal" href="#get-matrix-federation-v1-query-directory" id="id72">19.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/directory</tt></a></li>
+<li><a class="reference internal" href="#get-matrix-federation-v1-query-profile" id="id73">19.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/profile</tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openid" id="id74">20&nbsp;&nbsp;&nbsp;OpenID</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-openid-userinfo" id="id75">20.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/openid/userinfo</tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#device-management" id="id76">21&nbsp;&nbsp;&nbsp;Device Management</a><ul class="auto-toc">
+<li><a class="reference internal" href="#get-matrix-federation-v1-user-devices-userid" id="id77">21.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/user/devices/{userId}</span></tt></a></li>
+<li><a class="reference internal" href="#m-device-list-update-schema" id="id78">21.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.device_list_update</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#end-to-end-encryption" id="id79">22&nbsp;&nbsp;&nbsp;End-to-End Encryption</a><ul class="auto-toc">
+<li><a class="reference internal" href="#post-matrix-federation-v1-user-keys-claim" id="id80">22.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/claim</tt></a></li>
+<li><a class="reference internal" href="#post-matrix-federation-v1-user-keys-query" id="id81">22.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/query</tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#send-to-device-messaging" id="id82">23&nbsp;&nbsp;&nbsp;Send-to-device messaging</a><ul class="auto-toc">
+<li><a class="reference internal" href="#m-direct-to-device-schema" id="id83">23.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.direct_to_device</tt> schema</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#content-repository" id="id84">24&nbsp;&nbsp;&nbsp;Content Repository</a></li>
+<li><a class="reference internal" href="#server-access-control-lists-acls" id="id85">25&nbsp;&nbsp;&nbsp;Server Access Control Lists (ACLs)</a></li>
+<li><a class="reference internal" href="#id4" id="id86">26&nbsp;&nbsp;&nbsp;Signing Events</a><ul class="auto-toc">
+<li><a class="reference internal" href="#adding-hashes-and-signatures-to-outgoing-events" id="id87">26.1&nbsp;&nbsp;&nbsp;Adding hashes and signatures to outgoing events</a></li>
+<li><a class="reference internal" href="#validating-hashes-and-signatures-on-received-events" id="id88">26.2&nbsp;&nbsp;&nbsp;Validating hashes and signatures on received events</a></li>
+<li><a class="reference internal" href="#calculating-the-reference-hash-for-an-event" id="id89">26.3&nbsp;&nbsp;&nbsp;Calculating the reference hash for an event</a></li>
+<li><a class="reference internal" href="#calculating-the-content-hash-for-an-event" id="id90">26.4&nbsp;&nbsp;&nbsp;Calculating the content hash for an event</a></li>
+<li><a class="reference internal" href="#example-code" id="id91">26.5&nbsp;&nbsp;&nbsp;Example code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#security-considerations" id="id92">27&nbsp;&nbsp;&nbsp;Security considerations</a></li>
 </ul>
 </div>
 <p><a class="anchor" id="changelog"></a></p>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id5">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
+<h1><a class="toc-backref" href="#id6">1&nbsp;&nbsp;&nbsp;Changelog</a></h1>
 <div class="topic">
 <p class="topic-title first">Version: unstable</p>
 <p>New Endpoints</p>
 <ul class="simple">
 <li>Add new <tt class="docutils literal">POST /publicRooms</tt> endpoint for filtering the room directory. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2035">#2035</a>)</li>
 </ul>
+<p>Spec Clarifications</p>
+<ul class="simple">
+<li>Move auth event selection to a more obvious location. (<a class="reference external" href="https://github.com/matrix-org/matrix-doc/issues/2392">#2392</a>)</li>
+</ul>
 </div>
 <p>This version of the specification is generated from
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc">matrix-doc</a> as of Git commit
-<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/f11f77f3">master,f11f77f3</a>.</p>
+<a class="reference external" href="https://github.com/matrix-org/matrix-doc/tree/4808b60c">master,4808b60c</a>.</p>
 <p>For the full historical changelog, see
 <a class="reference external" href="https://github.com/matrix-org/matrix-doc/blob/master/changelogs/server_server.rst">https://github.com/matrix-org/matrix-doc/blob/master/changelogs/server_server.rst</a></p>
 <p><a class="anchor" id="other-versions-of-this-specification"></a></p>
 <div class="section" id="other-versions-of-this-specification">
-<h2><a class="toc-backref" href="#id6">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
+<h2><a class="toc-backref" href="#id7">1.1&nbsp;&nbsp;&nbsp;Other versions of this specification</a></h2>
 <p>The following other versions are also available, in reverse chronological order:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://matrix.org/docs/spec/server_server/unstable.html">HEAD</a>: Includes all changes since the latest versioned release.</li>
@@ -1152,7 +1159,7 @@ request.</p>
 </div>
 <p><a class="anchor" id="api-standards"></a></p>
 <div class="section" id="api-standards">
-<h1><a class="toc-backref" href="#id7">2&nbsp;&nbsp;&nbsp;API standards</a></h1>
+<h1><a class="toc-backref" href="#id8">2&nbsp;&nbsp;&nbsp;API standards</a></h1>
 <p>The mandatory baseline for client-server communication in Matrix is exchanging
 JSON objects over HTTP APIs. More efficient optional transports will in future
 be supported as optional extensions - e.g. a packed binary encoding over
@@ -1162,10 +1169,10 @@ For the default HTTP transport, all API calls use a Content-Type of
 </div>
 <p><a class="anchor" id="server-discovery"></a></p>
 <div class="section" id="server-discovery">
-<h1><a class="toc-backref" href="#id8">3&nbsp;&nbsp;&nbsp;Server discovery</a></h1>
+<h1><a class="toc-backref" href="#id9">3&nbsp;&nbsp;&nbsp;Server discovery</a></h1>
 <p><a class="anchor" id="resolving-server-names"></a></p>
 <div class="section" id="resolving-server-names">
-<h2><a class="toc-backref" href="#id9">3.1&nbsp;&nbsp;&nbsp;Resolving server names</a></h2>
+<h2><a class="toc-backref" href="#id10">3.1&nbsp;&nbsp;&nbsp;Resolving server names</a></h2>
 <p>Each Matrix homeserver is identified by a server name consisting of a hostname
 and an optional port, as described by the <a class="reference external" href="../appendices.html#server-name">grammar</a>. Where applicable, a delegated server name
 uses the same grammar.</p>
@@ -1256,7 +1263,7 @@ which case SNI is not supported and should not be sent.</p>
 <a class="reference external" href="https://www.certificate-transparency.org/">Certificate Transparency</a> project.</p>
 <p><a class="anchor" id="get-well-known-matrix-server"></a></p>
 <div class="section" id="get-well-known-matrix-server">
-<h3><a class="toc-backref" href="#id10">3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/.well-known/matrix/server</span></tt></a></h3>
+<h3><a class="toc-backref" href="#id11">3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/.well-known/matrix/server</span></tt></a></h3>
 <p>Gets information about the delegated server for server-server communication
 between Matrix homeservers. Servers should follow 30x redirects, carefully
 avoiding redirect loops, and use normal X.509 certificate validation.</p>
@@ -1307,10 +1314,10 @@ delegated server name uses the same grammar as
 </div>
 <p><a class="anchor" id="server-implementation"></a></p>
 <div class="section" id="server-implementation">
-<h2><a class="toc-backref" href="#id11">3.2&nbsp;&nbsp;&nbsp;Server implementation</a></h2>
+<h2><a class="toc-backref" href="#id12">3.2&nbsp;&nbsp;&nbsp;Server implementation</a></h2>
 <p><a class="anchor" id="get-matrix-federation-v1-version"></a></p>
 <div class="section" id="get-matrix-federation-v1-version">
-<h3><a class="toc-backref" href="#id12">3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/version</tt></a></h3>
+<h3><a class="toc-backref" href="#id13">3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/version</tt></a></h3>
 <p>Get the implementation name and version of this homeserver.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1379,7 +1386,7 @@ depends on the implementation.</td>
 </div>
 <p><a class="anchor" id="retrieving-server-keys"></a></p>
 <div class="section" id="retrieving-server-keys">
-<h2><a class="toc-backref" href="#id13">3.3&nbsp;&nbsp;&nbsp;Retrieving server keys</a></h2>
+<h2><a class="toc-backref" href="#id14">3.3&nbsp;&nbsp;&nbsp;Retrieving server keys</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">There was once a &quot;version 1&quot; of the key exchange. It has been removed from the
@@ -1399,7 +1406,7 @@ servers they trust and can corroborate the keys returned by a given notary
 server by querying other servers.</p>
 <p><a class="anchor" id="publishing-keys"></a></p>
 <div class="section" id="publishing-keys">
-<h3><a class="toc-backref" href="#id14">3.3.1&nbsp;&nbsp;&nbsp;Publishing Keys</a></h3>
+<h3><a class="toc-backref" href="#id15">3.3.1&nbsp;&nbsp;&nbsp;Publishing Keys</a></h3>
 <p>Homeservers publish their signing keys in a JSON
 object at <tt class="docutils literal"><span class="pre">/_matrix/key/v2/server/{key_id}</span></tt>. The response contains a list of
 <tt class="docutils literal">verify_keys</tt> that are valid for signing federation requests made by the
@@ -1407,7 +1414,7 @@ homeserver and for signing events. It contains a list of <tt class="docutils lit
 are only valid for signing events.</p>
 <p><a class="anchor" id="get-matrix-key-v2-server-keyid"></a></p>
 <div class="section" id="get-matrix-key-v2-server-keyid">
-<h4><a class="toc-backref" href="#id15">3.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/server/{keyId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id16">3.3.1.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/server/{keyId}</span></tt></a></h4>
 <p>Gets the homeserver's published signing keys.
 The homeserver may have any number of active keys and may have a
 number of old keys.</p>
@@ -1582,7 +1589,7 @@ expired.</td>
 </div>
 <p><a class="anchor" id="querying-keys-through-another-server"></a></p>
 <div class="section" id="querying-keys-through-another-server">
-<h3><a class="toc-backref" href="#id16">3.3.2&nbsp;&nbsp;&nbsp;Querying Keys Through Another Server</a></h3>
+<h3><a class="toc-backref" href="#id17">3.3.2&nbsp;&nbsp;&nbsp;Querying Keys Through Another Server</a></h3>
 <p>Servers may query another server's keys through a notary server. The notary
 server may be another homeserver. The notary server will retrieve keys from
 the queried servers through use of the <tt class="docutils literal"><span class="pre">/_matrix/key/v2/server/{keyId}</span></tt>
@@ -1593,7 +1600,7 @@ serving their own keys by using cached responses. Keys can be queried from
 multiple servers to mitigate against DNS spoofing.</p>
 <p><a class="anchor" id="get-matrix-key-v2-query-servername-keyid"></a></p>
 <div class="section" id="get-matrix-key-v2-query-servername-keyid">
-<h4><a class="toc-backref" href="#id17">3.3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/query/{serverName}/{keyId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id18">3.3.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/key/v2/query/{serverName}/{keyId}</span></tt></a></h4>
 <p>Query for another server's keys. The receiving (notary) server must
 sign the keys returned by the queried server.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1795,7 +1802,7 @@ and no cached keys were available.</p>
 </div>
 <p><a class="anchor" id="post-matrix-key-v2-query"></a></p>
 <div class="section" id="post-matrix-key-v2-query">
-<h4><a class="toc-backref" href="#id18">3.3.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/key/v2/query</tt></a></h4>
+<h4><a class="toc-backref" href="#id19">3.3.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/key/v2/query</tt></a></h4>
 <p>Query for keys from multiple servers in a batch format. The receiving (notary)
 server must sign the keys returned by the queried servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2022,10 +2029,10 @@ may result in an empty array.</p>
 </div>
 <p><a class="anchor" id="authentication"></a></p>
 <div class="section" id="authentication">
-<h1><a class="toc-backref" href="#id19">4&nbsp;&nbsp;&nbsp;Authentication</a></h1>
+<h1><a class="toc-backref" href="#id20">4&nbsp;&nbsp;&nbsp;Authentication</a></h1>
 <p><a class="anchor" id="request-authentication"></a></p>
 <div class="section" id="request-authentication">
-<h2><a class="toc-backref" href="#id20">4.1&nbsp;&nbsp;&nbsp;Request Authentication</a></h2>
+<h2><a class="toc-backref" href="#id21">4.1&nbsp;&nbsp;&nbsp;Request Authentication</a></h2>
 <p>Every HTTP request made by a homeserver is authenticated using public key
 digital signatures. The request method, target and body are signed by wrapping
 them in a JSON object and signing it using the JSON signing algorithm. The
@@ -2088,14 +2095,14 @@ Content-Type: application/json
 </div>
 <p><a class="anchor" id="response-authentication"></a></p>
 <div class="section" id="response-authentication">
-<h2><a class="toc-backref" href="#id21">4.2&nbsp;&nbsp;&nbsp;Response Authentication</a></h2>
+<h2><a class="toc-backref" href="#id22">4.2&nbsp;&nbsp;&nbsp;Response Authentication</a></h2>
 <p>Responses are authenticated by the TLS server certificate. A homeserver should
 not send a request until it has authenticated the connected server to avoid
 leaking messages to eavesdroppers.</p>
 </div>
 <p><a class="anchor" id="client-tls-certificates"></a></p>
 <div class="section" id="client-tls-certificates">
-<h2><a class="toc-backref" href="#id22">4.3&nbsp;&nbsp;&nbsp;Client TLS Certificates</a></h2>
+<h2><a class="toc-backref" href="#id23">4.3&nbsp;&nbsp;&nbsp;Client TLS Certificates</a></h2>
 <p>Requests are authenticated at the HTTP layer rather than at the TLS layer
 because HTTP services like Matrix are often deployed behind load balancers that
 handle the TLS and these load balancers make it difficult to check TLS client
@@ -2107,7 +2114,7 @@ homeserver.</p>
 </div>
 <p><a class="anchor" id="transactions"></a></p>
 <div class="section" id="transactions">
-<h1><a class="toc-backref" href="#id23">5&nbsp;&nbsp;&nbsp;Transactions</a></h1>
+<h1><a class="toc-backref" href="#id24">5&nbsp;&nbsp;&nbsp;Transactions</a></h1>
 <p>The transfer of EDUs and PDUs between homeservers is performed by an exchange
 of Transaction messages, which are encoded as JSON objects, passed over an HTTP
 PUT request. A Transaction is meaningful only to the pair of homeservers that
@@ -2115,7 +2122,7 @@ exchanged it; they are not globally-meaningful.</p>
 <p>Transactions are limited in size; they can have at most 50 PDUs and 100 EDUs.</p>
 <p><a class="anchor" id="put-matrix-federation-v1-send-txnid"></a></p>
 <div class="section" id="put-matrix-federation-v1-send-txnid">
-<h2><a class="toc-backref" href="#id24">5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send/{txnId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id25">5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send/{txnId}</span></tt></a></h2>
 <p>Push messages representing live activity to another server. The destination name
 will be set to that of the receiving server itself. Each embedded PDU in the
 transaction body will be processed.</p>
@@ -2295,7 +2302,7 @@ the event of one or more PDUs failing to be processed.</p>
 </div>
 <p><a class="anchor" id="pdus"></a></p>
 <div class="section" id="pdus">
-<span id="persistent-data-unit-schema"></span><h1><a class="toc-backref" href="#id25">6&nbsp;&nbsp;&nbsp;PDUs</a></h1>
+<span id="persistent-data-unit-schema"></span><h1><a class="toc-backref" href="#id26">6&nbsp;&nbsp;&nbsp;PDUs</a></h1>
 <p>Each PDU contains a single Room Event which the origin server wants to send to
 the destination.</p>
 <p>The <tt class="docutils literal">prev_events</tt> field of a PDU identifies the &quot;parents&quot; of the event, and
@@ -2317,7 +2324,58 @@ E3       E5
 |
 E4
 </pre>
-<p id="auth-events-selection">The <tt class="docutils literal">auth_events</tt> field of a PDU identifies the set of events which give the
+<p>For a full schema of what a PDU looks like, see the <a class="reference external" href="../index.html#room-versions">room version specification</a>.</p>
+<p><a class="anchor" id="checks-performed-on-receipt-of-a-pdu"></a></p>
+<div class="section" id="checks-performed-on-receipt-of-a-pdu">
+<h2><a class="toc-backref" href="#id27">6.1&nbsp;&nbsp;&nbsp;Checks performed on receipt of a PDU</a></h2>
+<p>Whenever a server receives an event from a remote server, the receiving server
+must ensure that the event:</p>
+<ol class="arabic simple">
+<li>Is a valid event, otherwise it is dropped.</li>
+<li>Passes signature checks, otherwise it is dropped.</li>
+<li>Passes hash checks, otherwise it is redacted before being processed
+further.</li>
+<li>Passes authorization rules based on the event's auth events, otherwise it
+is rejected.</li>
+<li>Passes authorization rules based on the state at the event, otherwise it
+is rejected.</li>
+<li>Passes authorization rules based on the current state of the room, otherwise it
+is &quot;soft failed&quot;.</li>
+</ol>
+<p>Further details of these checks, and how to handle failures, are described
+below.</p>
+<p>The <a class="reference external" href="#signing-events">Signing Events</a> section has more information on which hashes
+and signatures are expected on events, and how to calculate them.</p>
+<p><a class="anchor" id="definitions"></a></p>
+<div class="section" id="definitions">
+<h3><a class="toc-backref" href="#id28">6.1.1&nbsp;&nbsp;&nbsp;Definitions</a></h3>
+<dl class="docutils">
+<dt>Required Power Level</dt>
+<dd>A given event type has an associated <em>required power level</em>. This is given by
+the current <tt class="docutils literal">m.room.power_levels</tt> event. The event type is either listed
+explicitly in the <tt class="docutils literal">events</tt> section or given by either <tt class="docutils literal">state_default</tt> or
+<tt class="docutils literal">events_default</tt> depending on if the event is a state event or not.</dd>
+<dt>Invite Level, Kick Level, Ban Level, Redact Level</dt>
+<dd>The levels given by the <tt class="docutils literal">invite</tt>, <tt class="docutils literal">kick</tt>, <tt class="docutils literal">ban</tt>, and <tt class="docutils literal">redact</tt>
+properties in the current <tt class="docutils literal">m.room.power_levels</tt> state. Each defaults to 50
+if unspecified.</dd>
+<dt>Target User</dt>
+<dd>For an <tt class="docutils literal">m.room.member</tt> state event, the user given by the <tt class="docutils literal">state_key</tt> of
+the event.</dd>
+</dl>
+</div>
+<p><a class="anchor" id="id3"></a></p>
+<div class="section" id="id3">
+<span id="authorization-rules"></span><h3><a class="toc-backref" href="#id29">6.1.2&nbsp;&nbsp;&nbsp;Authorization rules</a></h3>
+<p>The rules governing whether an event is authorized depends on a set of state. A
+given event is checked multiple times against different sets of state, as
+specified above. Each room version can have a different algorithm for how the
+rules work, and which rules are applied. For more detailed information, please
+see the <a class="reference external" href="../index.html#room-versions">room version specification</a>.</p>
+<p><a class="anchor" id="auth-events-selection"></a></p>
+<div class="section" id="auth-events-selection">
+<h4><a class="toc-backref" href="#id30">6.1.2.1&nbsp;&nbsp;&nbsp;Auth events selection</a></h4>
+<p>The <tt class="docutils literal">auth_events</tt> field of a PDU identifies the set of events which give the
 sender permission to send the event. The <tt class="docutils literal">auth_events</tt> for the
 <tt class="docutils literal">m.room.create</tt> event in a room is empty; for other events, it should be the
 following subset of the room state:</p>
@@ -2342,58 +2400,11 @@ following subset of the room state:</p>
 </blockquote>
 </li>
 </ul>
-<p>For a full schema of what a PDU looks like, see the <a class="reference external" href="../index.html#room-versions">room version specification</a>.</p>
-<p><a class="anchor" id="checks-performed-on-receipt-of-a-pdu"></a></p>
-<div class="section" id="checks-performed-on-receipt-of-a-pdu">
-<h2><a class="toc-backref" href="#id26">6.1&nbsp;&nbsp;&nbsp;Checks performed on receipt of a PDU</a></h2>
-<p>Whenever a server receives an event from a remote server, the receiving server
-must ensure that the event:</p>
-<ol class="arabic simple">
-<li>Is a valid event, otherwise it is dropped.</li>
-<li>Passes signature checks, otherwise it is dropped.</li>
-<li>Passes hash checks, otherwise it is redacted before being processed
-further.</li>
-<li>Passes authorization rules based on the event's auth events, otherwise it
-is rejected.</li>
-<li>Passes authorization rules based on the state at the event, otherwise it
-is rejected.</li>
-<li>Passes authorization rules based on the current state of the room, otherwise it
-is &quot;soft failed&quot;.</li>
-</ol>
-<p>Further details of these checks, and how to handle failures, are described
-below.</p>
-<p>The <a class="reference external" href="#signing-events">Signing Events</a> section has more information on which hashes
-and signatures are expected on events, and how to calculate them.</p>
-<p><a class="anchor" id="definitions"></a></p>
-<div class="section" id="definitions">
-<h3><a class="toc-backref" href="#id27">6.1.1&nbsp;&nbsp;&nbsp;Definitions</a></h3>
-<dl class="docutils">
-<dt>Required Power Level</dt>
-<dd>A given event type has an associated <em>required power level</em>. This is given by
-the current <tt class="docutils literal">m.room.power_levels</tt> event. The event type is either listed
-explicitly in the <tt class="docutils literal">events</tt> section or given by either <tt class="docutils literal">state_default</tt> or
-<tt class="docutils literal">events_default</tt> depending on if the event is a state event or not.</dd>
-<dt>Invite Level, Kick Level, Ban Level, Redact Level</dt>
-<dd>The levels given by the <tt class="docutils literal">invite</tt>, <tt class="docutils literal">kick</tt>, <tt class="docutils literal">ban</tt>, and <tt class="docutils literal">redact</tt>
-properties in the current <tt class="docutils literal">m.room.power_levels</tt> state. Each defaults to 50
-if unspecified.</dd>
-<dt>Target User</dt>
-<dd>For an <tt class="docutils literal">m.room.member</tt> state event, the user given by the <tt class="docutils literal">state_key</tt> of
-the event.</dd>
-</dl>
 </div>
-<p><a class="anchor" id="id2"></a></p>
-<div class="section" id="id2">
-<span id="authorization-rules"></span><h3><a class="toc-backref" href="#id28">6.1.2&nbsp;&nbsp;&nbsp;Authorization rules</a></h3>
-<p>The rules governing whether an event is authorized depends on a set of state. A
-given event is checked multiple times against different sets of state, as
-specified above. Each room version can have a different algorithm for how the
-rules work, and which rules are applied. For more detailed information, please
-see the <a class="reference external" href="../index.html#room-versions">room version specification</a>.</p>
 </div>
 <p><a class="anchor" id="rejection"></a></p>
 <div class="section" id="rejection">
-<h3><a class="toc-backref" href="#id29">6.1.3&nbsp;&nbsp;&nbsp;Rejection</a></h3>
+<h3><a class="toc-backref" href="#id31">6.1.3&nbsp;&nbsp;&nbsp;Rejection</a></h3>
 <p>If an event is rejected it should neither be relayed to clients nor be included
 as a prev event in any new events generated by the server. Subsequent events
 from other servers that reference rejected events should be allowed if they
@@ -2415,7 +2426,7 @@ result in the user being considered joined.</p>
 </div>
 <p><a class="anchor" id="soft-failure"></a></p>
 <div class="section" id="soft-failure">
-<h3><a class="toc-backref" href="#id30">6.1.4&nbsp;&nbsp;&nbsp;Soft failure</a></h3>
+<h3><a class="toc-backref" href="#id32">6.1.4&nbsp;&nbsp;&nbsp;Soft failure</a></h3>
 <div class="admonition admonition-rationale">
 <p class="first admonition-title">Rationale</p>
 <p>It is important that we prevent users from evading bans (or other power
@@ -2521,13 +2532,13 @@ D
 </div>
 <p><a class="anchor" id="retrieving-event-authorization-information"></a></p>
 <div class="section" id="retrieving-event-authorization-information">
-<h3><a class="toc-backref" href="#id31">6.1.5&nbsp;&nbsp;&nbsp;Retrieving event authorization information</a></h3>
+<h3><a class="toc-backref" href="#id33">6.1.5&nbsp;&nbsp;&nbsp;Retrieving event authorization information</a></h3>
 <p>The homeserver may be missing event authorization information, or wish to check
 with other servers to ensure it is receiving the correct auth chain. These APIs
 give the homeserver an avenue for getting the information it needs.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-event-auth-roomid-eventid"></a></p>
 <div class="section" id="get-matrix-federation-v1-event-auth-roomid-eventid">
-<h4><a class="toc-backref" href="#id32">6.1.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event_auth/{roomId}/{eventId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id34">6.1.5.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event_auth/{roomId}/{eventId}</span></tt></a></h4>
 <p>Retrieves the complete auth chain for a given event.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2606,7 +2617,7 @@ specification</a> for precise event formats.</td>
 </div>
 <p><a class="anchor" id="post-matrix-federation-v1-query-auth-roomid-eventid"></a></p>
 <div class="section" id="post-matrix-federation-v1-query-auth-roomid-eventid">
-<h4><a class="toc-backref" href="#id33">6.1.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/query_auth/{roomId}/{eventId}</span></tt></a></h4>
+<h4><a class="toc-backref" href="#id35">6.1.5.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/query_auth/{roomId}/{eventId}</span></tt></a></h4>
 <p>Compares the auth chain provided with what the receiving server has for the
 room ID and event ID combination.</p>
 <p>The auth difference can be calculated in two parts, where the &quot;remote auth&quot;
@@ -2794,13 +2805,13 @@ rejected. One of: [&quot;auth_error&quot;, &quot;replaced&quot;,
 </div>
 <p><a class="anchor" id="edus"></a></p>
 <div class="section" id="edus">
-<h1><a class="toc-backref" href="#id34">7&nbsp;&nbsp;&nbsp;EDUs</a></h1>
+<h1><a class="toc-backref" href="#id36">7&nbsp;&nbsp;&nbsp;EDUs</a></h1>
 <p>EDUs, by comparison to PDUs, do not have an ID, a room ID, or a list of
 &quot;previous&quot; IDs. They are intended to be non-persistent data such as user
 presence, typing notifications, etc.</p>
 <p><a class="anchor" id="ephemeral-data-unit-schema"></a></p>
 <div class="section" id="ephemeral-data-unit-schema">
-<h2><a class="toc-backref" href="#id35">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Ephemeral Data Unit</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id37">7.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">Ephemeral Data Unit</tt> schema</a></h2>
 <p>An ephemeral data unit.</p>
 <p><tt class="docutils literal">Ephemeral Data Unit</tt></p>
 <table border="1" class="colwidths-auto docutils">
@@ -2835,7 +2846,7 @@ message.</td>
 </div>
 <p><a class="anchor" id="room-state-resolution"></a></p>
 <div class="section" id="room-state-resolution">
-<h1><a class="toc-backref" href="#id36">8&nbsp;&nbsp;&nbsp;Room State Resolution</a></h1>
+<h1><a class="toc-backref" href="#id38">8&nbsp;&nbsp;&nbsp;Room State Resolution</a></h1>
 <p>The <em>state</em> of a room is a map of <tt class="docutils literal">(event_type, state_key)</tt> to
 <tt class="docutils literal">event_id</tt>. Each room starts with an empty state, and each state event which
 is accepted into the room updates the state of that room.</p>
@@ -2863,7 +2874,7 @@ a description of each room version's algorithm, please see the <a class="referen
 </div>
 <p><a class="anchor" id="backfilling-and-retrieving-missing-events"></a></p>
 <div class="section" id="backfilling-and-retrieving-missing-events">
-<h1><a class="toc-backref" href="#id37">9&nbsp;&nbsp;&nbsp;Backfilling and retrieving missing events</a></h1>
+<h1><a class="toc-backref" href="#id39">9&nbsp;&nbsp;&nbsp;Backfilling and retrieving missing events</a></h1>
 <p>Once a homeserver has joined a room, it receives all the events emitted by
 other homeservers in that room, and is thus aware of the entire history of the
 room from that moment onwards. Since users in that room are able to request the
@@ -2885,7 +2896,7 @@ Specify (or remark that it is unspecified) how the server handles divergent
 history. DFS? BFS? Anything weirder? -->
 <p><a class="anchor" id="get-matrix-federation-v1-backfill-roomid"></a></p>
 <div class="section" id="get-matrix-federation-v1-backfill-roomid">
-<h2><a class="toc-backref" href="#id38">9.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/backfill/{roomId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id40">9.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/backfill/{roomId}</span></tt></a></h2>
 <p>Retrieves a sliding-window history of previous PDUs that occurred in the given room.
 Starting from the PDU ID(s) given in the <tt class="docutils literal">v</tt> argument, the PDUs that preceded it
 are retrieved, up to the total number given by the <tt class="docutils literal">limit</tt>.</p>
@@ -2984,7 +2995,7 @@ event(s), up to the given limit.</p>
 </div>
 <p><a class="anchor" id="post-matrix-federation-v1-get-missing-events-roomid"></a></p>
 <div class="section" id="post-matrix-federation-v1-get-missing-events-roomid">
-<h2><a class="toc-backref" href="#id39">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/get_missing_events/{roomId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id41">9.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST <span class="pre">/_matrix/federation/v1/get_missing_events/{roomId}</span></tt></a></h2>
 <p>Retrieves previous events that the sender is missing. This is done by doing a breadth-first
 walk of the <tt class="docutils literal">prev_events</tt> for the <tt class="docutils literal">latest_events</tt>, ignoring any events in <tt class="docutils literal">earliest_events</tt>
 and stopping at the <tt class="docutils literal">limit</tt>.</p>
@@ -3094,14 +3105,14 @@ provided <tt class="docutils literal">limit</tt>.</p>
 </div>
 <p><a class="anchor" id="retrieving-events"></a></p>
 <div class="section" id="retrieving-events">
-<h1><a class="toc-backref" href="#id40">10&nbsp;&nbsp;&nbsp;Retrieving events</a></h1>
+<h1><a class="toc-backref" href="#id42">10&nbsp;&nbsp;&nbsp;Retrieving events</a></h1>
 <p>In some circumstances, a homeserver may be missing a particular event or information
 about the room which cannot be easily determined from backfilling. These APIs provide
 homeservers with the option of getting events and the state of the room at a given
 point in the timeline.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-state-roomid"></a></p>
 <div class="section" id="get-matrix-federation-v1-state-roomid">
-<h2><a class="toc-backref" href="#id41">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state/{roomId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id43">10.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state/{roomId}</span></tt></a></h2>
 <p>Retrieves a snapshot of a room's state at a given event.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3200,7 +3211,7 @@ chain for the events.</p>
 </div>
 <p><a class="anchor" id="get-matrix-federation-v1-state-ids-roomid"></a></p>
 <div class="section" id="get-matrix-federation-v1-state-ids-roomid">
-<h2><a class="toc-backref" href="#id42">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state_ids/{roomId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id44">10.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/state_ids/{roomId}</span></tt></a></h2>
 <p>Retrieves a snapshot of a room's state at a given event, in the form of
 event IDs. This performs the same function as calling <tt class="docutils literal"><span class="pre">/state/{roomId}</span></tt>,
 however this returns just the event IDs rather than the full events.</p>
@@ -3283,7 +3294,7 @@ chain for the events.</p>
 </div>
 <p><a class="anchor" id="get-matrix-federation-v1-event-eventid"></a></p>
 <div class="section" id="get-matrix-federation-v1-event-eventid">
-<h2><a class="toc-backref" href="#id43">10.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event/{eventId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id45">10.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/event/{eventId}</span></tt></a></h2>
 <p>Retrieves a single event.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3369,7 +3380,7 @@ precise event formats.</td>
 </div>
 <p><a class="anchor" id="joining-rooms"></a></p>
 <div class="section" id="joining-rooms">
-<h1><a class="toc-backref" href="#id44">11&nbsp;&nbsp;&nbsp;Joining Rooms</a></h1>
+<h1><a class="toc-backref" href="#id46">11&nbsp;&nbsp;&nbsp;Joining Rooms</a></h1>
 <p>When a new user wishes to join a room that the user's homeserver already knows
 about, the homeserver can immediately determine if this is allowable by
 inspecting the state of the room. If it is acceptable, it can generate, sign,
@@ -3437,7 +3448,7 @@ newly-joined room. The resident server must also send the event to other servers
 participating in the room.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-make-join-roomid-userid"></a></p>
 <div class="section" id="get-matrix-federation-v1-make-join-roomid-userid">
-<h2><a class="toc-backref" href="#id45">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_join/{roomId}/{userId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id47">11.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_join/{roomId}/{userId}</span></tt></a></h2>
 <p>Asks the receiving server to return information that the sending
 server will need to prepare a join event to get into the room.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3600,7 +3611,7 @@ may give better feedback to users.</p>
 </div>
 <p><a class="anchor" id="put-matrix-federation-v1-send-join-roomid-eventid"></a></p>
 <div class="section" id="put-matrix-federation-v1-send-join-roomid-eventid">
-<h2><a class="toc-backref" href="#id46">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_join/{roomId}/{eventId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id48">11.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_join/{roomId}/{eventId}</span></tt></a></h2>
 <p>Submits a signed join event to the resident server for it
 to accept it into the room's graph. Note that events have
 a different format depending on the  room version - check
@@ -3780,14 +3791,14 @@ formats.</td>
 </div>
 <p><a class="anchor" id="inviting-to-a-room"></a></p>
 <div class="section" id="inviting-to-a-room">
-<h1><a class="toc-backref" href="#id47">12&nbsp;&nbsp;&nbsp;Inviting to a room</a></h1>
+<h1><a class="toc-backref" href="#id49">12&nbsp;&nbsp;&nbsp;Inviting to a room</a></h1>
 <p>When a user on a given homeserver invites another user on the same homeserver,
 the homeserver may sign the membership event itself and skip the process defined
 here. However, when a user invites another user on a different homeserver, a request
 to that homeserver to have the event signed and verified must be made.</p>
 <p><a class="anchor" id="put-matrix-federation-v1-invite-roomid-eventid"></a></p>
 <div class="section" id="put-matrix-federation-v1-invite-roomid-eventid">
-<h2><a class="toc-backref" href="#id48">12.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/invite/{roomId}/{eventId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id50">12.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/invite/{roomId}/{eventId}</span></tt></a></h2>
 <p>Invites a remote user to a room. Once the event has been  signed by both the inviting
 homeserver and the invited homeserver, it can be sent to all of the servers in the
 room by the inviting homeserver.</p>
@@ -4119,7 +4130,7 @@ room version - check the <a class="reference external" href="../index.html#room-
 </div>
 <p><a class="anchor" id="put-matrix-federation-v2-invite-roomid-eventid"></a></p>
 <div class="section" id="put-matrix-federation-v2-invite-roomid-eventid">
-<h2><a class="toc-backref" href="#id49">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v2/invite/{roomId}/{eventId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id51">12.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v2/invite/{roomId}/{eventId}</span></tt></a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This API is nearly identical to the v1 API with the exception of the request
@@ -4461,7 +4472,7 @@ may give better feedback to users.</p>
 </div>
 <p><a class="anchor" id="leaving-rooms-rejecting-invites"></a></p>
 <div class="section" id="leaving-rooms-rejecting-invites">
-<h1><a class="toc-backref" href="#id50">13&nbsp;&nbsp;&nbsp;Leaving Rooms (Rejecting Invites)</a></h1>
+<h1><a class="toc-backref" href="#id52">13&nbsp;&nbsp;&nbsp;Leaving Rooms (Rejecting Invites)</a></h1>
 <p>Normally homeservers can send appropriate <tt class="docutils literal">m.room.member</tt> events to have users
 leave the room, or to reject local invites. Remote invites from other homeservers
 do not involve the server in the graph and therefore need another approach to
@@ -4477,7 +4488,7 @@ the resident server via <tt class="docutils literal">/send_leave</tt>. The resid
 event to other servers in the room.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-make-leave-roomid-userid"></a></p>
 <div class="section" id="get-matrix-federation-v1-make-leave-roomid-userid">
-<h2><a class="toc-backref" href="#id51">13.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_leave/{roomId}/{userId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id53">13.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/make_leave/{roomId}/{userId}</span></tt></a></h2>
 <p>Asks the receiving server to return information that the sending
 server will need to prepare a leave event to get out of the room.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -4628,7 +4639,7 @@ required fields for a PDU.</strong></p>
 </div>
 <p><a class="anchor" id="put-matrix-federation-v1-send-leave-roomid-eventid"></a></p>
 <div class="section" id="put-matrix-federation-v1-send-leave-roomid-eventid">
-<h2><a class="toc-backref" href="#id52">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_leave/{roomId}/{eventId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id54">13.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/send_leave/{roomId}/{eventId}</span></tt></a></h2>
 <p>Submits a signed leave event to the resident server for it
 to accept it into the room's graph. Note that events have
 a different format depending on the  room version - check
@@ -4762,7 +4773,7 @@ the receiving homeserver.</p>
 </div>
 <p><a class="anchor" id="third-party-invites"></a></p>
 <div class="section" id="third-party-invites">
-<h1><a class="toc-backref" href="#id53">14&nbsp;&nbsp;&nbsp;Third-party invites</a></h1>
+<h1><a class="toc-backref" href="#id55">14&nbsp;&nbsp;&nbsp;Third-party invites</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">More information about third party invites is available in the <a class="reference external" href="../client_server/unstable.html">Client-Server API</a>
@@ -4775,14 +4786,14 @@ phone number).</p>
 implementing the <a class="reference external" href="../identity_service/unstable.html">Identity Service API</a>.</p>
 <p><a class="anchor" id="cases-where-an-association-exists-for-a-third-party-identifier"></a></p>
 <div class="section" id="cases-where-an-association-exists-for-a-third-party-identifier">
-<h2><a class="toc-backref" href="#id54">14.1&nbsp;&nbsp;&nbsp;Cases where an association exists for a third-party identifier</a></h2>
+<h2><a class="toc-backref" href="#id56">14.1&nbsp;&nbsp;&nbsp;Cases where an association exists for a third-party identifier</a></h2>
 <p>If the third-party identifier is already bound to a Matrix ID, a lookup request
 on the identity server will return it. The invite is then processed by the inviting
 homeserver as a standard <tt class="docutils literal">m.room.member</tt> invite event. This is the simplest case.</p>
 </div>
 <p><a class="anchor" id="cases-where-an-association-doesn-t-exist-for-a-third-party-identifier"></a></p>
 <div class="section" id="cases-where-an-association-doesn-t-exist-for-a-third-party-identifier">
-<h2><a class="toc-backref" href="#id55">14.2&nbsp;&nbsp;&nbsp;Cases where an association doesn't exist for a third-party identifier</a></h2>
+<h2><a class="toc-backref" href="#id57">14.2&nbsp;&nbsp;&nbsp;Cases where an association doesn't exist for a third-party identifier</a></h2>
 <p>If the third-party identifier isn't bound to any Matrix ID, the inviting
 homeserver will request the identity server to store an invite for this identifier
 and to deliver it to whoever binds it to its Matrix ID. It will also send a
@@ -4802,7 +4813,7 @@ event and send it.</p>
 will need to request the room's homeserver to auth the event.</p>
 <p><a class="anchor" id="put-matrix-federation-v1-exchange-third-party-invite-roomid"></a></p>
 <div class="section" id="put-matrix-federation-v1-exchange-third-party-invite-roomid">
-<h3><a class="toc-backref" href="#id56">14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/exchange_third_party_invite/{roomId}</span></tt></a></h3>
+<h3><a class="toc-backref" href="#id58">14.2.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT <span class="pre">/_matrix/federation/v1/exchange_third_party_invite/{roomId}</span></tt></a></h3>
 <p>The receiving server will verify the partial <tt class="docutils literal">m.room.member</tt> event
 given in the request body. If valid, the receiving server will issue
 an invite as per the <a class="reference external" href="#inviting-to-a-room">Inviting to a room</a> section before returning a
@@ -4963,7 +4974,7 @@ event.</td>
 </div>
 <p><a class="anchor" id="put-matrix-federation-v1-3pid-onbind"></a></p>
 <div class="section" id="put-matrix-federation-v1-3pid-onbind">
-<h3><a class="toc-backref" href="#id57">14.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT /_matrix/federation/v1/3pid/onbind</tt></a></h3>
+<h3><a class="toc-backref" href="#id59">14.2.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">PUT /_matrix/federation/v1/3pid/onbind</tt></a></h3>
 <p>Used by identity servers to notify the homeserver that one of its users
 has bound a third party identifier successfully, including any pending
 room invites the identity server has been made aware of.</p>
@@ -5129,7 +5140,7 @@ server's domain name, such as vector.im</td>
 </div>
 <p><a class="anchor" id="verifying-the-invite"></a></p>
 <div class="section" id="verifying-the-invite">
-<h3><a class="toc-backref" href="#id58">14.2.3&nbsp;&nbsp;&nbsp;Verifying the invite</a></h3>
+<h3><a class="toc-backref" href="#id60">14.2.3&nbsp;&nbsp;&nbsp;Verifying the invite</a></h3>
 <p>When a homeserver receives a <tt class="docutils literal">m.room.member</tt> invite event for a room it's in
 with a <tt class="docutils literal">third_party_invite</tt> object, it must verify that the association between
 the third-party identifier initially invited to the room and the Matrix ID that
@@ -5153,14 +5164,14 @@ identifier.</p>
 </div>
 <p><a class="anchor" id="public-room-directory"></a></p>
 <div class="section" id="public-room-directory">
-<h1><a class="toc-backref" href="#id59">15&nbsp;&nbsp;&nbsp;Public Room Directory</a></h1>
+<h1><a class="toc-backref" href="#id61">15&nbsp;&nbsp;&nbsp;Public Room Directory</a></h1>
 <p>To complement the <a class="reference external" href="../client_server/unstable.html">Client-Server API</a>'s room directory, homeservers need a
 way to query the public rooms for another server. This can be done by making
 a request to the <tt class="docutils literal">/publicRooms</tt> endpoint for the server the room directory
 should be retrieved for.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-publicrooms"></a></p>
 <div class="section" id="get-matrix-federation-v1-publicrooms">
-<h2><a class="toc-backref" href="#id60">15.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/publicRooms</tt></a></h2>
+<h2><a class="toc-backref" href="#id62">15.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/publicRooms</tt></a></h2>
 <p>Gets all the public rooms for the homeserver. This should not return
 rooms that are listed on another homeserver's directory, just those
 listed on the receiving homeserver's directory.</p>
@@ -5326,7 +5337,7 @@ other user.</td>
 </div>
 <p><a class="anchor" id="post-matrix-federation-v1-publicrooms"></a></p>
 <div class="section" id="post-matrix-federation-v1-publicrooms">
-<h2><a class="toc-backref" href="#id61">15.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/publicRooms</tt></a></h2>
+<h2><a class="toc-backref" href="#id63">15.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/publicRooms</tt></a></h2>
 <p>Lists the public rooms on the server, with optional filter.</p>
 <p>This API returns paginated responses. The rooms are ordered by the number
 of joined members, with the largest rooms first.</p>
@@ -5527,14 +5538,14 @@ other user.</td>
 </div>
 <p><a class="anchor" id="typing-notifications"></a></p>
 <div class="section" id="typing-notifications">
-<h1><a class="toc-backref" href="#id62">16&nbsp;&nbsp;&nbsp;Typing Notifications</a></h1>
+<h1><a class="toc-backref" href="#id64">16&nbsp;&nbsp;&nbsp;Typing Notifications</a></h1>
 <p>When a server's users send typing notifications, those notifications need to
 be sent to other servers in the room so their users are aware of the same
 state. Receiving servers should verify that the user is in the room, and is
 a user belonging to the sending server.</p>
 <p><a class="anchor" id="m-typing-schema"></a></p>
 <div class="section" id="m-typing-schema">
-<h2><a class="toc-backref" href="#id63">16.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.typing</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id65">16.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.typing</tt> schema</a></h2>
 <p>A typing notification EDU for a user in a room.</p>
 <p><tt class="docutils literal">m.typing</tt></p>
 <table border="1" class="colwidths-auto docutils">
@@ -5597,7 +5608,7 @@ room or not.</td>
 </div>
 <p><a class="anchor" id="presence"></a></p>
 <div class="section" id="presence">
-<h1><a class="toc-backref" href="#id64">17&nbsp;&nbsp;&nbsp;Presence</a></h1>
+<h1><a class="toc-backref" href="#id66">17&nbsp;&nbsp;&nbsp;Presence</a></h1>
 <p>The server API for presence is based entirely on exchange of the following
 EDUs. There are no PDUs or Federation Queries involved.</p>
 <p>Servers should only send presence updates for users that the receiving server
@@ -5610,7 +5621,7 @@ with a given user.</p>
 See also: docs/client-server/model/presence -->
 <p><a class="anchor" id="m-presence-schema"></a></p>
 <div class="section" id="m-presence-schema">
-<h2><a class="toc-backref" href="#id65">17.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.presence</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id67">17.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.presence</tt> schema</a></h2>
 <p>An EDU representing presence updates for users of the sending homeserver.</p>
 <p><tt class="docutils literal">m.presence</tt></p>
 <table border="1" class="colwidths-auto docutils">
@@ -5706,7 +5717,7 @@ minutes. Defaults to false.</td>
 </div>
 <p><a class="anchor" id="receipts"></a></p>
 <div class="section" id="receipts">
-<h1><a class="toc-backref" href="#id66">18&nbsp;&nbsp;&nbsp;Receipts</a></h1>
+<h1><a class="toc-backref" href="#id68">18&nbsp;&nbsp;&nbsp;Receipts</a></h1>
 <p>Receipts are EDUs used to communicate a marker for a given event. Currently the
 only kind of receipt supported is a &quot;read receipt&quot;, or where in the event graph
 the user has read up to.</p>
@@ -5714,7 +5725,7 @@ the user has read up to.</p>
 implied that by sending the event the user has read up to the event.</p>
 <p><a class="anchor" id="m-receipt-schema"></a></p>
 <div class="section" id="m-receipt-schema">
-<h2><a class="toc-backref" href="#id67">18.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.receipt</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id69">18.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.receipt</tt> schema</a></h2>
 <p>An EDU representing receipt updates for users of the sending homeserver.
 When receiving receipts, the server should only update entries that are
 listed in the EDU. Receipts previously received that do not appear in the
@@ -5817,7 +5828,7 @@ read receipt.</td>
 </div>
 <p><a class="anchor" id="querying-for-information"></a></p>
 <div class="section" id="querying-for-information">
-<h1><a class="toc-backref" href="#id68">19&nbsp;&nbsp;&nbsp;Querying for information</a></h1>
+<h1><a class="toc-backref" href="#id70">19&nbsp;&nbsp;&nbsp;Querying for information</a></h1>
 <p>Queries are a way to retrieve information from a homeserver about a resource,
 such as a user or room. The endpoints here are often called in conjunction with
 a request from a client on the client-server API in order to complete the call.</p>
@@ -5826,7 +5837,7 @@ represent all queries is described first, followed by the more specific queries
 that can be made.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-query-querytype"></a></p>
 <div class="section" id="get-matrix-federation-v1-query-querytype">
-<h2><a class="toc-backref" href="#id69">19.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/query/{queryType}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id71">19.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/query/{queryType}</span></tt></a></h2>
 <p>Performs a single query request on the receiving homeserver. The query string
 arguments are dependent on which type of query is being made. Known query types
 are specified as their own endpoints as an extension to this definition.</p>
@@ -5867,7 +5878,7 @@ are specified as their own endpoints as an extension to this definition.</p>
 </div>
 <p><a class="anchor" id="get-matrix-federation-v1-query-directory"></a></p>
 <div class="section" id="get-matrix-federation-v1-query-directory">
-<h2><a class="toc-backref" href="#id70">19.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/directory</tt></a></h2>
+<h2><a class="toc-backref" href="#id72">19.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/directory</tt></a></h2>
 <p>Performs a query to get the mapped room ID and list of resident homeservers in
 the room for a given room alias. Homeservers should only query room aliases
 that belong to the target server (identified by the DNS Name in the alias).</p>
@@ -5952,7 +5963,7 @@ may not include the server answering the query.</td>
 </div>
 <p><a class="anchor" id="get-matrix-federation-v1-query-profile"></a></p>
 <div class="section" id="get-matrix-federation-v1-query-profile">
-<h2><a class="toc-backref" href="#id71">19.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/profile</tt></a></h2>
+<h2><a class="toc-backref" href="#id73">19.3&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/query/profile</tt></a></h2>
 <p>Performs a query to get profile information, such as a display name or avatar,
 for a given user. Homeservers should only query profiles for users that belong
 to the target server (identified by the DNS Name in the user ID).</p>
@@ -6046,7 +6057,7 @@ should exclude it from the response body or give it the value <tt class="docutil
 </div>
 <p><a class="anchor" id="openid"></a></p>
 <div class="section" id="openid">
-<h1><a class="toc-backref" href="#id72">20&nbsp;&nbsp;&nbsp;OpenID</a></h1>
+<h1><a class="toc-backref" href="#id74">20&nbsp;&nbsp;&nbsp;OpenID</a></h1>
 <p>Third party services can exchange an access token previously generated by the
 <cite>Client-Server API</cite> for information about a user. This can help verify that a
 user is who they say they are without granting full access to the user's account.</p>
@@ -6054,7 +6065,7 @@ user is who they say they are without granting full access to the user's account
 nothing else.</p>
 <p><a class="anchor" id="get-matrix-federation-v1-openid-userinfo"></a></p>
 <div class="section" id="get-matrix-federation-v1-openid-userinfo">
-<h2><a class="toc-backref" href="#id73">20.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/openid/userinfo</tt></a></h2>
+<h2><a class="toc-backref" href="#id75">20.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET /_matrix/federation/v1/openid/userinfo</tt></a></h2>
 <p>Exchanges an OpenID access token for information about the user
 who generated the token. Currently this only exposes the Matrix
 User ID of the owner.</p>
@@ -6128,7 +6139,7 @@ token.</td>
 </div>
 <p><a class="anchor" id="device-management"></a></p>
 <div class="section" id="device-management">
-<h1><a class="toc-backref" href="#id74">21&nbsp;&nbsp;&nbsp;Device Management</a></h1>
+<h1><a class="toc-backref" href="#id76">21&nbsp;&nbsp;&nbsp;Device Management</a></h1>
 <p>Details of a user's devices must be efficiently published to other users and kept
 up-to-date.  This is critical for reliable end-to-end encryption, in order for users
 to know which devices are participating in a room.  It's also required for to-device
@@ -6165,7 +6176,7 @@ rather than inventing a whole different DAG.  The same room could be used for
 profiles etc. -->
 <p><a class="anchor" id="get-matrix-federation-v1-user-devices-userid"></a></p>
 <div class="section" id="get-matrix-federation-v1-user-devices-userid">
-<h2><a class="toc-backref" href="#id75">21.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/user/devices/{userId}</span></tt></a></h2>
+<h2><a class="toc-backref" href="#id77">21.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">GET <span class="pre">/_matrix/federation/v1/user/devices/{userId}</span></tt></a></h2>
 <p>Gets information on all of the user's devices</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -6331,7 +6342,7 @@ described at <a class="reference external" href="../appendices.html#signing-json
 </div>
 <p><a class="anchor" id="m-device-list-update-schema"></a></p>
 <div class="section" id="m-device-list-update-schema">
-<h2><a class="toc-backref" href="#id76">21.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.device_list_update</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id78">21.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.device_list_update</tt> schema</a></h2>
 <p>An EDU that lets servers push details to each other when one of their users
 adds a new device to their account, required for E2E encryption to correctly
 target the current set of devices for a given user.</p>
@@ -6495,14 +6506,14 @@ described at <a class="reference external" href="../appendices.html#signing-json
 </div>
 <p><a class="anchor" id="end-to-end-encryption"></a></p>
 <div class="section" id="end-to-end-encryption">
-<h1><a class="toc-backref" href="#id77">22&nbsp;&nbsp;&nbsp;End-to-End Encryption</a></h1>
+<h1><a class="toc-backref" href="#id79">22&nbsp;&nbsp;&nbsp;End-to-End Encryption</a></h1>
 <p>This section complements the <a class="reference external" href="../client_server/unstable.html#end-to-end-encryption">End-to-End Encryption module</a> of the Client-Server
 API. For detailed information about end-to-end encryption, please see that module.</p>
 <p>The APIs defined here are designed to be able to proxy much of the client's request
 through to federation, and have the response also be proxied through to the client.</p>
 <p><a class="anchor" id="post-matrix-federation-v1-user-keys-claim"></a></p>
 <div class="section" id="post-matrix-federation-v1-user-keys-claim">
-<h2><a class="toc-backref" href="#id78">22.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/claim</tt></a></h2>
+<h2><a class="toc-backref" href="#id80">22.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/claim</tt></a></h2>
 <p>Claims one-time keys for use in pre-key messages.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -6613,7 +6624,7 @@ from user ID to signature object.</td>
 </div>
 <p><a class="anchor" id="post-matrix-federation-v1-user-keys-query"></a></p>
 <div class="section" id="post-matrix-federation-v1-user-keys-query">
-<h2><a class="toc-backref" href="#id79">22.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/query</tt></a></h2>
+<h2><a class="toc-backref" href="#id81">22.2&nbsp;&nbsp;&nbsp;<tt class="docutils literal">POST /_matrix/federation/v1/user/keys/query</tt></a></h2>
 <p>Returns the current devices and identity keys for the given users.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -6778,7 +6789,7 @@ covered by the signatures.</td>
 </div>
 <p><a class="anchor" id="send-to-device-messaging"></a></p>
 <div class="section" id="send-to-device-messaging">
-<h1><a class="toc-backref" href="#id80">23&nbsp;&nbsp;&nbsp;Send-to-device messaging</a></h1>
+<h1><a class="toc-backref" href="#id82">23&nbsp;&nbsp;&nbsp;Send-to-device messaging</a></h1>
 <!-- TODO: add modules to the federation spec and make this a module -->
 <p>The server API for send-to-device messaging is based on the
 <tt class="docutils literal">m.direct_to_device</tt> EDU. There are no PDUs or Federation Queries involved.</p>
@@ -6786,7 +6797,7 @@ covered by the signatures.</td>
 the following EDU:</p>
 <p><a class="anchor" id="m-direct-to-device-schema"></a></p>
 <div class="section" id="m-direct-to-device-schema">
-<h2><a class="toc-backref" href="#id81">23.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.direct_to_device</tt> schema</a></h2>
+<h2><a class="toc-backref" href="#id83">23.1&nbsp;&nbsp;&nbsp;<tt class="docutils literal">m.direct_to_device</tt> schema</a></h2>
 <p>An EDU that lets servers push send events directly to a specific device on
 a remote server - for instance, to maintain an Olm E2E encrypted message channel
 between a local and remote device.</p>
@@ -6869,7 +6880,7 @@ for the user.</td>
 </div>
 <p><a class="anchor" id="content-repository"></a></p>
 <div class="section" id="content-repository">
-<h1><a class="toc-backref" href="#id82">24&nbsp;&nbsp;&nbsp;Content Repository</a></h1>
+<h1><a class="toc-backref" href="#id84">24&nbsp;&nbsp;&nbsp;Content Repository</a></h1>
 <p>Attachments to events (images, files, etc) are uploaded to a homeserver via the
 Content Repository described in the <a class="reference external" href="../client_server/unstable.html">Client-Server API</a>. When a server wishes
 to serve content originating from a remote server, it needs to ask the remote
@@ -6881,7 +6892,7 @@ parameter (set to <tt class="docutils literal">false</tt>).</p>
 </div>
 <p><a class="anchor" id="server-access-control-lists-acls"></a></p>
 <div class="section" id="server-access-control-lists-acls">
-<h1><a class="toc-backref" href="#id83">25&nbsp;&nbsp;&nbsp;Server Access Control Lists (ACLs)</a></h1>
+<h1><a class="toc-backref" href="#id85">25&nbsp;&nbsp;&nbsp;Server Access Control Lists (ACLs)</a></h1>
 <p>Server ACLs and their purpose are described in the <a class="reference external" href="../client_server/unstable.html#module-server-acls">Server ACLs</a> section of the
 Client-Server API.</p>
 <p>When a remote server makes a request, it MUST be verified to be allowed by the
@@ -6903,14 +6914,14 @@ MUST reply with a 403 HTTP status code and an <tt class="docutils literal">errco
 <li><tt class="docutils literal">/_matrix/federation/v1/get_missing_events</tt></li>
 </ul>
 </div>
-<p><a class="anchor" id="id3"></a></p>
-<div class="section" id="id3">
-<h1><a class="toc-backref" href="#id84">26&nbsp;&nbsp;&nbsp;Signing Events</a></h1>
+<p><a class="anchor" id="id4"></a></p>
+<div class="section" id="id4">
+<h1><a class="toc-backref" href="#id86">26&nbsp;&nbsp;&nbsp;Signing Events</a></h1>
 <p>Signing events is complicated by the fact that servers can choose to redact
 non-essential parts of an event.</p>
 <p><a class="anchor" id="adding-hashes-and-signatures-to-outgoing-events"></a></p>
 <div class="section" id="adding-hashes-and-signatures-to-outgoing-events">
-<h2><a class="toc-backref" href="#id85">26.1&nbsp;&nbsp;&nbsp;Adding hashes and signatures to outgoing events</a></h2>
+<h2><a class="toc-backref" href="#id87">26.1&nbsp;&nbsp;&nbsp;Adding hashes and signatures to outgoing events</a></h2>
 <p>Before signing the event, the <em>content hash</em> of the event is calculated as
 described below. The hash is encoded using <a class="reference external" href="../appendices.html#unpadded-base64">Unpadded Base64</a> and stored in the
 event object, in a <tt class="docutils literal">hashes</tt> object, under a <tt class="docutils literal">sha256</tt> key.</p>
@@ -6922,7 +6933,7 @@ server's signing key (see also <a class="reference internal" href="#retrieving-s
 </div>
 <p><a class="anchor" id="validating-hashes-and-signatures-on-received-events"></a></p>
 <div class="section" id="validating-hashes-and-signatures-on-received-events">
-<h2><a class="toc-backref" href="#id86">26.2&nbsp;&nbsp;&nbsp;Validating hashes and signatures on received events</a></h2>
+<h2><a class="toc-backref" href="#id88">26.2&nbsp;&nbsp;&nbsp;Validating hashes and signatures on received events</a></h2>
 <p>When a server receives an event over federation from another server, the
 receiving server should check the hashes and signatures on that event.</p>
 <p>First the signature is checked. The event is redacted following the <a class="reference external" href="../client_server/unstable.html#redactions">redaction
@@ -6949,7 +6960,7 @@ received.</p>
 </div>
 <p><a class="anchor" id="calculating-the-reference-hash-for-an-event"></a></p>
 <div class="section" id="calculating-the-reference-hash-for-an-event">
-<span id="reference-hashes"></span><h2><a class="toc-backref" href="#id87">26.3&nbsp;&nbsp;&nbsp;Calculating the reference hash for an event</a></h2>
+<span id="reference-hashes"></span><h2><a class="toc-backref" href="#id89">26.3&nbsp;&nbsp;&nbsp;Calculating the reference hash for an event</a></h2>
 <p>The <em>reference hash</em> of an event covers the essential fields of an event,
 including content hashes. It is used for event identifiers in some room versions.
 See the <a class="reference external" href="../index.html#room-versions">room version specification</a> for more information. It is calculated as
@@ -6964,7 +6975,7 @@ from the event, if present.</li>
 </div>
 <p><a class="anchor" id="calculating-the-content-hash-for-an-event"></a></p>
 <div class="section" id="calculating-the-content-hash-for-an-event">
-<h2><a class="toc-backref" href="#id88">26.4&nbsp;&nbsp;&nbsp;Calculating the content hash for an event</a></h2>
+<h2><a class="toc-backref" href="#id90">26.4&nbsp;&nbsp;&nbsp;Calculating the content hash for an event</a></h2>
 <p>The <em>content hash</em> of an event covers the complete event including the
 <em>unredacted</em> contents. It is calculated as follows.</p>
 <p>First, any existing <tt class="docutils literal">unsigned</tt>, <tt class="docutils literal">signature</tt>, and <tt class="docutils literal">hashes</tt> members are
@@ -6973,7 +6984,7 @@ JSON is hashed using SHA-256.</p>
 </div>
 <p><a class="anchor" id="example-code"></a></p>
 <div class="section" id="example-code">
-<h2><a class="toc-backref" href="#id89">26.5&nbsp;&nbsp;&nbsp;Example code</a></h2>
+<h2><a class="toc-backref" href="#id91">26.5&nbsp;&nbsp;&nbsp;Example code</a></h2>
 <pre class="code python literal-block">
 <span class="keyword">def</span> <span class="name function">hash_and_sign_event</span><span class="punctuation">(</span><span class="name">event_object</span><span class="punctuation">,</span> <span class="name">signing_key</span><span class="punctuation">,</span> <span class="name">signing_name</span><span class="punctuation">):</span>
     <span class="comment single"># First we need to hash the event object.</span>
@@ -7034,7 +7045,7 @@ known hash functions like SHA-256 when none of the keys have been redacted]] -->
 </div>
 <p><a class="anchor" id="security-considerations"></a></p>
 <div class="section" id="security-considerations">
-<h1><a class="toc-backref" href="#id90">27&nbsp;&nbsp;&nbsp;Security considerations</a></h1>
+<h1><a class="toc-backref" href="#id92">27&nbsp;&nbsp;&nbsp;Security considerations</a></h1>
 <p>When a domain's ownership changes, the new controller of the domain can masquerade
 as the previous owner, receiving messages (similarly to email) and request past
 messages from other servers. In the future, proposals like
