@@ -7,7 +7,7 @@ info:
     to query profile and presence information about users on each other's servers.
   contact:
     name: Anatoly Sablin
-    email: sablintolya@gmail.com
+    email: tolya@sablin.xyz
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -82,6 +82,115 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StateResponse'
+  /_matrix/federation/v1/send_join/{roomId}/{eventId}:
+    put:
+      summary: Submits a signed join event to the resident server for it to accept
+        it into the room's graph.
+      description: Note that events have a different format depending on the room
+        version - check the room version specification for precise event formats.
+        The request and response body here describes the common event fields in more
+        detail and may be missing other required fields for a PDU.
+      operationId: sendJoin
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID that is about to be joined.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID for the join event.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The full state for the room, having accepted the join event.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  anyOf:
+                  - type: integer
+                  - $ref: '#/components/schemas/RoomStateResponse'
+        400:
+          description: The request is invalid or the room the server is attempting
+            to join has a version that is not listed in the ver parameters. The error
+            should be passed through to clients so that they may give better feedback
+            to users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/make_join/{roomId}/{userId}:
+    get:
+      summary: Asks the receiving server to return information that the sending server
+        will need to prepare a join event to get into the room.
+      operationId: makeJoin
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID that is about to be joined.
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: The user ID the join event will be for.
+        required: true
+        schema:
+          type: string
+      - name: ver
+        in: query
+        description: The room versions the sending server has support for.
+        schema:
+          type: array
+          items:
+            type: string
+            default: "1"
+          default: "1"
+      responses:
+        200:
+          description: A template to be used for the rest of the Joining Rooms handshake.
+            Note that events have a different format depending on the room version
+            - check the room version specification for precise event formats. The
+            response body here describes the common event fields in more detail and
+            may be missing other required fields for a PDU.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MakeResponse'
+        400:
+          description: The request is invalid or the room the server is attempting
+            to join has a version that is not listed in the ver parameters. The error
+            should be passed through to clients so that they may give better feedback
+            to users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/user/devices/{userId}:
+    get:
+      summary: Gets information on all of the user's devices.
+      operationId: userDevices
+      parameters:
+      - name: userId
+        in: path
+        description: The user ID to retrieve devices for. Must be a user local to
+          the receiving homeserver.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The user's devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
   /_matrix/federation/v1/send/{txnId}:
     put:
       summary: Push messages representing live activity to another server.
@@ -104,6 +213,99 @@ paths:
             application/json:
               schema:
                 type: string
+  /_matrix/federation/v1/backfill/{roomId}:
+    get:
+      summary: Retrieves a sliding-window history of previous PDUs that occurred on
+        the given room.
+      description: Starting from the PDU ID(s) given in the "v" argument, the PDUs
+        that preceded it are retrieved, up to a total number given by the "limit".
+      operationId: backfill
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID to backfill.
+        required: true
+        schema:
+          type: string
+      - name: v
+        in: query
+        description: The event IDs to backfill from.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The maximum number of PDUs to retrieve, including the given events.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: A transaction containing the PDUs that preceded the given event(s),
+            including the given event(s), up to the given limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /_matrix/federation/v1/query_auth/{roomId}/{eventId}:
+    post:
+      summary: Compares the auth chain provided with what the receiving server has
+        for the room ID and event ID combination.
+      description: The auth difference can be calculated in two parts, where the "remote
+        auth" is the auth chain provided by the sending server and the "local auth"
+        is the auth chain the receiving server has. With those lists, the algorithm
+        works bottom-up after sorting each chain by depth then by event ID.The differences
+        are then discovered and returned as the response to this API call.
+      operationId: queryAuth
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID to compare the auth chain in.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID to compare the auth chain of.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The auth chain differences, as determined by the receiver.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryAuth'
+  /_matrix/federation/v1/query/directory:
+    get:
+      summary: Performs a query to get the mapped room ID and list of resident homeservers
+        in the room for a given room alias.
+      description: Servers may wish to cache the response to this query to avoid requesting
+        the information too often.
+      operationId: queryDirectory
+      parameters:
+      - name: room_alias
+        in: query
+        description: The room alias to query.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The corresponding room ID and list of known resident homeservers
+            for the room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryResponse'
+        404:
+          description: The room alias was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /_matrix/federation/v1/invite/{roomId}/{eventId}:
     put:
       summary: Invites a remote user to a room.
@@ -141,8 +343,54 @@ paths:
             application/json:
               schema:
                 type: array
+                items:
+                  type: string
+                  anyOf:
+                  - type: integer
+                  - $ref: '#/components/schemas/EventContainer'
         403:
           description: The invite is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /_matrix/federation/v1/make_leave/{roomId}/{userId}:
+    get:
+      summary: Asks the receiving server to return information that the sending server
+        will need to prepare a leave event to get out of the room.
+      operationId: makeLeave
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID that is about to be left.
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: The user ID the leave event will be for.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: A template to be used to call /send_leave. Note that events
+            have a different format depending on the room version - check the room
+            version specification for precise event formats. The response body here
+            describes the common event fields in more detail and may be missing other
+            required fields for a PDU.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  anyOf:
+                  - type: integer
+                  - $ref: '#/components/schemas/MakeResponse'
+        403:
+          description: The request is not authorized. This could mean that the user
+            is not in the room.
           content:
             application/json:
               schema:
@@ -171,6 +419,81 @@ paths:
             application/json:
               schema:
                 type: string
+  /_matrix/federation/v1/publicRooms:
+    get:
+      summary: Gets all the public rooms for the homeserver.
+      description: This should not return rooms that are listed on another homeserver's
+        directory, just those listed on the receiving homeserver's directory.
+      operationId: publicRooms
+      parameters:
+      - name: limit
+        in: query
+        description: The maximum number of rooms to return.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: since
+        in: query
+        description: A pagination token from a previous call to this endpoint to fetch
+          more rooms.
+        schema:
+          type: string
+      - name: include_all_networks
+        in: query
+        description: Whether or not to include all networks/protocols defined by application
+          services on the homeserver
+        schema:
+          type: boolean
+          default: false
+      - name: third_party_instance_id
+        in: query
+        description: The specific third party network/protocol to request from the
+          homeserver. Can only be used if include_all_networks is false.
+        schema:
+          type: string
+      responses:
+        200:
+          description: The public room list for the homeserver.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicRoomsResponse'
+  /_matrix/federation/v1/send_leave/{roomId}/{eventId}:
+    put:
+      summary: Submits a signed leave event to the resident server for it to accept
+        it into the room's graph.
+      description: Note that events have a different format depending on the room
+        version - check the room version specification for precise event formats.
+        The request and response body here describes the common event fields in more
+        detail and may be missing other required fields for a PDU.
+      operationId: sendLeave
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID that is about to be left.
+        required: true
+        schema:
+          type: string
+      - name: eventId
+        in: path
+        description: The event ID for the leave event.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: An empty response to indicate the event was accepted into the
+            graph by the receiving homeserver.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  anyOf:
+                  - type: integer
+                  - $ref: '#/components/schemas/EmptyResponse'
   /_matrix/federation/v1/query/profile:
     get:
       summary: Performs a query to get profile information, such as a display name
@@ -209,25 +532,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/user/devices/{userId}:
-    get:
-      summary: Gets information on all of the user's devices.
-      operationId: userDevices
-      parameters:
-      - name: userId
-        in: path
-        description: The user ID to retrieve devices for. Must be a user local to
-          the receiving homeserver.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The user's devices
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeviceResponse'
   /_matrix/federation/v1/user/keys/claim:
     post:
       summary: Claims one-time keys for use in pre-key messages.
@@ -250,41 +554,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KeyQueryResponse'
-  /_matrix/federation/v1/backfill/{roomId}:
-    get:
-      summary: Retrieves a sliding-window history of previous PDUs that occurred on
-        the given room.
-      description: Starting from the PDU ID(s) given in the "v" argument, the PDUs
-        that preceded it are retrieved, up to a total number given by the "limit".
-      operationId: backfill
+  /_matrix/federation/v1/exchange_third_party_invite/{roomId}:
+    put:
+      summary: The receiving server will verify the partial m.room.member event given
+        in the request body.
+      description: If valid, the receiving server will issue an invite as per the
+        Inviting to a room section before returning a response to this request.
+      operationId: exchangeThirdPartyInvite
       parameters:
       - name: roomId
         in: path
-        description: The room ID to backfill.
+        description: The room ID to exchange a third party invite in.
         required: true
         schema:
           type: string
-      - name: v
-        in: query
-        description: The event IDs to backfill from.
-        required: true
-        schema:
-          type: string
-      - name: limit
-        in: query
-        description: The maximum number of PDUs to retrieve, including the given events.
-        required: true
-        schema:
-          type: integer
-          format: int64
       responses:
         200:
-          description: A transaction containing the PDUs that preceded the given event(s),
-            including the given event(s), up to the given limit.
+          description: The invite has been issued successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
+                $ref: '#/components/schemas/EmptyResponse'
+  /_matrix/federation/v1/state_ids/{roomId}:
+    get:
+      summary: Retrieves a snapshot of a room's state at a given event, in the form
+        of event IDs.
+      operationId: stateIds
+      parameters:
+      - name: roomId
+        in: path
+        description: The room ID to get state for.
+        required: true
+        schema:
+          type: string
+      - name: event_id
+        in: query
+        description: An event ID in the room to retrieve the state at.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The fully resolved state for the room, prior to considering
+            any state changes induced by the requested event. Includes the authorization
+            chain for the events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateIdResponse'
   /_matrix/federation/v1/get_missing_events/{roomId}:
     post:
       summary: Retrieves previous events that the sender is missing.
@@ -338,303 +655,6 @@ paths:
             application/json:
               schema:
                 type: string
-  /_matrix/federation/v1/send_join/{roomId}/{eventId}:
-    put:
-      summary: Submits a signed join event to the resident server for it to accept
-        it into the room's graph.
-      description: Note that events have a different format depending on the room
-        version - check the room version specification for precise event formats.
-        The request and response body here describes the common event fields in more
-        detail and may be missing other required fields for a PDU.
-      operationId: sendJoin
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID that is about to be joined.
-        required: true
-        schema:
-          type: string
-      - name: eventId
-        in: path
-        description: The event ID for the join event.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The full state for the room, having accepted the join event.
-          content:
-            application/json:
-              schema:
-                type: array
-        400:
-          description: The request is invalid or the room the server is attempting
-            to join has a version that is not listed in the ver parameters. The error
-            should be passed through to clients so that they may give better feedback
-            to users.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/query/directory:
-    get:
-      summary: Performs a query to get the mapped room ID and list of resident homeservers
-        in the room for a given room alias.
-      description: Servers may wish to cache the response to this query to avoid requesting
-        the information too often.
-      operationId: queryDirectory
-      parameters:
-      - name: room_alias
-        in: query
-        description: The room alias to query.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The corresponding room ID and list of known resident homeservers
-            for the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DirectoryResponse'
-        404:
-          description: The room alias was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/state_ids/{roomId}:
-    get:
-      summary: Retrieves a snapshot of a room's state at a given event, in the form
-        of event IDs.
-      operationId: stateIds
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID to get state for.
-        required: true
-        schema:
-          type: string
-      - name: event_id
-        in: query
-        description: An event ID in the room to retrieve the state at.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The fully resolved state for the room, prior to considering
-            any state changes induced by the requested event. Includes the authorization
-            chain for the events.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StateIdResponse'
-  /_matrix/federation/v1/make_join/{roomId}/{userId}:
-    get:
-      summary: Asks the receiving server to return information that the sending server
-        will need to prepare a join event to get into the room.
-      operationId: makeJoin
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID that is about to be joined.
-        required: true
-        schema:
-          type: string
-      - name: userId
-        in: path
-        description: The user ID the join event will be for.
-        required: true
-        schema:
-          type: string
-      - name: ver
-        in: query
-        description: The room versions the sending server has support for.
-        schema:
-          type: array
-          items:
-            type: string
-            default: "1"
-          default: "1"
-      responses:
-        200:
-          description: A template to be used for the rest of the Joining Rooms handshake.
-            Note that events have a different format depending on the room version
-            - check the room version specification for precise event formats. The
-            response body here describes the common event fields in more detail and
-            may be missing other required fields for a PDU.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MakeResponse'
-        400:
-          description: The request is invalid or the room the server is attempting
-            to join has a version that is not listed in the ver parameters. The error
-            should be passed through to clients so that they may give better feedback
-            to users.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/make_leave/{roomId}/{userId}:
-    get:
-      summary: Asks the receiving server to return information that the sending server
-        will need to prepare a leave event to get out of the room.
-      operationId: makeLeave
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID that is about to be left.
-        required: true
-        schema:
-          type: string
-      - name: userId
-        in: path
-        description: The user ID the leave event will be for.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: A template to be used to call /send_leave. Note that events
-            have a different format depending on the room version - check the room
-            version specification for precise event formats. The response body here
-            describes the common event fields in more detail and may be missing other
-            required fields for a PDU.
-          content:
-            application/json:
-              schema:
-                type: array
-        403:
-          description: The request is not authorized. This could mean that the user
-            is not in the room.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /_matrix/federation/v1/send_leave/{roomId}/{eventId}:
-    put:
-      summary: Submits a signed leave event to the resident server for it to accept
-        it into the room's graph.
-      description: Note that events have a different format depending on the room
-        version - check the room version specification for precise event formats.
-        The request and response body here describes the common event fields in more
-        detail and may be missing other required fields for a PDU.
-      operationId: sendLeave
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID that is about to be left.
-        required: true
-        schema:
-          type: string
-      - name: eventId
-        in: path
-        description: The event ID for the leave event.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: An empty response to indicate the event was accepted into the
-            graph by the receiving homeserver.
-          content:
-            application/json:
-              schema:
-                type: array
-  /_matrix/federation/v1/exchange_third_party_invite/{roomId}:
-    put:
-      summary: The receiving server will verify the partial m.room.member event given
-        in the request body.
-      description: If valid, the receiving server will issue an invite as per the
-        Inviting to a room section before returning a response to this request.
-      operationId: exchangeThirdPartyInvite
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID to exchange a third party invite in.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The invite has been issued successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
-  /_matrix/federation/v1/publicRooms:
-    get:
-      summary: Gets all the public rooms for the homeserver.
-      description: This should not return rooms that are listed on another homeserver's
-        directory, just those listed on the receiving homeserver's directory.
-      operationId: publicRooms
-      parameters:
-      - name: limit
-        in: query
-        description: The maximum number of rooms to return.
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: since
-        in: query
-        description: A pagination token from a previous call to this endpoint to fetch
-          more rooms.
-        schema:
-          type: string
-      - name: include_all_networks
-        in: query
-        description: Whether or not to include all networks/protocols defined by application
-          services on the homeserver
-        schema:
-          type: boolean
-          default: false
-      - name: third_party_instance_id
-        in: query
-        description: The specific third party network/protocol to request from the
-          homeserver. Can only be used if include_all_networks is false.
-        schema:
-          type: string
-      responses:
-        200:
-          description: The public room list for the homeserver.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PublicRoomsResponse'
-  /_matrix/federation/v1/query_auth/{roomId}/{eventId}:
-    post:
-      summary: Compares the auth chain provided with what the receiving server has
-        for the room ID and event ID combination.
-      description: The auth difference can be calculated in two parts, where the "remote
-        auth" is the auth chain provided by the sending server and the "local auth"
-        is the auth chain the receiving server has. With those lists, the algorithm
-        works bottom-up after sorting each chain by depth then by event ID.The differences
-        are then discovered and returned as the response to this API call.
-      operationId: queryAuth
-      parameters:
-      - name: roomId
-        in: path
-        description: The room ID to compare the auth chain in.
-        required: true
-        schema:
-          type: string
-      - name: eventId
-        in: path
-        description: The event ID to compare the auth chain of.
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: The auth chain differences, as determined by the receiver.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/QueryAuth'
   /_matrix/federation/v2/invite/{roomId}/{eventId}:
     put:
       summary: Invites a remote user to a room.
@@ -672,6 +692,11 @@ paths:
             application/json:
               schema:
                 type: array
+                items:
+                  type: string
+                  anyOf:
+                  - type: integer
+                  - $ref: '#/components/schemas/EventContainer'
         403:
           description: The invite is not allowed.
           content:
@@ -820,47 +845,61 @@ components:
           items:
             $ref: '#/components/schemas/PersistedDataUnit'
       description: Response of the state methods.
-    EphemeralDataUnit:
+    RoomStateResponse:
       required:
-      - edu_type
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/EphemeralDataUnitContent'
-        edu_type:
-          type: string
-          description: The type of ephemeral message.
-          readOnly: true
-      description: Ephemeral data unit.
-    EphemeralDataUnitContent:
-      type: object
-    Transaction:
-      required:
+      - auth_chain
       - origin
-      - origin_server_ts
-      - pdus
+      - state
       type: object
       properties:
         origin:
           type: string
-          description: server_name of homeserver sending this transaction.
-        pdus:
+          description: The resident server's DNS name.
+        state:
           type: array
-          description: List of persistent updates to rooms.
+          description: The room state. The event format varies depending on the room
+            version - check the room version specification for precise event formats.
           items:
             $ref: '#/components/schemas/PersistedDataUnit'
-        edus:
+        auth_chain:
           type: array
-          description: List of ephemeral messages. May be omitted if there are no
-            ephemeral messages to be sent.
+          description: The auth chain. Note that events have a different format depending
+            on the room version - check the room version specification for precise
+            event formats.
           items:
-            $ref: '#/components/schemas/EphemeralDataUnit'
-        origin_server_ts:
-          type: integer
-          description: Timestamp in milliseconds on originating homeserver when this
-            transaction started.
-          format: int64
-      description: Transaction for Federation API.
+            $ref: '#/components/schemas/PersistedDataUnit'
+      description: Room state response.
+    AcceptedTerms:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: A list of terms URLs the user has previously accepted. Clients
+        SHOULD use this to avoid presenting the user with terms they have already
+        agreed to.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedAcceptedTermsContent'
+    AcceptedTermsContent:
+      type: object
+      properties:
+        accepted:
+          type: array
+          description: ' The list of URLs the user has previously accepted. Should
+            be appended to when the user agrees to new terms.'
+          items:
+            type: string
+            description: ' The list of URLs the user has previously accepted. Should
+              be appended to when the user agrees to new terms.'
+      description: A list of terms URLs the user has previously accepted. Clients
+        SHOULD use this to avoid presenting the user with terms they have already
+        agreed to.
     Answer:
       required:
       - sdp
@@ -878,17 +917,18 @@ components:
       required:
       - url
       type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/AudioInfo'
-        url:
-          type: string
-          description: The URL to the audio clip.
-        file:
-          $ref: '#/components/schemas/EncryptedFile'
       description: This message represents a single audio clip.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          info:
+            $ref: '#/components/schemas/AudioInfo'
+          url:
+            type: string
+            description: The URL to the audio clip.
+          file:
+            $ref: '#/components/schemas/EncryptedFile'
     AudioInfo:
       type: object
       properties:
@@ -904,79 +944,148 @@ components:
           description: The size of the audio clip in bytes.
           format: int64
       description: Audio type.
+    CallAnswer:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This event is sent by the callee when they wish to answer the call.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedCallAnswerContent'
     CallAnswerContent:
       required:
       - answer
       - call_id
       - version
       type: object
-      properties:
-        answer:
-          $ref: '#/components/schemas/Answer'
-        version:
-          type: integer
-          description: The version of the VoIP specification this message adheres
-            to. This specification is version 0.
-          format: int64
-        call_id:
-          type: string
-          description: The ID of the call this event relates to.
       description: This event is sent by the callee when they wish to answer the call.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          answer:
+            $ref: '#/components/schemas/Answer'
+          version:
+            type: integer
+            description: The version of the VoIP specification this message adheres
+              to. This specification is version 0.
+            format: int64
+          call_id:
+            type: string
+            description: The ID of the call this event relates to.
+    CallCandidates:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This event is sent by callers after sending an invite and by the
+        callee after answering. Its purpose is to give the other party additional
+        ICE candidates to try using to communicate.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedCallCandidatesContent'
     CallCandidatesContent:
       required:
       - call_id
       - candidates
       - version
       type: object
-      properties:
-        candidates:
-          type: array
-          description: Array of objects describing the candidates.
-          items:
-            $ref: '#/components/schemas/Candidate'
-        version:
-          type: integer
-          description: The version of the VoIP specification this messages adheres
-            to. This specification is version 0.
-          format: int64
-        call_id:
-          type: string
-          description: The ID of the call this event relates to.
       description: This event is sent by callers after sending an invite and by the
         callee after answering. Its purpose is to give the other party additional
         ICE candidates to try using to communicate.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          candidates:
+            type: array
+            description: Array of objects describing the candidates.
+            items:
+              $ref: '#/components/schemas/Candidate'
+          version:
+            type: integer
+            description: The version of the VoIP specification this messages adheres
+              to. This specification is version 0.
+            format: int64
+          call_id:
+            type: string
+            description: The ID of the call this event relates to.
+    CallHangup:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: Sent by either party to signal their termination of the call. This
+        can be sent either once the call has has been established or before to abort
+        the call.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedCallHangupContent'
     CallHangupContent:
       required:
       - call_id
       - version
       type: object
-      properties:
-        version:
-          type: integer
-          description: The version of the VoIP specification this message adheres
-            to. This specification is version 0.
-          format: int64
-        reason:
-          type: string
-          description: Optional error reason for the hangup. This should not be provided
-            when the user naturally ends or rejects the call. When there was an error
-            in the call negotiation, this should be ice_failed for when ICE negotiation
-            fails or invite_timeout for when the other party did not answer in time.
-          enum:
-          - ice_failed
-          - invite_timeout
-        call_id:
-          type: string
-          description: The ID of the call this event relates to.
       description: Sent by either party to signal their termination of the call. This
         can be sent either once the call has has been established or before to abort
         the call.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          version:
+            type: integer
+            description: The version of the VoIP specification this message adheres
+              to. This specification is version 0.
+            format: int64
+          reason:
+            type: string
+            description: Optional error reason for the hangup. This should not be
+              provided when the user naturally ends or rejects the call. When there
+              was an error in the call negotiation, this should be ice_failed for
+              when ICE negotiation fails or invite_timeout for when the other party
+              did not answer in time.
+            enum:
+            - ice_failed
+            - invite_timeout
+          call_id:
+            type: string
+            description: The ID of the call this event relates to.
+    CallInvite:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This event is sent by the caller when they wish to establish a
+        call.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedCallInviteContent'
     CallInviteContent:
       required:
       - call_id
@@ -984,27 +1093,28 @@ components:
       - offer
       - version
       type: object
-      properties:
-        offer:
-          $ref: '#/components/schemas/Offer'
-        version:
-          type: integer
-          description: The version of the VoIP specification this message adheres
-            to. This specification is version 0.
-          format: int64
-        lifetime:
-          type: integer
-          description: The time in milliseconds that the invite is valid for. Once
-            the invite age exceeds this value, clients should discard it. They should
-            also no longer show the call as awaiting an answer in the UI.
-          format: int64
-        call_id:
-          type: string
-          description: The ID of the call this event relates to.
       description: This event is sent by the caller when they wish to establish a
         call.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          offer:
+            $ref: '#/components/schemas/Offer'
+          version:
+            type: integer
+            description: The version of the VoIP specification this message adheres
+              to. This specification is version 0.
+            format: int64
+          lifetime:
+            type: integer
+            description: The time in milliseconds that the invite is valid for. Once
+              the invite age exceeds this value, clients should discard it. They should
+              also no longer show the call as awaiting an answer in the UI.
+            format: int64
+          call_id:
+            type: string
+            description: The ID of the call this event relates to.
     Candidate:
       required:
       - candidate
@@ -1034,34 +1144,55 @@ components:
           description: The Olm message type.
           format: int64
       description: Cipher text info.
+    Direct:
+      required:
+      - type
+      type: object
+      description: A map of which rooms are considered 'direct' rooms for specific
+        users is kept in account_data in an event of type m.direct. The content of
+        this event is an object where the keys are the user IDs and values are lists
+        of room ID strings of the 'direct' rooms for that user ID.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     DirectContent:
       type: object
-      properties:
-        empty:
-          type: boolean
       description: A map of which rooms are considered 'direct' rooms for specific
         users is kept in account_data in an event of type m.direct. The content of
         this event is an object where the keys are the user IDs and values are lists
         of room ID strings of the 'direct' rooms for that user ID.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          empty:
+            type: boolean
+    Dummy:
+      required:
+      - type
+      type: object
+      description: This event type is used to indicate new Olm sessions for end-to-end
+        encryption. Typically it is encrypted as an m.room.encrypted event, then sent
+        as a to-device event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     Emote:
       type: object
-      properties:
-        format:
-          type: string
-          description: The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html``
-            is supported.
-        formatted_body:
-          type: string
-          description: The formatted version of the ``body``. This is required if
-            ``format`` is specified.
       description: This message is similar to m.text except that the sender is 'performing'
         the action contained in the body key, similar to /me in IRC. This message
         should be prefixed by the name of the sender. This message could also be represented
         in a different colour to distinguish it from regular m.text messages.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          format:
+            type: string
+            description: The format used in the ``formatted_body``. Currently only
+              ``org.matrix.custom.html`` is supported.
+          formatted_body:
+            type: string
+            description: The formatted version of the ``body``. This is required if
+              ``format`` is specified.
     EncryptedFile:
       required:
       - iv
@@ -1106,14 +1237,6 @@ components:
             package naming conventions.
           readOnly: true
       description: Event.
-    EventContainer:
-      required:
-      - event
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/InviteEvent'
-      description: Event container.
     EventContent:
       type: object
       description: Parent class of all event contents part in the Event.
@@ -1122,20 +1245,21 @@ components:
       - filename
       - url
       type: object
-      properties:
-        filename:
-          type: string
-          description: The original filename of the uploaded file.
-        info:
-          $ref: '#/components/schemas/FileInfo'
-        url:
-          type: string
-          description: The URL to the file.
-        file:
-          $ref: '#/components/schemas/EncryptedFile'
       description: This message represents a generic file.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          filename:
+            type: string
+            description: The original filename of the uploaded file.
+          info:
+            $ref: '#/components/schemas/FileInfo'
+          url:
+            type: string
+            description: The URL to the file.
+          file:
+            $ref: '#/components/schemas/EncryptedFile'
     FileInfo:
       type: object
       properties:
@@ -1154,6 +1278,15 @@ components:
         thumbnail_info:
           $ref: '#/components/schemas/ThumbnailInfo'
       description: File info.
+    ForwardedRoomKey:
+      required:
+      - type
+      type: object
+      description: This event type is used to forward keys for end-to-end encryption.
+        Typically it is encrypted as an m.room.encrypted event, then sent as a to-device
+        event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     ForwardedRoomKeyContent:
       required:
       - algorithm
@@ -1164,92 +1297,119 @@ components:
       - session_id
       - session_key
       type: object
-      properties:
-        algorithm:
-          type: string
-          description: Required. The encryption algorithm the key in this event is
-            to be used with.
-        room_id:
-          type: string
-          description: The room where the key is used.
-        sender_key:
-          type: string
-          description: Required. The Curve25519 key of the device which initiated
-            the session originally.
-        session_id:
-          type: string
-          description: The ID of the session that the key is for.
-        session_key:
-          type: string
-          description: The key to be exchanged.
-        sender_claimed_ed25519_key:
-          type: string
-          description: The Ed25519 key of the device which initiated the session originally.
-            It is 'claimed' because the receiving device has no way to tell that the
-            original room_key actually came from a device which owns the private partof
-            this key unless they have done device verification.
-        forwarding_curve25519_key_chain:
-          type: array
-          description: Chain of Curve25519 keys. It starts out empty, but each time
-            the key is forwarded to another device, the previous sender in the chain
-            is added to the end of the list. For example, if the key is forwarded
-            from A to B to C, this field is empty between A and B, and contains A's
-            Curve25519 key between B and C.
-          items:
-            type: string
-            description: Chain of Curve25519 keys. It starts out empty, but each time
-              the key is forwarded to another device, the previous sender in the chain
-              is added to the end of the list. For example, if the key is forwarded
-              from A to B to C, this field is empty between A and B, and contains
-              A's Curve25519 key between B and C.
       description: This event type is used to forward keys for end-to-end encryption.
         Typically it is encrypted as an m.room.encrypted event, then sent as a to-device
         event.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          algorithm:
+            type: string
+            description: Required. The encryption algorithm the key in this event
+              is to be used with.
+          room_id:
+            type: string
+            description: The room where the key is used.
+          sender_key:
+            type: string
+            description: Required. The Curve25519 key of the device which initiated
+              the session originally.
+          session_id:
+            type: string
+            description: The ID of the session that the key is for.
+          session_key:
+            type: string
+            description: The key to be exchanged.
+          sender_claimed_ed25519_key:
+            type: string
+            description: The Ed25519 key of the device which initiated the session
+              originally. It is 'claimed' because the receiving device has no way
+              to tell that the original room_key actually came from a device which
+              owns the private partof this key unless they have done device verification.
+          forwarding_curve25519_key_chain:
+            type: array
+            description: Chain of Curve25519 keys. It starts out empty, but each time
+              the key is forwarded to another device, the previous sender in the chain
+              is added to the end of the list. For example, if the key is forwarded
+              from A to B to C, this field is empty between A and B, and contains
+              A's Curve25519 key between B and C.
+            items:
+              type: string
+              description: Chain of Curve25519 keys. It starts out empty, but each
+                time the key is forwarded to another device, the previous sender in
+                the chain is added to the end of the list. For example, if the key
+                is forwarded from A to B to C, this field is empty between A and B,
+                and contains A's Curve25519 key between B and C.
+    FullyRead:
+      required:
+      - room_id
+      - type
+      type: object
+      description: The current location of the user's read marker in a room. This
+        event appears in the user's room account data for the room the marker is applicable
+        for.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          room_id:
+            type: string
+            description: The ID of the room associated with this event.
     FullyReadContent:
       required:
       - event_id
       type: object
-      properties:
-        event_id:
-          type: string
-          description: The event the user's read marker is located at in the room.
       description: The current location of the user's read marker in a room. This
         event appears in the user's room account data for the room the marker is applicable
         for.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          event_id:
+            type: string
+            description: The event the user's read marker is located at in the room.
+    IgnoredUserList:
+      required:
+      - type
+      type: object
+      description: A map of users which are considered ignored is kept in account_data
+        in an event type of m.ignored_user_list.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     IgnoredUserListContent:
       required:
       - ignored_users
       type: object
-      properties:
-        ignored_users:
-          type: object
-          additionalProperties:
-            type: object
-            description: The map of users to ignore.
-          description: The map of users to ignore.
       description: A map of users which are considered ignored is kept in account_data
         in an event type of m.ignored_user_list.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          ignored_users:
+            type: object
+            additionalProperties:
+              type: object
+              description: The map of users to ignore.
+            description: The map of users to ignore.
     Image:
       required:
       - url
       type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/ImageInfo'
-        url:
-          type: string
-          description: The URL to the file.
-        file:
-          $ref: '#/components/schemas/EncryptedFile'
       description: This message represents a single image and an optional thumbnail.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          info:
+            $ref: '#/components/schemas/ImageInfo'
+          url:
+            type: string
+            description: The URL to the file.
+          file:
+            $ref: '#/components/schemas/EncryptedFile'
     ImageInfo:
       type: object
       properties:
@@ -1291,35 +1451,6 @@ components:
           description: A name which can be displayed to represent the user instead
             of their third party identifier.
       description: Third-party invites.
-    InviteEvent:
-      required:
-      - origin
-      - origin_server_ts
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        sender:
-          type: string
-          description: The matrix ID of the user who sent the original m.room.third_party_invite.
-        origin:
-          type: string
-          description: The name of the inviting homeserver.
-        type:
-          type: string
-          description: The value m.room.member.
-          default: m.room.member
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        origin_server_ts:
-          type: integer
-          description: A timestamp added by the inviting homeserver.
-          format: int64
-        state_key:
-          type: string
-          description: The user ID of the invited member.
-      description: Invite event.
     JWK:
       required:
       - alg
@@ -1348,19 +1479,56 @@ components:
           type: string
           description: The key, encoded as urlsafe unpadded base64.
       description: JSON Web Key.
+    KeyVerificationAccept:
+      required:
+      - type
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Event'
+    KeyVerificationCancel:
+      required:
+      - type
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Event'
+    KeyVerificationKey:
+      required:
+      - type
+      type: object
+      description: Sends the ephemeral public key for a device to the partner device.
+        Typically sent as a to-device event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+    KeyVerificationMac:
+      required:
+      - type
+      type: object
+      description: Sends the MAC of a device's key to the partner device. Typically
+        sent as a to-device event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+    KeyVerificationStart:
+      required:
+      - type
+      type: object
+      description: Begins a key verification process. Typically sent as a to-device
+        event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     Location:
       required:
       - geo_uri
       type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/LocationInfo'
-        geo_uri:
-          type: string
-          description: A geo URI representing this location.
       description: This message represents a real-world location.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          info:
+            $ref: '#/components/schemas/LocationInfo'
+          geo_uri:
+            type: string
+            description: A geo URI representing this location.
     LocationInfo:
       type: object
       properties:
@@ -1378,31 +1546,24 @@ components:
       - ciphertext
       - sender_key
       type: object
-      properties:
-        ciphertext:
-          type: string
-          description: The encrypted content of the event. The encrypted payload itself.
-        algorithm:
-          type: string
-          description: The encryption algorithm used to encrypt this event. The value
-            of this field determines which other properties will be present.
-          readOnly: true
-          enum:
-          - m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2
       description: Megolm encrypted message.
       allOf:
       - $ref: '#/components/schemas/RoomEncryptedContent'
+      - type: object
+        properties:
+          ciphertext:
+            type: string
+            description: The encrypted content of the event. The encrypted payload
+              itself.
+          algorithm:
+            type: string
+            description: The encryption algorithm used to encrypt this event. The
+              value of this field determines which other properties will be present.
+            readOnly: true
+            enum:
+            - m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2
     Notice:
       type: object
-      properties:
-        format:
-          type: string
-          description: The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html``
-            is supported.
-        formatted_body:
-          type: string
-          description: The formatted version of the ``body``. This is required if
-            ``format`` is specified.
       description: The ``m.notice`` type is primarily intended for responses from
         automated clients. An ``m.notice`` message must be treated the same way as
         a regular ``m.text`` message with two exceptions. Firstly, clients should
@@ -1412,6 +1573,16 @@ components:
         exchange messages.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          format:
+            type: string
+            description: The format used in the ``formatted_body``. Currently only
+              ``org.matrix.custom.html`` is supported.
+          formatted_body:
+            type: string
+            description: The formatted version of the ``body``. This is required if
+              ``format`` is specified.
     NotificationPowerLevel:
       type: object
       properties:
@@ -1440,46 +1611,170 @@ components:
       - ciphertext
       - sender_key
       type: object
-      properties:
-        ciphertext:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/CiphertextInfo'
-          description: The encrypted content of the event. A map from the recipient
-            Curve25519 identity key to ciphertext information. For more details, see
-            Messaging Algorithms.
       description: Olm encrypted message.
       allOf:
       - $ref: '#/components/schemas/RoomEncryptedContent'
+      - type: object
+        properties:
+          ciphertext:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/CiphertextInfo'
+            description: The encrypted content of the event. A map from the recipient
+              Curve25519 identity key to ciphertext information. For more details,
+              see Messaging Algorithms.
+    PolicyRuleRoom:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A moderation policy rule which affects room IDs and room aliases.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedPolicyRuleRoomContent'
+          prev_content:
+            $ref: '#/components/schemas/PolicyRuleRoomContent'
+    PolicyRuleRoomContent:
+      required:
+      - entity
+      - reason
+      - recommendation
+      type: object
+      properties:
+        entity:
+          type: string
+          description: The entity affected by this rule. Glob characters * and ? can
+            be used to match zero or more and one or more characters respectively.
+        recommendation:
+          type: string
+          description: The suggested action to take. Currently only m.ban is specified.
+        reason:
+          type: string
+          description: The human-readable description for the recommendation.
+      description: A moderation policy rule which affects room IDs and room aliases.
+    PolicyRuleServer:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A moderation policy rule which affects servers.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedPolicyRuleServerContent'
+          prev_content:
+            $ref: '#/components/schemas/PolicyRuleServerContent'
+    PolicyRuleServerContent:
+      required:
+      - entity
+      - reason
+      - recommendation
+      type: object
+      properties:
+        entity:
+          type: string
+          description: The entity affected by this rule. Glob characters * and ? can
+            be used to match zero or more and one or more characters respectively.
+        recommendation:
+          type: string
+          description: The suggested action to take. Currently only m.ban is specified.
+        reason:
+          type: string
+          description: The human-readable description for the recommendation.
+      description: A moderation policy rule which affects servers.
+    PolicyRuleUser:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A moderation policy rule which affects users.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedPolicyRuleUserContent'
+          prev_content:
+            $ref: '#/components/schemas/PolicyRuleUserContent'
+    PolicyRuleUserContent:
+      required:
+      - entity
+      - reason
+      - recommendation
+      type: object
+      properties:
+        entity:
+          type: string
+          description: The entity affected by this rule. Glob characters * and ? can
+            be used to match zero or more and one or more characters respectively.
+        recommendation:
+          type: string
+          description: The suggested action to take. Currently only m.ban is specified.
+        reason:
+          type: string
+          description: The human-readable description for the recommendation.
+      description: A moderation policy rule which affects users.
+    Presence:
+      required:
+      - sender
+      - type
+      type: object
+      description: Informs the client of a user's presence state change.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          sender:
+            type: string
+            description: Contains the fully-qualified ID of the user who sent this
+              event.
     PresenceContent:
       required:
       - presence
       type: object
-      properties:
-        presence:
-          type: string
-          description: The presence state for this user.
-          enum:
-          - online, offline, unavailable
-        avatar_url:
-          type: string
-          description: The current avatar URL for this user, if any.
-        displayname:
-          type: string
-          description: The current display name for this user, if any.
-        last_active_ago:
-          type: integer
-          description: The last time since this used performed some action, in milliseconds.
-          format: int64
-        currently_active:
-          type: boolean
-          description: Whether the user is currently active.
-        status_msg:
-          type: string
-          description: An optional description to accompany the presence.
       description: Informs the client of a user's presence state change.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          presence:
+            type: string
+            description: The presence state for this user.
+            enum:
+            - online, offline, unavailable
+          avatar_url:
+            type: string
+            description: The current avatar URL for this user, if any.
+          displayname:
+            type: string
+            description: The current display name for this user, if any.
+          last_active_ago:
+            type: integer
+            description: The last time since this used performed some action, in milliseconds.
+            format: int64
+          currently_active:
+            type: boolean
+            description: Whether the user is currently active.
+          status_msg:
+            type: string
+            description: An optional description to accompany the presence.
     PreviousRoom:
       required:
       - event_id
@@ -1509,11 +1804,41 @@ components:
           type: string
           description: A base-64 encoded ed25519 key with which token may be signed.
       description: Public keys.
+    PushRules:
+      required:
+      - type
+      type: object
+      description: All user push rules.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+    RawEvent:
+      required:
+      - type
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          properties:
+            type: object
+    Receipt:
+      required:
+      - room_id
+      - type
+      type: object
+      description: A map of which rooms are considered 'direct' rooms for specific
+        users is kept in account_data in an event of type m.direct. The content of
+        this event is an object where the keys are the user IDs and values are lists
+        of room ID strings of the 'direct' rooms for that user ID.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          room_id:
+            type: string
+            description: The ID of the room associated with this event.
     ReceiptContent:
       type: object
-      properties:
-        empty:
-          type: boolean
       additionalProperties:
         $ref: '#/components/schemas/ReceiptInfo'
       description: A map of which rooms are considered 'direct' rooms for specific
@@ -1522,6 +1847,10 @@ components:
         of room ID strings of the 'direct' rooms for that user ID.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          empty:
+            type: boolean
     ReceiptInfo:
       type: object
       properties:
@@ -1578,6 +1907,32 @@ components:
           type: string
           description: The ID of the session that the key is for.
       description: Requested key info.
+    RoomAliases:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event is sent by a homeserver directly to inform of changes
+        to the list of aliases it knows about for that room. The state_key for this
+        event is set to the homeserver which owns the room alias. The entire set of
+        known aliases for the room is the union of all the m.room.aliases events,
+        one for each homeserver. Clients should check the validity of any room alias
+        given in this list before presenting it to the user as trusted fact. The lists
+        given by this event should be considered simply as advice on which aliases
+        might exist, for which the client can perform the lookup to confirm whether
+        it receives the correct room ID.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomAliasesContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomAliasesContent'
     RoomAliasesContent:
       required:
       - aliases
@@ -1598,8 +1953,25 @@ components:
         given by this event should be considered simply as advice on which aliases
         might exist, for which the client can perform the lookup to confirm whether
         it receives the correct room ID.
+    RoomAvatar:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A picture that is associated with the room. This can be displayed
+        alongside the room information.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomAvatarContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomAvatarContent'
     RoomAvatarContent:
       required:
       - url
@@ -1612,8 +1984,28 @@ components:
           description: The URL to the image.
       description: A picture that is associated with the room. This can be displayed
         alongside the room information.
+    RoomCanonicalAlias:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event is used to inform the room about which alias should
+        be considered the canonical one. This could be for display purposes or as
+        suggestion to users which alias to use to advertise the room. A room with
+        an m.room.canonical_alias event with an absent, null, or empty alias field
+        should be treated the same as a room with no m.room.canonical_alias event.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomCanonicalAliasContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomCanonicalAliasContent'
     RoomCanonicalAliasContent:
       required:
       - alias
@@ -1627,8 +2019,25 @@ components:
         suggestion to users which alias to use to advertise the room. A room with
         an m.room.canonical_alias event with an absent, null, or empty alias field
         should be treated the same as a room with no m.room.canonical_alias event.
+    RoomCreate:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This is the first event in a room and cannot be changed. It acts
+        as the root of all other events.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomCreateContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomCreateContent'
     RoomCreateContent:
       required:
       - creator
@@ -1649,35 +2058,69 @@ components:
             exist.
       description: This is the first event in a room and cannot be changed. It acts
         as the root of all other events.
+    RoomEncrypted:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This event type is used when sending encrypted events. It can be
+        used either within a room (in which case it will have all of the Room Event
+        fields), or as a to-device event.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomEncryptedContent'
     RoomEncryptedContent:
       required:
       - algorithm
       - sender_key
       type: object
-      properties:
-        algorithm:
-          type: string
-          description: The encryption algorithm used to encrypt this event. The value
-            of this field determines which other properties will be present.
-          enum:
-          - m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2
-        sender_key:
-          type: string
-          description: The Curve25519 key of the sender.
-        device_id:
-          type: string
-          description: The ID of the sending device. Required with Megolm.
-        session_id:
-          type: string
-          description: The ID of the session used to encrypt the message. Required
-            with Megolm.
       description: This event type is used when sending encrypted events. It can be
         used either within a room (in which case it will have all of the Room Event
         fields), or as a to-device event.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          algorithm:
+            type: string
+            description: The encryption algorithm used to encrypt this event. The
+              value of this field determines which other properties will be present.
+            enum:
+            - m.olm.v1.curve25519-aes-sha2, m.megolm.v1.aes-sha2
+          sender_key:
+            type: string
+            description: The Curve25519 key of the sender.
+          device_id:
+            type: string
+            description: The ID of the sending device. Required with Megolm.
+          session_id:
+            type: string
+            description: The ID of the session used to encrypt the message. Required
+              with Megolm.
+    RoomEncryption:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: State Event. Defines how messages sent in this room should be encrypted.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomEncryptionContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomEncryptionContent'
     RoomEncryptionContent:
       required:
       - algorithm
@@ -1698,8 +2141,6 @@ components:
             100 is the recommended default.
           format: int64
       description: State Event. Defines how messages sent in this room should be encrypted.
-      allOf:
-      - $ref: '#/components/schemas/EventContent'
     RoomEvent:
       required:
       - event_id
@@ -1708,26 +2149,48 @@ components:
       - sender
       - type
       type: object
-      properties:
-        sender:
-          type: string
-          description: Contains the fully-qualified ID of the user who sent this event.
-        unsigned:
-          $ref: '#/components/schemas/UnsignedEventContent'
-        event_id:
-          type: string
-          description: The globally unique event identifier.
-        room_id:
-          type: string
-          description: The ID of the room associated with this event.
-        origin_server_ts:
-          type: integer
-          description: Timestamp in milliseconds on originating homeserver when this
-            event was sent.
-          format: int64
       description: Room Event.
       allOf:
       - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          sender:
+            type: string
+            description: Contains the fully-qualified ID of the user who sent this
+              event.
+          unsigned:
+            $ref: '#/components/schemas/UnsignedEventContent'
+          event_id:
+            type: string
+            description: The globally unique event identifier.
+          room_id:
+            type: string
+            description: The ID of the room associated with this event.
+          origin_server_ts:
+            type: integer
+            description: Timestamp in milliseconds on originating homeserver when
+              this event was sent.
+            format: int64
+    RoomGuestAccess:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event controls whether guest users are allowed to join rooms.
+        If this event is absent, servers should act as if it is present and has the
+        guest_access value "forbidden".
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomGuestAccessContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomGuestAccessContent'
     RoomGuestAccessContent:
       type: object
       properties:
@@ -1739,8 +2202,25 @@ components:
       description: This event controls whether guest users are allowed to join rooms.
         If this event is absent, servers should act as if it is present and has the
         guest_access value "forbidden".
+    RoomHistoryVisibility:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event controls whether a user can see the events that happened
+        in a room from before they joined.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomHistoryVisibilityContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomHistoryVisibilityContent'
     RoomHistoryVisibilityContent:
       required:
       - history_visibility
@@ -1753,8 +2233,28 @@ components:
           - invited, joined, shared, world_readable
       description: This event controls whether a user can see the events that happened
         in a room from before they joined.
+    RoomJoinRules:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A room may be ``public`` meaning anyone can join the room without
+        any prior action. Alternatively, it can be ``invite`` meaning that a user
+        who wishes to join the room must first receive an invite to the room from
+        someone already inside of the room. Currently, ``knock`` and ``private`` are
+        reserved keywords which are not implemented.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomJoinRulesContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomJoinRulesContent'
     RoomJoinRulesContent:
       type: object
       properties:
@@ -1771,8 +2271,15 @@ components:
         who wishes to join the room must first receive an invite to the room from
         someone already inside of the room. Currently, ``knock`` and ``private`` are
         reserved keywords which are not implemented.
+    RoomKey:
+      required:
+      - type
+      type: object
+      description: This event type is used to exchange keys for end-to-end encryption.
+        Typically it is encrypted as an m.room.encrypted event, then sent as a to-device
+        event.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/Event'
     RoomKeyContent:
       required:
       - algorithm
@@ -1780,51 +2287,83 @@ components:
       - session_id
       - session_key
       type: object
-      properties:
-        algorithm:
-          type: string
-          description: The encryption algorithm the key in this event is to be used
-            with. Must be 'm.megolm.v1.aes-sha2'.
-        room_id:
-          type: string
-          description: The room where the key is used.
-        session_id:
-          type: string
-          description: The ID of the session that the key is for.
-        session_key:
-          type: string
-          description: The key to be exchanged.
       description: This event type is used to exchange keys for end-to-end encryption.
         Typically it is encrypted as an m.room.encrypted event, then sent as a to-device
         event.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          algorithm:
+            type: string
+            description: The encryption algorithm the key in this event is to be used
+              with. Must be 'm.megolm.v1.aes-sha2'.
+          room_id:
+            type: string
+            description: The room where the key is used.
+          session_id:
+            type: string
+            description: The ID of the session that the key is for.
+          session_key:
+            type: string
+            description: The key to be exchanged.
+    RoomKeyRequest:
+      required:
+      - type
+      type: object
+      description: This event type is used to request keys for end-to-end encryption.
+        It is sent as an unencrypted to-device event.
+      allOf:
+      - $ref: '#/components/schemas/Event'
     RoomKeyRequestContent:
       required:
       - action
       - request_id
       - requesting_device_id
       type: object
-      properties:
-        body:
-          $ref: '#/components/schemas/RequestedKeyInfo'
-        action:
-          type: string
-          description: Request action.
-          enum:
-          - request, cancel_request
-        requesting_device_id:
-          type: string
-          description: ID of the device requesting the key.
-        request_id:
-          type: string
-          description: A random string uniquely identifying the request for a key.
-            If the key is requested multiple times, it should be reused. It should
-            also reused in order to cancel a request.
       description: This event type is used to request keys for end-to-end encryption.
         It is sent as an unencrypted to-device event.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          body:
+            $ref: '#/components/schemas/RequestedKeyInfo'
+          action:
+            type: string
+            description: Request action.
+            enum:
+            - request, cancel_request
+          requesting_device_id:
+            type: string
+            description: ID of the device requesting the key.
+          request_id:
+            type: string
+            description: A random string uniquely identifying the request for a key.
+              If the key is requested multiple times, it should be reused. It should
+              also reused in order to cancel a request.
+    RoomMember:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: Adjusts the membership state for a user in a room. It is preferable
+        to use the membership APIs (/rooms/<room id>/invite etc) when performing membership
+        actions rather than adjusting the state directly as there are a restricted
+        set of valid transformations. For example, user A cannot force user B to join
+        a room, and trying to force this state change directly will fail.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomMemberContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomMemberContent'
     RoomMemberContent:
       required:
       - membership
@@ -1854,18 +2393,28 @@ components:
         actions rather than adjusting the state directly as there are a restricted
         set of valid transformations. For example, user A cannot force user B to join
         a room, and trying to force this state change directly will fail.
+    RoomMessage:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This event is used when sending messages in a room. Messages are
+        not limited to be text. The ``msgtype`` key outlines the type of message,
+        e.g. text, audio, image, video, etc. The ``body`` key is text and MUST be
+        used with every kind of ``msgtype`` as a fallback mechanism for when a client
+        cannot render a message. This allows clients to display *something* even if
+        it is just plain text.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomMessageContent'
     RoomMessageContent:
       type: object
-      properties:
-        body:
-          type: string
-          description: The textual representation of this message.
-        m.relates_to:
-          $ref: '#/components/schemas/Relates'
-        msgtype:
-          type: string
-          description: Message type.
-          readOnly: true
       description: This event is used when sending messages in a room. Messages are
         not limited to be text. The ``msgtype`` key outlines the type of message,
         e.g. text, audio, image, video, etc. The ``body`` key is text and MUST be
@@ -1874,6 +2423,71 @@ components:
         it is just plain text.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          body:
+            type: string
+            description: The textual representation of this message.
+          m.relates_to:
+            $ref: '#/components/schemas/Relates'
+          msgtype:
+            type: string
+            description: Message type.
+            readOnly: true
+    RoomMessageFeedback:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: 'DEPRECATED. **NB: Usage of this event is discouraged in favour
+        of the** `receipts module`_.'
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomMessageFeedbackContent'
+    RoomMessageFeedbackContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of feedback.
+          enum:
+          - delivered, read
+        target_event_id:
+          type: string
+          description: The event that this feedback is related to.
+      description: 'DEPRECATED. **NB: Usage of this event is discouraged in favour
+        of the** `receipts module`_.'
+    RoomName:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A room has an opaque room ID which is not human-friendly to read.
+        A room alias is human-friendly, but not all rooms have room aliases. The room
+        name is a human-friendly string designed to be displayed to the end-user.
+        The room name is not unique, as multiple rooms can have the same room name
+        set. A room with an m.room.name event with an absent, null, or empty name
+        field should be treated the same as a room with no m.room.name event. An event
+        of this type is automatically created when creating a room using /createRoom
+        with the name key.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomNameContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomNameContent'
     RoomNameContent:
       required:
       - name
@@ -1890,8 +2504,30 @@ components:
         field should be treated the same as a room with no m.room.name event. An event
         of this type is automatically created when creating a room using /createRoom
         with the name key.
+    RoomPinned:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event is used to "pin" particular events in a room for other
+        participants to review later. The order of the pinned events is guaranteed
+        and based upon the order supplied in the event. Clients should be aware that
+        the current user may not be able to see some of the events pinned due to visibility
+        settings in the room. Clients are responsible for determining if a particular
+        event in the pinned list is displayable, and have the option to not display
+        it if it cannot be pinned in the client.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomPinnedContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomPinnedContent'
     RoomPinnedContent:
       required:
       - pinned
@@ -1910,8 +2546,42 @@ components:
         settings in the room. Clients are responsible for determining if a particular
         event in the pinned list is displayable, and have the option to not display
         it if it cannot be pinned in the client.
+    RoomPowerLevels:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: This event specifies the minimum level a user must have in order
+        to perform a certain action. It also specifies the levels of each user in
+        the room. If a user_id is in the users list, then that user_id has the associated
+        power level. Otherwise they have the default level users_default. If users_default
+        is not supplied, it is assumed to be 0. If the room contains no m.room.power_levels
+        event, the room's creator has a power level of 100, and all other users have
+        a power level of 0. The level required to send a certain event is governed
+        by events, state_default and events_default. If an event type is specified
+        in events, then the user must have at least the level specified in order to
+        send that event. If the event type is not supplied, it defaults to events_default
+        for Message Events and state_default for State Events. If there is no state_default
+        in the m.room.power_levels event, the state_default is 50. If there is no
+        events_default in the m.room.power_levels event, the events_default is 0.
+        If the room contains no m.room.power_levels event, both the state_default
+        and events_default are 0. The power level required to invite a user to the
+        room, kick a user from the room, ban a user from the room, or redact an event,
+        is defined by invite, kick, ban, and redact, respectively. Each of these levels
+        defaults to 50 if they are not specified in the m.room.power_levels event,
+        or if the room contains no m.room.power_levels event.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomPowerLevelsContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomPowerLevelsContent'
     RoomPowerLevelsContent:
       type: object
       properties:
@@ -1986,14 +2656,29 @@ components:
         is defined by invite, kick, ban, and redact, respectively. Each of these levels
         defaults to 50 if they are not specified in the m.room.power_levels event,
         or if the room contains no m.room.power_levels event.
+    RoomRedaction:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: Events can be redacted by either room or server admins. Redacting
+        an event means that all keys not required by the protocol are stripped off,
+        allowing admins to remove offensive or illegal content that may have been
+        attached to any event. This cannot be undone, allowing server owners to physically
+        delete the offending data. There is also a concept of a moderator hiding a
+        message event, which can be undone, but cannot be applied to state events.
+        The event that has been redacted is specified in the redacts event level key.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomRedactionContent'
     RoomRedactionContent:
       type: object
-      properties:
-        reason:
-          type: string
-          description: The reason for the redaction, if any.
       description: Events can be redacted by either room or server admins. Redacting
         an event means that all keys not required by the protocol are stripped off,
         allowing admins to remove offensive or illegal content that may have been
@@ -2003,6 +2688,30 @@ components:
         The event that has been redacted is specified in the redacts event level key.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          reason:
+            type: string
+            description: The reason for the redaction, if any.
+    RoomServerAcl:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: An event to indicate which servers are permitted to participate
+        in the room. Server ACLs may allow or deny groups of hosts.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomServerAclContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomServerAclContent'
     RoomServerAclContent:
       type: object
       properties:
@@ -2040,8 +2749,27 @@ components:
             homeservers to be backed by a valid registered domain name.
       description: An event to indicate which servers are permitted to participate
         in the room. Server ACLs may allow or deny groups of hosts.
+    RoomThirdPartyInvite:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: Acts as an m.room.member invite event, where there isn't a target
+        user_id to invite. This event contains a token and a public key whose private
+        key must be used to sign the token. Any user who can present that signature
+        may use this invitation to join the target room.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomThirdPartyInviteContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomThirdPartyInviteContent'
     RoomThirdPartyInviteContent:
       required:
       - display_name
@@ -2074,8 +2802,44 @@ components:
         user_id to invite. This event contains a token and a public key whose private
         key must be used to sign the token. Any user who can present that signature
         may use this invitation to join the target room.
+    RoomTombstone:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedTombstoneContent'
+          prev_content:
+            $ref: '#/components/schemas/TombstoneContent'
+    RoomTopic:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - state_key
+      - type
+      type: object
+      description: A topic is a short message detailing what is currently being discussed
+        in the room. It can also be used as a way to display extra information about
+        the room, which may not be suitable for the room name. The room topic can
+        also be set when creating a room using /createRoom with the topic key.
+      allOf:
+      - $ref: '#/components/schemas/StateEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedRoomTopicContent'
+          prev_content:
+            $ref: '#/components/schemas/RoomTopicContent'
     RoomTopicContent:
       required:
       - topic
@@ -2088,27 +2852,55 @@ components:
         in the room. It can also be used as a way to display extra information about
         the room, which may not be suitable for the room name. The room topic can
         also be set when creating a room using /createRoom with the topic key.
-      allOf:
-      - $ref: '#/components/schemas/EventContent'
+    SendRequest:
+      required:
+      - origin
+      - origin_server_ts
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        sender:
+          type: string
+          description: The user ID of the joining member.
+        origin:
+          type: string
+          description: The name of the joining homeserver.
+        type:
+          type: string
+          description: The value m.room.member.
+          default: m.room.member
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        origin_server_ts:
+          type: integer
+          description: A timestamp added by the joining homeserver.
+          format: int64
+        state_key:
+          type: string
+          description: The user ID of the joining member.
+      description: JSON request of the send_join/send_leave requests.
     ServerNotice:
       required:
       - server_notice_type
       type: object
-      properties:
-        server_notice_type:
-          type: string
-          description: The type of notice being represented.
-        admin_contact:
-          type: string
-          description: A URI giving a contact method for the server administrator.
-            Required if the notice type is m.server_notice.usage_limit_reached.
-        limit_type:
-          type: string
-          description: The kind of usage limit the server has exceeded. Required if
-            the notice type is m.server_notice.usage_limit_reached.
       description: Represents a server notice for a user.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          server_notice_type:
+            type: string
+            description: The type of notice being represented.
+          admin_contact:
+            type: string
+            description: A URI giving a contact method for the server administrator.
+              Required if the notice type is m.server_notice.usage_limit_reached.
+          limit_type:
+            type: string
+            description: The kind of usage limit the server has exceeded. Required
+              if the notice type is m.server_notice.usage_limit_reached.
     Signed:
       required:
       - mxid
@@ -2145,34 +2937,34 @@ components:
       - state_key
       - type
       type: object
-      properties:
-        sender:
-          type: string
-          description: Contains the fully-qualified ID of the user who sent this event.
-        unsigned:
-          $ref: '#/components/schemas/UnsignedEventContent'
-        event_id:
-          type: string
-          description: The globally unique event identifier.
-        room_id:
-          type: string
-          description: The ID of the room associated with this event.
-        origin_server_ts:
-          type: integer
-          description: Timestamp in milliseconds on originating homeserver when this
-            event was sent.
-          format: int64
-        prev_content:
-          $ref: '#/components/schemas/EventContent'
-        state_key:
-          type: string
-          description: ' A unique key which defines the overwriting semantics for
-            this piece of room state. This value is often a zero-length string. The
-            presence of this key makes this event a State Event. The key MUST NOT
-            start with ''_''.'
       description: Event.
       allOf:
-      - $ref: '#/components/schemas/Event'
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          prev_content:
+            $ref: '#/components/schemas/EventContent'
+          state_key:
+            type: string
+            description: ' A unique key which defines the overwriting semantics for
+              this piece of room state. This value is often a zero-length string.
+              The presence of this key makes this event a State Event. The key MUST
+              NOT start with ''_''.'
+    Sticker:
+      required:
+      - event_id
+      - origin_server_ts
+      - room_id
+      - sender
+      - type
+      type: object
+      description: This message represents a single sticker image.
+      allOf:
+      - $ref: '#/components/schemas/RoomEvent'
+      - type: object
+        properties:
+          unsigned:
+            $ref: '#/components/schemas/UnsignedStickerContent'
     StickerContent:
       required:
       - body
@@ -2191,19 +2983,25 @@ components:
           type: string
           description: The URL to the sticker image. This must be a valid mxc:// URI.
       description: This message represents a single sticker image.
+    Tag:
+      required:
+      - type
+      type: object
+      description: Informs the client of tags on a room.
       allOf:
-      - $ref: '#/components/schemas/EventContent'
+      - $ref: '#/components/schemas/Event'
     TagContent:
       type: object
-      properties:
-        tags:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TagInfo'
-          description: The tags on the room and their contents.
       description: Informs the client of tags on a room.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          tags:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TagInfo'
+            description: The tags on the room and their contents.
     TagInfo:
       type: object
       properties:
@@ -2215,19 +3013,20 @@ components:
       description: TagContent info.
     Text:
       type: object
-      properties:
-        format:
-          type: string
-          description: The format used in the ``formatted_body``. Currently only ``org.matrix.custom.html``
-            is supported.
-        formatted_body:
-          type: string
-          description: The formatted version of the ``body``. This is required if
-            ``format`` is specified.
       description: This message is the most basic message and is used to represent
         text.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          format:
+            type: string
+            description: The format used in the ``formatted_body``. Currently only
+              ``org.matrix.custom.html`` is supported.
+          formatted_body:
+            type: string
+            description: The formatted version of the ``body``. This is required if
+              ``format`` is specified.
     ThumbnailInfo:
       type: object
       properties:
@@ -2249,20 +3048,48 @@ components:
             differ from the intrinsic dimensions of the image file.
           format: int64
       description: Thumbnail info.
+    TombstoneContent:
+      required:
+      - body
+      - replacement_room
+      type: object
+      properties:
+        body:
+          type: string
+          description: A server-defined message.
+        replacement_room:
+          type: string
+          description: The new room the client should be visiting.
+      description: A state event signifying that a room has been upgraded to a different
+        room version, and that clients should go there.
+    Typing:
+      required:
+      - room_id
+      - type
+      type: object
+      description: Informs the client of the list of users currently typing.
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          room_id:
+            type: string
+            description: The ID of the room associated with this event.
     TypingContent:
       required:
       - user_ids
       type: object
-      properties:
-        user_ids:
-          type: array
-          description: The list of user IDs typing in this room, if any.
-          items:
-            type: string
-            description: The list of user IDs typing in this room, if any.
       description: Informs the client of the list of users currently typing.
       allOf:
       - $ref: '#/components/schemas/EventContent'
+      - type: object
+        properties:
+          user_ids:
+            type: array
+            description: The list of user IDs typing in this room, if any.
+            items:
+              type: string
+              description: The list of user IDs typing in this room, if any.
     Unsigned:
       type: object
       properties:
@@ -2281,6 +3108,131 @@ components:
             the event is the same one which sent it.
         prev_content:
           $ref: '#/components/schemas/EventContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedAcceptedTermsContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/AcceptedTermsContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedCallAnswerContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/CallAnswerContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedCallCandidatesContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/CallCandidatesContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedCallHangupContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/CallHangupContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedCallInviteContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/CallInviteContent'
         invite_room_state:
           type: array
           description: This contains an array of StrippedState Events. These events
@@ -2313,21 +3265,622 @@ components:
           items:
             $ref: '#/components/schemas/Event'
       description: Unsigned addition data.
+    UnsignedPolicyRuleRoomContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/PolicyRuleRoomContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedPolicyRuleServerContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/PolicyRuleServerContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedPolicyRuleUserContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/PolicyRuleUserContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomAliasesContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomAliasesContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomAvatarContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomAvatarContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomCanonicalAliasContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomCanonicalAliasContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomCreateContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomCreateContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomEncryptedContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomEncryptedContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomEncryptionContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomEncryptionContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomGuestAccessContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomGuestAccessContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomHistoryVisibilityContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomHistoryVisibilityContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomJoinRulesContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomJoinRulesContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomMemberContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomMessageContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomMessageContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomMessageFeedbackContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomMessageFeedbackContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomNameContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomNameContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomPinnedContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomPinnedContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomPowerLevelsContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomPowerLevelsContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomRedactionContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomRedactionContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomServerAclContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomServerAclContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomThirdPartyInviteContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomThirdPartyInviteContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedRoomTopicContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/RoomTopicContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedStickerContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/StickerContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
+    UnsignedTombstoneContent:
+      type: object
+      properties:
+        age:
+          type: integer
+          description: The time in milliseconds that has elapsed since the event was
+            sent. This field is generated by the local homeserver, and may be incorrect
+            if the local time on at least one of the two servers is out of sync, which
+            can cause the age to either be negative or greater than it actually is.
+          format: int64
+        redacted_because:
+          $ref: '#/components/schemas/Event'
+        transaction_id:
+          type: string
+          description: The client-supplied transaction ID, if the client being given
+            the event is the same one which sent it.
+        prev_content:
+          $ref: '#/components/schemas/TombstoneContent'
+        invite_room_state:
+          type: array
+          description: This contains an array of StrippedState Events. These events
+            provide information on a subset of state events such as the room name.
+          items:
+            $ref: '#/components/schemas/Event'
+      description: Unsigned addition data.
     Video:
       required:
       - url
       type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/VideoInfo'
-        url:
-          type: string
-          description: The URL to the video clip.
-        file:
-          $ref: '#/components/schemas/EncryptedFile'
       description: This message represents a single video clip.
       allOf:
       - $ref: '#/components/schemas/RoomMessageContent'
+      - type: object
+        properties:
+          info:
+            $ref: '#/components/schemas/VideoInfo'
+          url:
+            type: string
+            description: The URL to the video clip.
+          file:
+            $ref: '#/components/schemas/EncryptedFile'
     VideoInfo:
       type: object
       properties:
@@ -2360,7 +3913,7 @@ components:
             differ from the intrinsic dimensions of the image file.
           format: int64
       description: Video info.
-    InviteV1Request:
+    EventTemplate:
       required:
       - origin
       - origin_server_ts
@@ -2371,38 +3924,34 @@ components:
       properties:
         sender:
           type: string
-          description: The matrix ID of the user who sent the original m.room.third_party_invite.
+          description: The user ID of the joining member.
         origin:
           type: string
-          description: The name of the inviting homeserver.
+          description: The name of the resident homeserver.
         type:
           type: string
           description: The value m.room.member.
           default: m.room.member
         content:
           $ref: '#/components/schemas/RoomMemberContent'
-        unsigned:
-          $ref: '#/components/schemas/Unsigned'
         origin_server_ts:
           type: integer
-          description: A timestamp added by the inviting homeserver.
+          description: A timestamp added by the resident homeserver.
           format: int64
         state_key:
           type: string
-          description: The user ID of the invited member.
-      description: V1 Invite JSON request.
-    ProfileResponse:
+          default: The user ID of the joining member.
+      description: Event Template.
+    MakeResponse:
       type: object
       properties:
-        avatar_url:
+        event:
+          $ref: '#/components/schemas/EventTemplate'
+        room_version:
           type: string
-          description: The avatar URL for the user's avatar. May be omitted if the
-            user does not have an avatar set.
-        display_name:
-          type: string
-          description: The display name of the user. May be omitted if the user does
-            not have a display name set.
-      description: Profile.
+          description: The version of the room where the server is trying to join.
+            If not provided, the room version is assumed to be either "1" or "2".
+      description: Response of the make_join/make_leave requests.
     DeviceKeys:
       required:
       - algorithms
@@ -2490,6 +4039,280 @@ components:
           type: string
           description: Optional display name for the device.
       description: user device.
+    EphemeralDataUnit:
+      required:
+      - edu_type
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/EphemeralDataUnitContent'
+        edu_type:
+          type: string
+          description: The type of ephemeral message.
+          readOnly: true
+      description: Ephemeral data unit.
+    EphemeralDataUnitContent:
+      type: object
+    Transaction:
+      required:
+      - origin
+      - origin_server_ts
+      - pdus
+      type: object
+      properties:
+        origin:
+          type: string
+          description: server_name of homeserver sending this transaction.
+        pdus:
+          type: array
+          description: List of persistent updates to rooms.
+          items:
+            $ref: '#/components/schemas/PersistedDataUnit'
+        edus:
+          type: array
+          description: List of ephemeral messages. May be omitted if there are no
+            ephemeral messages to be sent.
+          items:
+            $ref: '#/components/schemas/EphemeralDataUnit'
+        origin_server_ts:
+          type: integer
+          description: Timestamp in milliseconds on originating homeserver when this
+            transaction started.
+          format: int64
+      description: Transaction for Federation API.
+    QueryAuth:
+      required:
+      - auth_chain
+      type: object
+      properties:
+        missing:
+          type: array
+          description: A list of event IDs that the sender thinks the receiver is
+            missing.
+          items:
+            type: string
+            description: A list of event IDs that the sender thinks the receiver is
+              missing.
+        rejects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RejectReason'
+          description: The set of events that the sending server has rejected from
+            the provided auth chain.
+        auth_chain:
+          type: array
+          description: The auth chain (the "remote auth"). Note that events have a
+            different format depending on the room version - check the room version
+            specification for precise event formats.
+          items:
+            $ref: '#/components/schemas/PersistedDataUnit'
+      description: Query auth.
+    RejectReason:
+      required:
+      - reason
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason for the event being rejected.
+          enum:
+          - auth_error
+          - replaced
+          - not_ancestor
+      description: Reject reason.
+    DirectoryResponse:
+      required:
+      - room_id
+      - servers
+      type: object
+      properties:
+        servers:
+          type: array
+          description: An array of server names that are likely to hold the given
+            room. This list may or may not include the server answering the query.
+          items:
+            type: string
+            description: An array of server names that are likely to hold the given
+              room. This list may or may not include the server answering the query.
+        room_id:
+          type: string
+          description: The room ID mapped to the queried room alias.
+      description: Directory response.
+    EventContainer:
+      required:
+      - event
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/InviteEvent'
+      description: Event container.
+    InviteEvent:
+      required:
+      - origin
+      - origin_server_ts
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        sender:
+          type: string
+          description: The matrix ID of the user who sent the original m.room.third_party_invite.
+        origin:
+          type: string
+          description: The name of the inviting homeserver.
+        type:
+          type: string
+          description: The value m.room.member.
+          default: m.room.member
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        origin_server_ts:
+          type: integer
+          description: A timestamp added by the inviting homeserver.
+          format: int64
+        state_key:
+          type: string
+          description: The user ID of the invited member.
+      description: Invite event.
+    InviteV1Request:
+      required:
+      - origin
+      - origin_server_ts
+      - sender
+      - state_key
+      - type
+      type: object
+      properties:
+        sender:
+          type: string
+          description: The matrix ID of the user who sent the original m.room.third_party_invite.
+        origin:
+          type: string
+          description: The name of the inviting homeserver.
+        type:
+          type: string
+          description: The value m.room.member.
+          default: m.room.member
+        content:
+          $ref: '#/components/schemas/RoomMemberContent'
+        unsigned:
+          $ref: '#/components/schemas/Unsigned'
+        origin_server_ts:
+          type: integer
+          description: A timestamp added by the inviting homeserver.
+          format: int64
+        state_key:
+          type: string
+          description: The user ID of the invited member.
+      description: V1 Invite JSON request.
+    EmptyResponse:
+      type: object
+      description: Empty response
+    OnBindRequest:
+      required:
+      - address
+      - invites
+      - medium
+      - mxid
+      type: object
+      properties:
+        medium:
+          type: string
+          description: The type of third party identifier. Currently only "email"
+            is a possible value.
+        address:
+          type: string
+          description: The third party identifier itself. For example, an email address.
+        mxid:
+          type: string
+          description: The user that is now bound to the third party identifier.
+        invites:
+          type: array
+          description: A list of pending invites that the third party identifier has
+            received.
+          items:
+            $ref: '#/components/schemas/Invite'
+      description: Bind request.
+    PublicRoomsChunk:
+      required:
+      - guest_can_join
+      - num_joined_members
+      - room_id
+      - world_readable
+      type: object
+      properties:
+        aliases:
+          type: array
+          description: Aliases of the room. May be empty.
+          items:
+            type: string
+            description: Aliases of the room. May be empty.
+        name:
+          type: string
+          description: The name of the room, if any.
+        topic:
+          type: string
+          description: The topic of the room, if any.
+        canonical_alias:
+          type: string
+          description: The canonical alias of the room, if any.
+        num_joined_members:
+          type: integer
+          description: The number of members joined to the room.
+          format: int64
+        room_id:
+          type: string
+          description: The ID of the room.
+        world_readable:
+          type: boolean
+          description: Whether the room may be viewed by guest users without joining.
+        guest_can_join:
+          type: boolean
+          description: Whether guest users may join the room and participate in it.
+            If they can, they will be subject to ordinary power level rules like any
+            other user.
+        avatar_url:
+          type: string
+          description: The URL for the room's avatar, if one is set.
+      description: Public rooms chunk.
+    PublicRoomsResponse:
+      required:
+      - chunk
+      type: object
+      properties:
+        chunk:
+          type: array
+          description: A paginated chunk of public rooms.
+          items:
+            $ref: '#/components/schemas/PublicRoomsChunk'
+        next_batch:
+          type: string
+          description: A pagination token for the response. The absence of this token
+            means there are no more results to fetch and the client should stop paginating.
+        prev_batch:
+          type: string
+          description: A pagination token that allows fetching previous results. The
+            absence of this token means there are no results before this batch, i.e.
+            this is the first batch.
+        total_room_count_estimate:
+          type: integer
+          description: An estimate on the total number of public rooms, if the server
+            has an estimate.
+          format: int64
+      description: Public rooms response.
+    ProfileResponse:
+      type: object
+      properties:
+        avatar_url:
+          type: string
+          description: The avatar URL for the user's avatar. May be omitted if the
+            user does not have an avatar set.
+        display_name:
+          type: string
+          description: The display name of the user. May be omitted if the user does
+            not have a display name set.
+      description: Profile.
     KeyClaimResponse:
       required:
       - one_time_keys
@@ -2627,140 +4450,6 @@ components:
             device IDs, or to an empty list to indicate all devices for the corresponding
             user.
       description: Key query request.
-    RoomStateResponse:
-      required:
-      - auth_chain
-      - origin
-      - state
-      type: object
-      properties:
-        origin:
-          type: string
-          description: The resident server's DNS name.
-        state:
-          type: array
-          description: The room state. The event format varies depending on the room
-            version - check the room version specification for precise event formats.
-          items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-        auth_chain:
-          type: array
-          description: The auth chain. Note that events have a different format depending
-            on the room version - check the room version specification for precise
-            event formats.
-          items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-      description: Room state response.
-    SendRequest:
-      required:
-      - origin
-      - origin_server_ts
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        sender:
-          type: string
-          description: The user ID of the joining member.
-        origin:
-          type: string
-          description: The name of the joining homeserver.
-        type:
-          type: string
-          description: The value m.room.member.
-          default: m.room.member
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        origin_server_ts:
-          type: integer
-          description: A timestamp added by the joining homeserver.
-          format: int64
-        state_key:
-          type: string
-          description: The user ID of the joining member.
-      description: JSON request of the send_join/send_leave requests.
-    DirectoryResponse:
-      required:
-      - room_id
-      - servers
-      type: object
-      properties:
-        servers:
-          type: array
-          description: An array of server names that are likely to hold the given
-            room. This list may or may not include the server answering the query.
-          items:
-            type: string
-            description: An array of server names that are likely to hold the given
-              room. This list may or may not include the server answering the query.
-        room_id:
-          type: string
-          description: The room ID mapped to the queried room alias.
-      description: Directory response.
-    StateIdResponse:
-      required:
-      - auth_chain
-      - pdus
-      type: object
-      properties:
-        pdus:
-          type: array
-          description: The fully resolved state of the room at the given event.
-          items:
-            type: string
-            description: The fully resolved state of the room at the given event.
-        auth_chain:
-          type: array
-          description: The full set of authorization events that make up the state
-            of the room, and their authorization events, recursively.
-          items:
-            type: string
-            description: The full set of authorization events that make up the state
-              of the room, and their authorization events, recursively.
-      description: Response of the state methods, in the form of event IDs.
-    EventTemplate:
-      required:
-      - origin
-      - origin_server_ts
-      - sender
-      - state_key
-      - type
-      type: object
-      properties:
-        sender:
-          type: string
-          description: The user ID of the joining member.
-        origin:
-          type: string
-          description: The name of the resident homeserver.
-        type:
-          type: string
-          description: The value m.room.member.
-          default: m.room.member
-        content:
-          $ref: '#/components/schemas/RoomMemberContent'
-        origin_server_ts:
-          type: integer
-          description: A timestamp added by the resident homeserver.
-          format: int64
-        state_key:
-          type: string
-          default: The user ID of the joining member.
-      description: Event Template.
-    MakeResponse:
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/EventTemplate'
-        room_version:
-          type: string
-          description: The version of the room where the server is trying to join.
-            If not provided, the room version is assumed to be either "1" or "2".
-      description: Response of the make_join/make_leave requests.
-    EmptyResponse:
-      type: object
-      description: Empty response
     ThirdPartyInvite:
       required:
       - room_id
@@ -2787,138 +4476,27 @@ components:
           type: string
           description: The user ID of the invited user.
       description: Third party invite event.
-    OnBindRequest:
-      required:
-      - address
-      - invites
-      - medium
-      - mxid
-      type: object
-      properties:
-        medium:
-          type: string
-          description: The type of third party identifier. Currently only "email"
-            is a possible value.
-        address:
-          type: string
-          description: The third party identifier itself. For example, an email address.
-        mxid:
-          type: string
-          description: The user that is now bound to the third party identifier.
-        invites:
-          type: array
-          description: A list of pending invites that the third party identifier has
-            received.
-          items:
-            $ref: '#/components/schemas/Invite'
-      description: Bind request.
-    PublicRoomsChunk:
-      required:
-      - guest_can_join
-      - num_joined_members
-      - room_id
-      - world_readable
-      type: object
-      properties:
-        aliases:
-          type: array
-          description: Aliases of the room. May be empty.
-          items:
-            type: string
-            description: Aliases of the room. May be empty.
-        name:
-          type: string
-          description: The name of the room, if any.
-        topic:
-          type: string
-          description: The topic of the room, if any.
-        canonical_alias:
-          type: string
-          description: The canonical alias of the room, if any.
-        num_joined_members:
-          type: integer
-          description: The number of members joined to the room.
-          format: int64
-        room_id:
-          type: string
-          description: The ID of the room.
-        world_readable:
-          type: boolean
-          description: Whether the room may be viewed by guest users without joining.
-        guest_can_join:
-          type: boolean
-          description: Whether guest users may join the room and participate in it.
-            If they can, they will be subject to ordinary power level rules like any
-            other user.
-        avatar_url:
-          type: string
-          description: The URL for the room's avatar, if one is set.
-      description: Public rooms chunk.
-    PublicRoomsResponse:
-      required:
-      - chunk
-      type: object
-      properties:
-        chunk:
-          type: array
-          description: A paginated chunk of public rooms.
-          items:
-            $ref: '#/components/schemas/PublicRoomsChunk'
-        next_batch:
-          type: string
-          description: A pagination token for the response. The absence of this token
-            means there are no more results to fetch and the client should stop paginating.
-        prev_batch:
-          type: string
-          description: A pagination token that allows fetching previous results. The
-            absence of this token means there are no results before this batch, i.e.
-            this is the first batch.
-        total_room_count_estimate:
-          type: integer
-          description: An estimate on the total number of public rooms, if the server
-            has an estimate.
-          format: int64
-      description: Public rooms response.
-    QueryAuth:
+    StateIdResponse:
       required:
       - auth_chain
+      - pdus
       type: object
       properties:
-        missing:
+        pdus:
           type: array
-          description: A list of event IDs that the sender thinks the receiver is
-            missing.
+          description: The fully resolved state of the room at the given event.
           items:
             type: string
-            description: A list of event IDs that the sender thinks the receiver is
-              missing.
-        rejects:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RejectReason'
-          description: The set of events that the sending server has rejected from
-            the provided auth chain.
+            description: The fully resolved state of the room at the given event.
         auth_chain:
           type: array
-          description: The auth chain (the "remote auth"). Note that events have a
-            different format depending on the room version - check the room version
-            specification for precise event formats.
+          description: The full set of authorization events that make up the state
+            of the room, and their authorization events, recursively.
           items:
-            $ref: '#/components/schemas/PersistedDataUnit'
-      description: Query auth.
-    RejectReason:
-      required:
-      - reason
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason for the event being rejected.
-          enum:
-          - auth_error
-          - replaced
-          - not_ancestor
-      description: Reject reason.
+            type: string
+            description: The full set of authorization events that make up the state
+              of the room, and their authorization events, recursively.
+      description: Response of the state methods, in the form of event IDs.
     InviteV2Request:
       required:
       - room_version
