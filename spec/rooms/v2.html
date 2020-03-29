@@ -1347,8 +1347,8 @@ not rejected.</dd>
 <li>Take all <em>power events</em> and any events in their auth chains, recursively,
 that appear in the <em>full conflicted set</em> and order them by the <em>reverse
 topological power ordering</em>.</li>
-<li>Apply the <em>iterative auth checks algorithm</em> on the <em>unconflicted state map</em>
-and the list of events from the previous step to get a partially resolved
+<li>Apply the <em>iterative auth checks algorithm</em>, starting from the <em>unconflicted state map</em>,
+to the list of events from the previous step to get a partially resolved
 state.</li>
 <li>Take all remaining events that weren't picked in step 1 and order them by
 the mainline ordering based on the power level in the partially resolved
