@@ -1035,9 +1035,11 @@ state.</td>
 </tr>
 <tr><td>prev_events</td>
 <td>[string]</td>
-<td><strong>Required.</strong> Event IDs for the most recent events
+<td><p class="first"><strong>Required.</strong> Event IDs for the most recent events
 in the room that the homeserver was aware of when
-it made this event.</td>
+it made this event.</p>
+<p class="last">Must contain less than or equal to 20 events.</p>
+</td>
 </tr>
 <tr><td>depth</td>
 <td>integer</td>
@@ -1049,9 +1051,14 @@ must be set to the limit.</td>
 </tr>
 <tr><td>auth_events</td>
 <td>[string]</td>
-<td><strong>Required.</strong> Event IDs for the authorization
+<td><p class="first"><strong>Required.</strong> Event IDs for the authorization
 events that would allow this event to be in the
-room.</td>
+room.</p>
+<p class="last">Must contain less than or equal to 10 events. Note
+that if the relevant auth event selection rules
+are used, this restriction should never be
+encountered.</p>
+</td>
 </tr>
 <tr><td>redacts</td>
 <td>string</td>
